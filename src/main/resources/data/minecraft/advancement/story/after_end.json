@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:story/enter_the_end",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

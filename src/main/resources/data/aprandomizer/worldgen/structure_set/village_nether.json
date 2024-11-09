@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "aprandomizer:village_nether",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 784665,
+    "spacing": 16,
+    "separation": 6,
+    "type": "minecraft:random_spread"
+  }
+}

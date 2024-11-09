@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:nether/distract_piglin",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

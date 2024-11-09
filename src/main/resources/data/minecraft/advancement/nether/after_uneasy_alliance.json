@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:nether/uneasy_alliance",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

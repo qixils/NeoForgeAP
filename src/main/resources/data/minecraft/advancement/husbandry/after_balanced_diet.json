@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:husbandry/balanced_diet",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/brush_armadillo",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

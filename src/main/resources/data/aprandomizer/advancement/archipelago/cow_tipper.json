@@ -1,0 +1,49 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:player_head",
+      "components": {
+        "minecraft:profile": {
+          "id": [
+            -1249965427,
+            -975419212,
+            -2023434771,
+            -1609999959
+          ],
+          "properties": [
+            {
+              "name": "textures",
+              "value": "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM0YjVmNmQ3NTEyNjM4MGY1MjBhNjdjYTU3YmM5YTU2YWExMWRiOGFmZTdlNWRjYjJhNTJkZmNmZWFlMDc4NSJ9fX0="
+            }
+          ]
+        }
+      }
+    },
+    "title": "Cow Tipper",
+    "description": "Harvest some leather.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "aprandomizer:archipelago/root",
+  "criteria": {
+    "get_leather": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:leather"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_leather"
+    ]
+  ]
+}

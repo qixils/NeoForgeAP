@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "aprandomizer:bee_grove",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 87633157,
+    "spacing": 12,
+    "separation": 8,
+    "type": "minecraft:random_spread"
+  }
+}

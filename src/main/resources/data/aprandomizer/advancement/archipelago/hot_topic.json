@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:furnace"
+    },
+    "title": "Hot Topic",
+    "description": "Construct a furnace out of eight cobblestone blocks.",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "aprandomizer:archipelago/get_pickaxe",
+  "criteria": {
+    "get_furnace": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:furnace"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_furnace"
+    ]
+  ]
+}

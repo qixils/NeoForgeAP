@@ -1,0 +1,45 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:mace",
+      "count": 1
+    },
+    "title": "Overkill",
+    "description": "Deal nine hearts of melee damage in a single hit.",
+    "frame": "challenge"
+  },
+  "parent": "aprandomizer:archipelago/craft_sword",
+  "criteria": {
+    "overkill": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "damage": {
+          "dealt": {
+            "min": 18
+          },
+          "type": {
+            "tags": [
+              {
+                "id": "minecraft:is_player_attack",
+                "expected": true
+              }
+            ],
+            "direct_entity": {
+              "type": "minecraft:player",
+              "equipment": {
+                "mainhand": {
+                  "items": "#minecraft:enchantable/weapon"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "overkill"
+    ]
+  ]
+}

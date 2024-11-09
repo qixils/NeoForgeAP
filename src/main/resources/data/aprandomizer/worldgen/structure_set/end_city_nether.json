@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "aprandomizer:end_city_nether",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 92464638,
+    "spacing": 20,
+    "separation": 10,
+    "type": "minecraft:random_spread"
+  }
+}

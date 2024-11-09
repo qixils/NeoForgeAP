@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:pillager_outpost",
+    "aprandomizer:pillager_outpost_nether"
+  ]
+}

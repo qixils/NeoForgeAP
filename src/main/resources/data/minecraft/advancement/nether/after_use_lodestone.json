@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:nether/use_lodestone",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

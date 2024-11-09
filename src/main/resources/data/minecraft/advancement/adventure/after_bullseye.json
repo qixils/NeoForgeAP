@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/bullseye",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

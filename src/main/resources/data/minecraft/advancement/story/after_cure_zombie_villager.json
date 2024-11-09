@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:story/cure_zombie_villager",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

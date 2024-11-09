@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:husbandry/complete_catalogue",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}
