@@ -48,9 +48,6 @@ public class GoalManager {
     @NotNull
     private final APMCData apmc;
 
-    private boolean dragonKilled = false;
-    private boolean witherKilled = false;
-
     public GoalManager() {
         apmc = APRandomizer.getApmcData();
         advancementManager = Objects.requireNonNull(APRandomizer.getAdvancementManager(), "Mod not initialized");
@@ -148,25 +145,14 @@ public class GoalManager {
         APClient apClient = APRandomizer.getAP();
         if (apClient == null) return; // checked by isConnected but a failsafe doesn't hurt
 
-        //check to see if our goal is done! if so send completion to AP server
-        if (goalsDone() && apmc.required_bosses == APMCData.Bosses.NONE) {
-            apClient.setGameState(ClientStatus.CLIENT_GOAL);
-        }
+        boolean hasGoal = goalsDone();
+        if (apmc.required_bosses.hasDragon())
+            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isDragonKilled).orElse(false);
+        if (apmc.required_bosses.hasWither())
+            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isWitherKilled).orElse(false);
 
-        //check if both bosses have/need to be killed
-        if (goalsDone() && apmc.required_bosses == APMCData.Bosses.BOTH && dragonKilled && witherKilled) {
+        if (hasGoal)
             apClient.setGameState(ClientStatus.CLIENT_GOAL);
-        }
-
-        //check wither goal completion
-        if (goalsDone() && apmc.required_bosses == APMCData.Bosses.WITHER && witherKilled) {
-            apClient.setGameState(ClientStatus.CLIENT_GOAL);
-        }
-
-        //check wither goal completion
-        if (goalsDone() && apmc.required_bosses == APMCData.Bosses.ENDER_DRAGON && dragonKilled) {
-            apClient.setGameState(ClientStatus.CLIENT_GOAL);
-        }
     }
 
     public void checkDragonSpawn() {
@@ -198,22 +184,14 @@ public class GoalManager {
         GoalManager goalManager = APRandomizer.getGoalManager();
         if (goalManager == null) return;
         if (mob instanceof EnderDragon && goalManager.goalsDone()) {
-            goalManager.dragonKilled = true;
+            APRandomizer.worldData().ifPresent(WorldData::setDragonKilled);
             Utils.sendMessageToAll("She is no more...");
             goalManager.updateGoal(false);
         }
         if (mob instanceof WitherBoss && goalManager.goalsDone()) {
-            goalManager.witherKilled = true;
+            APRandomizer.worldData().ifPresent(WorldData::setWitherKilled);
             Utils.sendMessageToAll("The Darkness has lifted...");
             goalManager.updateGoal(true);
         }
-    }
-
-    public boolean isDragonDead() {
-        return dragonKilled;
-    }
-
-    public boolean isWitherDead() {
-        return witherKilled;
     }
 }

@@ -17,6 +17,7 @@ public class WorldData extends SavedData {
     private Set<Long> locations = new HashSet<>();
     private int index = 0;
     private Map<String, Integer> playerIndex = new HashMap<>();
+    private boolean witherKilled = false;
 
     public static final int DRAGON_KILLED = 30;
     public static final int DRAGON_SPAWNED = 20;
@@ -37,8 +38,16 @@ public class WorldData extends SavedData {
         this.setDirty();
     }
 
+    public void setDragonKilled() {
+        setDragonState(DRAGON_KILLED);
+    }
+
     public int getDragonState() {
         return dragonState;
+    }
+
+    public boolean isDragonKilled() {
+        return dragonState == DRAGON_KILLED;
     }
 
     public boolean getJailPlayers() {
@@ -82,6 +91,15 @@ public class WorldData extends SavedData {
         this.setDirty();
     }
 
+    public boolean isWitherKilled() {
+        return witherKilled;
+    }
+
+    public void setWitherKilled() {
+        this.witherKilled = true;
+        this.setDirty();
+    }
+
     @Override
     public @NotNull CompoundTag save(CompoundTag tag, HolderLookup.@NotNull Provider holder) {
         tag.putString("seedName", seedName);
@@ -92,6 +110,7 @@ public class WorldData extends SavedData {
         CompoundTag tagIndex = new CompoundTag();
         this.playerIndex.forEach(tagIndex::putLong);
         tag.put("playerIndex", tagIndex);
+        tag.putBoolean("witherKilled", witherKilled);
         return tag;
     }
 
@@ -102,13 +121,14 @@ public class WorldData extends SavedData {
     public WorldData() {
     }
 
-    private WorldData(String seedName, int dragonState, boolean jailPlayers, long[] locations, Map<String, Integer> playerIndex, int itemIndex) {
+    private WorldData(String seedName, int dragonState, boolean jailPlayers, long[] locations, Map<String, Integer> playerIndex, int itemIndex, boolean witherKilled) {
         this.seedName = seedName;
         this.dragonState = dragonState;
         this.jailPlayers = jailPlayers;
         this.locations = new HashSet<>(Set.of(ArrayUtils.toObject(locations)));
         this.index = itemIndex;
         this.playerIndex = playerIndex;
+        this.witherKilled = witherKilled;
     }
 
     public static WorldData load(CompoundTag tag, HolderLookup.Provider provider) {
@@ -121,7 +141,8 @@ public class WorldData extends SavedData {
                 tag.getBoolean("jailPlayers"),
                 tag.getLongArray("locations"),
                 indexMap,
-                tag.getInt("index")
+                tag.getInt("index"),
+                tag.getBoolean("witherKilled")
         );
     }
 }
