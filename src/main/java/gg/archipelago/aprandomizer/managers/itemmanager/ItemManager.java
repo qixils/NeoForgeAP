@@ -191,7 +191,7 @@ public class ItemManager {
         if (data.getPlayerIndex(player.getStringUUID()) >= itemIndex) return;
 
         //update the player's index of received items for syncing later.
-        data.updatePlayerIndex(player.getStringUUID(), receivedItems.size());
+        data.updatePlayerIndex(player.getStringUUID(), itemIndex);
 
         if (itemStacks.containsKey(itemID)) {
             ItemStack itemstack = itemStacks.get(itemID).copy();
