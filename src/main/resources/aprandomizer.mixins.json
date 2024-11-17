@@ -6,7 +6,8 @@
   "refmap": "aprandomizer.refmap.json",
   "mixins": [
     "MixinPropertyManager",
-    "MixinRaid"
+    "MixinRaid",
+    "MixinServerRecipeBook"
   ],
   "injectors": {
     "defaultRequire": 1

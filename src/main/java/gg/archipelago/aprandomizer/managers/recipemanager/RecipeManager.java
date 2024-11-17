@@ -1,7 +1,9 @@
 package gg.archipelago.aprandomizer.managers.recipemanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 
 public class RecipeManager {
@@ -81,6 +84,10 @@ public class RecipeManager {
 
     public Set<RecipeHolder<?>> getGrantedRecipes() {
         return granted;
+    }
+
+    public Stream<ResourceKey<Recipe<?>>> getGrantedRecipeKeys() {
+        return granted.stream().map(RecipeHolder::id);
     }
 
     public void resetRecipes() {
