@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:group_recipes/brewing"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Brewing Stand\nBlaze Powder",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:brewing_stand"
+    },
+    "title": "Brewing"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

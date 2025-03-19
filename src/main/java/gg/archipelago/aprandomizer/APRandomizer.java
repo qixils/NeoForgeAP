@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer;
 
 import com.google.gson.Gson;
 import dev.koifysh.archipelago.network.client.BouncePacket;
+import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
@@ -11,6 +12,7 @@ import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManage
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import gg.archipelago.aprandomizer.managers.recipemanager.RecipeManager;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifier;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -21,12 +23,15 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.*;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +41,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Comparator;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -55,18 +62,18 @@ public class APRandomizer {
     static private ItemManager itemManager;
     static private GoalManager goalManager;
     static private APMCData apmcData;
-    static private final Set<Integer> validVersions = new HashSet<>() {{
-        this.add(9); //mc 1.19
-    }};
+    static private final IntSet VALID_VERSIONS = IntSet.of(
+            9 // 1.19
+    );
     static private BlockPos jailCenter = BlockPos.ZERO;
     static private WorldData worldData;
     static private double lastDeathTimestamp;
 
-    public APRandomizer() {
+    public APRandomizer(IEventBus modEventBus) {
         LOGGER.info("Minecraft Archipelago 1.20.4 v0.1.3 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        IEventBus forgeBus = NeoForge.EVENT_BUS;
         forgeBus.register(this);
 
 
@@ -84,7 +91,7 @@ public class APRandomizer {
             String b64 = Files.readAllLines(files[0].toPath()).get(0);
             String json = new String(Base64.getDecoder().decode(b64));
             apmcData = gson.fromJson(json, APMCData.class);
-            if (!validVersions.contains(apmcData.client_version)) {
+            if (!VALID_VERSIONS.contains(apmcData.client_version)) {
                 apmcData.state = APMCData.State.INVALID_VERSION;
             }
             //LOGGER.info(apmcData.structures.toString());
@@ -97,11 +104,14 @@ public class APRandomizer {
         }
 
         // For registration and init stuff.
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         APStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
-        APStructureModifier.structureModifiers.register(modEventBus);
-        APStructureModifier.structureModifiers.register("ap_structure_modifier",APStructureModifier::makeCodec);
+        APStructureModifier.STRUCTURE_MODIFIERS.register(modEventBus);
+        APCriteriaTriggers.CRITERION_TRIGGERS.register(modEventBus);
+        modEventBus.addListener(APRandomizer::registerDataPackRegistries);
+    }
 
+    public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
+        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEMS, null);
     }
 
     public static APClient getAP() {
@@ -132,8 +142,8 @@ public class APRandomizer {
         return itemManager;
     }
 
-    public static Set<Integer> getValidVersions() {
-        return validVersions;
+    public static IntSet getValidVersions() {
+        return VALID_VERSIONS;
     }
 
 
@@ -201,7 +211,7 @@ public class APRandomizer {
         server.setDifficulty(Difficulty.NORMAL, true);
 
         //fetch our custom world save data we attach to the worlds.
-        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.factory(),MODID);
+        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory(), MODID);
         advancementManager.setCheckedAdvancements(worldData.getLocations());
 
 
@@ -231,7 +241,7 @@ public class APRandomizer {
             ServerLevel overworld = server.getLevel(Level.OVERWORLD);
             BlockPos spawn = overworld.getSharedSpawnPos();
             // alter the spawn box position, so it doesn't interfere with spawning
-            StructureTemplate jail = overworld.getStructureManager().get(new ResourceLocation(MODID,"spawnjail")).get();
+            StructureTemplate jail = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID, "spawnjail")).get();
             BlockPos jailPos = new BlockPos(spawn.getX()+5, 300, spawn.getZ()+5);
             jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX()/2),jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ()/2));
             jail.placeInWorld(overworld,jailPos,jailPos,new StructurePlaceSettings(), RandomSource.create(),2);

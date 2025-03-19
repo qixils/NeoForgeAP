@@ -1,0 +1,24 @@
+{
+  "parent": "aprandomizer:archipelago/get_wood",
+  "criteria": {
+    "get_pick": {
+      "conditions": {
+        "recipe_id": "minecraft:wooden_pickaxe"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": "Use planks and sticks to make a pickaxe",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wooden_pickaxe"
+    },
+    "title": "Time to Mine!"
+  },
+  "requirements": [
+    [
+      "get_pick"
+    ]
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "parent": "aprandomizer:archipelago/root",
+  "criteria": {
+    "get_bread": {
+      "conditions": {
+        "recipe_id": "minecraft:bread"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": "Turn wheat into bread",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bread"
+    },
+    "title": "Bake Bread"
+  },
+  "requirements": [
+    [
+      "get_bread"
+    ]
+  ]
+}

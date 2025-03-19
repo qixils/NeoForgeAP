@@ -1,0 +1,28 @@
+{
+  "parent": "aprandomizer:archipelago/root",
+  "criteria": {
+    "get_logs": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Attack a tree until a block of wood pops out.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:oak_log"
+    },
+    "title": "Getting Wood"
+  },
+  "requirements": [
+    [
+      "get_logs"
+    ]
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "parent": "aprandomizer:archipelago/root",
+  "criteria": {
+    "get_leather": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:leather"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Harvest some leather",
+    "icon": {
+      "components": {
+        "minecraft:profile": {
+          "id": [
+            -245779852,
+            -1037155520,
+            -1212067157,
+            -569084141
+          ],
+          "name": "MHF_Cow"
+        }
+      },
+      "count": 1,
+      "id": "minecraft:player_head"
+    },
+    "title": "Cow Tipper"
+  },
+  "requirements": [
+    [
+      "get_leather"
+    ]
+  ]
+}

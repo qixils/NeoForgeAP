@@ -1,8 +1,8 @@
 package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import gg.archipelago.aprandomizer.APRandomizer;
 import dev.koifysh.archipelago.network.client.BouncePacket;
+import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -13,15 +13,16 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.Map;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class BounceCommand {
 
     // Directly reference a log4j logger.
@@ -61,11 +62,10 @@ public class BounceCommand {
     private static int bounceEntity(CommandSourceStack commandSource, Holder.Reference<EntityType<?>> entity, CompoundTag nbt) {
         BouncePacket packet = new BouncePacket();
         packet.tags = new String[]{"MC35"};
-        packet.setData(new HashMap<String, Object>() {{
-            put("enemy", entity.toString());
-            put("source", APRandomizer.getAP().getSlot());
-            put("nbt", nbt.toString());
-        }});
+        packet.setData(new HashMap<>(Map.of(
+                "enemy", entity.toString(),
+                "source", APRandomizer.getAP().getSlot(),
+                "nbt", nbt.toString())));
         APRandomizer.getAP().sendBounce(packet);
         return 1;
     }

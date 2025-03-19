@@ -1,0 +1,24 @@
+{
+  "parent": "aprandomizer:archipelago/get_wood",
+  "criteria": {
+    "get_sword": {
+      "conditions": {
+        "recipe_id": "minecraft:wooden_sword"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": "Use planks and sticks to make a sword",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wooden_sword"
+    },
+    "title": "Time to Strike!"
+  },
+  "requirements": [
+    [
+      "get_sword"
+    ]
+  ]
+}

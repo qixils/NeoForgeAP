@@ -1,0 +1,6 @@
+{
+  "type": "aprandomizer:end_city_nether",
+  "biomes": [],
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

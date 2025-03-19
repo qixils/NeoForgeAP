@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:group_recipes/enchanting"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Enchanting Table\nBookshelf",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:enchanting_table"
+    },
+    "title": "Enchanting"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

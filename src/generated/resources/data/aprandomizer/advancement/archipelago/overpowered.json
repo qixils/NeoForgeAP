@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:archipelago/bake_bread",
+  "criteria": {
+    "consumed_item": {
+      "conditions": {
+        "item": {
+          "items": "minecraft:enchanted_golden_apple"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": "Eat an enchanted golden apple.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:enchanted_golden_apple"
+    },
+    "title": "Overpowered"
+  },
+  "requirements": [
+    [
+      "consumed_item"
+    ]
+  ]
+}

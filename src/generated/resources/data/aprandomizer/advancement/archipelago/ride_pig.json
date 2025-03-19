@@ -1,0 +1,45 @@
+{
+  "parent": "aprandomizer:archipelago/cow_tipper",
+  "criteria": {
+    "fall_riding_pig": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "tags": [
+              {
+                "expected": true,
+                "id": "aprandomizer:fall"
+              }
+            ]
+          }
+        },
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "vehicle": {
+                "type": "minecraft:pig"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:entity_hurt_player"
+    }
+  },
+  "display": {
+    "description": "Fly a pig off a cliff of at least 5 blocks",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:saddle"
+    },
+    "title": "When Pigs Fly"
+  },
+  "requirements": [
+    [
+      "fall_riding_pig"
+    ]
+  ]
+}

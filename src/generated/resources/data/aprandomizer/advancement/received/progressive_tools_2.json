@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:received/progressive_tools_1",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/tools",
+        "tier": 2
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Iron:\n  Pickaxe\n  Shovel\n  Hoe",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_pickaxe"
+    },
+    "title": "Progressive Tools 2"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

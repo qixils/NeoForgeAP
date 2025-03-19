@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:received/progressive_weapons_1",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/weapons",
+        "tier": 2
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Iron:\n  Sword\n  Axe",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_sword"
+    },
+    "title": "Progressive Weapons 2"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

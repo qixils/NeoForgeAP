@@ -2,37 +2,50 @@ package gg.archipelago.aprandomizer.modifiers;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
+import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraftforge.common.world.ModifiableStructureInfo;
-import net.minecraftforge.common.world.StructureModifier;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.common.world.ModifiableStructureInfo;
+import net.neoforged.neoforge.common.world.StructureModifier;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class APStructureModifier implements StructureModifier {
+public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> levels, ResourceKey<Structure> defaultStructure, ResourceLocation name) implements StructureModifier {
+
+    public static final MapCodec<APStructureModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
+            .group(
+                    Codec.unboundedMap(ResourceKey.codec(Registries.DIMENSION), LevelReplacements.CODEC).optionalFieldOf("levels", Map.of()).forGetter(APStructureModifier::levels),
+                    ResourceKey.codec(Registries.STRUCTURE).fieldOf("default_structure").forGetter(APStructureModifier::defaultStructure),
+                    ResourceLocation.CODEC.fieldOf("name").forGetter(APStructureModifier::name))
+            .apply(instance, APStructureModifier::new));
+
+    public static final DeferredRegister<MapCodec<? extends StructureModifier>> STRUCTURE_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
+    private static final DeferredHolder<MapCodec<? extends StructureModifier>, MapCodec<APStructureModifier>> AP_STRUCTURE_MODIFIER = STRUCTURE_MODIFIERS.register("ap_structure_modifier", () -> CODEC);
 
     public static HolderSet<Biome> overworldStructures;
     public static HolderSet<Biome> netherStructures;
     public static HolderSet<Biome> endStructures;
     public static HolderSet<Biome> noBiomes;
 
-    public static HashMap<String, HolderSet<Biome>> structures = new HashMap<>();
-
-    public APStructureModifier() {
-    }
+    public static Map<ResourceLocation, ResourceKey<Level>> structures = new HashMap<>();
 
     public static void loadTags() {
         if (!structures.isEmpty()) return;
@@ -40,38 +53,21 @@ public class APStructureModifier implements StructureModifier {
             APRandomizer.LOGGER.error("APMCData is missing, cannot load tags.");
             return;
         }
-        APRandomizer.LOGGER.info("Loading Tags and Biome info.");
-
-        Registry<Biome> biomeRegistry = ServerLifecycleHooks.getCurrentServer().registryAccess().registryOrThrow(Registries.BIOME);
-
-        //get structure biome holdersets.
-        TagKey<Biome> overworldTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","overworld_structure"));
-        overworldStructures = biomeRegistry.getTag(overworldTag).orElseThrow();
-
-        TagKey<Biome> netherTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","nether_structure"));
-        netherStructures = biomeRegistry.getTag(netherTag).orElseThrow();
-
-        TagKey<Biome> endTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","end_structure"));
-        endStructures = biomeRegistry.getTag(endTag).orElseThrow();
-
-        TagKey<Biome> noneTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","none"));
-        noBiomes = biomeRegistry.getTag(noneTag).orElseThrow();
+        APRandomizer.LOGGER.info("Loading Biome info.");
 
         APMCData data = APRandomizer.getApmcData();
         for (Map.Entry<String, String> entry : data.structures.entrySet()) {
             switch (entry.getKey()) {
                 case "Overworld Structure 1", "Overworld Structure 2" ->
-                        structures.put(entry.getValue(), APStructureModifier.overworldStructures);
+                    structures.put(getResourceLocation(entry.getValue()), Level.OVERWORLD);
                 case "Nether Structure 1", "Nether Structure 2" ->
-                        structures.put(entry.getValue(), APStructureModifier.netherStructures);
+                    structures.put(getResourceLocation(entry.getValue()), Level.NETHER);
                 case "The End Structure" ->
-                        structures.put(entry.getValue(), APStructureModifier.endStructures);
+                    structures.put(getResourceLocation(entry.getValue()), Level.END);
             }
         }
     }
 
-    public static final DeferredRegister<Codec<? extends StructureModifier>> structureModifiers = DeferredRegister.create(ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
-    private static final RegistryObject<Codec<? extends StructureModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(APRandomizer.MODID, "ap_structure_modifier"), ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
     @Override
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
@@ -80,51 +76,46 @@ public class APStructureModifier implements StructureModifier {
             return;
         }
         if (structures.isEmpty()) loadTags();
-        APRandomizer.LOGGER.debug("Altering biome list for " + structure.unwrapKey().get().location());
+        Set<ResourceKey<Structure>> changedStructures = Stream.concat(levels.values().stream().flatMap(levels -> levels.replacements().keySet().stream()), Stream.of(defaultStructure)).collect(Collectors.toSet());
+        ResourceKey<Structure> currentStructure = structure.unwrapKey().get();
+        if (!structures.containsKey(name) || !changedStructures.contains(currentStructure))
+            return;
+        APRandomizer.LOGGER.debug("Altering biome list for " + currentStructure.location());
 
-        HolderSet<Biome> biomes = structure.get().biomes();
-
-        switch (structure.unwrapKey().get().location().toString()) {
-            case "minecraft:village_plains", "minecraft:village_desert", "minecraft:village_savanna", "minecraft:village_snowy", "minecraft:village_taiga" -> {
-                if (!structures.get("Village").equals(overworldStructures))
-                    biomes = noBiomes;
-            }
-            case "aprandomizer:village_nether" -> {
-                if (!structures.get("Village").equals(overworldStructures))
-                    biomes = structures.get("Village");
-            }
-            case "minecraft:pillager_outpost" -> {
-                if (!structures.get("Pillager Outpost").equals(overworldStructures))
-                    biomes = noBiomes;
-            }
-            case "aprandomizer:pillager_outpost_nether" -> {
-                if (!structures.get("Pillager Outpost").equals(overworldStructures))
-                    biomes = structures.get("Pillager Outpost");
-            }
-            case "minecraft:fortress" -> biomes = structures.get("Nether Fortress");
-            case "minecraft:bastion_remnant" -> biomes = structures.get("Bastion Remnant");
-            case "minecraft:end_city" -> {
-                if (structures.get("End City").equals(netherStructures))
-                    biomes = noBiomes;
-                else if (!structures.get("End City").equals(endStructures))
-                    biomes = structures.get("End City");
-            }
-            case "aprandomizer:end_city_nether" -> {
-                if (structures.get("End City").equals(netherStructures))
-                    biomes = structures.get("End City");
-            }
+        ResourceKey<Level> level = structures.get(name);
+        HolderSet<Biome> biomes = structure.value().biomes();
+        HolderSet<Biome> defaultBiomes = ServerLifecycleHooks.getCurrentServer().registryAccess().lookupOrThrow(Registries.DIMENSION).getData(APDataMaps.DEFAULT_STRUCTURE_BIOMES, level);
+        if (defaultBiomes == null) {
+            defaultBiomes = HolderSet.empty();
         }
+        Map<ResourceKey<Structure>, HolderSet<Biome>> currentReplacements = levels.containsKey(level) ? levels.get(level).replacements() : Map.of(defaultStructure, defaultBiomes);
+
+        biomes = currentReplacements.getOrDefault(currentStructure, noBiomes);
 
         builder.getStructureSettings().setBiomes(biomes);
     }
 
-    @Override
-    public Codec<? extends StructureModifier> codec() {
-        return SERIALIZER.get();
+    private static ResourceLocation getResourceLocation(String name) {
+        return switch (name) {
+            case "Village" -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village");
+            case "Pillager Outpost" -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost");
+            case "Nether Fortress" -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fortress");
+            case "Bastion Remnant" -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant");
+            case "End City" -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city");
+            default -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "unknown");
+        };
     }
 
-    public static Codec<APStructureModifier> makeCodec() {
-        return Codec.unit(APStructureModifier::new);
+    @Override
+    public MapCodec<APStructureModifier> codec() {
+        return CODEC;
+    }
+
+    public static record LevelReplacements(Map<ResourceKey<Structure>, HolderSet<Biome>> replacements) {
+        public static final Codec<LevelReplacements> CODEC = RecordCodecBuilder.create(instance -> instance
+                .group(
+                        Codec.unboundedMap(ResourceKey.codec(Registries.STRUCTURE), RegistryCodecs.homogeneousList(Registries.BIOME)).fieldOf("replacements").forGetter(LevelReplacements::replacements))
+                .apply(instance, LevelReplacements::new));
     }
 }
 

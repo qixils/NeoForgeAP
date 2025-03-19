@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:archipelago/cow_tipper",
+  "criteria": {
+    "get_bookshelf": {
+      "conditions": {
+        "recipe_id": "minecraft:bookshelf"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Build a bookshelf to improve your enchantment table.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bookshelf"
+    },
+    "title": "Librarian"
+  },
+  "requirements": [
+    [
+      "get_bookshelf"
+    ]
+  ]
+}

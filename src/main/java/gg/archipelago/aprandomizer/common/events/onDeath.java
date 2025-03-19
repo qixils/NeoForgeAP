@@ -5,14 +5,14 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onDeath {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
@@ -40,7 +40,7 @@ public class onDeath {
         sendDeathLink = false;
         for (ServerPlayer serverPlayer : APRandomizer.getServer().getPlayerList().getPlayers()) {
             if (serverPlayer != player) {
-                serverPlayer.kill();
+                serverPlayer.kill(serverPlayer.serverLevel());
             }
         }
         deathMessages.set(death, server);

@@ -5,15 +5,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
+import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import net.minecraft.ResourceLocationException;
-import net.minecraft.nbt.TagParser;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
+import net.minecraft.commands.arguments.item.ItemParser;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 
@@ -61,8 +58,9 @@ public class SlotData {
         return include_insane_advancements;
     }
 
-    public void parseStartingItems() {
+    public void parseStartingItems(HolderLookup.Provider registries) {
         JsonArray si = JsonParser.parseString(startingItems).getAsJsonArray();
+        ItemParser itemParser = new ItemParser(registries);
         for (JsonElement jsonItem : si) {
             JsonObject object = jsonItem.getAsJsonObject();
             String itemName = object.getAsJsonObject().get("item").getAsString();
@@ -70,22 +68,16 @@ public class SlotData {
             int amount = object.has("amount") ? object.get("amount").getAsInt() : 1;
 
             try {
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
+                ItemParser.ItemResult item = itemParser.parse(new StringReader(itemName));
 
-                //air is the default item returned if the resource name is invalid.
-                if(item == Items.AIR) {
-                    Utils.sendMessageToAll("No such item \"" + itemName + "\"");
-                    continue;
-                }
-
-                ItemStack iStack = new ItemStack(item,amount);
+                ItemStack iStack = new ItemStack(item.item(), amount, item.components());
                 // TODO: figure out how to parse a string of components into actual components
 //                if(object.has("nbt"))
 //                    iStack.setTag(TagParser.parseTag(object.get("nbt").getAsString()));
 
                 startingItemStacks.add(iStack);
 
-            } catch (ResourceLocationException e) {
+            } catch (CommandSyntaxException e) {
                 Utils.sendMessageToAll("No such item \"" + itemName + "\"");
             }
         }

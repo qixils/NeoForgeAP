@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:group_recipes/campfires"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Campfire\nSoul Campfire",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:campfire"
+    },
+    "title": "Campfires"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

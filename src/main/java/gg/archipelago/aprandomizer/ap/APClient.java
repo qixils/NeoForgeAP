@@ -36,7 +36,7 @@ public class APClient extends Client {
 
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
-        this.getEventManager().registerListener(new ConnectResult(this));
+        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess()));
         this.getEventManager().registerListener(new AttemptedConnection());
         this.getEventManager().registerListener(new ReceiveItem());
         this.getEventManager().registerListener(new LocationChecked());

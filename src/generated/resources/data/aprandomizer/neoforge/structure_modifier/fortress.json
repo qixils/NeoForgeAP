@@ -1,0 +1,5 @@
+{
+  "type": "aprandomizer:ap_structure_modifier",
+  "default_structure": "minecraft:fortress",
+  "name": "aprandomizer:fortress"
+}

@@ -1,13 +1,14 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.helper.DeathLink;
-import gg.archipelago.aprandomizer.ap.APClient;
-import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.SlotData;
-import gg.archipelago.aprandomizer.common.Utils.Utils;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
+import dev.koifysh.archipelago.helper.DeathLink;
 import dev.koifysh.archipelago.network.ConnectionResult;
+import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.ap.APClient;
+import gg.archipelago.aprandomizer.common.Utils.Utils;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,9 +17,11 @@ public class ConnectResult {
 
     private static final Logger LOGGER = LogManager.getLogger();
     APClient APClient;
+    private HolderLookup.Provider registries;
 
-    public ConnectResult(APClient APClient) {
+    public ConnectResult(APClient APClient, HolderLookup.Provider registries) {
         this.APClient = APClient;
+        this.registries = registries;
     }
 
     @ArchipelagoEventListener
@@ -27,7 +30,7 @@ public class ConnectResult {
             Utils.sendMessageToAll("Connected to Archipelago Server.");
             try {
                 APClient.slotData = event.getSlotData(SlotData.class);
-                APClient.slotData.parseStartingItems();
+                APClient.slotData.parseStartingItems(registries);
             } catch (Exception e) {
                 Utils.sendMessageToAll("Invalid staring item section, check logs for more details.");
                 LOGGER.warn("invalid staring items json string: " + APClient.slotData.startingItems);

@@ -4,13 +4,8 @@ import dev.koifysh.archipelago.Print.APPrint;
 import dev.koifysh.archipelago.Print.APPrintColor;
 import dev.koifysh.archipelago.Print.APPrintPart;
 import dev.koifysh.archipelago.Print.APPrintType;
-import static dev.koifysh.archipelago.flags.NetworkItem.ADVANCEMENT;
-import static dev.koifysh.archipelago.flags.NetworkItem.TRAP;
-import static dev.koifysh.archipelago.flags.NetworkItem.USEFUL;
-import static gg.archipelago.aprandomizer.APRandomizer.server;
 import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.*;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -22,15 +17,20 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.awt.Color;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+
+import static dev.koifysh.archipelago.flags.NetworkItem.*;
+import static gg.archipelago.aprandomizer.APRandomizer.server;
 
 public class Utils {
     // Directly reference a log4j logger.
@@ -142,7 +142,7 @@ public class Utils {
 
         String structureName = getAPStructureName(structureTag);
         //fetch what structures are where from our APMC data.
-        HashMap<String, String> structures = APRandomizer.getApmcData().structures;
+        Map<String, String> structures = APRandomizer.getApmcData().structures;
         for (Map.Entry<String, String> entry : structures.entrySet()) {
             if(entry.getValue().equals(structureName)) {
                 if (entry.getKey().contains("Overworld")) {
@@ -180,14 +180,6 @@ public class Utils {
         return new Vec3(x,y,z);
     }
 
-    public static void addLodestoneTags(ResourceKey<Level> worldRegistryKey, BlockPos blockPos, CompoundTag nbt) {
-        nbt.put("LodestonePos", NbtUtils.writeBlockPos(blockPos));
-        Level.RESOURCE_KEY_CODEC.encodeStart(NbtOps.INSTANCE, worldRegistryKey).resultOrPartial(LOGGER::error).ifPresent((p_234668_1_) -> {
-            nbt.put("LodestoneDimension", p_234668_1_);
-        });
-        nbt.putBoolean("LodestoneTracked", false);
-    }
-
     public static void giveItemToPlayer(ServerPlayer player, ItemStack itemstack) {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {
@@ -218,20 +210,14 @@ public class Utils {
     }
 
     public static void setItemName(ItemStack itemstack, String itemName) {
-        itemstack.setHoverName(Component.literal(itemName));
+        itemstack.set(DataComponents.ITEM_NAME, Component.literal(itemName));
     }
 
     public static void setItemName(ItemStack itemstack, Component itemName) {
-        itemstack.setHoverName(itemName);
+        itemstack.set(DataComponents.ITEM_NAME, itemName);
     }
 
     public static void setItemLore(ItemStack iStack, Collection<String> itemLore) {
-        CompoundTag compoundnbt = iStack.getOrCreateTagElement("display");
-        ListTag itemLoreLines = new ListTag();
-        for (String line : itemLore) {
-            StringTag lineTag = StringTag.valueOf(Component.Serializer.toJson(Component.literal(line)));
-            itemLoreLines.add(lineTag);
-        }
-        compoundnbt.put("Lore",itemLoreLines);
+        iStack.set(DataComponents.LORE, new ItemLore(itemLore.stream().<Component>map(Component::literal).toList()));
     }
 }

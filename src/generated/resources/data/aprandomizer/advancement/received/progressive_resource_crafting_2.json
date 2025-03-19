@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:received/progressive_resource_crafting_1",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/resource_crafting",
+        "tier": 2
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Anvil\n  Redstone Blocks <-> Dust\n  Glowstone Dust -> Blocks\n  Iron Ingots <-> Blocks\n  Gold Ingots <-> Blocks\n  Diamond Ingots <-> Blocks\n  Nethrite Ingots <-> Blocks\n  Emeralds <-> Blocks\n  Copper Ingots -> Blocks",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:anvil"
+    },
+    "title": "Progressive Resource Crafting 2"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

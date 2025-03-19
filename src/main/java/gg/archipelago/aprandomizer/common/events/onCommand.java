@@ -5,30 +5,29 @@ import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.CommandEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.CommandEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onCommand {
 
-    private static final ArrayList<String> allowedCommands = new ArrayList<>() {{
-        add("connect");
-        add("sync");
-        add("start");
-        add("stop");
-        add("kick");
-        add("ban");
-        add("ban-ip");
-        add("pardon");
-        add("pardon-ip");
-        add("whitelist");
-        add("me");
-        add("say");
-    }};
+    private static final List<String> ALLOWED_COMMANDS = List.of(
+            "connect",
+            "sync",
+            "start",
+            "stop",
+            "kick",
+            "ban",
+            "ban-ip",
+            "pardon",
+            "pardon-ip",
+            "whitelist",
+            "me",
+            "say");
 
     @SubscribeEvent
     static void onPlayerLoginEvent(CommandEvent event) {
@@ -37,7 +36,7 @@ public class onCommand {
         }
         CommandSourceStack source = event.getParseResults().getContext().getSource();
         String command = event.getParseResults().getReader().getRead();
-        for (String allowedCommand : allowedCommands)
+        for (String allowedCommand : ALLOWED_COMMANDS)
             if (command.startsWith(allowedCommand) || command.startsWith("/"+allowedCommand))
                 return;
 
@@ -45,7 +44,7 @@ public class onCommand {
         source.sendFailure(Component.literal("Non-essential commands are disabled in race mode."));
     }
 
-    @Mod.EventBusSubscriber
+    @EventBusSubscriber
     public static class onDimensionChange {
 
         @SubscribeEvent

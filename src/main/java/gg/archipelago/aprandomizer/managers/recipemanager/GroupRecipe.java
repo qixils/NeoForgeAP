@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.managers.recipemanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.HashSet;
@@ -16,7 +15,7 @@ public class GroupRecipe implements APRecipe {
 
     GroupRecipe(int id, String trackingAdvancement, String[] namespaceIDs) {
         this.id = id;
-        this.trackingAdvancement = new ResourceLocation(APRandomizer.MODID,"received/"+trackingAdvancement);
+        this.trackingAdvancement = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "received/" + trackingAdvancement);
         this.namespaceIDs = namespaceIDs;
     }
 

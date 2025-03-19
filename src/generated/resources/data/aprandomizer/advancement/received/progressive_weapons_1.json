@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/weapons"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Stone:\n  Sword\n  Axe",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:stone_sword"
+    },
+    "title": "Progressive Weapons 1"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

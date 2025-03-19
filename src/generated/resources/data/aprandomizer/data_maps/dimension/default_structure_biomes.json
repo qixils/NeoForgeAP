@@ -1,0 +1,7 @@
+{
+  "values": {
+    "minecraft:overworld": "#aprandomizer:overworld_structure",
+    "minecraft:the_end": "#aprandomizer:end_structure",
+    "minecraft:the_nether": "#aprandomizer:nether_structure"
+  }
+}

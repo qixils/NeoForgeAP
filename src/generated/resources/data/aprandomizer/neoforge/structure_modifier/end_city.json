@@ -1,0 +1,12 @@
+{
+  "type": "aprandomizer:ap_structure_modifier",
+  "default_structure": "aprandomizer:end_city_nether",
+  "levels": {
+    "minecraft:the_end": {
+      "replacements": {
+        "minecraft:end_city": "#minecraft:has_structure/end_city"
+      }
+    }
+  },
+  "name": "aprandomizer:end_city"
+}

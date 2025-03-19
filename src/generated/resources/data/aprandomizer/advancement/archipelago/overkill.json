@@ -1,0 +1,37 @@
+{
+  "parent": "aprandomizer:archipelago/craft_sword",
+  "criteria": {
+    "overkill": {
+      "conditions": {
+        "damage": {
+          "type": {
+            "tags": [
+              {
+                "expected": false,
+                "id": "aprandomizer:fireball"
+              }
+            ]
+          },
+          "dealt": {
+            "min": 18.0
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "description": "Deal nine hearts of melee damage in a single hit.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:netherite_sword"
+    },
+    "title": "Overkill"
+  },
+  "requirements": [
+    [
+      "overkill"
+    ]
+  ]
+}

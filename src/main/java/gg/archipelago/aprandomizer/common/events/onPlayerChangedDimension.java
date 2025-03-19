@@ -2,11 +2,11 @@ package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onPlayerChangedDimension {
 
     @SubscribeEvent

@@ -1,0 +1,13 @@
+{
+  "parent": "aprandomizer:received/progressive_weapons_3",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

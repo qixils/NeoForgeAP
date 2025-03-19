@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.ap.events;
 
+import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.DeathLinkEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import gg.archipelago.aprandomizer.common.events.onDeath;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
@@ -24,7 +24,7 @@ public class onDeathLink {
         showDeathMessages.set(false, APRandomizer.getServer());
         onDeath.sendDeathLink = false;
         for (ServerPlayer player : APRandomizer.getServer().getPlayerList().getPlayers()) {
-            player.kill();
+            player.kill(player.serverLevel());
         }
         onDeath.sendDeathLink = true;
         showDeathMessages.set(showDeaths,APRandomizer.getServer());

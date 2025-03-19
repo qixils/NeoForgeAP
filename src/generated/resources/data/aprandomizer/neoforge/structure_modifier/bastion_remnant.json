@@ -1,0 +1,5 @@
+{
+  "type": "aprandomizer:ap_structure_modifier",
+  "default_structure": "minecraft:bastion_remnant",
+  "name": "aprandomizer:bastion_remnant"
+}

@@ -2,14 +2,14 @@ package gg.archipelago.aprandomizer.ap.storage;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class APMCData {
 
     @SerializedName("world_seed")
     public long world_seed;
     @SerializedName("structures")
-    public HashMap<String, String> structures;
+    public Map<String, String> structures;
     @SerializedName("seed_name")
     public String seed_name;
     @SerializedName("player_name")

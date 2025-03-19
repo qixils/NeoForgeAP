@@ -1,0 +1,16 @@
+{
+  "type": "aprandomizer:ap_structure_modifier",
+  "default_structure": "aprandomizer:village_nether",
+  "levels": {
+    "minecraft:overworld": {
+      "replacements": {
+        "minecraft:village_desert": "#minecraft:has_structure/village_desert",
+        "minecraft:village_plains": "#minecraft:has_structure/village_plains",
+        "minecraft:village_savanna": "#minecraft:has_structure/village_savanna",
+        "minecraft:village_snowy": "#minecraft:has_structure/village_snowy",
+        "minecraft:village_taiga": "#minecraft:has_structure/village_taiga"
+      }
+    }
+  },
+  "name": "aprandomizer:village"
+}

@@ -1,0 +1,23 @@
+{
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/basalt_side.png",
+    "description": "This tab will track items that you have received from Archipelago",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:structure_block"
+    },
+    "show_toast": false,
+    "title": "Received Items"
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

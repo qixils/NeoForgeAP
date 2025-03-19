@@ -1,0 +1,6 @@
+// 1.21.4	2025-03-17T22:14:39.1907468	Tags for minecraft:worldgen/biome mod id aprandomizer
+f12c62fd9e60ff9618faf051ed0fcc159eef6d9c data/aprandomizer/tags/worldgen/biome/bee_grove_biomes.json
+91b0eb2c9a1bca9eaa7aeb065cf6566cc9ef4ef6 data/aprandomizer/tags/worldgen/biome/end_structure.json
+a24545b58f3f91c6c033586e2b2ae12f1e8131b1 data/aprandomizer/tags/worldgen/biome/nether_structure.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/aprandomizer/tags/worldgen/biome/none.json
+545053c5611eee42e466d9803aa5ae4fb7562309 data/aprandomizer/tags/worldgen/biome/overworld_structure.json

@@ -1,0 +1,24 @@
+{
+  "parent": "aprandomizer:archipelago/get_pickaxe",
+  "criteria": {
+    "get_furnace": {
+      "conditions": {
+        "recipe_id": "minecraft:furnace"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": "Construct a furnace out of eight cobblestone blocks.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:furnace"
+    },
+    "title": "Hot Topic"
+  },
+  "requirements": [
+    [
+      "get_furnace"
+    ]
+  ]
+}

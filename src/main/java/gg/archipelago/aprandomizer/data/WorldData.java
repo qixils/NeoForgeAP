@@ -5,7 +5,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.apache.commons.lang3.ArrayUtils;
-import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -86,7 +85,7 @@ public class WorldData extends SavedData {
     }
 
     @Override
-    public @NotNull CompoundTag save(CompoundTag compoundTag) {
+    public @NotNull CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider registries) {
         compoundTag.putString("seedName", seedName);
         compoundTag.putInt("dragonState", dragonState);
         compoundTag.putBoolean("jailPlayers", jailPlayers);
@@ -98,8 +97,8 @@ public class WorldData extends SavedData {
         return compoundTag;
     }
 
-    public static SavedData.Factory<WorldData> factory() {
-        return new SavedData.Factory<>(WorldData::new, WorldData::load, null);
+    public static SavedData.Factory<WorldData> getFactory() {
+        return new SavedData.Factory<>(WorldData::new, WorldData::load);
     }
 
     public WorldData() {
@@ -114,7 +113,7 @@ public class WorldData extends SavedData {
         this.playerIndex = playerIndex;
     }
 
-    public static WorldData load(CompoundTag tag) {
+    public static WorldData load(CompoundTag tag, HolderLookup.Provider registries) {
         CompoundTag indexTag = tag.getCompound("playerIndex");
         HashMap<String, Integer> indexMap = new HashMap<>();
         indexTag.getAllKeys().forEach(key -> indexMap.put(key, indexTag.getInt(key)));

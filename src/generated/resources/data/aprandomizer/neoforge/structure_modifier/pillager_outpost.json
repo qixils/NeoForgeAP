@@ -1,0 +1,12 @@
+{
+  "type": "aprandomizer:ap_structure_modifier",
+  "default_structure": "aprandomizer:pillager_outpost_nether",
+  "levels": {
+    "minecraft:overworld": {
+      "replacements": {
+        "minecraft:pillager_outpost": "#minecraft:has_structure/pillager_outpost"
+      }
+    }
+  },
+  "name": "aprandomizer:pillager_outpost"
+}

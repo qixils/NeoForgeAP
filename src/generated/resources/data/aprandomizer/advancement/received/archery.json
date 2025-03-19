@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:group_recipes/archery"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Bow\nArrow\nCrossbow",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bow"
+    },
+    "title": "Archery"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/tools"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Stone:\n  Pickaxe\n  Shovel\n  Hoe",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:stone_pickaxe"
+    },
+    "title": "Progressive Tools 1"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

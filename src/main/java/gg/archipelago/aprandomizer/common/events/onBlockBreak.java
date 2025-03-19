@@ -2,13 +2,13 @@ package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onBlockBreak {
 
     // Directly reference a log4j logger.
@@ -19,6 +19,6 @@ public class onBlockBreak {
         if(!APRandomizer.isJailPlayers())
             return;
         event.setCanceled(true);
-        event.getPlayer().sendSystemMessage(Component.literal("No!"));
+        event.getPlayer().displayClientMessage(Component.literal("No!"), false);
     }
 }

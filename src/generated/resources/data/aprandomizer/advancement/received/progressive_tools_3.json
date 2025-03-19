@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:received/progressive_tools_2",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:progressive_recipes/tools",
+        "tier": 3
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Diamond:\n  Pickaxe\n  Shovel\n  Hoe\nNetherite Ingots",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:diamond_pickaxe"
+    },
+    "title": "Progressive Tools 3"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}

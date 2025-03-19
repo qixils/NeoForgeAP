@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:archipelago/bake_bread",
+  "criteria": {
+    "bake_cake": {
+      "conditions": {
+        "recipe_id": "minecraft:cake"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": "Bake cake using wheat, sugar, milk, and eggs!",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:cake"
+    },
+    "title": "The Lie"
+  },
+  "requirements": [
+    [
+      "bake_cake"
+    ]
+  ]
+}

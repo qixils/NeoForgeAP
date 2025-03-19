@@ -1,0 +1,44 @@
+{
+  "parent": "aprandomizer:archipelago/root",
+  "criteria": {
+    "ride_1km": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "stats": [
+                  {
+                    "type": "minecraft:custom",
+                    "stat": "minecraft:minecart_one_cm",
+                    "value": {
+                      "min": 100000
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "description": "Reach 1km by minecart in your statistics.",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:minecart"
+    },
+    "title": "On A Rail"
+  },
+  "requirements": [
+    [
+      "ride_1km"
+    ]
+  ]
+}

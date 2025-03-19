@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Ghast;
@@ -18,7 +19,7 @@ public class GhastTrap implements Trap {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
 
-            Ghast ghast = EntityType.GHAST.create(world);
+            Ghast ghast = EntityType.GHAST.create(world, EntitySpawnReason.MOB_SUMMONED);
             if (ghast == null)
                 return;
 
