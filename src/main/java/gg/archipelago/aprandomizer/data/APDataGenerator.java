@@ -1,6 +1,7 @@
 package gg.archipelago.aprandomizer.data;
 
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.APStructures;
 import gg.archipelago.aprandomizer.data.advancements.APAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.ReceivedAdvancementProvider;
@@ -9,6 +10,7 @@ import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APStructureTagsProvider;
+import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.APStructureSets;
 import gg.archipelago.aprandomizer.structures.APTemplatePools;
@@ -37,7 +39,8 @@ public class APDataGenerator {
                         .add(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, APStructureModifiers::bootstrap)
                         .add(Registries.STRUCTURE, APStructures::bootstrap)
                         .add(Registries.TEMPLATE_POOL, APTemplatePools::bootstrap)
-                        .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap),
+                        .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
+                        .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap),
                 Set.of(APRandomizer.MODID))).getRegistryProvider();
         event.addProvider(new AdvancementProvider(event.getGenerator().getPackOutput(), registries, List.of(
                 new APAdvancementProvider(),

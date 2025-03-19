@@ -7,6 +7,9 @@ import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
+import gg.archipelago.aprandomizer.locations.APLocation;
+import gg.archipelago.aprandomizer.locations.APLocationTypes;
+import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
@@ -32,6 +35,8 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -107,11 +112,13 @@ public class APRandomizer {
         APStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
         APStructureModifier.STRUCTURE_MODIFIERS.register(modEventBus);
         APCriteriaTriggers.CRITERION_TRIGGERS.register(modEventBus);
+        APLocationTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
     }
 
     public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEMS, null);
+        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, null);
+        event.dataPackRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
     }
 
     public static APClient getAP() {

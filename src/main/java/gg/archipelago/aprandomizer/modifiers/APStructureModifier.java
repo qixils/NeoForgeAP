@@ -40,11 +40,6 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
     public static final DeferredRegister<MapCodec<? extends StructureModifier>> STRUCTURE_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
     private static final DeferredHolder<MapCodec<? extends StructureModifier>, MapCodec<APStructureModifier>> AP_STRUCTURE_MODIFIER = STRUCTURE_MODIFIERS.register("ap_structure_modifier", () -> CODEC);
 
-    public static HolderSet<Biome> overworldStructures;
-    public static HolderSet<Biome> netherStructures;
-    public static HolderSet<Biome> endStructures;
-    public static HolderSet<Biome> noBiomes;
-
     public static Map<ResourceLocation, ResourceKey<Level>> structures = new HashMap<>();
 
     public static void loadTags() {
@@ -90,7 +85,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
         }
         Map<ResourceKey<Structure>, HolderSet<Biome>> currentReplacements = levels.containsKey(level) ? levels.get(level).replacements() : Map.of(defaultStructure, defaultBiomes);
 
-        biomes = currentReplacements.getOrDefault(currentStructure, noBiomes);
+        biomes = currentReplacements.getOrDefault(currentStructure, HolderSet.empty());
 
         builder.getStructureSettings().setBiomes(biomes);
     }

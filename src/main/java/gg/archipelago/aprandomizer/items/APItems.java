@@ -27,6 +27,6 @@ public class APItems {
     public static final ResourceKey<APItem> PROGRESSIVE_RECIPES_RESOURCE_CRAFTING = id("progressive_recipes/resource_crafting");
 
     private static ResourceKey<APItem> id(String name) {
-        return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEMS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
+        return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
 }
