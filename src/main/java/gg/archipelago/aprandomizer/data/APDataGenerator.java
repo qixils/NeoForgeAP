@@ -10,6 +10,7 @@ import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APStructureTagsProvider;
+import gg.archipelago.aprandomizer.items.APItems;
 import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.APStructureSets;
@@ -40,7 +41,8 @@ public class APDataGenerator {
                         .add(Registries.STRUCTURE, APStructures::bootstrap)
                         .add(Registries.TEMPLATE_POOL, APTemplatePools::bootstrap)
                         .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
-                        .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap),
+                        .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap)
+                        .add(APRegistries.ARCHIPELAGO_ITEM, APItems::bootstrap),
                 Set.of(APRandomizer.MODID))).getRegistryProvider();
         event.addProvider(new AdvancementProvider(event.getGenerator().getPackOutput(), registries, List.of(
                 new APAdvancementProvider(),

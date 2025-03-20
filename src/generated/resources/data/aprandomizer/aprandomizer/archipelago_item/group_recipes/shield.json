@@ -1,0 +1,6 @@
+{
+  "rewards": {
+    "type": "aprandomizer:recipe",
+    "recipe": "minecraft:shield"
+  }
+}

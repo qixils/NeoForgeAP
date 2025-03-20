@@ -1,0 +1,12 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:enchanting_table"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:bookshelf"
+    }
+  ]
+}

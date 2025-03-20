@@ -1,0 +1,92 @@
+{
+  "rewards": [
+    [
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:iron_ingot_from_nuggets"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:iron_nugget"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:gold_ingot_from_nuggets"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:gold_nugget"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:furnace"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:blast_furnace"
+      }
+    ],
+    [
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:redstone"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:redstone_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:glowstone"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:iron_ingot_from_iron_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:iron_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:gold_ingot_from_gold_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:gold_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:diamond"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:diamond_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:netherite_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:netherite_ingot_from_netherite_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:anvil"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:emerald"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:emerald_block"
+      },
+      {
+        "type": "aprandomizer:recipe",
+        "recipe": "minecraft:copper_block"
+      }
+    ]
+  ]
+}

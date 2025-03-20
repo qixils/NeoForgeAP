@@ -1,0 +1,12 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:campfire"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:soul_campfire"
+    }
+  ]
+}

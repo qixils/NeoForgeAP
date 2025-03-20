@@ -2,8 +2,13 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
+
+import java.util.List;
 
 public class APItems {
     // Group Recipes
@@ -28,5 +33,144 @@ public class APItems {
 
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
+    }
+
+    public static void bootstrap(BootstrapContext<APItem> context) {
+        context.register(GROUP_RECIPES_ARCHERY,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOW)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ARROW)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CROSSBOW)))));
+
+        context.register(GROUP_RECIPES_BREWING,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAZE_POWDER)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BREWING_STAND)))));
+
+        context.register(GROUP_RECIPES_ENCHANTING,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ENCHANTING_TABLE)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOOKSHELF)))));
+
+        context.register(GROUP_RECIPES_BUCKET,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BUCKET)))));
+
+        context.register(GROUP_RECIPES_FLINT_AND_STEEL,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FLINT_AND_STEEL)))));
+
+        context.register(GROUP_RECIPES_BEDS,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLACK_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLUE_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BROWN_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CYAN_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GRAY_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GREEN_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIGHT_BLUE_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIGHT_GRAY_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIME_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.MAGENTA_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ORANGE_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.PINK_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.PURPLE_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RED_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.WHITE_BED)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.YELLOW_BED)))));
+
+        context.register(GROUP_RECIPES_BOTTLES,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLASS_BOTTLE)))));
+
+        context.register(GROUP_RECIPES_SHIELD,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SHIELD)))));
+
+        context.register(GROUP_RECIPES_FISHING,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FISHING_ROD)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CARROT_ON_A_STICK)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.WARPED_FUNGUS_ON_A_STICK)))));
+
+        context.register(GROUP_RECIPES_CAMPFIRES,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CAMPFIRE)),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SOUL_CAMPFIRE)))));
+
+        context.register(GROUP_RECIPES_SPYGLASS,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SPYGLASS)))));
+
+        context.register(GROUP_RECIPES_LEAD,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LEAD)))));
+
+        context.register(PROGRESSIVE_RECIPES_WEAPONS,
+                APItem.ofTiers(List.of(
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SWORD)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_AXE))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SWORD)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_AXE))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SWORD)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_AXE))))));
+
+        context.register(PROGRESSIVE_RECIPES_TOOLS,
+                APItem.ofTiers(List.of(
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_PICKAXE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SHOVEL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_HOE))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_PICKAXE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SHOVEL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HOE))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_PICKAXE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SHOVEL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HOE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_INGOT))))));
+
+        context.register(PROGRESSIVE_RECIPES_ARMOR,
+                APItem.ofTiers(List.of(
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HELMET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_CHESTPLATE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_LEGGINGS)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BOOTS))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HELMET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_CHESTPLATE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_LEGGINGS)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BOOTS))))));
+
+        context.register(PROGRESSIVE_RECIPES_RESOURCE_CRAFTING,
+                APItem.ofTiers(List.of(
+                        List.of(
+                                new RecipeReward(ResourceLocation.withDefaultNamespace("iron_ingot_from_nuggets")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_NUGGET)),
+                                new RecipeReward(ResourceLocation.withDefaultNamespace("gold_ingot_from_nuggets")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_NUGGET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FURNACE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAST_FURNACE))),
+                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLOWSTONE)),
+                                new RecipeReward(ResourceLocation.withDefaultNamespace("iron_ingot_from_iron_block")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BLOCK)),
+                                new RecipeReward(ResourceLocation.withDefaultNamespace("gold_ingot_from_gold_block")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_BLOCK)),
+                                new RecipeReward(ResourceLocation.withDefaultNamespace("netherite_ingot_from_netherite_block")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK))))));
     }
 }

@@ -1,0 +1,12 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:blaze_powder"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:brewing_stand"
+    }
+  ]
+}

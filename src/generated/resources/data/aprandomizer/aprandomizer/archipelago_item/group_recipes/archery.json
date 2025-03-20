@@ -1,0 +1,16 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:bow"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:arrow"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:crossbow"
+    }
+  ]
+}

@@ -7,9 +7,10 @@ import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
+import gg.archipelago.aprandomizer.items.APItem;
+import gg.archipelago.aprandomizer.items.APRewardTypes;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.locations.APLocationTypes;
-import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
@@ -113,11 +114,12 @@ public class APRandomizer {
         APStructureModifier.STRUCTURE_MODIFIERS.register(modEventBus);
         APCriteriaTriggers.CRITERION_TRIGGERS.register(modEventBus);
         APLocationTypes.REGISTER.register(modEventBus);
+        APRewardTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
     }
 
     public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, null);
+        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, APItem.CODEC);
         event.dataPackRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
     }
 

@@ -1,0 +1,68 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:black_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:blue_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:brown_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:cyan_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:gray_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:green_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:light_blue_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:light_gray_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:lime_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:magenta_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:orange_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:pink_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:purple_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:red_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:white_bed"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:yellow_bed"
+    }
+  ]
+}

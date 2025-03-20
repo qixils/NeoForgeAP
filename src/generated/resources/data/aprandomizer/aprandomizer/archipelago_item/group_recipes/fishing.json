@@ -1,0 +1,16 @@
+{
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:fishing_rod"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:carrot_on_a_stick"
+    },
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:warped_fungus_on_a_stick"
+    }
+  ]
+}
