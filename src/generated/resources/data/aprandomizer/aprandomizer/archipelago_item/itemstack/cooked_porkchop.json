@@ -1,0 +1,9 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "count": 16,
+      "id": "minecraft:cooked_porkchop"
+    }
+  }
+}

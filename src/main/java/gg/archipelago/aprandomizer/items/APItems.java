@@ -2,11 +2,20 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 
 import java.util.List;
 
@@ -31,11 +40,35 @@ public class APItems {
     public static final ResourceKey<APItem> PROGRESSIVE_RECIPES_ARMOR = id("progressive_recipes/armor");
     public static final ResourceKey<APItem> PROGRESSIVE_RECIPES_RESOURCE_CRAFTING = id("progressive_recipes/resource_crafting");
 
+    // ItemStacks
+    public static final ResourceKey<APItem> ITEMSTACK_NETHERITE_SCRAP = id("itemstack/netherite_scrap");
+    public static final ResourceKey<APItem> ITEMSTACK_EIGHT_EMERALD = id("itemstack/eight_emerald");
+    public static final ResourceKey<APItem> ITEMSTACK_FOUR_EMERALD = id("itemstack/four_emerald");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_CHANNELING_ONE = id("itemstack/enchantment/channeling_one");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE = id("itemstack/enchantment/silk_touch_one");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_SHARPNESS_THREE = id("itemstack/enchantment/sharpness_three");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_PIERCING_FOUR = id("itemstack/enchantment/piercing_four");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_MOB_LOOTING_THREE = id("itemstack/enchantment/mob_looting_three");
+    public static final ResourceKey<APItem> ITEMSTACK_ENCHANTMENT_INFINITY_ARROWS_ONE = id("itemstack/enchantment/infinity_arrows_one");
+    public static final ResourceKey<APItem> ITEMSTACK_DIAMOND_ORE = id("itemstack/diamond_ore");
+    public static final ResourceKey<APItem> ITEMSTACK_IRON_ORE = id("itemstack/iron_ore");
+    public static final ResourceKey<APItem> ITEMSTACK_ENDER_PEARL = id("itemstack/ender_pearl");
+    public static final ResourceKey<APItem> ITEMSTACK_LAPIS_LAZULI = id("itemstack/lapis_lazuli");
+    public static final ResourceKey<APItem> ITEMSTACK_COOKED_PORKCHOP = id("itemstack/cooked_porkchop");
+    public static final ResourceKey<APItem> ITEMSTACK_GOLD_ORE = id("itemstack/gold_ore");
+    public static final ResourceKey<APItem> ITEMSTACK_ROTTEN_FLESH = id("itemstack/rotten_flesh");
+    public static final ResourceKey<APItem> ITEMSTACK_THE_ARROW = id("itemstack/the_arrow");
+    public static final ResourceKey<APItem> ITEMSTACK_THIRTY_TWO_ARROW = id("itemstack/thirty_two_arrow");
+    public static final ResourceKey<APItem> ITEMSTACK_SADDLE = id("itemstack/saddle");
+    public static final ResourceKey<APItem> ITEMSTACK_SHULKER_BOX = id("itemstack/shulker_box");
+
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
 
     public static void bootstrap(BootstrapContext<APItem> context) {
+        HolderGetter<Enchantment> enchantments = context.lookup(Registries.ENCHANTMENT);
+
         context.register(GROUP_RECIPES_ARCHERY,
                 APItem.ofRewards(List.of(
                         new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOW)),
@@ -50,7 +83,8 @@ public class APItems {
         context.register(GROUP_RECIPES_ENCHANTING,
                 APItem.ofRewards(List.of(
                         new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ENCHANTING_TABLE)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOOKSHELF)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOOKSHELF)),
+                        new ItemReward(new ItemStack(Items.LAPIS_LAZULI, 4)))));
 
         context.register(GROUP_RECIPES_BUCKET,
                 APItem.ofRewards(List.of(
@@ -172,5 +206,94 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK))))));
+
+        context.register(ITEMSTACK_NETHERITE_SCRAP,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.NETHERITE_SCRAP, 8))));
+
+        context.register(ITEMSTACK_EIGHT_EMERALD,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.EMERALD, 8))));
+
+        context.register(ITEMSTACK_FOUR_EMERALD,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.EMERALD, 4))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_CHANNELING_ONE,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.CHANNELING), 1))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.SILK_TOUCH), 1))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_SHARPNESS_THREE,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), 3))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_PIERCING_FOUR,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.PIERCING), 4))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_MOB_LOOTING_THREE,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.LOOTING), 3))));
+
+        context.register(ITEMSTACK_ENCHANTMENT_INFINITY_ARROWS_ONE,
+                APItem.ofReward(
+                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.INFINITY), 1))));
+
+        context.register(ITEMSTACK_DIAMOND_ORE,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.DIAMOND_ORE, 4))));
+
+        context.register(ITEMSTACK_IRON_ORE,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.IRON_ORE, 16))));
+
+        context.register(ITEMSTACK_ENDER_PEARL,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.ENDER_PEARL, 3))));
+
+        context.register(ITEMSTACK_LAPIS_LAZULI,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.LAPIS_LAZULI, 4))));
+
+        context.register(ITEMSTACK_COOKED_PORKCHOP,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.COOKED_PORKCHOP, 16))));
+
+        context.register(ITEMSTACK_GOLD_ORE,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.GOLD_ORE, 8))));
+
+        context.register(ITEMSTACK_ROTTEN_FLESH,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.ROTTEN_FLESH, 8))));
+
+        context.register(ITEMSTACK_THE_ARROW,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.ARROW.builtInRegistryHolder(), 1,
+                                DataComponentPatch.builder()
+                                        .set(DataComponents.ITEM_NAME, Component.literal("The Arrow"))
+                                        .build()))));
+
+        context.register(ITEMSTACK_THIRTY_TWO_ARROW,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.ARROW, 32))));
+
+        context.register(ITEMSTACK_SADDLE,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.SADDLE, 1))));
+
+        context.register(ITEMSTACK_SHULKER_BOX,
+                APItem.ofReward(
+                        new ItemReward(new ItemStack(Items.SHULKER_BOX, 1))));
+    }
+
+    private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {
+        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+        stack.enchant(enchantment, level);
+        return stack;
     }
 }

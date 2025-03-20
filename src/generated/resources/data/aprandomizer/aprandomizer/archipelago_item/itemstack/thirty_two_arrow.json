@@ -1,0 +1,9 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "count": 32,
+      "id": "minecraft:arrow"
+    }
+  }
+}

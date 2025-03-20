@@ -7,6 +7,13 @@
     {
       "type": "aprandomizer:recipe",
       "recipe": "minecraft:bookshelf"
+    },
+    {
+      "type": "aprandomizer:item",
+      "item": {
+        "count": 4,
+        "id": "minecraft:lapis_lazuli"
+      }
     }
   ]
 }

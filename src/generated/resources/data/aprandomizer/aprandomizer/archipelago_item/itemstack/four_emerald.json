@@ -1,0 +1,9 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "count": 4,
+      "id": "minecraft:emerald"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "count": 8,
+      "id": "minecraft:netherite_scrap"
+    }
+  }
+}

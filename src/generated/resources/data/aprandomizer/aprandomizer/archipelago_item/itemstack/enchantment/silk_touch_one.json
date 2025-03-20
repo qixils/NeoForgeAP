@@ -1,0 +1,16 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "components": {
+        "minecraft:stored_enchantments": {
+          "levels": {
+            "minecraft:silk_touch": 1
+          }
+        }
+      },
+      "count": 1,
+      "id": "minecraft:enchanted_book"
+    }
+  }
+}

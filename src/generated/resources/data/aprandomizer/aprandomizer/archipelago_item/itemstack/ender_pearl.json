@@ -1,0 +1,9 @@
+{
+  "rewards": {
+    "type": "aprandomizer:item",
+    "item": {
+      "count": 3,
+      "id": "minecraft:ender_pearl"
+    }
+  }
+}
