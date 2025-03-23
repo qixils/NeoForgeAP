@@ -14,4 +14,5 @@ public class APRewardTypes {
 
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<RecipeReward>> RECIPE = REGISTER.register("recipe", () -> RecipeReward.CODEC);
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<ItemReward>> ITEM = REGISTER.register("item", () -> ItemReward.CODEC);
+    public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<ExperienceReward>> EXPERIENCE = REGISTER.register("experience", () -> ExperienceReward.CODEC);
 }

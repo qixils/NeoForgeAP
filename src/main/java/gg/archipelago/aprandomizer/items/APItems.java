@@ -62,6 +62,11 @@ public class APItems {
     public static final ResourceKey<APItem> ITEMSTACK_SADDLE = id("itemstack/saddle");
     public static final ResourceKey<APItem> ITEMSTACK_SHULKER_BOX = id("itemstack/shulker_box");
 
+    // Experience
+    public static final ResourceKey<APItem> EXPERIENCE_FIVE_HUNDRED = id("experience/five_hundred");
+    public static final ResourceKey<APItem> EXPERIENCE_ONE_HUNDRED = id("experience/one_hundred");
+    public static final ResourceKey<APItem> EXPERIENCE_FIFTY = id("experience/fifty");
+
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
     }

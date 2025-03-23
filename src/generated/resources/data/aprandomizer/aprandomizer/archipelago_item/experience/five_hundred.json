@@ -1,0 +1,6 @@
+{
+  "rewards": {
+    "type": "aprandomizer:experience",
+    "experience": 500
+  }
+}
