@@ -1,0 +1,10 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:bastion_remnant"
+    },
+    "structures": "#aprandomizer:bastion_remnant"
+  }
+}

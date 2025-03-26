@@ -1,4 +1,9 @@
-// 1.21.4	2025-03-23T22:21:49.7786787	Registries
+// 1.21.4	2025-03-26T01:06:34.2770952	Registries
+7294524e42b9acfe08e164998d1aade63bf8f4d5 data/aprandomizer/aprandomizer/archipelago_item/compass/bastion_remnant.json
+066eda42a54a041c69c3177e4406513687dfce52 data/aprandomizer/aprandomizer/archipelago_item/compass/end_city.json
+bb6dfc3f97ec5d64778cf956f518442446e188ab data/aprandomizer/aprandomizer/archipelago_item/compass/fortress.json
+a09bdc66a217524ec476a95e38b2ea729f8c5afc data/aprandomizer/aprandomizer/archipelago_item/compass/pillager_outpost.json
+b834b377ea045b4f6245d078d2b27f44add469a8 data/aprandomizer/aprandomizer/archipelago_item/compass/village.json
 c468e7dd0d0eaaac2c4be8d869fa64b69f52d7c2 data/aprandomizer/aprandomizer/archipelago_item/experience/fifty.json
 4b69977781f5746af6c787272f8ab6d933e0f839 data/aprandomizer/aprandomizer/archipelago_item/experience/five_hundred.json
 12f42d696f023dffd70e7f770fcf53d63a3f9549 data/aprandomizer/aprandomizer/archipelago_item/experience/one_hundred.json

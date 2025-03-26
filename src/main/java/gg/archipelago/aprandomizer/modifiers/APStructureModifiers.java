@@ -17,11 +17,17 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.Map;
 
 public class APStructureModifiers {
-    public static final ResourceKey<StructureModifier> VILLAGE = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village"));
-    public static final ResourceKey<StructureModifier> PILLAGER_OUTPOST = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost"));
-    public static final ResourceKey<StructureModifier> FORTRESS = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fortress"));
-    public static final ResourceKey<StructureModifier> BASTION_REMNANT = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant"));
-    public static final ResourceKey<StructureModifier> END_CITY = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city"));
+    public static final ResourceLocation VILLAGE_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village");
+    public static final ResourceLocation PILLAGER_OUTPOST_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost");
+    public static final ResourceLocation FORTRESS_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fortress");
+    public static final ResourceLocation BASTION_REMNANT_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant");
+    public static final ResourceLocation END_CITY_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city");
+
+    public static final ResourceKey<StructureModifier> VILLAGE = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, VILLAGE_NAME);
+    public static final ResourceKey<StructureModifier> PILLAGER_OUTPOST = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, PILLAGER_OUTPOST_NAME);
+    public static final ResourceKey<StructureModifier> FORTRESS = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, FORTRESS_NAME);
+    public static final ResourceKey<StructureModifier> BASTION_REMNANT = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, BASTION_REMNANT_NAME);
+    public static final ResourceKey<StructureModifier> END_CITY = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, END_CITY_NAME);
 
     public static void bootstrap(BootstrapContext<StructureModifier> context) {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
@@ -35,7 +41,7 @@ public class APStructureModifiers {
                                         BuiltinStructures.VILLAGE_SNOWY, biomes.getOrThrow(BiomeTags.HAS_VILLAGE_SNOWY),
                                         BuiltinStructures.VILLAGE_TAIGA, biomes.getOrThrow(BiomeTags.HAS_VILLAGE_TAIGA)))),
                 APStructures.VILLAGE_NETHER_STRUCTURE,
-                ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village")));
+                VILLAGE_NAME));
         
         context.register(PILLAGER_OUTPOST, new APStructureModifier(
                 Map.of(
@@ -43,17 +49,17 @@ public class APStructureModifiers {
                                 Map.of(
                                         BuiltinStructures.PILLAGER_OUTPOST, biomes.getOrThrow(BiomeTags.HAS_PILLAGER_OUTPOST)))),
                 APStructures.PILLAGER_OUTPOST_NETHER_STRUCTURE,
-                ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost")));
+                PILLAGER_OUTPOST_NAME));
         
         context.register(FORTRESS, new APStructureModifier(
                 Map.of(),
                 BuiltinStructures.FORTRESS,
-                ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fortress")));
+                FORTRESS_NAME));
 
         context.register(BASTION_REMNANT, new APStructureModifier(
                 Map.of(),
                 BuiltinStructures.BASTION_REMNANT,
-                ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant")));
+                BASTION_REMNANT_NAME));
         
         context.register(END_CITY, new APStructureModifier(
                 Map.of(
@@ -61,6 +67,6 @@ public class APStructureModifiers {
                                 Map.of(
                                         BuiltinStructures.END_CITY, biomes.getOrThrow(BiomeTags.HAS_END_CITY)))),
                 APStructures.END_CITY_NETHER_STRUCTURE,
-                ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city")));
+                END_CITY_NAME));
     }
 }

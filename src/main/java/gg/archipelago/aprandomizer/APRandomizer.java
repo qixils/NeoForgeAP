@@ -16,6 +16,7 @@ import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManage
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import gg.archipelago.aprandomizer.managers.recipemanager.RecipeManager;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifier;
+import gg.archipelago.aprandomizer.structures.level.StructureLevelReferenceTypes;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -115,6 +116,7 @@ public class APRandomizer {
         APCriteriaTriggers.CRITERION_TRIGGERS.register(modEventBus);
         APLocationTypes.REGISTER.register(modEventBus);
         APRewardTypes.REGISTER.register(modEventBus);
+        StructureLevelReferenceTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
     }
 

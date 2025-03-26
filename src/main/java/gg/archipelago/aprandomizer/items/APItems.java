@@ -2,6 +2,9 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
+import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
+import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponentPatch;
@@ -66,6 +69,13 @@ public class APItems {
     public static final ResourceKey<APItem> EXPERIENCE_FIVE_HUNDRED = id("experience/five_hundred");
     public static final ResourceKey<APItem> EXPERIENCE_ONE_HUNDRED = id("experience/one_hundred");
     public static final ResourceKey<APItem> EXPERIENCE_FIFTY = id("experience/fifty");
+
+    // Compasses
+    public static final ResourceKey<APItem> COMPASS_VILLAGE = id("compass/village");
+    public static final ResourceKey<APItem> COMPASS_PILLAGER_OUTPOST = id("compass/pillager_outpost");
+    public static final ResourceKey<APItem> COMPASS_FORTRESS = id("compass/fortress");
+    public static final ResourceKey<APItem> COMPASS_BASTION_REMNANT = id("compass/bastion_remnant");
+    public static final ResourceKey<APItem> COMPASS_END_CITY = id("compass/end_city");
 
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
@@ -294,6 +304,38 @@ public class APItems {
         context.register(ITEMSTACK_SHULKER_BOX,
                 APItem.ofReward(
                         new ItemReward(new ItemStack(Items.SHULKER_BOX, 1))));
+
+        context.register(EXPERIENCE_FIVE_HUNDRED,
+                APItem.ofReward(
+                        new ExperienceReward(500)));
+
+        context.register(EXPERIENCE_ONE_HUNDRED,
+                APItem.ofReward(
+                        new ExperienceReward(100)));
+
+        context.register(EXPERIENCE_FIFTY,
+                APItem.ofReward(
+                        new ExperienceReward(50)));
+        
+        context.register(COMPASS_VILLAGE, 
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.VILLAGE, new RandomizedStructureLevel(APStructureModifiers.VILLAGE_NAME))));
+
+        context.register(COMPASS_PILLAGER_OUTPOST,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME))));
+
+        context.register(COMPASS_FORTRESS,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.FORTRESS, new RandomizedStructureLevel(APStructureModifiers.FORTRESS_NAME))));
+
+        context.register(COMPASS_BASTION_REMNANT,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME))));
+
+        context.register(COMPASS_END_CITY,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME))));
     }
 
     private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {

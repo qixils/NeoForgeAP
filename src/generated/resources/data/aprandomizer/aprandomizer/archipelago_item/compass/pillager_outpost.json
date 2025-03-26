@@ -1,0 +1,10 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:pillager_outpost"
+    },
+    "structures": "#aprandomizer:pillager_outpost"
+  }
+}
