@@ -319,23 +319,23 @@ public class APItems {
         
         context.register(COMPASS_VILLAGE, 
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.VILLAGE, new RandomizedStructureLevel(APStructureModifiers.VILLAGE_NAME))));
+                        new CompassReward(APStructureTags.VILLAGE, new RandomizedStructureLevel(APStructureModifiers.VILLAGE_NAME), Component.literal("Village"))));
 
         context.register(COMPASS_PILLAGER_OUTPOST,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME))));
+                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME), Component.literal("Bastion Remnant"))));
 
         context.register(COMPASS_FORTRESS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.FORTRESS, new RandomizedStructureLevel(APStructureModifiers.FORTRESS_NAME))));
+                        new CompassReward(APStructureTags.FORTRESS, new RandomizedStructureLevel(APStructureModifiers.FORTRESS_NAME), Component.literal("Nether Fortress"))));
 
         context.register(COMPASS_BASTION_REMNANT,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME))));
+                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME), Component.literal("Pillager Outpost"))));
 
         context.register(COMPASS_END_CITY,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME))));
+                        new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME), Component.literal("End City"))));
     }
 
     private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {

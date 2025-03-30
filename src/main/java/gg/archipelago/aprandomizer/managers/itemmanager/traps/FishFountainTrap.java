@@ -21,7 +21,7 @@ public class FishFountainTrap implements Trap {
                 if (fish == null)
                     continue;
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
-                fish.moveTo(offset);
+                fish.snapTo(offset);
                 world.addFreshEntity(fish);
             }
         });

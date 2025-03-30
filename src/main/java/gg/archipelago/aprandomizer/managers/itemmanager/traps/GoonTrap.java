@@ -48,7 +48,7 @@ public class GoonTrap implements Trap {
                 goon.setItemInHand(InteractionHand.MAIN_HAND,fish.copy());
                 goon.setTarget(player);
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
-                goon.moveTo(offset);
+                goon.snapTo(offset);
                 zombies.add(goon);
                 world.addFreshEntity(goon);
             }

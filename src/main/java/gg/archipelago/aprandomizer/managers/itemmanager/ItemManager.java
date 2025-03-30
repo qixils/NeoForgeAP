@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.items.CompassReward;
 import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.ChatFormatting;
@@ -10,6 +11,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -125,12 +127,12 @@ public class ItemManager {
 
     private final ArrayList<TagKey<Structure>> receivedCompasses = new ArrayList<>();
 
-    private void makeCompass(ItemStack iStack, TagKey<Structure> structureTag) {
+    private void makeCompass(ItemStack iStack, CompassReward compassReward, int index) {
         CompoundTag nbt = iStack.has(DataComponents.CUSTOM_DATA) ? iStack.get(DataComponents.CUSTOM_DATA).copyTag() : new CompoundTag();
-        nbt.put("structure", StringTag.valueOf(structureTag.location().toString()));
+        nbt.store("compass", CompassReward.CODEC, compassReward);
         iStack.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
 
-        GlobalPos structureCords = GlobalPos.of(Utils.getStructureWorld(structureTag), new BlockPos(0, 0, 0));
+        GlobalPos structureCords = GlobalPos.of(compassReward.level().level(), new BlockPos(0, 0, 0));
         iStack.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(structureCords), false));
         Utils.setItemName(iStack, "uninitialized structure compass");
         Utils.setItemLore(iStack, List.of(
@@ -165,8 +167,8 @@ public class ItemManager {
             ItemStack itemstack = itemStacks.get(itemID).copy();
             if(compasses.containsKey(itemID)){
 
-                TagKey<Structure> tag = compasses.get(itemID);
-                updateCompassLocation(tag, player , itemstack);
+//                TagKey<Structure> tag = compasses.get(itemID);
+//                updateCompassLocation(tag, player , itemstack);
             }
             Utils.giveItemToPlayer(player, itemstack);
         } else if (xpData.containsKey(itemID)) {
@@ -219,12 +221,12 @@ public class ItemManager {
         return receivedItems;
     }
 
-    public static void updateCompassLocation(TagKey<Structure> structureTag, Player player, ItemStack compass) {
+    public static void updateCompassLocation(CompassReward compassReward, Player player, ItemStack compass) {
 
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.
 
         //get our local custom structure if needed.
-        ResourceKey<Level> world = Utils.getStructureWorld(structureTag);
+        ResourceKey<Level> world = compassReward.level().level();
 
         //only locate structure if the player is in the same world as the one for the compass
         //otherwise just point it to 0,0 in said dimension.
@@ -232,52 +234,58 @@ public class ItemManager {
         List<String> lore = List.of(
                 "Right click with compass in hand to",
                 "cycle though unlocked compasses.");
-        var displayName = Component.literal(String.format("Structure Compass (%s)", Utils.getAPStructureName(structureTag)));
+        Component displayName = Component.empty()
+                .append("Structure Compass (")
+                .append(compassReward.name())
+                .append(")");
         if(player.getCommandSenderWorld().dimension().equals(world)) {
-            structurePos = APRandomizer.getServer().getLevel(world).findNearestMapStructure(structureTag, player.blockPosition(), 75, false);
+            structurePos = APRandomizer.getServer().getLevel(world).findNearestMapStructure(compassReward.structures(), player.blockPosition(), 75, false);
             if (structurePos != null) {
                 lore.add(0,"Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
             } else {
-                player.displayClientMessage(Component.literal("Could not find a nearby " + Utils.getAPStructureName(structureTag)), false);
-                displayName = Component.literal(
-                        String.format("Structure Compass (%s) Not Found",
-                                Utils.getAPStructureName(structureTag))
-                ).withStyle(ChatFormatting.YELLOW);
+                player.displayClientMessage(Component.empty()
+                        .append("Could not find a nearby ")
+                        .append(compassReward.name()), false);
+                displayName = Component.empty()
+                        .append("Structure Compass (")
+                        .append(compassReward.name())
+                        .append(") Not Found")
+                        .withStyle(ChatFormatting.YELLOW);
             }
         }
         else {
-            displayName = Component.literal(
-                    String.format("Structure Compass (%s) Wrong Dimension",
-                            Utils.getAPStructureName(structureTag))
-                    ).withStyle(ChatFormatting.DARK_RED);
+            displayName = Component.empty()
+                    .append("Structure Compass (")
+                    .append(compassReward.name())
+                    .append(") Wrong Dimension")
+                    .withStyle(ChatFormatting.DARK_RED);
         }
 
         if(structurePos == null)
             structurePos = new BlockPos(0,0,0);
         //update the nbt data with our new structure.
         CompoundTag nbt = compass.has(DataComponents.CUSTOM_DATA) ? compass.get(DataComponents.CUSTOM_DATA).copyTag() : new CompoundTag();
-        nbt.put("structure", StringTag.valueOf(structureTag.location().toString()));
+        nbt.store("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE), compassReward);
         compass.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
 
         //update the nbt data with our new structure.
-        nbt.put("structure", StringTag.valueOf(structureTag.location().toString()));
         compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(GlobalPos.of(world, structurePos)), false));
         Utils.setNameAndLore(compass, displayName, lore);
     }
 
         // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
-        player.getInventory().items.forEach( (item) -> {
+        player.getInventory().forEach( (item) -> {
             if(item.getItem().equals(Items.COMPASS)) {
                 if (!item.has(DataComponents.CUSTOM_DATA))
                     return;
                 CompoundTag nbt = item.get(DataComponents.CUSTOM_DATA).copyTag();
-                if(nbt.get("structure") == null)
+                Optional<CompassReward> structure = nbt.read("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE));
+                if (structure.isEmpty())
                     return;
 
                 try {
-                    TagKey<Structure> tagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.tryParse(nbt.getString("structure")));
-                    updateCompassLocation(tagKey, player, item);
+                    updateCompassLocation(structure.get(), player, item);
                 } catch (Exception ignored) {}
             }
         });

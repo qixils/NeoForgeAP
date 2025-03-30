@@ -38,7 +38,7 @@ public class PhantomTrap implements Trap {
                     continue;
                 phantom.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,MobEffectInstance.INFINITE_DURATION,0, false, false));
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
-                phantom.moveTo(offset);
+                phantom.snapTo(offset);
                 if (world.addFreshEntity(phantom))
                     phantoms.add(phantom);
 

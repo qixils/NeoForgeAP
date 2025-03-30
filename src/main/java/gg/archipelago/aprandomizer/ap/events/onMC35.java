@@ -31,20 +31,20 @@ public class onMC35 {
             CompoundTag eNBT = new CompoundTag();
             try {
                 if (event.containsKey("nbt"))
-                    eNBT = TagParser.parseTag(event.getString("nbt"));
+                    eNBT = TagParser.parseCompoundFully(event.getString("nbt"));
             } catch (CommandSyntaxException ignored) {
             }
             eNBT.putString("id", event.getString("enemy"));
             Entity entity = EntityType.loadEntityRecursive(eNBT, player.level(), EntitySpawnReason.MOB_SUMMONED, (spawnEntity) -> {
                 Vec3 pos = player.position();
                 Vec3 offset = Utils.getRandomPosition(pos, 10);
-                spawnEntity.moveTo(offset.x, offset.y, offset.z, spawnEntity.yRotO, spawnEntity.xRotO);
+                spawnEntity.snapTo(offset.x, offset.y, offset.z, spawnEntity.yRotO, spawnEntity.xRotO);
                 return spawnEntity;
             });
             if (entity != null) {
                 if (entity instanceof LivingEntity) {
                     ((LivingEntity) entity).heal(((LivingEntity) entity).getMaxHealth());
-                    ((LivingEntity) entity).setLastHurtByPlayer(player);
+                    ((LivingEntity) entity).setLastHurtByPlayer(player, 100);
                 }
                 player.level().addFreshEntity(entity);
             }

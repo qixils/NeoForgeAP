@@ -222,7 +222,7 @@ public class APRandomizer {
         server.setDifficulty(Difficulty.NORMAL, true);
 
         //fetch our custom world save data we attach to the worlds.
-        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory(), MODID);
+        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());
         advancementManager.setCheckedAdvancements(worldData.getLocations());
 
 

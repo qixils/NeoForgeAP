@@ -32,7 +32,7 @@ public class CreeperTrap implements Trap {
                     continue;
                 creeper.setTarget(player);
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
-                creeper.moveTo(offset);
+                creeper.snapTo(offset);
                 world.addFreshEntity(creeper);
             }
         });

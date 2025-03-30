@@ -27,7 +27,7 @@ public class GhastTrap implements Trap {
             ghast.getAttribute(Attributes.MAX_HEALTH).setBaseValue(15d);
             ghast.addEffect(new MobEffectInstance(MobEffects.WITHER, MobEffectInstance.INFINITE_DURATION));
             Vec3 offset = Utils.getRandomPosition(pos, 20);
-            ghast.moveTo(offset);
+            ghast.snapTo(offset);
             world.addFreshEntity(ghast);
 
         });

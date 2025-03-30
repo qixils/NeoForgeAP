@@ -1,11 +1,13 @@
 package gg.archipelago.aprandomizer.common.events;
 
+import com.mojang.serialization.Codec;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.items.CompassReward;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -18,7 +20,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @EventBusSubscriber
 public class onPlayerInteract {
@@ -54,23 +57,26 @@ public class onPlayerInteract {
         if (APRandomizer.isJailPlayers())
             event.setCanceled(true);
         if (event.getItemStack().getItem().equals(Items.COMPASS) && event.getItemStack().has(DataComponents.CUSTOM_DATA)) {
+            HolderLookup.Provider registries = event.getLevel().registryAccess();
             ItemStack compass = event.getItemStack();
             CompoundTag nbt = compass.get(DataComponents.CUSTOM_DATA).copyTag();
-            if(nbt.get("structure") == null)
-                return;
 
             //fetch our current compass list.
-            ArrayList<TagKey<Structure>> compasses = APRandomizer.getItemManager().getCompasses();
+            List<CompassReward> compasses = APRandomizer.getWorldData().getUnlockedCompassRewards();
 
-            TagKey<Structure> tagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(nbt.getString("structure")));
-            //get our current structures index in that list, increase it by one, wrapping it to 0 if needed.
-            int index = compasses.indexOf(tagKey) + 1;
-            if(index >= compasses.size())
-                index = 0;
+            Optional<CompassReward> currentCompassReward = nbt.read("structure", CompassReward.CODEC, registries.createSerializationContext(NbtOps.INSTANCE));
+            Optional<Integer> currentCompassIndex = nbt.getInt("index");
 
-            TagKey<Structure> structure = compasses.get(index);
+            if (currentCompassReward.isEmpty() || currentCompassIndex.isEmpty())
+                return;
 
-            ItemManager.updateCompassLocation(structure,event.getEntity(),compass);
+            int newCompassIndex = currentCompassIndex.get() + 1;
+            if (compasses.size() <= newCompassIndex) {
+                newCompassIndex = 0;
+            }
+            CompassReward newCompassReward = compasses.get(newCompassIndex);
+
+            ItemManager.updateCompassLocation(newCompassReward, event.getEntity(), compass);
 
         }
     }

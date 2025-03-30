@@ -10,16 +10,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -138,9 +137,9 @@ public class Utils {
         });
     }
 
-    public static ResourceKey<Level> getStructureWorld(TagKey<Structure> structureTag) {
+    public static ResourceKey<Level> getStructureWorld(ResourceLocation id) {
 
-        String structureName = getAPStructureName(structureTag);
+        String structureName = getAPStructureName(id);
         //fetch what structures are where from our APMC data.
         Map<String, String> structures = APRandomizer.getApmcData().structures;
         for (Map.Entry<String, String> entry : structures.entrySet()) {
@@ -160,14 +159,14 @@ public class Utils {
         return Level.OVERWORLD;
     }
 
-    public static String getAPStructureName(TagKey<Structure> structureTag) {
-        return switch (structureTag.location().toString()) {
+    public static String getAPStructureName(ResourceLocation id) {
+        return switch (id.toString()) {
             case "aprandomizer:village" -> "Village";
             case "aprandomizer:end_city" -> "End City";
             case "aprandomizer:pillager_outpost" -> "Pillager Outpost";
             case "aprandomizer:fortress" -> "Nether Fortress";
             case "aprandomizer:bastion_remnant" -> "Bastion Remnant";
-            default -> structureTag.location().getPath().toLowerCase();
+            default -> id.getPath().toLowerCase();
         };
     }
 

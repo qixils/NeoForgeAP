@@ -29,7 +29,7 @@ public class BeeTrap implements Trap {
             for (int i = 0; i < numberOfBees; i++) {
                 Bee bee = EntityType.BEE.create(world, EntitySpawnReason.MOB_SUMMONED);
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
-                bee.moveTo(offset);
+                bee.snapTo(offset);
                 bee.setPersistentAngerTarget(player.getUUID());
                 bee.setRemainingPersistentAngerTime(1200);
                 world.addFreshEntity(bee);
