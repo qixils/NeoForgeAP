@@ -3,6 +3,7 @@ package gg.archipelago.aprandomizer.items;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.server.level.ServerPlayer;
 
 public record ExperienceReward(int experience) implements APReward {
 
@@ -14,6 +15,11 @@ public record ExperienceReward(int experience) implements APReward {
     @Override
     public MapCodec<? extends APReward> codec() {
         return CODEC;
+    }
+
+    @Override
+    public void give(ServerPlayer player) {
+        player.giveExperiencePoints(experience);
     }
 
 }

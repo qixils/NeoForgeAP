@@ -8,6 +8,8 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
@@ -44,14 +46,10 @@ public class ConnectResult {
                 DeathLink.setDeathLinkEnabled(true);
             }
 
-            APRandomizer.getAdvancementManager().setCheckedAdvancements(APClient.getLocationManager().getCheckedLocations());
+            APRandomizer.getAdvancementManager().setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
 
             //give our item manager the list of received items to give to players as they log in.
-            APRandomizer.getItemManager().setReceivedItems(APClient.getItemManager().getReceivedItemIDs());
-
-            //reset and catch up our global recipe list to be consistent with what we just got from the AP server
-            APRandomizer.getRecipeManager().resetRecipes();
-            APRandomizer.getRecipeManager().grantRecipeList(APClient.getItemManager().getReceivedItemIDs());
+            APRandomizer.getItemManager().setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs()));
 
             //catch up all connected players to the list just received.
             APRandomizer.server.execute(() -> {

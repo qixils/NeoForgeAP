@@ -1,22 +1,12 @@
 package gg.archipelago.aprandomizer.data;
 
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.items.CompassReward;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Function;
 
 public class WorldData extends SavedData {
 
@@ -27,8 +17,6 @@ public class WorldData extends SavedData {
     private boolean jailPlayers = true;
     private LongSet locations = new LongOpenHashSet();
     private int index = 0;
-    private Object2IntMap<String> playerIndex = new Object2IntOpenHashMap<>();
-    private List<CompassReward> compassRewards = new ArrayList<>();
 
     public static final int KILLED = 30;
     public static final int SPAWNED = 20;
@@ -42,9 +30,7 @@ public class WorldData extends SavedData {
                     Codec.INT.optionalFieldOf("witherState", ASLEEP).forGetter(WorldData::getWitherState),
                     Codec.BOOL.fieldOf("jailPlayers").forGetter(WorldData::getJailPlayers),
                     Codec.LONG_STREAM.<LongSet>xmap(stream -> new LongOpenHashSet(stream.toArray()), LongSet::longStream).fieldOf("locations").forGetter(WorldData::getLocations),
-                    Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex),
-                    Codec.unboundedMap(Codec.STRING, Codec.INT).<Object2IntMap<String>>xmap(Object2IntOpenHashMap::new, Function.identity()).fieldOf("playerIndex").forGetter(data -> data.playerIndex),
-                    CompassReward.CODEC.listOf().fieldOf("compass_rewards").forGetter(WorldData::getUnlockedCompassRewards))
+                    Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex))
             .apply(instance, WorldData::new));
 
     public void setSeedName(String seedName) {
@@ -74,27 +60,18 @@ public class WorldData extends SavedData {
         this.setDirty();
     }
 
-    public void addLocation(Long location) {
+    public void addLocation(long location) {
         this.locations.add(location);
         this.setDirty();
     }
 
-    public void addLocations(Long[] locations) {
-        this.locations.addAll(Lists.newArrayList(Arrays.stream(locations).iterator()));
+    public void addLocations(long[] locations) {
+        this.locations.addAll(new LongOpenHashSet(locations));
         this.setDirty();
     }
 
     public LongSet getLocations() {
         return locations;
-    }
-
-    public void updatePlayerIndex(String playerUUID, int index) {
-        playerIndex.put(playerUUID, index);
-        this.setDirty();
-    }
-
-    public int getPlayerIndex(String playerUUID) {
-        return playerIndex.getOrDefault(playerUUID, 0);
     }
 
     public int getItemIndex() {
@@ -113,15 +90,13 @@ public class WorldData extends SavedData {
     public WorldData() {
     }
 
-    private WorldData(String seedName, int dragonState, int witherState, boolean jailPlayers, LongSet locations, int itemIndex, Object2IntMap<String> playerIndex, List<CompassReward> compassRewards) {
+    private WorldData(String seedName, int dragonState, int witherState, boolean jailPlayers, LongSet locations, int itemIndex) {
         this.seedName = seedName;
         this.dragonState = dragonState;
         this.witherState = witherState;
         this.jailPlayers = jailPlayers;
         this.locations = locations;
         this.index = itemIndex;
-        this.playerIndex = playerIndex;
-        this.compassRewards = compassRewards;
     }
 
     public int getWitherState() {
@@ -131,13 +106,5 @@ public class WorldData extends SavedData {
     public void setWitherState(int waiting) {
         this.witherState = waiting;
         this.setDirty();
-    }
-
-    public List<CompassReward> getUnlockedCompassRewards() {
-        return Collections.unmodifiableList(compassRewards);
-    }
-
-    public void unlockCompassReward(CompassReward reward) {
-        compassRewards.add(reward);
     }
 }

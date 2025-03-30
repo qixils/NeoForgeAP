@@ -15,7 +15,6 @@ public class ReceiveItem {
     @ArchipelagoEventListener
     public static void onReceiveItem(ReceiveItemEvent event) {
         NetworkItem item = event.getItem();
-        APRandomizer.getRecipeManager().grantRecipe(item.itemID);
         APRandomizer.getItemManager().giveItemToAll(item.itemID, (int) event.getIndex());
 
         // Dont fire if we have all ready recevied this location

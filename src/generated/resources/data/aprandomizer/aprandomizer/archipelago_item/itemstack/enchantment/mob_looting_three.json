@@ -4,9 +4,7 @@
     "item": {
       "components": {
         "minecraft:stored_enchantments": {
-          "levels": {
-            "minecraft:looting": 3
-          }
+          "minecraft:looting": 3
         }
       },
       "count": 1,

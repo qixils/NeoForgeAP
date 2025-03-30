@@ -41,11 +41,6 @@ public class onJoin {
             return;
         }
         APRandomizer.getAdvancementManager().syncAllAdvancements();
-        Set<RecipeHolder<?>> restricted = APRandomizer.getRecipeManager().getRestrictedRecipes();
-        Set<RecipeHolder<?>> granted = APRandomizer.getRecipeManager().getGrantedRecipes();
-        player.resetRecipes(restricted);
-        player.awardRecipes(granted);
-
 
         APRandomizer.getGoalManager().updateInfoBar();
         APRandomizer.getItemManager().catchUpPlayer(player);

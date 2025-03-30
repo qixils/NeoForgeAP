@@ -5,6 +5,7 @@ import dev.koifysh.archipelago.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
+import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.items.APItem;
@@ -14,7 +15,6 @@ import gg.archipelago.aprandomizer.locations.APLocationTypes;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
-import gg.archipelago.aprandomizer.managers.recipemanager.RecipeManager;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifier;
 import gg.archipelago.aprandomizer.structures.level.StructureLevelReferenceTypes;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -37,8 +37,6 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
-import net.neoforged.neoforge.registries.RegistryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,7 +63,6 @@ public class APRandomizer {
     static public MinecraftServer server;
 
     static private AdvancementManager advancementManager;
-    static private RecipeManager recipeManager;
     static private ItemManager itemManager;
     static private GoalManager goalManager;
     static private APMCData apmcData;
@@ -117,6 +114,7 @@ public class APRandomizer {
         APLocationTypes.REGISTER.register(modEventBus);
         APRewardTypes.REGISTER.register(modEventBus);
         StructureLevelReferenceTypes.REGISTER.register(modEventBus);
+        APAttachmentTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
     }
 
@@ -135,10 +133,6 @@ public class APRandomizer {
 
     public static AdvancementManager getAdvancementManager() {
         return advancementManager;
-    }
-
-    public static RecipeManager getRecipeManager() {
-        return recipeManager;
     }
 
     public static APMCData getApmcData() {
@@ -211,7 +205,6 @@ public class APRandomizer {
         }
         // do something when the server starts
         advancementManager = new AdvancementManager();
-        recipeManager = new RecipeManager();
         itemManager = new ItemManager();
         goalManager = new GoalManager();
 

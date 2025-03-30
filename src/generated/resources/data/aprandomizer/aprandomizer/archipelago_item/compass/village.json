@@ -5,6 +5,7 @@
       "type": "aprandomizer:randomized_structure_level",
       "name": "aprandomizer:village"
     },
+    "name": "Village",
     "structures": "#aprandomizer:village"
   }
 }

@@ -5,6 +5,7 @@
       "type": "aprandomizer:randomized_structure_level",
       "name": "aprandomizer:end_city"
     },
+    "name": "End City",
     "structures": "#aprandomizer:end_city"
   }
 }

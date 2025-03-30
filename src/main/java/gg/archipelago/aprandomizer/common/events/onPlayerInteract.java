@@ -1,19 +1,17 @@
 package gg.archipelago.aprandomizer.common.events;
 
-import com.mojang.serialization.Codec;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.items.CompassReward;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -62,7 +60,7 @@ public class onPlayerInteract {
             CompoundTag nbt = compass.get(DataComponents.CUSTOM_DATA).copyTag();
 
             //fetch our current compass list.
-            List<CompassReward> compasses = APRandomizer.getWorldData().getUnlockedCompassRewards();
+            List<CompassReward> compasses = event.getEntity().getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
 
             Optional<CompassReward> currentCompassReward = nbt.read("structure", CompassReward.CODEC, registries.createSerializationContext(NbtOps.INSTANCE));
             Optional<Integer> currentCompassIndex = nbt.getInt("index");

@@ -3,7 +3,7 @@
     "type": "aprandomizer:item",
     "item": {
       "components": {
-        "minecraft:item_name": "\"The Arrow\""
+        "minecraft:item_name": "The Arrow"
       },
       "count": 1,
       "id": "minecraft:arrow"

@@ -4,9 +4,7 @@
     "item": {
       "components": {
         "minecraft:stored_enchantments": {
-          "levels": {
-            "minecraft:piercing": 4
-          }
+          "minecraft:piercing": 4
         }
       },
       "count": 1,

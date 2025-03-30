@@ -5,6 +5,7 @@
       "type": "aprandomizer:randomized_structure_level",
       "name": "aprandomizer:fortress"
     },
+    "name": "Nether Fortress",
     "structures": "#aprandomizer:fortress"
   }
 }

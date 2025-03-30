@@ -4,9 +4,7 @@
     "item": {
       "components": {
         "minecraft:stored_enchantments": {
-          "levels": {
-            "minecraft:silk_touch": 1
-          }
+          "minecraft:silk_touch": 1
         }
       },
       "count": 1,

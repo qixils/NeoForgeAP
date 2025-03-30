@@ -4,9 +4,7 @@
     "item": {
       "components": {
         "minecraft:stored_enchantments": {
-          "levels": {
-            "minecraft:infinity": 1
-          }
+          "minecraft:infinity": 1
         }
       },
       "count": 1,
