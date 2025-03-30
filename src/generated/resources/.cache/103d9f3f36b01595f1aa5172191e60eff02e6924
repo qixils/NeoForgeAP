@@ -1,4 +1,4 @@
-// 1.21.5	2025-03-30T23:00:12.000289	Registries
+// 1.21.5	2025-03-31T00:44:38.0144711	Registries
 9be9847e643f11d585c388a822adb0ea0b71f892 data/aprandomizer/aprandomizer/archipelago_item/compass/bastion_remnant.json
 0dbfaf383aff7d9e9311f5a01ef426b5c84b45be data/aprandomizer/aprandomizer/archipelago_item/compass/end_city.json
 c22f12a8fc1aa6999b6d52d6117ef27e3c4ade94 data/aprandomizer/aprandomizer/archipelago_item/compass/fortress.json
@@ -182,3 +182,6 @@ c5b419e2aaa9d9ab879a9a073044b0e614fa06bf data/aprandomizer/worldgen/template_poo
 59968877760dbf32bdd492748e4814e9ecd62a4f data/aprandomizer/worldgen/template_pool/village/nether/town_centers.json
 8fa514aae9d7dd6c10d3ce784e7c34292729263e data/aprandomizer/worldgen/template_pool/village/nether/trees.json
 c0fd37dd753c086cf9b62b90e00b01aa7b415657 data/aprandomizer/worldgen/template_pool/village/nether/villagers.json
+1890f39eb7e56b85bf5cd1942032e5e17474e881 data/minecraft/dimension_type/overworld.json
+2f5244f85da31c52835debf31d42f5814e220b6f data/minecraft/dimension_type/overworld_caves.json
+c231f7845c3e4ac7c4dbd07af242cbb430494bba data/minecraft/dimension_type/the_nether.json
