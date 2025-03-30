@@ -22,7 +22,7 @@ public class APPlayerAttachment {
                     Codec.unboundedMap(ResourceKey.codec(APRegistries.ARCHIPELAGO_ITEM), Codec.INT).<Object2IntMap<ResourceKey<APItem>>>xmap(Object2IntOpenHashMap::new, Function.identity()).fieldOf("tiers").forGetter(APPlayerAttachment::getTiers))
             .apply(instance, APPlayerAttachment::new));
 
-    private int index = -1;
+    private int index = 0;
     private List<CompassReward> compassRewards = new ArrayList<>();
     private Object2IntMap<ResourceKey<APItem>> tiers = new Object2IntOpenHashMap<>();
 

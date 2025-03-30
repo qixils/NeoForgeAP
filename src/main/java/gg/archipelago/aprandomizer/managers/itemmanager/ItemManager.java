@@ -31,12 +31,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 public class ItemManager {
     // Directly reference a log4j logger.
@@ -202,9 +204,8 @@ public class ItemManager {
                 }
             }
         }
-        Set<ResourceKey<Recipe<?>>> recipes = new HashSet<>(player.registryAccess().lookupOrThrow(Registries.RECIPE).registryKeySet());
-        recipes.removeAll(lockedRecipes);
-        player.awardRecipesByKey(recipes.stream().toList());
+        Set<RecipeHolder<?>> recipes = player.getServer().getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
+        player.awardRecipes(recipes);
     }
 
     public static void updateCompassLocation(CompassReward compassReward, Player player, ItemStack compass) {
