@@ -11,7 +11,6 @@ import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerPlayer;
@@ -54,10 +53,14 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
 
     @Override
     public void give(ServerPlayer player) {
-        player.getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards().add(this);
+        List<CompassReward> compassRewards = player.getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
+        compassRewards.add(this);
 
         ItemStack compass = DEFAULT_COMPASS.copy();
         ItemManager.updateCompassLocation(this, player, compass);
+        CompoundTag tag = compass.get(DataComponents.CUSTOM_DATA).copyTag();
+        tag.putInt("index", compassRewards.size() - 1);
+        compass.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         Utils.giveItemToPlayer(player, compass);
     }
 

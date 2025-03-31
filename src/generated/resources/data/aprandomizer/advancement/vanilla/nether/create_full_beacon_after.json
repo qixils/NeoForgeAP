@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/create_full_beacon",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

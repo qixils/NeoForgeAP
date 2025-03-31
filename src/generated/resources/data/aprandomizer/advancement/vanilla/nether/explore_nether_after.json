@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/explore_nether",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

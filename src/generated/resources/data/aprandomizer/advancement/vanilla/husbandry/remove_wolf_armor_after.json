@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/remove_wolf_armor",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

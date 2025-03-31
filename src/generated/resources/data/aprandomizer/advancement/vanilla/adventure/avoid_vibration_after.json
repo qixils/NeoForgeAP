@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/avoid_vibration",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

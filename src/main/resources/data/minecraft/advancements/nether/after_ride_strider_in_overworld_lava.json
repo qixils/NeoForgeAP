@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/ride_strider_in_overworld_lava",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

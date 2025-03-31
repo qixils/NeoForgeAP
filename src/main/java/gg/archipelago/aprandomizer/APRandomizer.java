@@ -8,6 +8,7 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
+import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.APRewardTypes;
 import gg.archipelago.aprandomizer.locations.APLocation;
@@ -37,6 +38,7 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -116,11 +118,16 @@ public class APRandomizer {
         StructureLevelReferenceTypes.REGISTER.register(modEventBus);
         APAttachmentTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
+        modEventBus.addListener(APRandomizer::registerDataMapTypes);
     }
 
     public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, APItem.CODEC);
         event.dataPackRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
+    }
+
+    public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
+        event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
 
     public static APClient getAP() {

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/read_power_of_chiseled_bookshelf",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

@@ -4,6 +4,7 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.APStructures;
 import gg.archipelago.aprandomizer.data.advancements.APAdvancementProvider;
+import gg.archipelago.aprandomizer.data.advancements.AfterAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.ReceivedAdvancementProvider;
 import gg.archipelago.aprandomizer.data.datamaps.APDataMapProvider;
 import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
@@ -20,6 +21,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementProvider;
+import net.minecraft.data.advancements.packs.*;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
@@ -48,7 +51,14 @@ public class APDataGenerator {
                 Set.of(APRandomizer.MODID, "minecraft"))).getRegistryProvider();
         event.addProvider(new AdvancementProvider(event.getGenerator().getPackOutput(), registries, List.of(
                 new APAdvancementProvider(),
-                new ReceivedAdvancementProvider())));
+                new ReceivedAdvancementProvider(),
+                new AfterAdvancementProvider(List.of(
+                        new VanillaStoryAdvancements(),
+                        new VanillaNetherAdvancements(),
+                        new VanillaTheEndAdvancements(),
+                        new VanillaHusbandryAdvancements(),
+                        new VanillaAdventureAdvancements()),
+                        id -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")))));
         event.addProvider(new APDamageTypeTagsProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APRecipeProvider.Runner(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APDataMapProvider(event.getGenerator().getPackOutput(), registries));

@@ -31,7 +31,7 @@ public class APPlayerAttachment {
 
     public APPlayerAttachment(int index, List<CompassReward> compassRewards, Object2IntMap<ResourceKey<APItem>> tiers) {
         this.index = index;
-        this.compassRewards = compassRewards;
+        this.compassRewards = new ArrayList<>(compassRewards);
         this.tiers = tiers;
     }
 

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/hero_of_the_village",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

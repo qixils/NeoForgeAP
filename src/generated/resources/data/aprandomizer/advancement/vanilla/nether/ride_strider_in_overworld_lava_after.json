@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/ride_strider_in_overworld_lava",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

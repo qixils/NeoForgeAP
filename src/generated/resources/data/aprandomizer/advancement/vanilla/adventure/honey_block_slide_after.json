@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/honey_block_slide",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

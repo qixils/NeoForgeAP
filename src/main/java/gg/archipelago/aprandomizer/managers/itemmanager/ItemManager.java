@@ -3,7 +3,6 @@ package gg.archipelago.aprandomizer.managers.itemmanager;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
-import gg.archipelago.aprandomizer.advancements.ReceivedItemCriteria;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.attachments.APPlayerAttachment;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
@@ -19,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
@@ -141,7 +139,7 @@ public class ItemManager {
             ResourceKey<APItem> itemKey = DEFAULT_ITEMS.get(itemID);
             int tier = attachment.getTiers().getInt(itemKey);
             attachment.getTiers().put(itemKey, tier + 1);
-            APCriteriaTriggers.RECEIVED_ITEM.get().trigger(player, itemKey, tier);
+            APCriteriaTriggers.RECEIVED_ITEM.get().trigger(player, itemKey, tier + 1);
             Optional<Holder.Reference<APItem>> itemOptional = player.registryAccess().get(itemKey);
             if (itemOptional.isPresent()) {
                 APItem item = itemOptional.get().value();
@@ -218,9 +216,9 @@ public class ItemManager {
         //only locate structure if the player is in the same world as the one for the compass
         //otherwise just point it to 0,0 in said dimension.
         BlockPos structurePos = new BlockPos(0,0,0);
-        List<String> lore = List.of(
+        List<String> lore = new ArrayList<>(List.of(
                 "Right click with compass in hand to",
-                "cycle though unlocked compasses.");
+                "cycle though unlocked compasses."));
         Component displayName = Component.empty()
                 .append("Structure Compass (")
                 .append(compassReward.name())
@@ -258,6 +256,8 @@ public class ItemManager {
         //update the nbt data with our new structure.
         compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(GlobalPos.of(world, structurePos)), false));
         Utils.setNameAndLore(compass, displayName, lore);
+        compass.set(DataComponents.CUSTOM_NAME, displayName);
+        player.containerMenu.broadcastChanges();
     }
 
         // refresh all compasses in player inventory

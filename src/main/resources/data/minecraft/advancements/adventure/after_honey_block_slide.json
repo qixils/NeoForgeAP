@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/honey_block_slide",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

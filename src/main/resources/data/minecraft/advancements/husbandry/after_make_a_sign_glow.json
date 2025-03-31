@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/make_a_sign_glow",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

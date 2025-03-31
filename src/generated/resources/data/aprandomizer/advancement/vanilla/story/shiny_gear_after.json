@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:story/shiny_gear",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

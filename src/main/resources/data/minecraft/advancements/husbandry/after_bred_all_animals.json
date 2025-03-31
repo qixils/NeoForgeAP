@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/bred_all_animals",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

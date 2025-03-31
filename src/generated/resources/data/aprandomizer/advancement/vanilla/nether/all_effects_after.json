@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/all_effects",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

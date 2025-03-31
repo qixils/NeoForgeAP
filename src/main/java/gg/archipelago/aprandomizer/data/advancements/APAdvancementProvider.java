@@ -1,5 +1,6 @@
 package gg.archipelago.aprandomizer.data.advancements;
 
+import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.tags.APDamageTypeTags;
@@ -24,7 +25,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 public class APAdvancementProvider implements AdvancementSubProvider {
@@ -40,7 +40,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.ENDER_PEARL,
                         Component.literal("Archipelago"),
                         Component.literal("Welcome to the AP Randomizer"),
-                        ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/end.png"),
+                        ResourceLocation.withDefaultNamespace("gui/advancements/backgrounds/end"),
                         AdvancementType.TASK,
                         false,
                         false,
@@ -64,6 +64,8 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                 .requirements(AdvancementRequirements.Strategy.AND)
                 .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/bake_bread"));
 
+        PropertyMap cowTexturePropertyMap = new PropertyMap();
+        cowTexturePropertyMap.put("textures", new Property("textures", "ewogICJ0aW1lc3RhbXAiIDogMTc0MzQwMzc3NDE2MSwKICAicHJvZmlsZUlkIiA6ICJmMTU5YjI3NGMyMmU0MzQwYjdjMTUyYWJkZTE0NzcxMyIsCiAgInByb2ZpbGVOYW1lIiA6ICJNSEZfQ293IiwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2QwZTRlNmZiZjVmM2RjZjk0NDIyYTFmMzE5NDQ4ZjE1MjM2OWQxNzlkYmZiY2RmMDBlNWJmZTg0OTVmYTk3NyIKICAgIH0KICB9Cn0=", null));
         AdvancementHolder leather = Advancement.Builder.recipeAdvancement()
                 .parent(root)
                 .display(
@@ -71,7 +73,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                                 Items.PLAYER_HEAD.builtInRegistryHolder(),
                                 1,
                                 DataComponentPatch.builder()
-                                        .set(DataComponents.PROFILE, new ResolvableProfile(Optional.of("MHF_Cow"), Optional.of(UUID.fromString("f159b274-c22e-4340-b7c1-52abde147713")), new PropertyMap()))
+                                        .set(DataComponents.PROFILE, new ResolvableProfile(Optional.empty(), Optional.empty(), cowTexturePropertyMap))
                                         .build()),
                         Component.literal("Cow Tipper"),
                         Component.literal("Harvest some leather"),

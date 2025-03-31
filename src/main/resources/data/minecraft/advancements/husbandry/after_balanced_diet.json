@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/balanced_diet",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

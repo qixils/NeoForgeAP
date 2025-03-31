@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/two_birds_one_arrow",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

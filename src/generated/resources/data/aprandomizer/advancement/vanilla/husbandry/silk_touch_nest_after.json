@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/silk_touch_nest",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/fall_from_world_height",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

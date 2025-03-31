@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/trade_at_world_height",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

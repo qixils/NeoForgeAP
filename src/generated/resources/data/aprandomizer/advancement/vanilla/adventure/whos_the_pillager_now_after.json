@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/whos_the_pillager_now",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

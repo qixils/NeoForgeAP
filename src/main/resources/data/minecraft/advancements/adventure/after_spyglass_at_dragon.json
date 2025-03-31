@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/spyglass_at_dragon",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

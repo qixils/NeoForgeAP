@@ -24,7 +24,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                         Items.STRUCTURE_BLOCK,
                         Component.literal("Received Items"),
                         Component.literal("This tab will track items that you have received from Archipelago"),
-                        ResourceLocation.withDefaultNamespace("textures/block/basalt_side.png"),
+                        ResourceLocation.withDefaultNamespace("block/basalt_side"),
                         AdvancementType.TASK,
                         false,
                         false,

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/wax_off",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

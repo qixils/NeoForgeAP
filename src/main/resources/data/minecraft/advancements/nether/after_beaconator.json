@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/create_full_beacon",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

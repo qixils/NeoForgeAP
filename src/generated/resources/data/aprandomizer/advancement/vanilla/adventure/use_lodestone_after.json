@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/use_lodestone",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

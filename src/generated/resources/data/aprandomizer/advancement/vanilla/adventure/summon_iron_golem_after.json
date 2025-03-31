@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/summon_iron_golem",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

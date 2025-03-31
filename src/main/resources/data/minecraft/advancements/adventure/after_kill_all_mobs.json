@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/kill_all_mobs",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

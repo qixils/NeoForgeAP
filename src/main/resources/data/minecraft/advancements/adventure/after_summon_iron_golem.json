@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/summon_iron_golem",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

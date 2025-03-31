@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:story/deflect_arrow",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

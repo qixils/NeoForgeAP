@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:story/deflect_arrow",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

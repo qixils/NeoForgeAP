@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/arbalistic",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

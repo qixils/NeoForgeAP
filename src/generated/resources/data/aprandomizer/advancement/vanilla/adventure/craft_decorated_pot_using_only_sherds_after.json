@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/craft_decorated_pot_using_only_sherds",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

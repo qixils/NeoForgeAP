@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

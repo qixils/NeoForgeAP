@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/plant_any_sniffer_seed",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

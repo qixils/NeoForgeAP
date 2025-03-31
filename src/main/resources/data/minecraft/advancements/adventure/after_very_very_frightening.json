@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/very_very_frightening",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

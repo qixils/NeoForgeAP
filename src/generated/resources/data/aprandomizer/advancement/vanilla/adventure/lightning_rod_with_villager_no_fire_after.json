@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/lightning_rod_with_villager_no_fire",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

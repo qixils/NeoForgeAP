@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:end/dragon_breath",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

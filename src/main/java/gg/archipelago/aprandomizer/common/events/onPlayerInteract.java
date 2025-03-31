@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -72,6 +73,8 @@ public class onPlayerInteract {
             if (compasses.size() <= newCompassIndex) {
                 newCompassIndex = 0;
             }
+            nbt.putInt("index", newCompassIndex);
+            compass.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
             CompassReward newCompassReward = compasses.get(newCompassIndex);
 
             ItemManager.updateCompassLocation(newCompassReward, event.getEntity(), compass);

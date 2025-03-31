@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/two_birds_one_arrow",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

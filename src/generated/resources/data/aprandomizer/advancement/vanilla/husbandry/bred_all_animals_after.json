@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/bred_all_animals",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

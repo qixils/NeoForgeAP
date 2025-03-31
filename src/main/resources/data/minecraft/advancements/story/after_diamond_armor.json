@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:story/shiny_gear",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

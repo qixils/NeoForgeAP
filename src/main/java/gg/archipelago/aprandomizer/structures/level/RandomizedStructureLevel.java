@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.structures.level;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

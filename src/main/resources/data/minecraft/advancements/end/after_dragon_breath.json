@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:end/dragon_breath",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/charge_respawn_anchor",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

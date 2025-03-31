@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:nether/loot_bastion",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}
