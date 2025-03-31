@@ -6,6 +6,7 @@ import gg.archipelago.aprandomizer.APStructures;
 import gg.archipelago.aprandomizer.data.advancements.APAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.AfterAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.ReceivedAdvancementProvider;
+import gg.archipelago.aprandomizer.data.advancements.VanillaOverrideAdvancementProvider;
 import gg.archipelago.aprandomizer.data.datamaps.APDataMapProvider;
 import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
@@ -58,7 +59,8 @@ public class APDataGenerator {
                         new VanillaTheEndAdvancements(),
                         new VanillaHusbandryAdvancements(),
                         new VanillaAdventureAdvancements()),
-                        id -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")))));
+                        id -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
+                new VanillaOverrideAdvancementProvider())));
         event.addProvider(new APDamageTypeTagsProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APRecipeProvider.Runner(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APDataMapProvider(event.getGenerator().getPackOutput(), registries));

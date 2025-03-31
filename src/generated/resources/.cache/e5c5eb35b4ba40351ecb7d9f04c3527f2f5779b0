@@ -1,4 +1,4 @@
-// 1.21.5	2025-03-31T19:51:13.496008	Advancements
+// 1.21.5	2025-03-31T23:15:49.4601596	Advancements
 8c93e51cabe62b27d8a0310d86ff0804554b23a8 data/aprandomizer/advancement/archipelago/bake_bread.json
 83fd14ab80931cae27b0dea14301226992f2acfa data/aprandomizer/advancement/archipelago/cow_tipper.json
 2776c2e9e880e77bbdb9c47c1843667f049228fc data/aprandomizer/advancement/archipelago/craft_sword.json
@@ -105,3 +105,4 @@ f24b45cecd359a7312ceb82703e3b339d96acfa5 data/aprandomizer/advancement/vanilla/s
 2e90f3382f25966c80baac5adc284a297afc0c99 data/aprandomizer/advancement/vanilla/story/enchant_item_after.json
 adc19d01205e5e76bb64e907f4ff7810a4a2764b data/aprandomizer/advancement/vanilla/story/enter_the_end_after.json
 b1cad869e52a6a9648095fd25eb57671660bf9d4 data/aprandomizer/advancement/vanilla/story/shiny_gear_after.json
+7d0207fd328f398ab3dd63cfe6e8d8bfe0b6af20 data/minecraft/advancement/end/find_end_city.json
