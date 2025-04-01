@@ -1,40 +1,44 @@
 {
-  "rewards": [
-    [
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_helmet"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_chestplate"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_leggings"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_boots"
-      }
-    ],
-    [
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_helmet"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_chestplate"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_leggings"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_boots"
-      }
-    ]
+  "tiers": [
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_helmet"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_chestplate"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_leggings"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_boots"
+        }
+      ]
+    },
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_helmet"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_chestplate"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_leggings"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_boots"
+        }
+      ]
+    }
   ]
 }

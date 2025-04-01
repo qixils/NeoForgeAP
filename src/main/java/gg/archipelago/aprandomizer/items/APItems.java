@@ -157,55 +157,55 @@ public class APItems {
 
         context.register(PROGRESSIVE_RECIPES_WEAPONS,
                 APItem.ofTiers(List.of(
-                        List.of(
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_AXE))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_AXE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_AXE))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_AXE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_AXE))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_AXE)))))));
 
         context.register(PROGRESSIVE_RECIPES_TOOLS,
                 APItem.ofTiers(List.of(
-                        List.of(
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_PICKAXE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_HOE))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_HOE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_PICKAXE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HOE))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HOE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_PICKAXE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SHOVEL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HOE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_INGOT))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_INGOT)))))));
 
         context.register(PROGRESSIVE_RECIPES_ARMOR,
                 APItem.ofTiers(List.of(
-                        List.of(
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HELMET)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_CHESTPLATE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_LEGGINGS)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BOOTS))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BOOTS)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HELMET)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_CHESTPLATE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_LEGGINGS)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BOOTS))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BOOTS)))))));
 
         context.register(PROGRESSIVE_RECIPES_RESOURCE_CRAFTING,
                 APItem.ofTiers(List.of(
-                        List.of(
+                        new APTier(List.of(
                                 new RecipeReward(ResourceLocation.withDefaultNamespace("iron_ingot_from_nuggets")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_NUGGET)),
                                 new RecipeReward(ResourceLocation.withDefaultNamespace("gold_ingot_from_nuggets")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_NUGGET)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FURNACE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAST_FURNACE))),
-                        List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAST_FURNACE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLOWSTONE)),
@@ -220,7 +220,7 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK)))))));
 
         context.register(ITEMSTACK_NETHERITE_SCRAP,
                 APItem.ofReward(

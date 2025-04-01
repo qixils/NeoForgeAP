@@ -146,7 +146,7 @@ public class ItemManager {
             Optional<Holder.Reference<APItem>> itemOptional = player.registryAccess().get(itemKey);
             if (itemOptional.isPresent()) {
                 APItem item = itemOptional.get().value();
-                for (APReward reward : item.rewards().get(Math.min(item.rewards().size() - 1, tier))) {
+                for (APReward reward : item.tiers().get(Math.min(item.tiers().size() - 1, tier)).rewards()) {
                     reward.give(player);
                 }
             } else {
@@ -197,8 +197,8 @@ public class ItemManager {
     public void grantAllInitialRecipes(ServerPlayer player) {
         Set<ResourceKey<Recipe<?>>> lockedRecipes = new HashSet<>();
         for (APItem item : player.registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
-            for (List<APReward> tier : item.rewards()) {
-                for (APReward reward : tier) {
+            for (APTier tier : item.tiers()) {
+                for (APReward reward : tier.rewards()) {
                     if (reward instanceof RecipeReward recipeReward) {
                         lockedRecipes.add(recipeReward.recipe());
                     }

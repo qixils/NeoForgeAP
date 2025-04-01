@@ -1,50 +1,56 @@
 {
-  "rewards": [
-    [
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:stone_pickaxe"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:stone_shovel"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:stone_hoe"
-      }
-    ],
-    [
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_pickaxe"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_shovel"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:iron_hoe"
-      }
-    ],
-    [
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_pickaxe"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_shovel"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:diamond_hoe"
-      },
-      {
-        "type": "aprandomizer:recipe",
-        "recipe": "minecraft:netherite_ingot"
-      }
-    ]
+  "tiers": [
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:stone_pickaxe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:stone_shovel"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:stone_hoe"
+        }
+      ]
+    },
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_pickaxe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_shovel"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_hoe"
+        }
+      ]
+    },
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_pickaxe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_shovel"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_hoe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:netherite_ingot"
+        }
+      ]
+    }
   ]
 }
