@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:adventure/hero_of_the_village",
+  "parent": "minecraft:nether/all_potions",
   "criteria": {
     "auto": {
       "trigger": "minecraft:tick"

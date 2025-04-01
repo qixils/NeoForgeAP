@@ -95,6 +95,9 @@ public class ItemManager {
         map.put(45041L, APItems.COMPASS_END_CITY);
 
         map.put(45042L, APItems.ITEMSTACK_SHULKER_BOX);
+
+        map.put(45044L, APItems.GROUP_RECIPES_SPYGLASS);
+        map.put(45045L, APItems.GROUP_RECIPES_LEAD);
     });
 
     long index = 45100L;

@@ -28,11 +28,13 @@ public class AfterAdvancementProvider implements AdvancementSubProvider {
         Object2BooleanMap<ResourceLocation> noChildren = new Object2BooleanOpenHashMap<>();
         for (AdvancementSubProvider provider : baseAdvancements) {
             provider.generate(registries, holder -> {
-                if (!noChildren.containsKey(holder.id())) {
-                    noChildren.put(holder.id(), true);
-                }
-                if (holder.value().parent().isPresent()) {
-                    noChildren.put(holder.value().parent().get(), false);
+                if (holder.value().display().isPresent() && !holder.value().display().get().isHidden()) {
+                    if (!noChildren.containsKey(holder.id())) {
+                        noChildren.put(holder.id(), true);
+                    }
+                    if (holder.value().parent().isPresent()) {
+                        noChildren.put(holder.value().parent().get(), false);
+                    }
                 }
             });
         }
