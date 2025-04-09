@@ -1,35 +1,32 @@
 package gg.archipelago.aprandomizer;
 
-import gg.archipelago.aprandomizer.apevents.*;
+import dev.koifysh.archipelago.Client;
 import dev.koifysh.archipelago.ItemFlags;
+import gg.archipelago.aprandomizer.apevents.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import net.minecraft.server.MinecraftServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import gg.archipelago.aprandomizer.managers.GoalManager;
+import org.jetbrains.annotations.Nullable;
 
-public class APClient extends dev.koifysh.archipelago.Client {
+public class APClient extends Client {
 
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
-
+    @Nullable
     public SlotData slotData;
 
-    private final MinecraftServer server;
-
-    APClient(MinecraftServer server) {
+    APClient() {
         super();
 
         this.setGame("Minecraft");
         this.setItemsHandlingFlags(ItemFlags.SEND_ITEMS + ItemFlags.SEND_OWN_ITEMS + ItemFlags.SEND_STARTING_INVENTORY);
-        this.server = server;
-        APRandomizer.getAdvancementManager().setCheckedAdvancements(getLocationManager().getCheckedLocations());
+        APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(getLocationManager().getCheckedLocations()));
 
         //give our item manager the list of received items to give to players as they log in.
-        APRandomizer.getItemManager().setReceivedItems(getItemManager().getReceivedItemIDs());
+        APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(getItemManager().getReceivedItemIDs()));
 
         //reset and catch up our global recipe list to be consistent with what we loaded from our save file.
-        APRandomizer.getRecipeManager().resetRecipes();
-        APRandomizer.getRecipeManager().grantRecipeList(getItemManager().getReceivedItemIDs());
+        APRandomizer.recipeManager().ifPresent(value -> {
+            value.resetRecipes();
+            value.grantRecipeList(getItemManager().getReceivedItemIDs());
+        });
 
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
@@ -40,6 +37,7 @@ public class APClient extends dev.koifysh.archipelago.Client {
         this.getEventManager().registerListener(new PrintJsonListener());
     }
 
+    @Nullable
     public SlotData getSlotData() {
         return slotData;
     }
@@ -57,7 +55,7 @@ public class APClient extends dev.koifysh.archipelago.Client {
         } else {
             Utils.sendMessageToAll(reason);
         }
-        APRandomizer.getGoalManager().updateInfoBar();
+        APRandomizer.goalManager().ifPresent(GoalManager::updateInfoBar);
     }
 
 }

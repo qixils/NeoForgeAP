@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.recipemanager;
 
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +14,7 @@ public class RecipeData {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
-    HashMap<Long, GroupRecipe> recipes = new HashMap<>() {{
+    final Map<Long, GroupRecipe> recipes = new HashMap<>() {{
         put(45000L, new GroupRecipe(45000, "Archery", new String[]{
                 "minecraft:bow",
                 "minecraft:arrow",
@@ -78,7 +77,7 @@ public class RecipeData {
         }));
     }};
 
-    HashMap<Long, ProgressiveRecipe> progressiveRecipes = new HashMap<>() {{
+    final Map<Long, ProgressiveRecipe> progressiveRecipes = new HashMap<>() {{
         put(45012L,
                 new ProgressiveRecipe(45012, "Progressive Weapons",
                         new ArrayList<>(
@@ -174,10 +173,11 @@ public class RecipeData {
     }};
 
     protected boolean injectIRecipe(RecipeHolder<?> iRecipe) {
+        String recipeId = iRecipe.id().location().toString();
         for (var entry : recipes.entrySet()) {
             for (String namespaceID : entry.getValue().namespaceIDs) {
-                LOGGER.trace("checking {} vs {},", iRecipe.id(), namespaceID);
-                if (iRecipe.id().toString().equals(namespaceID)) {
+                LOGGER.trace("checking recipe {} vs {},", recipeId, namespaceID);
+                if (recipeId.equals(namespaceID)) {
                     entry.getValue().addIRecipe(iRecipe);
                     return true;
                 }
@@ -187,8 +187,8 @@ public class RecipeData {
             for (int i = 0; entry.getValue().namespaceIDs.size() > i; ++i) {
                 String[] namespaceIDs = entry.getValue().namespaceIDs.get(i);
                 for (String s : namespaceIDs) {
-                    LOGGER.trace("checking {} vs {},", iRecipe.id(), s);
-                    if (iRecipe.id().toString().equals(s)) {
+                    LOGGER.trace("checking progressive recipe {} vs {},", recipeId, s);
+                    if (recipeId.equals(s)) {
                         entry.getValue().addIRecipe(iRecipe, i);
                         return true;
                     }

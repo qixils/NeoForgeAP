@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.recipemanager;
 
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
@@ -10,10 +9,10 @@ import java.util.Set;
 
 public class ProgressiveRecipe implements APRecipe {
 
-    int id;
-    String name;
-    ArrayList<String[]> namespaceIDs;
-    List<Set<RecipeHolder<?>>> recipes = new ArrayList<>();
+    final int id;
+    final String name;
+    final ArrayList<String[]> namespaceIDs;
+    final List<Set<RecipeHolder<?>>> recipes = new ArrayList<>();
     int currentTier = 0;
 
     ProgressiveRecipe(int id, String name, ArrayList<String[]> namespaceIDs) {
@@ -41,7 +40,7 @@ public class ProgressiveRecipe implements APRecipe {
     public Set<RecipeHolder<?>> getTier(int tier) {
         if (recipes.size() >= tier)
             return recipes.get(tier - 1);
-        return recipes.get(recipes.size() - 1);
+        return recipes.getLast();
     }
 
 

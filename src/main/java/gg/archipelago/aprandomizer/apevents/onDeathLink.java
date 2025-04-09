@@ -1,33 +1,42 @@
 package gg.archipelago.aprandomizer.apevents;
 
+import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.DeathLinkEvent;
+import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.common.DeathLinkDamage;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
 
 public class onDeathLink {
 
     @ArchipelagoEventListener
-    public static void onDeath(DeathLinkEvent event) {
-        if (!APRandomizer.getAP().getSlotData().deathlink)
-            return;
+    public void onDeath(DeathLinkEvent event) {
+        APClient apClient = APRandomizer.getAP();
+        if (apClient == null) return;
 
-        GameRules.BooleanValue showDeathMessages = APRandomizer.getServer().getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
+        SlotData slotData = apClient.getSlotData();
+        if (slotData == null || !slotData.deathlink) return;
+
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+
+        GameRules.BooleanValue showDeathMessages = server.getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
         boolean showDeaths = showDeathMessages.get();
-        if(showDeaths) {
+        if (showDeaths) {
             String cause = event.cause;
-            if(cause != null && !cause.isBlank())
+            if (cause != null && !cause.isBlank())
                 Utils.sendMessageToAll(event.cause);
             else
-                Utils.sendMessageToAll("This Death brought to you by "+ event.source);
+                Utils.sendMessageToAll("This Death brought to you by " + event.source);
         }
-        showDeathMessages.set(false,APRandomizer.getServer());
-        for (ServerPlayer player : APRandomizer.getServer().getPlayerList().getPlayers()) {
-            player.hurt(new DeathLinkDamage() , Float.MAX_VALUE);
+        showDeathMessages.set(false, server);
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            player.hurtServer(player.serverLevel(), new DeathLinkDamage(), Float.MAX_VALUE);
         }
-        showDeathMessages.set(showDeaths,APRandomizer.getServer());
+        showDeathMessages.set(showDeaths, server);
     }
 }

@@ -1,10 +1,12 @@
 package gg.archipelago.aprandomizer.managers.advancementmanager;
 
+import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.data.WorldData;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.*;
@@ -176,7 +178,6 @@ public class AdvancementManager {
 
     public final Set<ResourceLocation> unreasonableAdvancements = new HashSet<>() {{
         add(ResourceLocation.withDefaultNamespace("nether/all_effects")); // How Did We Get Here?
-        add(ResourceLocation.withDefaultNamespace("nether/all_effects")); // How Did We Get Here?
     }};
 
     private final Set<Long> earnedAdvancements = new HashSet<>();
@@ -202,33 +203,36 @@ public class AdvancementManager {
 
     public void addAdvancement(long id) {
         earnedAdvancements.add(id);
-        APRandomizer.getAP().checkLocation(id);
-        APRandomizer.getGoalManager().updateGoal( true);
-        APRandomizer.getWorldData().addLocation(id);
+        AP().ifPresent(value -> value.checkLocation(id));
+        goalManager().ifPresent(value -> value.updateGoal(true));
+        worldData().ifPresent(worldData -> worldData.addLocation(id));
         syncAllAdvancements();
     }
 
     public void resendAdvancements() {
+        APClient apClient = getAP();
+        if (apClient == null) return;
         for (Long earnedAdvancement : earnedAdvancements) {
-            APRandomizer.getAP().checkLocation(earnedAdvancement);
+            apClient.checkLocation(earnedAdvancement);
         }
     }
 
     public void syncAdvancement(AdvancementHolder a) {
-        if (hasAdvancement(a.id().toString())) {
-            for (ServerPlayer serverPlayerEntity : APRandomizer.getServer().getPlayerList().getPlayers()) {
-                AdvancementProgress ap = serverPlayerEntity.getAdvancements().getOrStartProgress(a);
-                if (ap.isDone())
-                    continue;
-                for (String remainingCriterion : ap.getRemainingCriteria()) {
-                    serverPlayerEntity.getAdvancements().award(a, remainingCriterion);
-                }
+        if (!hasAdvancement(a.id().toString())) return;
+        if (server == null) return;
+        for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()) {
+            AdvancementProgress ap = serverPlayerEntity.getAdvancements().getOrStartProgress(a);
+            if (ap.isDone())
+                continue;
+            for (String remainingCriterion : ap.getRemainingCriteria()) {
+                serverPlayerEntity.getAdvancements().award(a, remainingCriterion);
             }
         }
     }
 
     public void syncAllAdvancements() {
-        for (AdvancementHolder a : getServer().getAdvancements().getAllAdvancements()) {
+        if (server == null) return;
+        for (AdvancementHolder a : server.getAdvancements().getAllAdvancements()) {
             syncAdvancement(a);
         }
     }
@@ -239,10 +243,11 @@ public class AdvancementManager {
 
     public void setCheckedAdvancements(Set<Long> checkedLocations) {
         earnedAdvancements.addAll(checkedLocations);
-        WorldData data = APRandomizer.getWorldData();
-        for (var checkedLocation : checkedLocations) {
-            data.addLocation(checkedLocation);
-        }
+        worldData().ifPresent(data -> {
+            for (var checkedLocation : checkedLocations) {
+                data.addLocation(checkedLocation);
+            }
+        });
 
         syncAllAdvancements();
     }

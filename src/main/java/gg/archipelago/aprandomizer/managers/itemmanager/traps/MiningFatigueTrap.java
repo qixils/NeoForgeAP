@@ -11,9 +11,9 @@ public class MiningFatigueTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.server.execute(() -> {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
             player.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.GUARDIAN_ELDER_EFFECT, 1F));
-            player.addEffect(new MobEffectInstance(DIG_SLOWDOWN,20 * 10));
-        });
+            player.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 20 * 10));
+        }));
     }
 }

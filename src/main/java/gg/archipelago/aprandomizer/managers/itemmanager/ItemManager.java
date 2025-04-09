@@ -3,6 +3,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APStructures;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -14,21 +15,21 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.LodestoneTracker;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public class ItemManager {
@@ -36,34 +37,34 @@ public class ItemManager {
     public static final long DRAGON_EGG_SHARD = 45043L;
 
     private final HashMap<Long, ItemStack> itemStacks = new HashMap<>() {{
-        var enchantmentRegistry = APRandomizer.getServer().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+        var enchantmentRegistry = APRandomizer.server().orElseThrow().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         put(45015L, new ItemStack(Items.NETHERITE_SCRAP, 8));
         put(45016L, new ItemStack(Items.EMERALD, 8));
         put(45017L, new ItemStack(Items.EMERALD, 4));
 
-        enchantmentRegistry.getHolder(Enchantments.CHANNELING).ifPresent(
-                ref -> put(45018L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 1)))
+        enchantmentRegistry.get(Enchantments.CHANNELING).ifPresent(
+                ref -> put(45018L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 1)))
         );
 
-        enchantmentRegistry.getHolder(Enchantments.SILK_TOUCH).ifPresent(
-                ref -> put(45019L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 1)))
+        enchantmentRegistry.get(Enchantments.SILK_TOUCH).ifPresent(
+                ref -> put(45019L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 1)))
         );
 
-        enchantmentRegistry.getHolder(Enchantments.SHARPNESS).ifPresent(
-                ref -> put(45020L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 3)))
+        enchantmentRegistry.get(Enchantments.SHARPNESS).ifPresent(
+                ref -> put(45020L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 3)))
         );
 
-        enchantmentRegistry.getHolder(Enchantments.PIERCING).ifPresent(
-                ref -> put(45021L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 4)))
+        enchantmentRegistry.get(Enchantments.PIERCING).ifPresent(
+                ref -> put(45021L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 4)))
         );
 
-        enchantmentRegistry.getHolder(Enchantments.LOOTING).ifPresent(
-                ref -> put(45022L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 3)))
+        enchantmentRegistry.get(Enchantments.LOOTING).ifPresent(
+                ref -> put(45022L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 3)))
         );
 
-        enchantmentRegistry.getHolder(Enchantments.INFINITY).ifPresent(
-                ref -> put(45023L, EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ref, 1)))
-    );
+        enchantmentRegistry.get(Enchantments.INFINITY).ifPresent(
+                ref -> put(45023L, EnchantmentHelper.createBook(new EnchantmentInstance(ref, 1)))
+        );
 
         put(45024L, new ItemStack(Items.DIAMOND_ORE, 4));
         put(45025L, new ItemStack(Items.IRON_ORE, 16));
@@ -77,7 +78,7 @@ public class ItemManager {
         put(45035L, new ItemStack(Items.ARROW, 32));
         put(45036L, new ItemStack(Items.SADDLE, 1));
 
-        String[] compassLore = new String[]{"Right click with compass in hand to","cycle to next known structure location."};
+        String[] compassLore = new String[]{"Right click with compass in hand to", "cycle to next known structure location."};
 
         ItemStack villageCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(villageCompass, APStructures.VILLAGE_TAG);
@@ -97,7 +98,7 @@ public class ItemManager {
         ItemStack bastionCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(bastionCompass, APStructures.BASTION_REMNANT_TAG);
         addLore(bastionCompass, "Structure Compass (Bastion Remnant)", compassLore);
-        put(45040L,bastionCompass);
+        put(45040L, bastionCompass);
 
         ItemStack endCityCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(endCityCompass, APStructures.END_CITY_TAG);
@@ -107,7 +108,7 @@ public class ItemManager {
         put(45042L, new ItemStack(Items.SHULKER_BOX, 1));
     }};
 
-    private final HashMap<Long,TagKey<Structure>> compasses = new HashMap<>() {{
+    private final HashMap<Long, TagKey<Structure>> compasses = new HashMap<>() {{
         put(45037L, APStructures.VILLAGE_TAG);
         put(45038L, APStructures.OUTPOST_TAG);
         put(45039L, APStructures.FORTRESS_TAG);
@@ -153,8 +154,8 @@ public class ItemManager {
 
         iStack.set(DataComponents.CUSTOM_NAME, Component.literal("Structure Compass"));
 
-        BlockPos structureCords = new BlockPos(0,0,0);
-        iStack.set(DataComponents.LODESTONE_TRACKER,new LodestoneTracker(Optional.of(new GlobalPos(Utils.getStructureWorld(structureTag), structureCords)),false));
+        BlockPos structureCords = new BlockPos(0, 0, 0);
+        iStack.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(Utils.getStructureWorld(structureTag), structureCords)), false));
     }
 
     private void addLore(ItemStack iStack, String name, String[] compassLore) {
@@ -171,30 +172,33 @@ public class ItemManager {
     public void setReceivedItems(ArrayList<Long> items) {
         this.receivedItems = items;
         for (var item : items) {
-            if(compasses.containsKey(item) && !receivedCompasses.contains(compasses.get(item))) {
+            if (compasses.containsKey(item) && !receivedCompasses.contains(compasses.get(item))) {
                 receivedCompasses.add(compasses.get(item));
             }
         }
-        APRandomizer.getGoalManager().updateGoal(false);
+        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
     }
 
     public void giveItem(Long itemID, ServerPlayer player, int itemIndex) {
+        WorldData data = APRandomizer.getWorldData();
+        if (data == null) return;
+
         if (APRandomizer.isJailPlayers()) {
             //dont send items to players if game has not started.
             return;
         }
 
-        if (APRandomizer.getWorldData().getPlayerIndex(player.getStringUUID()) >= itemIndex) return;
+        if (data.getPlayerIndex(player.getStringUUID()) >= itemIndex) return;
 
         //update the player's index of received items for syncing later.
-        APRandomizer.getWorldData().updatePlayerIndex(player.getStringUUID(),receivedItems.size());
+        data.updatePlayerIndex(player.getStringUUID(), receivedItems.size());
 
         if (itemStacks.containsKey(itemID)) {
             ItemStack itemstack = itemStacks.get(itemID).copy();
-            if(compasses.containsKey(itemID)){
+            if (compasses.containsKey(itemID)) {
 
                 TagKey<Structure> tag = compasses.get(itemID);
-                updateCompassLocation(tag, player , itemstack);
+                updateCompassLocation(tag, player, itemstack);
             }
             Utils.giveItemToPlayer(player, itemstack);
         } else if (xpData.containsKey(itemID)) {
@@ -213,17 +217,17 @@ public class ItemManager {
 
         receivedItems.add(itemID);
         //check if this item is a structure compass, and we are not already tracking that one.
-        if(compasses.containsKey(itemID) && !receivedCompasses.contains(compasses.get(itemID))) {
+        if (compasses.containsKey(itemID) && !receivedCompasses.contains(compasses.get(itemID))) {
             receivedCompasses.add(compasses.get(itemID));
         }
 
-        APRandomizer.getServer().execute(() -> {
-            for (ServerPlayer serverplayerentity : APRandomizer.getServer().getPlayerList().getPlayers()) {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
+            for (ServerPlayer serverplayerentity : server.getPlayerList().getPlayers()) {
                 giveItem(itemID, serverplayerentity, index);
             }
-        });
+        }));
 
-        APRandomizer.getGoalManager().updateGoal(true);
+        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(true));
     }
 
     /***
@@ -231,12 +235,14 @@ public class ItemManager {
      * @param player ServerPlayer to catch up
      */
     public void catchUpPlayer(ServerPlayer player) {
-        int playerIndex = APRandomizer.getWorldData().getPlayerIndex(player.getStringUUID());
+        WorldData data = APRandomizer.getWorldData();
+        if (data == null) return;
+
+        int playerIndex = data.getPlayerIndex(player.getStringUUID());
 
         for (int i = playerIndex; i < receivedItems.size(); i++) {
-            giveItem(receivedItems.get(i), player, i+1);
+            giveItem(receivedItems.get(i), player, i + 1);
         }
-
     }
 
     public ArrayList<TagKey<Structure>> getCompasses() {
@@ -247,7 +253,7 @@ public class ItemManager {
         return receivedItems;
     }
 
-    public static void updateCompassLocation(TagKey<Structure> structureTag, Player player, ItemStack compass) {
+    public static void updateCompassLocation(TagKey<Structure> structureTag, ServerPlayer player, ItemStack compass) {
 
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.
 
@@ -256,46 +262,47 @@ public class ItemManager {
 
         //only locate structure if the player is in the same world as the one for the compass
         //otherwise just point it to 0,0 in said dimension.
-        BlockPos structurePos = new BlockPos(0,0,0);
+        BlockPos structurePos = new BlockPos(0, 0, 0);
 
         var displayName = Component.literal(String.format("Structure Compass (%s)", Utils.getAPStructureName(structureTag)));
-        if(player.getCommandSenderWorld().dimension().equals(world)) {
+        if (player.getCommandSenderWorld().dimension().equals(world)) {
             try {
+                //noinspection DataFlowIssue
                 structurePos = APRandomizer.getServer().getLevel(world).findNearestMapStructure(structureTag, player.blockPosition(), 75, false);
-            } catch (NullPointerException exception) {
+            } catch (Exception exception) {
                 player.sendSystemMessage(Component.literal("Could not find a nearby " + Utils.getAPStructureName(structureTag)));
             }
-        }
-        else {
+        } else {
             displayName = Component.literal(
                     String.format("Structure Compass (%s) Wrong Dimension",
                             Utils.getAPStructureName(structureTag))
-                    ).withStyle(ChatFormatting.DARK_RED);
+            ).withStyle(ChatFormatting.DARK_RED);
         }
 
-        if(structurePos == null)
-            structurePos = new BlockPos(0,0,0);
+        if (structurePos == null)
+            structurePos = new BlockPos(0, 0, 0);
         //update the nbt data with our new structure.
 
-        compass.get(DataComponents.CUSTOM_DATA).getUnsafe().putString(APRandomizer.MODID + ":tracked_structure", structureTag.location().toString());
+        CustomData customData = compass.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        customData.getUnsafe().putString(APRandomizer.MODID + ":tracked_structure", structureTag.location().toString());
+        compass.set(DataComponents.CUSTOM_DATA, customData);
 
 
-        compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(world,structurePos)),false));
+        compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(world, structurePos)), false));
         compass.set(DataComponents.CUSTOM_NAME, displayName);
     }
 
     // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
-        player.getInventory().items.forEach( (item) -> {
-            if(item.getItem().equals(Items.COMPASS)) {
-                CustomData tracked_structure = item.get(DataComponents.CUSTOM_DATA);
-                if(tracked_structure == null) return;
-                String trackedStructure = tracked_structure.getUnsafe().getString(APRandomizer.MODID + ":tracked_structure");
-                if (trackedStructure.isBlank()) return;
+        player.getInventory().items.forEach((item) -> {
+            if (!item.getItem().equals(Items.COMPASS)) return;
+            CustomData tracked_structure = item.get(DataComponents.CUSTOM_DATA);
+            if (tracked_structure == null) return;
+            String trackedStructure = tracked_structure.getUnsafe().getString(APRandomizer.MODID + ":tracked_structure");
+            if (trackedStructure.isBlank()) return;
 
-                TagKey<Structure> tagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(trackedStructure));
-                updateCompassLocation(tagKey, player, item);
-            }
+            TagKey<Structure> tagKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.parse(trackedStructure));
+            updateCompassLocation(tagKey, player, item);
         });
     }
 }

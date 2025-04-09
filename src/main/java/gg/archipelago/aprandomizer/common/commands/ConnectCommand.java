@@ -10,19 +10,14 @@ import gg.archipelago.aprandomizer.APStorage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 import java.net.URISyntaxException;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class ConnectCommand {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -63,9 +58,11 @@ public class ConnectCommand {
         if (data.state == APMCData.State.VALID) {
 
             APClient apClient = APRandomizer.getAP();
+            if (apClient == null) return 0;
+
             apClient.setName(data.player_name);
             apClient.setPassword(password);
-            String address = (port==-1) ? hostname : hostname.concat(":" + port);
+            String address = (port == -1) ? hostname : hostname.concat(":" + port);
             Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
             try {
                 apClient.connect(address);

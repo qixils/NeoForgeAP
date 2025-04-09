@@ -2,21 +2,16 @@ package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class DisconnectCommand {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -30,7 +25,7 @@ public class DisconnectCommand {
     }
 
     private static int disconnect(CommandContext<CommandSourceStack> commandContext) {
-        APRandomizer.getAP().disconnect();
+        APRandomizer.AP().ifPresent(APClient::disconnect);
         //Utils.sendMessageToAll("Disconnected.");
         return 1;
     }

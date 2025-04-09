@@ -20,8 +20,9 @@ public abstract class MixinRaid {
 
     @Shadow
     public abstract BlockPos getCenter();
-    @Inject(method = "findRandomSpawnPos(II)Lnet/minecraft/core/BlockPos;", at = @At(value = "HEAD"), cancellable = true)
-    protected void onFindRandomSpawnPos(int p_221298_1_, int p_221298_2_, CallbackInfoReturnable<BlockPos> cir) {
+
+    @Inject(method = "findRandomSpawnPos", at = @At(value = "HEAD"), cancellable = true)
+    protected void onFindRandomSpawnPos(int p_37708_, CallbackInfoReturnable<BlockPos> cir) {
         if (this.level.dimension() == Level.NETHER) {
             cir.setReturnValue(getCenter());
         }

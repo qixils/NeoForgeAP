@@ -2,25 +2,26 @@ package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class WaterTrap implements Trap {
 
-    List<BlockPos> waterBlocks = new LinkedList<>();
+    final List<BlockPos> waterBlocks = new LinkedList<>();
     int timer = 20 * 15;
 
     public WaterTrap() {
-        MinecraftForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
     }
 
     @Override
@@ -34,7 +35,9 @@ public class WaterTrap implements Trap {
             }
         }
 
-        APRandomizer.getServer().execute(() -> {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+        server.execute(() -> {
             for (BlockPos waterBlock : waterBlocks) {
                 if (world.isEmptyBlock(waterBlock)) {
                     world.setBlock(waterBlock, Blocks.WATER.defaultBlockState(), 3);
@@ -44,17 +47,17 @@ public class WaterTrap implements Trap {
     }
 
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
+    public void onServerTick(ServerTickEvent event) {
         if (--timer > 0)
             return;
 
         for (BlockPos pos : waterBlocks) {
-            ServerLevel world = APRandomizer.getServer().overworld();
+            ServerLevel world = event.getServer().overworld();
             if (world.getBlockState(pos).getFluidState().isSourceOfType(Fluids.WATER)) {
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }
         }
 
-        MinecraftForge.EVENT_BUS.unregister(this);
+        NeoForge.EVENT_BUS.unregister(this);
     }
 }

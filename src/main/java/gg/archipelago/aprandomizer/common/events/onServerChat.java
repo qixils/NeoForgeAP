@@ -1,30 +1,28 @@
 package gg.archipelago.aprandomizer.common.events;
 
+import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.ServerChatEvent;
 
-@Mod.EventBusSubscriber
+import java.util.Objects;
+
+@EventBusSubscriber
 public class onServerChat {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @SubscribeEvent
     static void onServerChatEvent(ServerChatEvent event) {
-        if(!APRandomizer.getAP().isConnected())
-            return;
+        APClient apClient = APRandomizer.getAP();
+        if (apClient == null || !apClient.isConnected()) return;
+
         ServerPlayer player = event.getPlayer();
 
         String message = event.getMessage().getString();
 
         if (message.startsWith("!"))
-            APRandomizer.getAP().sendChat(message);
+            apClient.sendChat(message);
         else
-            APRandomizer.getAP().sendChat("(" + player.getDisplayName().getString() + ") " + message);
+            apClient.sendChat("(" + Objects.requireNonNullElseGet(player.getDisplayName(), player::getName).getString() + ") " + message);
     }
 }

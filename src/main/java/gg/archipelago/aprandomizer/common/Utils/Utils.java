@@ -1,12 +1,11 @@
 package gg.archipelago.aprandomizer.common.Utils;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.koifysh.archipelago.Print.APPrint;
 import dev.koifysh.archipelago.Print.APPrintColor;
 import dev.koifysh.archipelago.Print.APPrintPart;
 import dev.koifysh.archipelago.Print.APPrintType;
+import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -24,18 +23,22 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Utils {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
-
-    private static final MinecraftServer server = APRandomizer.getServer();
+    @NotNull
+    private static MinecraftServer server() {
+        return Objects.requireNonNull(APRandomizer.getServer(), "Server not started");
+    }
 
     public static void sendMessageToAll(String message) {
         sendMessageToAll(Component.literal(message));
@@ -43,7 +46,7 @@ public class Utils {
 
     public static void sendMessageToAll(Component message) {
         //tell the server to send the message in a thread safe way.
-        server.execute(() -> server.getPlayerList().broadcastSystemMessage(message, false));
+        server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
 
     }
 
@@ -51,12 +54,13 @@ public class Utils {
         Component message = Utils.apPrintToTextComponent(apPrint);
 
         //tell the server to send the message in a thread safe way.
-        server.execute(() -> server.getPlayerList().broadcastSystemMessage(message, false));
+        server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
 
     }
 
     public static Component apPrintToTextComponent(APPrint apPrint) {
-        boolean isMe = apPrint.receiving == APRandomizer.getAP().getSlot();
+        APClient apClient = APRandomizer.getAP();
+        boolean isMe = apClient != null && apPrint.receiving == apClient.getSlot();
 
         MutableComponent message = Component.literal("");
         for (int i = 0; apPrint.parts.length > i; ++i) {
@@ -96,30 +100,30 @@ public class Utils {
     }
 
     public static void sendTitleToAll(Component title, Component subTitle, int fadeIn, int stay, int fadeOut) {
-        server.execute(() -> TitleQueue.queueTitle(new QueuedTitle(server.getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title)));
+        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title)));
     }
 
     public static void sendTitleToAll(Component title, Component subTitle, Component chatMessage, int fadeIn, int stay, int fadeOut) {
-        server.execute(() -> TitleQueue.queueTitle(new QueuedTitle(server.getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title, chatMessage)));
+        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title, chatMessage)));
     }
 
     public static void sendActionBarToAll(String actionBarMessage, int fadeIn, int stay, int fadeOut) {
-        server.execute(() -> {
-            TitleUtils.setTimes(server.getPlayerList().getPlayers(), fadeIn, stay, fadeOut);
-            TitleUtils.showActionBar(server.getPlayerList().getPlayers(), Component.literal(actionBarMessage));
+        server().execute(() -> {
+            TitleUtils.setTimes(server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut);
+            TitleUtils.showActionBar(server().getPlayerList().getPlayers(), Component.literal(actionBarMessage));
         });
     }
 
     public static void sendActionBarToPlayer(ServerPlayer player, String actionBarMessage, int fadeIn, int stay, int fadeOut) {
-        server.execute(() -> {
+        server().execute(() -> {
             TitleUtils.setTimes(Collections.singletonList(player), fadeIn, stay, fadeOut);
             TitleUtils.showActionBar(Collections.singletonList(player), Component.literal(actionBarMessage));
         });
     }
 
     public static void PlaySoundToAll(SoundEvent sound) {
-        server.execute(() -> {
-            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+        server().execute(() -> {
+            for (ServerPlayer player : server().getPlayerList().getPlayers()) {
                 player.playNotifySound(sound, SoundSource.MASTER, 1, 1);
             }
         });
@@ -128,20 +132,16 @@ public class Utils {
     public static ResourceKey<Level> getStructureWorld(TagKey<Structure> structureTag) {
 
         String structureName = getAPStructureName(structureTag);
-        String world = "overworld";
         //fetch what structures are where from our APMC data.
         HashMap<String, String> structures = APRandomizer.getApmcData().structures;
         for (Map.Entry<String, String> entry : structures.entrySet()) {
-            if(entry.getValue().equals(structureName)) {
-                if (entry.getKey().contains("Overworld")) {
+            if (entry.getValue().equals(structureName)) {
+                if (entry.getKey().contains("Overworld"))
                     return Level.OVERWORLD;
-                }
-                if(entry.getKey().contains("Nether")) {
+                if (entry.getKey().contains("Nether"))
                     return Level.NETHER;
-                }
-                if(entry.getKey().contains("The End")) {
+                if (entry.getKey().contains("The End"))
                     return Level.END;
-                }
             }
         }
 
@@ -160,12 +160,12 @@ public class Utils {
     }
 
     public static Vec3 getRandomPosition(Vec3 pos, int radius) {
-        double a = Math.random()*Math.PI*2;
-        double b = Math.random()*Math.PI/2;
+        double a = Math.random() * Math.PI * 2;
+        double b = Math.random() * Math.PI / 2;
         double x = radius * Math.cos(a) * Math.sin(b) + pos.x;
         double z = radius * Math.sin(a) * Math.sin(b) + pos.z;
         double y = radius * Math.cos(b) + pos.y;
-        return new Vec3(x,y,z);
+        return new Vec3(x, y, z);
     }
 
     public static void giveItemToPlayer(ServerPlayer player, ItemStack itemstack) {

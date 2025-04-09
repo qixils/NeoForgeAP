@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.recipemanager;
 
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.Set;

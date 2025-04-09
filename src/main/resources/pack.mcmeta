@@ -1,14 +1,6 @@
 {
   "pack": {
     "description": "${mod_id} resources",
-    "pack_format": 45
-  },
-  "filter": {
-    "block": [
-      {
-        "namespace": "minecraft",
-        "path": "recipes/.*"
-      }
-    ]
+    "pack_format": 57
   }
 }

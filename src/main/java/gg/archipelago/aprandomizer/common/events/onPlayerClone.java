@@ -1,18 +1,14 @@
 package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.managers.GoalManager;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onPlayerClone {
-
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @SubscribeEvent
     public static void onPlayerCloneEvent(PlayerEvent.PlayerRespawnEvent event) {
         if (APRandomizer.isJailPlayers()) {
@@ -21,8 +17,9 @@ public class onPlayerClone {
         }
 
         //if we are leaving because the dragon is dead check if our goals are all done!
-        if(event.isEndConquered() && APRandomizer.getGoalManager().isDragonDead()) {
-           APRandomizer.getGoalManager().checkGoalCompletion();
+        GoalManager goalManager = APRandomizer.getGoalManager();
+        if (event.isEndConquered() && goalManager != null && goalManager.isDragonDead()) {
+            goalManager.checkGoalCompletion();
         }
     }
 }

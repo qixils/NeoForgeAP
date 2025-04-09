@@ -87,7 +87,7 @@ public class WorldData extends SavedData {
         tag.putString("seedName", seedName);
         tag.putInt("dragonState", dragonState);
         tag.putBoolean("jailPlayers", jailPlayers);
-        tag.putLongArray("locations",locations.stream().toList());
+        tag.putLongArray("locations", locations.stream().toList());
         tag.putLong("index", index);
         CompoundTag tagIndex = new CompoundTag();
         this.playerIndex.forEach(tagIndex::putLong);
@@ -122,6 +122,6 @@ public class WorldData extends SavedData {
                 tag.getLongArray("locations"),
                 indexMap,
                 tag.getInt("index")
-                );
+        );
     }
 }

@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class NetherVillageStructure extends Structure {
     public static final MapCodec<NetherVillageStructure> CODEC = RecordCodecBuilder.mapCodec(instance ->
             instance.group(NetherVillageStructure.settingsCodec(instance),
@@ -52,15 +53,14 @@ public class NetherVillageStructure extends Structure {
     private final LiquidSettings liquidSettings;
 
     public NetherVillageStructure(Structure.StructureSettings config,
-                         Holder<StructureTemplatePool> startPool,
-                         Optional<ResourceLocation> startJigsawName,
-                         int size,
-                         HeightProvider startHeight,
-                         Optional<Heightmap.Types> projectStartToHeightmap,
-                         int maxDistanceFromCenter,
-                         DimensionPadding dimensionPadding,
-                         LiquidSettings liquidSettings)
-    {
+                                  Holder<StructureTemplatePool> startPool,
+                                  Optional<ResourceLocation> startJigsawName,
+                                  int size,
+                                  HeightProvider startHeight,
+                                  Optional<Heightmap.Types> projectStartToHeightmap,
+                                  int maxDistanceFromCenter,
+                                  DimensionPadding dimensionPadding,
+                                  LiquidSettings liquidSettings) {
         super(config);
         this.startPool = startPool;
         this.startJigsawName = startJigsawName;
@@ -113,7 +113,7 @@ public class NetherVillageStructure extends Structure {
     }
 
     @Override
-    public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
+    public @NotNull Optional<Structure.GenerationStub> findGenerationPoint(Structure.@NotNull GenerationContext context) {
 
         // Check if the spot is valid for our structure. This is just as another method for cleanness.
         // Returning an empty optional tells the game to skip this spot as it will not generate the structure.
@@ -127,10 +127,10 @@ public class NetherVillageStructure extends Structure {
         int seaLevel = context.chunkGenerator().getSeaLevel();
         WorldGenerationContext worldgenerationcontext = new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor());
         int y = this.startHeight.sample(worldgenrandom, worldgenerationcontext);
-        NoiseColumn noisecolumn = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(),context.randomState());
+        NoiseColumn noisecolumn = context.chunkGenerator().getBaseColumn(x, z, context.heightAccessor(), context.randomState());
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(x, y, z);
 
-        while(y > seaLevel) {
+        while (y > seaLevel) {
             BlockState blockstate = noisecolumn.getBlock(y);
             --y;
             BlockState blockstate1 = noisecolumn.getBlock(y);
@@ -142,22 +142,6 @@ public class NetherVillageStructure extends Structure {
             return Optional.empty();
         }
         BlockPos blockPos = new BlockPos(x, y, z);
-        Optional<Structure.GenerationStub> structurePiecesGenerator =
-                JigsawPlacement.addPieces(
-                        context, // Used for JigsawPlacement to get all the proper behaviors done.
-                        this.startPool, // The starting pool to use to create the structure layout from
-                        this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
-                        this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
-                        blockPos, // Where to spawn the structure.
-                        false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
-                        this.projectStartToHeightmap, // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
-                        // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
-                        // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
-                        // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
-                        this.maxDistanceFromCenter, // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
-                        PoolAliasLookup.EMPTY, // Optional thing that allows swapping a template pool with another per structure json instance. We don't need this but see vanilla JigsawStructure class for how to wire it up if you want it.
-                        this.dimensionPadding, // Optional thing to prevent generating too close to the bottom or top of the dimension.
-                        this.liquidSettings); // Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
 
         /*
          * Note, you are always free to make your own StructurePoolBasedGenerator class and implementation of how the structure
@@ -166,7 +150,21 @@ public class NetherVillageStructure extends Structure {
          */
 
         // Return the pieces generator that is now set up so that the game runs it when it needs to create the layout of structure pieces.
-        return structurePiecesGenerator;
+        return JigsawPlacement.addPieces(
+                context, // Used for JigsawPlacement to get all the proper behaviors done.
+                this.startPool, // The starting pool to use to create the structure layout from
+                this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
+                this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
+                blockPos, // Where to spawn the structure.
+                false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
+                this.projectStartToHeightmap, // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
+                // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
+                // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
+                // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
+                this.maxDistanceFromCenter, // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
+                PoolAliasLookup.EMPTY, // Optional thing that allows swapping a template pool with another per structure json instance. We don't need this but see vanilla JigsawStructure class for how to wire it up if you want it.
+                this.dimensionPadding, // Optional thing to prevent generating too close to the bottom or top of the dimension.
+                this.liquidSettings); // Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
     }
 
     @Override

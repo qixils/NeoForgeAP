@@ -3,29 +3,29 @@ package gg.archipelago.aprandomizer.common.events;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APStorage.APMCData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.AdvancementEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Iterator;
 import java.util.Objects;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class onAdvancement {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
     static void onAdvancementEvent(AdvancementEvent.AdvancementProgressEvent event) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+
         for (String progress : event.getAdvancementProgress().getCompletedCriteria()) {
-            for (ServerPlayer p : APRandomizer.server.getPlayerList().getPlayers()) {
+            for (ServerPlayer p : server.getPlayerList().getPlayers()) {
                 p.getAdvancements().award(event.getAdvancement(), progress);
             }
         }
@@ -33,9 +33,11 @@ public class onAdvancement {
 
     @SubscribeEvent
     static void onAdvancementEvent(AdvancementEvent.AdvancementEarnEvent event) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return; // !?
+
         //dont do any checking if the apmcdata file is not valid.
-        if (APRandomizer.getApmcData().state != APMCData.State.VALID)
-            return;
+        if (APRandomizer.getApmcData().state != APMCData.State.VALID) return;
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
         AdvancementHolder advancementHolder = event.getAdvancement();
@@ -43,15 +45,12 @@ public class onAdvancement {
 
         AdvancementManager am = APRandomizer.getAdvancementManager();
         //don't do anything if this advancement has already been had, or is not on our list of tracked advancements.
-        if (!am.hasAdvancement(id) && am.getAdvancementID(id) != 0) {
-            LOGGER.debug("{} has gotten the advancement {}", player.getDisplayName().getString(), id);
-            am.addAdvancement(am.getAdvancementID(id));
-            am.syncAdvancement(advancementHolder);
+        if (am == null || am.hasAdvancement(id) || am.getAdvancementID(id) == 0) return;
 
-            advancementHolder.value().display().ifPresent(it -> {
-                APRandomizer.getServer().getPlayerList().broadcastSystemMessage(it.getType().createAnnouncement(advancementHolder, player), false);
-            });
+        LOGGER.debug("{} has gotten the advancement {}", Objects.requireNonNullElseGet(player.getDisplayName(), player::getName).getString(), id);
+        am.addAdvancement(am.getAdvancementID(id));
+        am.syncAdvancement(advancementHolder);
 
-        }
+        advancementHolder.value().display().ifPresent(it -> server.getPlayerList().broadcastSystemMessage(it.getType().createAnnouncement(advancementHolder, player), false));
     }
 }

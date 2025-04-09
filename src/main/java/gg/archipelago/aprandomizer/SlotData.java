@@ -5,17 +5,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.annotations.SerializedName;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.ResourceLocationException;
-import net.minecraft.nbt.TagParser;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SlotData {
 
@@ -35,7 +34,15 @@ public class SlotData {
     @SerializedName("starting_items")
     public String startingItems;
 
-    transient public ArrayList<ItemStack> startingItemStacks = new ArrayList<>();
+    transient public final List<ItemStack> startingItemStacks = new ArrayList<>();
+
+    public boolean getMC35() {
+        return MC35;
+    }
+
+    public boolean getDeath_link() {
+        return deathlink;
+    }
 
     public int getInclude_hard_advancements() {
         return include_hard_advancements;
@@ -70,15 +77,15 @@ public class SlotData {
             int amount = object.has("amount") ? object.get("amount").getAsInt() : 1;
 
             try {
-                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(itemName));
+                Item item = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(itemName));
 
                 //air is the default item returned if the resource name is invalid.
-                if(item == Items.AIR) {
+                if (item == Items.AIR) {
                     Utils.sendMessageToAll("No such item \"" + itemName + "\"");
                     continue;
                 }
 
-                ItemStack iStack = new ItemStack(item,amount);
+                ItemStack iStack = new ItemStack(item, amount);
 
                 //todo: figure out starting inventory NBT
 //                if(object.has("nbt"))

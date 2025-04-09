@@ -6,7 +6,7 @@ import dev.koifysh.archipelago.events.CheckedLocationsEvent;
 public class LocationChecked {
 
     @ArchipelagoEventListener
-    public static void onLocationChecked(CheckedLocationsEvent event) {
+    public void onLocationChecked(CheckedLocationsEvent event) {
 //        event.checkedLocations.forEach(location -> APRandomizer.getAdvancementManager().addAdvancement(location));
     }
 }

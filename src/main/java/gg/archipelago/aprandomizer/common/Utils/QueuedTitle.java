@@ -27,21 +27,21 @@ public class QueuedTitle {
         this.ticks = fadeIn + stay + fadeOut + 20;
     }
 
-    public QueuedTitle(List<ServerPlayer> players, int fadeIn, int stay, int fadeOut, Component subTitle, Component title,Component chatMessage) {
-        this(players,fadeIn,stay,fadeOut,subTitle,title);
+    public QueuedTitle(List<ServerPlayer> players, int fadeIn, int stay, int fadeOut, Component subTitle, Component title, Component chatMessage) {
+        this(players, fadeIn, stay, fadeOut, subTitle, title);
         this.chatMessage = chatMessage;
 
     }
 
 
     public void sendTitle() {
-        APRandomizer.getServer().execute(() -> {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
             TitleUtils.setTimes(players, fadeIn, stay, fadeOut);
             TitleUtils.showTitle(players, title, subTitle);
-            if(chatMessage != null) {
+            if (chatMessage != null) {
                 Utils.sendMessageToAll(chatMessage);
             }
-        });
+        }));
     }
 
     public int getTicks() {

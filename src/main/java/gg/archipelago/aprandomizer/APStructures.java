@@ -10,18 +10,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 
 public class APStructures {
 
     public static final DeferredRegister<StructureType<?>> DEFERRED_REGISTRY_STRUCTURE = DeferredRegister.create(Registries.STRUCTURE_TYPE, APRandomizer.MODID);
 
-    public static final RegistryObject<StructureType<?>> VILLAGE_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("village_nether", () -> explicitStructureTypeTyping(NetherVillageStructure.CODEC));
-    public static final RegistryObject<StructureType<?>> END_CITY_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("end_city_nether", () -> explicitStructureTypeTyping(NetherEndCityStructure.CODEC));
-    public static final RegistryObject<StructureType<?>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> explicitStructureTypeTyping(NetherPillagerOutpostStructure.CODEC));
-    public static final RegistryObject<StructureType<?>> BEE_GROVE = DEFERRED_REGISTRY_STRUCTURE.register("bee_grove", () -> explicitStructureTypeTyping(BeeGroveStructure.CODEC));
+    public static final DeferredHolder<StructureType<?>, StructureType<NetherVillageStructure>> VILLAGE_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("village_nether", () -> explicitStructureTypeTyping(NetherVillageStructure.CODEC));
+    public static final DeferredHolder<StructureType<?>, StructureType<NetherEndCityStructure>> END_CITY_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("end_city_nether", () -> explicitStructureTypeTyping(NetherEndCityStructure.CODEC));
+    public static final DeferredHolder<StructureType<?>, StructureType<NetherPillagerOutpostStructure>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> explicitStructureTypeTyping(NetherPillagerOutpostStructure.CODEC));
+    public static final DeferredHolder<StructureType<?>, StructureType<BeeGroveStructure>> BEE_GROVE = DEFERRED_REGISTRY_STRUCTURE.register("bee_grove", () -> explicitStructureTypeTyping(BeeGroveStructure.CODEC));
 
 
     /**
