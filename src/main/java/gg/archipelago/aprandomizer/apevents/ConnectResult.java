@@ -8,7 +8,6 @@ import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import gg.archipelago.aprandomizer.managers.GoalManager;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,14 +59,17 @@ public class ConnectResult {
             });
 
             //catch up all connected players to the list just received.
+            // TODO: broken ish
             APRandomizer.server().ifPresent(server -> server.execute(() -> {
                 APRandomizer.itemManager().ifPresent(value -> {
                     for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                         value.catchUpPlayer(player);
                     }
                 });
-                APRandomizer.goalManager().ifPresent(GoalManager::updateInfoBar);
             }));
+
+            // ensure server is synced
+            APRandomizer.goalManager().ifPresent(goalManager -> goalManager.updateGoal(true));
 
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {
             Utils.sendMessageToAll("Connection Failed: Invalid Password.");
