@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.ap;
 
 import dev.koifysh.archipelago.Client;
-import dev.koifysh.archipelago.flags.ItemsHandling;
+import dev.koifysh.archipelago.ItemFlags;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.events.*;
@@ -23,7 +23,7 @@ public class APClient extends Client {
         super();
 
         this.setGame("Minecraft");
-        this.setItemsHandlingFlags(ItemsHandling.SEND_ITEMS | ItemsHandling.SEND_OWN_ITEMS | ItemsHandling.SEND_STARTING_INVENTORY);
+        this.setItemsHandlingFlags(ItemFlags.SEND_ITEMS | ItemFlags.SEND_OWN_ITEMS | ItemFlags.SEND_STARTING_INVENTORY);
         this.server = server;
         APRandomizer.getAdvancementManager().setCheckedAdvancements(getLocationManager().getCheckedLocations());
 
@@ -63,4 +63,5 @@ public class APClient extends Client {
         }
         APRandomizer.getGoalManager().updateInfoBar();
     }
+
 }

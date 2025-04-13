@@ -1,9 +1,8 @@
 plugins {
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
-    id 'io.github.goooler.shadow' version '8.1.8'
 }
 
 version = mod_version
@@ -14,7 +13,7 @@ base {
 }
 
 // Mojang ships Java 21 to end users in 1.20.5+, so your mod should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
@@ -34,7 +33,7 @@ minecraft {
     mappings channel: mapping_channel, version: mapping_version
 
     // Tell FG to not automtically create the reobf tasks, as we now use Official mappings at runtime, If you don't use them at dev time then you'll have to fix your reobf yourself.
-//    reobf = false
+    reobf = false
 
     // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
     // In most cases, it is not necessary to enable.
@@ -57,7 +56,7 @@ minecraft {
     // However, it must be at "META-INF/accesstransformer.cfg" in the final mod jar to be loaded by Forge.
     // This default location is a best practice to automatically put the file in the right place in the final jar.
     // See https://docs.minecraftforge.net/en/latest/advanced/accesstransformers/ for more information.
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -113,11 +112,13 @@ repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
-    // flatDir {
-    //     dir 'libs'
-    // }
+     flatDir {
+         dir 'libs'
+     }
 }
 
 dependencies {
@@ -150,15 +151,13 @@ dependencies {
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 
     // Archipelago Client Java Library
-    minecraftLibrary 'dev.koifysh:archipelago-client:0.1.19'
+    implementation group: 'dev.koifysh', name: 'archipelago-client', version: '0.1.17'
 
-    // Archipelago Client Java Library Dependencies
-    // for use when local testing new library updates.
-//    minecraftLibrary "org.java-websocket:Java-WebSocket:1.5.7"
-//    minecraftLibrary "org.apache.httpcomponents.client5:httpclient5:5.2.1"
-//    minecraftLibrary "org.apache.httpcomponents.core5:httpcore5:5.2.5"
+    implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.2'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.11.0'
+    implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1'
+    implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: '5.2'
 }
-
 
 mixin {
     // MixinGradle Settings
@@ -205,9 +204,6 @@ tasks.named('jar', Jar).configure {
             'MixinConfigs'            : 'mixins.aprandomizer.json'
         ])
     }
-
-    // This is the preferred method to reobfuscate your jar file
-    finalizedBy 'reobfJar'
 }
 
 // Example configuration to allow publishing using the maven-publish plugin
@@ -236,21 +232,4 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
-}
-
-// Output to build/libs/shadow.jar
-shadowJar {
-    archiveBaseName.set(mod_id)
-    archiveClassifier.set('shadow')
-    archiveVersion.set(mod_version)
-    dependencies {
-        include(dependency("dev.koifysh:archipelago-client"))
-        include(dependency("org.java-websocket:Java-WebSocket"))
-        include(dependency("org.apache.httpcomponents.client5:httpclient5"))
-        include(dependency("org.apache.httpcomponents.core5:httpcore5"))
-    }
-}
-
-reobf {
-    shadowJar {} // Reobfuscate the shadowed JAR
 }

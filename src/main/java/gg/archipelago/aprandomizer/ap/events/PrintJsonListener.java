@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.Print.APPrintJsonType;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.PrintJSONEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
@@ -11,9 +10,8 @@ public class PrintJsonListener {
     @ArchipelagoEventListener
     public void onPrintJson(PrintJSONEvent event) {
         // Don't print chat messages originating from ourselves.
-        if (event.type == APPrintJsonType.Chat)
-            if (event.player != APRandomizer.getAP().getSlot())
-                return;
+        if ("Chat".equals(event.type) && event.player == APRandomizer.getAP().getSlot())
+            return;
 
         Utils.sendFancyMessageToAll(event.apPrint);
     }

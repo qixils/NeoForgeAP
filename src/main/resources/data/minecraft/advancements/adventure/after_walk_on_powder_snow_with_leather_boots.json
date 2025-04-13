@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/walk_on_powder_snow_with_leather_boots",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

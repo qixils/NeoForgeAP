@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/ride_strider",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

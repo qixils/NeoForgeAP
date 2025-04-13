@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/distract_piglin",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

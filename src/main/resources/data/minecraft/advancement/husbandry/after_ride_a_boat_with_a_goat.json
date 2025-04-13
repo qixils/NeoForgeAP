@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:husbandry/ride_a_boat_with_a_goat",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

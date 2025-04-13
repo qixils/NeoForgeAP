@@ -5,18 +5,16 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.apache.commons.lang3.ArrayUtils;
-import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class WorldData extends SavedData {
 
-
     private String seedName = "";
     private int dragonState = ASLEEP;
     private int witherState = ASLEEP;
-    private boolean jailPlayers = true;
+    private boolean jailPlayers = false;
     private Set<Long> locations = new HashSet<>();
     private int index = 0;
     private Map<String, Integer> playerIndex = new HashMap<>();
@@ -86,16 +84,17 @@ public class WorldData extends SavedData {
     }
 
     @Override
-    public @NotNull CompoundTag save(CompoundTag compoundTag) {
-        compoundTag.putString("seedName", seedName);
-        compoundTag.putInt("dragonState", dragonState);
-        compoundTag.putBoolean("jailPlayers", jailPlayers);
-        compoundTag.putLongArray("locations",locations.stream().toList());
-        compoundTag.putLong("index", index);
+    public @NotNull CompoundTag save(CompoundTag tag, HolderLookup.@NotNull Provider holder) {
+        tag.putString("seedName", seedName);
+        tag.putInt("dragonState", dragonState);
+        tag.putInt("witherState", witherState);
+        tag.putBoolean("jailPlayers", jailPlayers);
+        tag.putLongArray("locations",locations.stream().toList());
+        tag.putLong("index", index);
         CompoundTag tagIndex = new CompoundTag();
         this.playerIndex.forEach(tagIndex::putLong);
-        compoundTag.put("playerIndex", tagIndex);
-        return compoundTag;
+        tag.put("playerIndex", tagIndex);
+        return tag;
     }
 
     public static SavedData.Factory<WorldData> factory() {
@@ -114,7 +113,7 @@ public class WorldData extends SavedData {
         this.playerIndex = playerIndex;
     }
 
-    public static WorldData load(CompoundTag tag) {
+    public static WorldData load(CompoundTag tag, HolderLookup.Provider provider) {
         CompoundTag indexTag = tag.getCompound("playerIndex");
         HashMap<String, Integer> indexMap = new HashMap<>();
         indexTag.getAllKeys().forEach(key -> indexMap.put(key, indexTag.getInt(key)));

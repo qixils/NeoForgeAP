@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:story/enter_the_end",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

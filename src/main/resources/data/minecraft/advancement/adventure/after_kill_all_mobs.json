@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/kill_all_mobs",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:wooden_sword"
+    },
+    "title": "Time to Strike!",
+    "description": "Use planks and sticks to make a sword",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "aprandomizer:archipelago/get_wood",
+  "criteria": {
+    "get_sword": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "minecraft:wooden_sword"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_sword"
+    ]
+  ]
+}

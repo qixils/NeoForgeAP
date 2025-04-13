@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.modifiers;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
@@ -45,35 +44,38 @@ public class APStructureModifier implements StructureModifier {
         Registry<Biome> biomeRegistry = ServerLifecycleHooks.getCurrentServer().registryAccess().registryOrThrow(Registries.BIOME);
 
         //get structure biome holdersets.
-        TagKey<Biome> overworldTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","overworld_structure"));
+        TagKey<Biome> overworldTag = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"overworld_structure"));
         overworldStructures = biomeRegistry.getTag(overworldTag).orElseThrow();
 
-        TagKey<Biome> netherTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","nether_structure"));
+        TagKey<Biome> netherTag = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"nether_structure"));
         netherStructures = biomeRegistry.getTag(netherTag).orElseThrow();
 
-        TagKey<Biome> endTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","end_structure"));
+        TagKey<Biome> endTag = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"end_structure"));
         endStructures = biomeRegistry.getTag(endTag).orElseThrow();
 
-        TagKey<Biome> noneTag = TagKey.create(Registries.BIOME, new ResourceLocation("aprandomizer","none"));
+        TagKey<Biome> noneTag = TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"none"));
         noBiomes = biomeRegistry.getTag(noneTag).orElseThrow();
 
         APMCData data = APRandomizer.getApmcData();
-        for (Map.Entry<String, String> entry : data.structures.entrySet()) {
-            switch (entry.getKey()) {
-                case "Overworld Structure 1", "Overworld Structure 2" ->
-                        structures.put(entry.getValue(), APStructureModifier.overworldStructures);
-                case "Nether Structure 1", "Nether Structure 2" ->
-                        structures.put(entry.getValue(), APStructureModifier.netherStructures);
-                case "The End Structure" ->
-                        structures.put(entry.getValue(), APStructureModifier.endStructures);
+        if (data.structures != null) {
+            for (Map.Entry<String, String> entry : data.structures.entrySet()) {
+                switch (entry.getKey()) {
+                    case "Overworld Structure 1", "Overworld Structure 2" ->
+                            structures.put(entry.getValue(), APStructureModifier.overworldStructures);
+                    case "Nether Structure 1", "Nether Structure 2" ->
+                            structures.put(entry.getValue(), APStructureModifier.netherStructures);
+                    case "The End Structure" -> structures.put(entry.getValue(), APStructureModifier.endStructures);
+                }
             }
         }
     }
 
-    public static final DeferredRegister<Codec<? extends StructureModifier>> structureModifiers = DeferredRegister.create(ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
-    private static final RegistryObject<Codec<? extends StructureModifier>> SERIALIZER = RegistryObject.create(new ResourceLocation(APRandomizer.MODID, "ap_structure_modifier"), ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
+    public static final DeferredRegister<MapCodec<? extends StructureModifier>> structureModifiers = DeferredRegister.create(ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
+    private static final RegistryObject<MapCodec<? extends StructureModifier>> SERIALIZER = RegistryObject.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "ap_structure_modifier"), ForgeRegistries.Keys.STRUCTURE_MODIFIER_SERIALIZERS, APRandomizer.MODID);
     @Override
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
+        if (APRandomizer.getApmcData().structures == null)
+            return;
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
         if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
             APRandomizer.LOGGER.error("APMCData is missing, cannot modify structures.");
@@ -119,12 +121,12 @@ public class APStructureModifier implements StructureModifier {
     }
 
     @Override
-    public Codec<? extends StructureModifier> codec() {
+    public MapCodec<? extends StructureModifier> codec() {
         return SERIALIZER.get();
     }
 
-    public static Codec<APStructureModifier> makeCodec() {
-        return Codec.unit(APStructureModifier::new);
+    public static MapCodec<APStructureModifier> makeCodec() {
+        return MapCodec.unit(APStructureModifier::new);
     }
 }
 

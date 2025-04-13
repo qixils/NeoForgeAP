@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:end/levitate",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

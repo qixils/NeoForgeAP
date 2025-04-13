@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/play_jukebox_in_meadows",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

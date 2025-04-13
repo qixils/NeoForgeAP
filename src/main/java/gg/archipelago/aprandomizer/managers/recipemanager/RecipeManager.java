@@ -49,7 +49,6 @@ public class RecipeManager {
             if (!recipeData.hasID(id))
                 continue;
             grantRecipe(id);
-            return;
         }
     }
 

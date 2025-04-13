@@ -20,7 +20,7 @@ public class FakeWither implements Trap {
     private static final CustomBossEvent witherBar;
 
     static {
-        witherBar = APRandomizer.getServer().getCustomBossEvents().create(new ResourceLocation(APRandomizer.MODID,"fake-wither"),Component.translatable(EntityType.WITHER.getDescriptionId()));
+        witherBar = APRandomizer.getServer().getCustomBossEvents().create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"fake-wither"),Component.translatable(EntityType.WITHER.getDescriptionId()));
         witherBar.setColor(BossEvent.BossBarColor.PURPLE);
         witherBar.setDarkenScreen(true);
         witherBar.setMax(300);

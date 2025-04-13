@@ -22,7 +22,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.*;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,13 +60,13 @@ public class APRandomizer {
     static private APMCData apmcData;
     static private final Set<Integer> validVersions = new HashSet<>() {{
         this.add(9); //mc 1.19
+        this.add(10);
     }};
     static private BlockPos jailCenter = BlockPos.ZERO;
     static private WorldData worldData;
-    static private double lastDeathTimestamp;
 
     public APRandomizer() {
-        LOGGER.info("Minecraft Archipelago 1.20.4 v0.1.3 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21 v0.1.3 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
@@ -162,14 +165,6 @@ public class APRandomizer {
         return goalManager;
     }
 
-    public static void setLastDeathTimestamp(double deathTime) {
-        lastDeathTimestamp = deathTime;
-    }
-
-    public static double getLastDeathTimestamp() {
-        return lastDeathTimestamp;
-    }
-
     public static WorldData getWorldData() {
         return worldData;
     }
@@ -231,10 +226,16 @@ public class APRandomizer {
             ServerLevel overworld = server.getLevel(Level.OVERWORLD);
             BlockPos spawn = overworld.getSharedSpawnPos();
             // alter the spawn box position, so it doesn't interfere with spawning
-            StructureTemplate jail = overworld.getStructureManager().get(new ResourceLocation(MODID,"spawnjail")).get();
-            BlockPos jailPos = new BlockPos(spawn.getX()+5, 300, spawn.getZ()+5);
-            jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX()/2),jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ()/2));
-            jail.placeInWorld(overworld,jailPos,jailPos,new StructurePlaceSettings(), RandomSource.create(),2);
+
+            var jailOptional = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID,"spawnjail"));
+            if (jailOptional.isPresent()) {
+                StructureTemplate jail = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID, "spawnjail")).get();
+                BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
+                jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX() / 2), jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ() / 2));
+                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(), 2);
+            } else {
+                jailCenter = spawn;
+            }
             server.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, server);
             server.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, server);
             server.getGameRules().getRule(GameRules.RULE_DOFIRETICK).set(false, server);

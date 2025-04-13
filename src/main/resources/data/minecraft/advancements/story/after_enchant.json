@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:story/enchant_item",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

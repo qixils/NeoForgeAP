@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.common.events;
 
 import dev.koifysh.archipelago.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.CompoundTag;
@@ -29,12 +28,10 @@ public class onLivingHurt {
 
     @SubscribeEvent
     static void onLivingDeathEvent(LivingDeathEvent event) {
-        if(!APRandomizer.isConnected())
+        if(APRandomizer.isConnected() && !APRandomizer.getAP().getSlotData().MC35)
             return;
 
         String name = event.getEntity().getEncodeId();
-        if(!APRandomizer.getAP().getSlotData().MC35)
-            return;
 
         Entity damageSource = event.getSource().getEntity();
         if(damageSource != null && damageSource.getType() == EntityType.PLAYER) {
@@ -62,7 +59,7 @@ public class onLivingHurt {
                 if (entity.getPassengers().get(0) instanceof ServerPlayer) {
                     if (event.getSource().getMsgId().equals("fall")) {
                         ServerPlayer player = (ServerPlayer) entity.getPassengers().get(0);
-                        AdvancementHolder advancement = event.getEntity().getServer().getAdvancements().get(new ResourceLocation("aprandomizer:archipelago/ride_pig"));
+                        AdvancementHolder advancement = event.getEntity().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
                         AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancement);
                         if (!ap.isDone()) {
                             for (String s : ap.getRemainingCriteria()) {
@@ -79,7 +76,7 @@ public class onLivingHurt {
             ServerPlayer player = (ServerPlayer) e;
             //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
             if (event.getAmount() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().getMsgId().equals("fireball")) {
-                AdvancementHolder a = event.getEntity().getServer().getAdvancements().get(new ResourceLocation("aprandomizer:archipelago/overkill"));
+                AdvancementHolder a = event.getEntity().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
                 AdvancementProgress ap = player.getAdvancements().getOrStartProgress(a);
                 if (!ap.isDone()) {
                     for (String s : ap.getRemainingCriteria()) {

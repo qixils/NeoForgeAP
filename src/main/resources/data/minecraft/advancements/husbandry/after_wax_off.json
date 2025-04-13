@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/wax_off",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

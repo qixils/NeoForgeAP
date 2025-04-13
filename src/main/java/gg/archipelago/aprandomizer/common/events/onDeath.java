@@ -32,7 +32,9 @@ public class onDeath {
         if (!sendDeathLink)
             return;
 
-        DeathLink.SendDeathLink(event.getEntity().getDisplayName().getString(),event.getSource().getLocalizedDeathMessage(player).getString() );
+        // TODO: these args are backwards on kono master
+        DeathLink.SendDeathLink(event.getSource().getLocalizedDeathMessage(player).getString(), player.getDisplayName().getString());
+
         MinecraftServer server = APRandomizer.getServer();
         GameRules.BooleanValue deathMessages = server.getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
         boolean death = deathMessages.get();

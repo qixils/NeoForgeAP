@@ -5,7 +5,6 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.GameType;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -25,8 +24,11 @@ public class onJoin {
     static void onPlayerLoginEvent(PlayerEvent.PlayerLoggedInEvent event) {
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
-        if(APRandomizer.isRace())
+        if(APRandomizer.isRace()) {
+            if (player.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) {
                 player.setGameMode(GameType.SURVIVAL);
+            }
+        }
 
         APMCData data = APRandomizer.getApmcData();
         if (data.state == APMCData.State.MISSING) {
@@ -54,7 +56,9 @@ public class onJoin {
         if(APRandomizer.isJailPlayers()) {
             BlockPos jail = APRandomizer.getJailPosition();
             player.teleportTo(jail.getX(),jail.getY(),jail.getZ());
-            player.setGameMode(GameType.SURVIVAL);
+            if (player.gameMode.getGameModeForPlayer() != GameType.SURVIVAL) {
+                player.setGameMode(GameType.SURVIVAL);
+            }
         }
     }
 }

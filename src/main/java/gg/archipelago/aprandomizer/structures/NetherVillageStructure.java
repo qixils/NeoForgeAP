@@ -19,38 +19,47 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class NetherVillageStructure extends Structure {
-    public static final Codec<NetherVillageStructure> CODEC = RecordCodecBuilder.<NetherVillageStructure>mapCodec(instance ->
-            instance.group(settingsCodec(instance),
+    public static final MapCodec<NetherVillageStructure> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(NetherVillageStructure.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
-                    Codec.intRange(0, 30).fieldOf("size").forGetter((structure) -> structure.size),
+                    Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
-                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
-            ).apply(instance, NetherVillageStructure::new)).codec();
+                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter),
+                    DimensionPadding.CODEC.optionalFieldOf("dimension_padding", JigsawStructure.DEFAULT_DIMENSION_PADDING).forGetter(structure -> structure.dimensionPadding),
+                    LiquidSettings.CODEC.optionalFieldOf("liquid_settings", JigsawStructure.DEFAULT_LIQUID_SETTINGS).forGetter(structure -> structure.liquidSettings)
+            ).apply(instance, NetherVillageStructure::new));
 
-    final Holder<StructureTemplatePool> startPool;
-    final Optional<ResourceLocation> startJigsawName;
-    final int size;
-    final HeightProvider startHeight;
+    private final Holder<StructureTemplatePool> startPool;
+    private final Optional<ResourceLocation> startJigsawName;
+    private final int size;
+    private final HeightProvider startHeight;
     private final Optional<Heightmap.Types> projectStartToHeightmap;
-    final int maxDistanceFromCenter;
+    private final int maxDistanceFromCenter;
+    private final DimensionPadding dimensionPadding;
+    private final LiquidSettings liquidSettings;
 
-    public NetherVillageStructure(StructureSettings config,
-                                  Holder<StructureTemplatePool> startPool,
-                                  Optional<ResourceLocation> startJigsawName,
-                                  int size,
-                                  HeightProvider startHeight,
-                                  Optional<Heightmap.Types> projectStartToHeightmap,
-                                  int maxDistanceFromCenter)
+    public NetherVillageStructure(Structure.StructureSettings config,
+                         Holder<StructureTemplatePool> startPool,
+                         Optional<ResourceLocation> startJigsawName,
+                         int size,
+                         HeightProvider startHeight,
+                         Optional<Heightmap.Types> projectStartToHeightmap,
+                         int maxDistanceFromCenter,
+                         DimensionPadding dimensionPadding,
+                         LiquidSettings liquidSettings)
     {
         super(config);
         this.startPool = startPool;
@@ -59,6 +68,8 @@ public class NetherVillageStructure extends Structure {
         this.startHeight = startHeight;
         this.projectStartToHeightmap = projectStartToHeightmap;
         this.maxDistanceFromCenter = maxDistanceFromCenter;
+        this.dimensionPadding = dimensionPadding;
+        this.liquidSettings = liquidSettings;
     }
 
     /*
@@ -133,18 +144,20 @@ public class NetherVillageStructure extends Structure {
         BlockPos blockPos = new BlockPos(x, y, z);
         Optional<Structure.GenerationStub> structurePiecesGenerator =
                 JigsawPlacement.addPieces(
-                        context, // Used for StructurePoolBasedGenerator to get all the proper behaviors done.
+                        context, // Used for JigsawPlacement to get all the proper behaviors done.
                         this.startPool, // The starting pool to use to create the structure layout from
                         this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
                         this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
                         blockPos, // Where to spawn the structure.
-                        true, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
+                        false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
                         this.projectStartToHeightmap, // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
                         // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
                         // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
                         // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
                         this.maxDistanceFromCenter, // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
-                        PoolAliasLookup.EMPTY);
+                        PoolAliasLookup.EMPTY, // Optional thing that allows swapping a template pool with another per structure json instance. We don't need this but see vanilla JigsawStructure class for how to wire it up if you want it.
+                        this.dimensionPadding, // Optional thing to prevent generating too close to the bottom or top of the dimension.
+                        this.liquidSettings); // Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
 
         /*
          * Note, you are always free to make your own StructurePoolBasedGenerator class and implementation of how the structure

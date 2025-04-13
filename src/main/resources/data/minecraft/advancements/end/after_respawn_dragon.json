@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:end/respawn_dragon",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

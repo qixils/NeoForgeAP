@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/sniper_duel",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

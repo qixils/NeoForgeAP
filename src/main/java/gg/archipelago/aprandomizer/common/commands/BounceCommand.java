@@ -1,8 +1,8 @@
 package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import gg.archipelago.aprandomizer.APRandomizer;
 import dev.koifysh.archipelago.network.client.BouncePacket;
+import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -31,9 +31,7 @@ public class BounceCommand {
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext pContext) {
 
         dispatcher.register(Commands.literal("bounce") //base slash command is "connect"
-                // first make sure its NOT a dedicated server (aka single player or hosted via in game client, OR user has an op level of 1)
                 .requires((CommandSource) -> (!CommandSource.getServer().isDedicatedServer() || CommandSource.hasPermission(1)))
-                //take the first argument as a string and name it "Address"
                 .then(Commands.argument("entity", ResourceArgument.resource(pContext, Registries.ENTITY_TYPE))
                         .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                         .executes(context ->

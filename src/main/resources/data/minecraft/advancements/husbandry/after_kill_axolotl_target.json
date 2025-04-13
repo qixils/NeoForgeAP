@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/kill_axolotl_target",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

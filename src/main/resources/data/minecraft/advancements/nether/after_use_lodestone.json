@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/use_lodestone",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

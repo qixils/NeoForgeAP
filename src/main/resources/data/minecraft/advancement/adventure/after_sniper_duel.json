@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/sniper_duel",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

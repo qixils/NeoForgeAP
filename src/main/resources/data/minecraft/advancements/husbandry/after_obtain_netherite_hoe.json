@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/obtain_netherite_hoe",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

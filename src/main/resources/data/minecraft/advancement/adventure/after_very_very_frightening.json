@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/very_very_frightening",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

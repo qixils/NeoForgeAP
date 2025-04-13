@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:adventure/totem_of_undying",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

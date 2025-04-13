@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/lightning_rod_with_villager_no_fire",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

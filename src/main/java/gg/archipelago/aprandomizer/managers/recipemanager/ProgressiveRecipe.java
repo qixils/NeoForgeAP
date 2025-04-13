@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.managers.recipemanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class ProgressiveRecipe implements APRecipe {
     public Set<ResourceLocation> getUnlockedTrackingAdvancements() {
         HashSet<ResourceLocation> trackingAdvancements = new HashSet<>();
         for (int i = 1; i <= currentTier; i++) {
-            trackingAdvancements.add(new ResourceLocation(APRandomizer.MODID,"received/"+ trackingAdvancementBase + "_" + i));
+            trackingAdvancements.add(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID,"received/"+ trackingAdvancementBase + "_" + i));
         }
         return trackingAdvancements;
     }

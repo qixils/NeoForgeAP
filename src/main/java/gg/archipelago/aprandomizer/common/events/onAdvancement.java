@@ -3,8 +3,7 @@ package gg.archipelago.aprandomizer.common.events;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.network.chat.Component;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,21 +35,19 @@ public class onAdvancement {
             return;
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
-        Advancement advancement = event.getAdvancement().value();
-        String id = event.getAdvancement().id().toString();
+        AdvancementHolder advancementHolder = event.getAdvancement();
+        String id = advancementHolder.id().toString();
 
-        AdvancementManager APAdvancementManager = APRandomizer.getAdvancementManager();
+        AdvancementManager am = APRandomizer.getAdvancementManager();
         //don't do anything if this advancement has already been had, or is not on our list of tracked advancements.
-        if (!APAdvancementManager.hasAdvancement(id) && APAdvancementManager.getAdvancementID(id) != 0) {
+        if (!am.hasAdvancement(id) && am.getAdvancementID(id) != 0) {
             LOGGER.debug("{} has gotten the advancement {}", player.getDisplayName().getString(), id);
-            APAdvancementManager.addAdvancement(APAdvancementManager.getAdvancementID(id));
-            APAdvancementManager.syncAdvancement(event.getAdvancement());
-            if(advancement.display().isEmpty())
-                return;
-            APRandomizer.getServer().getPlayerList().broadcastSystemMessage(
-                     advancement.display().get().getType().createAnnouncement(event.getAdvancement(), player),
-                    false
-            );
+            am.addAdvancement(am.getAdvancementID(id));
+            am.syncAdvancement(advancementHolder);
+
+            advancementHolder.value().display().ifPresent(it -> {
+                APRandomizer.getServer().getPlayerList().broadcastSystemMessage(it.getType().createAnnouncement(advancementHolder, player), false);
+            });
 
         }
     }

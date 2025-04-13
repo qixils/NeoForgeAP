@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/whos_the_pillager_now",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

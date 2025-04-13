@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:nether/loot_bastion",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

@@ -1,13 +1,13 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.helper.DeathLink;
-import gg.archipelago.aprandomizer.ap.APClient;
-import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.SlotData;
-import gg.archipelago.aprandomizer.common.Utils.Utils;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
+import dev.koifysh.archipelago.helper.DeathLink;
 import dev.koifysh.archipelago.network.ConnectionResult;
+import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.ap.APClient;
+import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +24,7 @@ public class ConnectResult {
     @ArchipelagoEventListener
     public void onConnectResult(ConnectionResultEvent event) {
         if (event.getResult() == ConnectionResult.Success) {
-            Utils.sendMessageToAll("Connected to Archipelago Server.");
+            Utils.sendMessageToAll("Successfully connected to " + APClient.getConnectedAddress());
             try {
                 APClient.slotData = event.getSlotData(SlotData.class);
                 APClient.slotData.parseStartingItems();
@@ -34,6 +34,7 @@ public class ConnectResult {
             }
 
             if(APClient.slotData.MC35) {
+                Utils.sendMessageToAll("Welcome to Minecraft 35.");
                 APClient.addTag("MC35");
             }
             if(APClient.slotData.deathlink) {
@@ -59,13 +60,13 @@ public class ConnectResult {
             });
 
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {
-            Utils.sendMessageToAll("Invalid Password.");
+            Utils.sendMessageToAll("Connection Failed: Invalid Password.");
         } else if (event.getResult() == ConnectionResult.IncompatibleVersion) {
-            Utils.sendMessageToAll("Server Sent Incompatible Version Error.");
+            Utils.sendMessageToAll("Connection Failed: Server Sent Incompatible Version Error.");
         } else if (event.getResult() == ConnectionResult.InvalidSlot) {
-            Utils.sendMessageToAll("Invalid Slot Name. (this is case sensitive)");
+            Utils.sendMessageToAll("Connection Failed: Invalid Slot Name. (this is case sensitive)");
         } else if (event.getResult() == ConnectionResult.SlotAlreadyTaken) {
-            Utils.sendMessageToAll("Room Slot has all ready been taken.");
+            Utils.sendMessageToAll("Connection Failed: Room Slot has all ready been taken.");
         }
     }
 }

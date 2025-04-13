@@ -1,14 +1,13 @@
 {
   "pack": {
-    "description": "APRandomizer Resources",
-    "pack_format": 6,
-    "_comment": "the meat and potatoes of the AP Randomizer Mod"
+    "description": "${mod_id} resources",
+    "pack_format": 45
   },
   "filter": {
     "block": [
       {
         "namespace": "minecraft",
-        "path": "advancements/recipes/.*"
+        "path": "recipes/.*"
       }
     ]
   }

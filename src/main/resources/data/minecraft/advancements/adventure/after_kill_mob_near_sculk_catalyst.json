@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/kill_mob_near_sculk_catalyst",
-  "criteria": {
-    "after_end_city": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}
