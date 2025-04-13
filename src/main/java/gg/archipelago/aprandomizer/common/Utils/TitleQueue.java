@@ -33,7 +33,7 @@ public class TitleQueue {
         titleQueue.add(queuedTitle);
     }
 
-    public static void ClearQueue() {
+    public static void clearTitleQueue() {
         titleQueue.clear();
     }
 }

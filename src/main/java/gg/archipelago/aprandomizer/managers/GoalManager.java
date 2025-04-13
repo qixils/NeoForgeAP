@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.managers;
 
 import dev.koifysh.archipelago.ClientStatus;
-import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.APClient;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
@@ -88,7 +88,7 @@ public class GoalManager {
         updateInfoBar();
         if (canFinish)
             checkGoalCompletion();
-        checkDragonSpawn();
+        checkBossMessages();
     }
 
 
@@ -155,20 +155,24 @@ public class GoalManager {
             apClient.setGameState(ClientStatus.CLIENT_GOAL);
     }
 
-    public void checkDragonSpawn() {
+    public void checkBossMessages() {
         WorldData worldData = APRandomizer.getWorldData();
         if (worldData == null) return;
 
-        //check if the dragon is not spawned and we need to spawn it.
-        if (goalsDone() && worldData.getDragonState() == WorldData.DRAGON_ASLEEP) {
-            //set the dragon state to spawn as soon as the end 0,0 chunk is loaded
-            worldData.setDragonState(WorldData.DRAGON_WAITING);
+        //check if the dragon message has been sent, and send it if needed.
+        if (goalsDone() && worldData.getDragonState() == WorldData.ASLEEP && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
+            worldData.setDragonState(WorldData.WAITING);
             Utils.PlaySoundToAll(SoundEvents.ENDER_DRAGON_AMBIENT);
-            Utils.sendMessageToAll("The Dragon has awoken.");
-            Utils.sendTitleToAll(Component.literal("Ender Dragon").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(java.awt.Color.ORANGE.getRGB()))), Component.literal("has awoken"), 40, 120, 40);
+            Utils.sendMessageToAll("The Dragon is waiting...");
+            Utils.sendTitleToAll(Component.literal("The Dragon").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(java.awt.Color.ORANGE.getRGB()))), Component.literal("is waiting..."), 40, 120, 40);
+        }
 
-            // TODO: Spawn end dragon
-//            Utils.SpawnDragon(end);
+        //check if the wither message has been sent, and send it if needed.
+        if (goalsDone() && worldData.getWitherState() == WorldData.ASLEEP && isBossRequired(APMCData.Bosses.WITHER)) {
+            worldData.setWitherState(WorldData.WAITING);
+            Utils.PlaySoundToAll(SoundEvents.WITHER_AMBIENT);
+            Utils.sendMessageToAll("The Darkness is calling...");
+            Utils.sendTitleToAll(Component.literal("The Darkness").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(java.awt.Color.BLACK.getRGB()))), Component.literal("is calling..."), 40, 120, 40);
         }
     }
 
@@ -183,15 +187,29 @@ public class GoalManager {
         LivingEntity mob = event.getEntity();
         GoalManager goalManager = APRandomizer.getGoalManager();
         if (goalManager == null) return;
-        if (mob instanceof EnderDragon && goalManager.goalsDone()) {
+        if (mob instanceof EnderDragon && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
             APRandomizer.worldData().ifPresent(WorldData::setDragonKilled);
             Utils.sendMessageToAll("She is no more...");
             goalManager.updateGoal(false);
         }
-        if (mob instanceof WitherBoss && goalManager.goalsDone()) {
+        if (mob instanceof WitherBoss && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.WITHER)) {
             APRandomizer.worldData().ifPresent(WorldData::setWitherKilled);
             Utils.sendMessageToAll("The Darkness has lifted...");
             goalManager.updateGoal(true);
         }
+    }
+
+    // check APMC.required_bosses to see if the boss is required
+    public static boolean isBossRequired(APMCData.Bosses boss) {
+        var required = APRandomizer.getApmcData().required_bosses;
+
+        // if it matches our goal its true
+        if (required == boss) return true;
+        // a boss is required and you asked about none.
+        if (boss == APMCData.Bosses.NONE) return false;
+        // if both boses are required and you didn't ask about none return ture;
+        if (required == APMCData.Bosses.BOTH) return true;
+
+        return false;
     }
 }

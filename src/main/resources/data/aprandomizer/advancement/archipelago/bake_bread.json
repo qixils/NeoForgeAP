@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "id": "minecraft:bread"
+      "item": "minecraft:bread"
     },
     "title": "Bake Bread",
     "description": "Turn wheat into bread",

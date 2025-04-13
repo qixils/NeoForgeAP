@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.managers.advancementmanager;
 
-import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.data.WorldData;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
@@ -9,7 +9,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static gg.archipelago.aprandomizer.APRandomizer.*;
 
@@ -210,7 +212,7 @@ public class AdvancementManager {
     }
 
     public void resendAdvancements() {
-        APClient apClient = getAP();
+        gg.archipelago.aprandomizer.ap.APClient apClient = getAP(); // TODO
         if (apClient == null) return;
         for (Long earnedAdvancement : earnedAdvancements) {
             apClient.checkLocation(earnedAdvancement);
@@ -218,7 +220,7 @@ public class AdvancementManager {
     }
 
     public void syncAdvancement(AdvancementHolder a) {
-        if (!hasAdvancement(a.id().toString())) return;
+        if (!hasAdvancement(a.id().toString()) || APRandomizer.recipeManager().map(rm -> rm.hasReceived(a.id())).orElse(false)) return;
         if (server == null) return;
         for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()) {
             AdvancementProgress ap = serverPlayerEntity.getAdvancements().getOrStartProgress(a);
@@ -232,7 +234,7 @@ public class AdvancementManager {
 
     public void syncAllAdvancements() {
         if (server == null) return;
-        for (AdvancementHolder a : server.getAdvancements().getAllAdvancements()) {
+        for (var a : server.getAdvancements().getAllAdvancements()) {
             syncAdvancement(a);
         }
     }

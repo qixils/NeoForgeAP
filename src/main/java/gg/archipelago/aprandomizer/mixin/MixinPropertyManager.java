@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.mixin;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import net.minecraft.server.dedicated.Settings;
 import org.apache.logging.log4j.LogManager;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.nio.file.Path;
 import java.util.Properties;
@@ -18,7 +17,7 @@ import java.util.Properties;
 @Mixin(value = Settings.class, remap = false)
 public abstract class MixinPropertyManager {
 
-    @Inject(method = "loadFromFile", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "loadFromFile", at = @At("RETURN"))
     private static void onLoadFromFile(Path pPath, @NotNull CallbackInfoReturnable<Properties> cir) {
         Properties properties = cir.getReturnValue();
         APMCData data = APRandomizer.getApmcData();

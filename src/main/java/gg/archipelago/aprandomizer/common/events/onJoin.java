@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
@@ -28,13 +28,18 @@ public class onJoin {
         }
 
         APMCData data = APRandomizer.getApmcData();
-        if (data.state == APMCData.State.MISSING)
+        if (data.state == APMCData.State.MISSING) {
             Utils.sendMessageToAll("No APMC file found, please only start the server via the APMC file.");
-        else if (data.state == APMCData.State.INVALID_VERSION)
+            return;
+        }
+        else if (data.state == APMCData.State.INVALID_VERSION) {
             Utils.sendMessageToAll("This Seed was generated using an incompatible randomizer version.");
-        else if (data.state == APMCData.State.INVALID_SEED)
-            Utils.sendMessageToAll("Invalid Minecraft World please only start the Minecraft server via the correct APMC file");
-
+            return;
+        }
+        else if (data.state == APMCData.State.INVALID_SEED) {
+            Utils.sendMessageToAll("Supplied APMC file does not match world loaded. something went very wrong here.");
+            return;
+        }
         APRandomizer.advancementManager().ifPresent(AdvancementManager::syncAllAdvancements);
         APRandomizer.recipeManager().ifPresent(value -> {
             Set<RecipeHolder<?>> restricted = value.getRestrictedRecipes();

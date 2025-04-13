@@ -1,13 +1,15 @@
 {
   "required": true,
-  "minVersion": "0.8",
+  "minVersion": "0.8.3",
   "package": "gg.archipelago.aprandomizer.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "aprandomizer.refmap.json",
   "mixins": [
+    "MixinItemStack",
     "MixinPropertyManager",
     "MixinRaid",
-    "MixinServerRecipeBook"
+    "MixinServerRecipeBook",
+    "MixinSpawnGateways"
   ],
   "injectors": {
     "defaultRequire": 1

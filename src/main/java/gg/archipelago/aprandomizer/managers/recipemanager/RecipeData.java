@@ -15,28 +15,28 @@ public class RecipeData {
     private static final Logger LOGGER = LogManager.getLogger();
 
     final Map<Long, GroupRecipe> recipes = new HashMap<>() {{
-        put(45000L, new GroupRecipe(45000, "Archery", new String[]{
+        put(45000L, new GroupRecipe(45000, "archery", new String[]{
                 "minecraft:bow",
                 "minecraft:arrow",
                 "minecraft:crossbow"
         }));
         //put(45001, new GroupRecipe(45001, "Ingot Crafting", new String[]{"minecraft:iron_ingot_from_nuggets", "minecraft:iron_nugget", "minecraft:gold_ingot_from_nuggets", "minecraft:gold_nugget", "minecraft:furnace", "minecraft:blast_furnace"}));
         //put(45002, new GroupRecipe(45002, "Resource Blocks", new String[]{"minecraft:redstone_block", "minecraft:redstone", "minecraft:glowstone", "minecraft:iron_ingot_from_iron_block", "minecraft:iron_block", "minecraft:gold_block", "minecraft:gold_block", "minecraft:gold_ingot_from_gold_block", "minecraft:diamond", "minecraft:diamond_block", "minecraft:netherite_block", "minecraft:netherite_ingot_from_netherite_block", "minecraft:anvil"}));
-        put(45003L, new GroupRecipe(45003, "Brewing", new String[]{
+        put(45003L, new GroupRecipe(45003, "brewing", new String[]{
                 "minecraft:blaze_powder",
                 "minecraft:brewing_stand"
         }));
-        put(45004L, new GroupRecipe(45004, "Enchanting", new String[]{
+        put(45004L, new GroupRecipe(45004, "enchanting", new String[]{
                 "minecraft:enchanting_table",
                 "minecraft:bookshelf"
         }));
-        put(45005L, new GroupRecipe(45005, "Bucket", new String[]{
+        put(45005L, new GroupRecipe(45005, "bucket", new String[]{
                 "minecraft:bucket"
         }));
-        put(45006L, new GroupRecipe(45006, "Flint & Steel", new String[]{
+        put(45006L, new GroupRecipe(45006, "flint_and_steel", new String[]{
                 "minecraft:flint_and_steel"
         }));
-        put(45007L, new GroupRecipe(45007, "Bed", new String[]{
+        put(45007L, new GroupRecipe(45007, "beds", new String[]{
                 "minecraft:black_bed",
                 "minecraft:blue_bed",
                 "minecraft:brown_bed",
@@ -54,32 +54,32 @@ public class RecipeData {
                 "minecraft:white_bed",
                 "minecraft:yellow_bed"
         }));
-        put(45008L, new GroupRecipe(45008, "Bottles", new String[]{
+        put(45008L, new GroupRecipe(45008, "bottles", new String[]{
                 "minecraft:glass_bottle"
         }));
-        put(45009L, new GroupRecipe(45009, "Shield", new String[]{
+        put(45009L, new GroupRecipe(45009, "shield", new String[]{
                 "minecraft:shield"
         }));
-        put(45010L, new GroupRecipe(45010, "Fishing Rod", new String[]{
+        put(45010L, new GroupRecipe(45010, "fishing", new String[]{
                 "minecraft:fishing_rod",
                 "minecraft:carrot_on_a_stick",
                 "minecraft:warped_fungus_on_a_stick"
         }));
-        put(45011L, new GroupRecipe(45011, "Campfire", new String[]{
+        put(45011L, new GroupRecipe(45011, "campfires", new String[]{
                 "minecraft:campfire",
                 "minecraft:soul_campfire"
         }));
-        put(45044L, new GroupRecipe(45044, "Spyglass", new String[]{
+        put(45044L, new GroupRecipe(45044, "spyglass", new String[]{
                 "minecraft:spyglass"
         }));
-        put(45045L, new GroupRecipe(45044, "Lead", new String[]{
+        put(45045L, new GroupRecipe(45044, "lead", new String[]{
                 "minecraft:lead"
         }));
     }};
 
     final Map<Long, ProgressiveRecipe> progressiveRecipes = new HashMap<>() {{
         put(45012L,
-                new ProgressiveRecipe(45012, "Progressive Weapons",
+                new ProgressiveRecipe(45012, "progressive_weapons",
                         new ArrayList<>(
                                 Arrays.asList(
                                         new String[]{
@@ -99,7 +99,7 @@ public class RecipeData {
                 )
         );
         put(45013L,
-                new ProgressiveRecipe(45013, "Progressive Tools",
+                new ProgressiveRecipe(45013, "progressive_tools",
                         new ArrayList<>(
                                 Arrays.asList(
                                         new String[]{"minecraft:stone_pickaxe",
@@ -119,7 +119,7 @@ public class RecipeData {
                 )
         );
         put(45014L,
-                new ProgressiveRecipe(45013, "Progressive Armor",
+                new ProgressiveRecipe(45013, "progressive_armor",
                         new ArrayList<>(
                                 Arrays.asList(
                                         new String[]{
@@ -138,7 +138,7 @@ public class RecipeData {
                 )
         );
         put(45001L,
-                new ProgressiveRecipe(45001, "Progressive Resource Crafting",
+                new ProgressiveRecipe(45001, "progressive_resource_crafting",
                         new ArrayList<>(
                                 Arrays.asList(
                                         new String[]{

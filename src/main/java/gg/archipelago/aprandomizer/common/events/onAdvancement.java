@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.server.MinecraftServer;
@@ -24,11 +24,13 @@ public class onAdvancement {
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
 
-        for (String progress : event.getAdvancementProgress().getCompletedCriteria()) {
-            for (ServerPlayer p : server.getPlayerList().getPlayers()) {
-                p.getAdvancements().award(event.getAdvancement(), progress);
+        server.execute(() -> {
+            for (String progress : event.getAdvancementProgress().getCompletedCriteria()) {
+                for (ServerPlayer p : server.getPlayerList().getPlayers()) {
+                    p.getAdvancements().award(event.getAdvancement(), progress);
+                }
             }
-        }
+        });
     }
 
     @SubscribeEvent

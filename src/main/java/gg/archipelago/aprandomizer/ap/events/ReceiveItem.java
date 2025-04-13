@@ -1,4 +1,4 @@
-package gg.archipelago.aprandomizer.apevents;
+package gg.archipelago.aprandomizer.ap.events;
 
 import dev.koifysh.archipelago.Print.APPrintColor;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;

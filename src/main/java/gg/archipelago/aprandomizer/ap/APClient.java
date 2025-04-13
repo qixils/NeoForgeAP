@@ -1,8 +1,10 @@
-package gg.archipelago.aprandomizer;
+package gg.archipelago.aprandomizer.ap;
 
 import dev.koifysh.archipelago.Client;
 import dev.koifysh.archipelago.ItemFlags;
-import gg.archipelago.aprandomizer.apevents.*;
+import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.ap.events.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import org.jetbrains.annotations.Nullable;
@@ -12,11 +14,11 @@ public class APClient extends Client {
     @Nullable
     public SlotData slotData;
 
-    APClient() {
+    public APClient() {
         super();
 
         this.setGame("Minecraft");
-        this.setItemsHandlingFlags(ItemFlags.SEND_ITEMS + ItemFlags.SEND_OWN_ITEMS + ItemFlags.SEND_STARTING_INVENTORY);
+        this.setItemsHandlingFlags(ItemFlags.SEND_ITEMS | ItemFlags.SEND_OWN_ITEMS | ItemFlags.SEND_STARTING_INVENTORY);
         APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(getLocationManager().getCheckedLocations()));
 
         //give our item manager the list of received items to give to players as they log in.
@@ -41,6 +43,7 @@ public class APClient extends Client {
     public SlotData getSlotData() {
         return slotData;
     }
+
 
     @Override
     public void onError(Exception ex) {

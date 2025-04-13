@@ -7,7 +7,6 @@ import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -33,7 +32,6 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public class ItemManager {
-
     public static final long DRAGON_EGG_SHARD = 45043L;
 
     private final HashMap<Long, ItemStack> itemStacks = new HashMap<>() {{
@@ -78,31 +76,24 @@ public class ItemManager {
         put(45035L, new ItemStack(Items.ARROW, 32));
         put(45036L, new ItemStack(Items.SADDLE, 1));
 
-        String[] compassLore = new String[]{"Right click with compass in hand to", "cycle to next known structure location."};
-
         ItemStack villageCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(villageCompass, APStructures.VILLAGE_TAG);
-        addLore(villageCompass, "Structure Compass (Village)", compassLore);
         put(45037L, villageCompass);
 
         ItemStack outpostCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(outpostCompass, APStructures.OUTPOST_TAG);
-        addLore(outpostCompass, "Structure Compass (Pillager Outpost)", compassLore);
         put(45038L, outpostCompass);
 
         ItemStack fortressCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(fortressCompass, APStructures.FORTRESS_TAG);
-        addLore(fortressCompass, "Structure Compass (Nether Fortress)", compassLore);
         put(45039L, fortressCompass);
 
         ItemStack bastionCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(bastionCompass, APStructures.BASTION_REMNANT_TAG);
-        addLore(bastionCompass, "Structure Compass (Bastion Remnant)", compassLore);
         put(45040L, bastionCompass);
 
         ItemStack endCityCompass = new ItemStack(Items.COMPASS, 1);
         makeCompass(endCityCompass, APStructures.END_CITY_TAG);
-        addLore(endCityCompass, "Structure Compass (End City)", compassLore);
         put(45041L, endCityCompass);
 
         put(45042L, new ItemStack(Items.SHULKER_BOX, 1));
@@ -155,18 +146,14 @@ public class ItemManager {
         iStack.set(DataComponents.CUSTOM_NAME, Component.literal("Structure Compass"));
 
         BlockPos structureCords = new BlockPos(0, 0, 0);
-        iStack.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(Utils.getStructureWorld(structureTag), structureCords)), false));
-    }
-
-    private void addLore(ItemStack iStack, String name, String[] compassLore) {
-        iStack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
-
-        List<Component> itemLore = new ArrayList<>();
-        for (String s : compassLore) {
-            itemLore.add(Component.literal(s));
-        }
-
-        iStack.set(DataComponents.LORE, new ItemLore(itemLore));
+        Utils.addLodestoneTags(Utils.getStructureWorld(structureTag),structureCords,  iStack);
+        Utils.setItemName(iStack, "uninitialized structure compass");
+        Utils.setItemLore(iStack, new ArrayList<>(){{
+            add("oops, this compass is broken.");
+            add("right click with compass in hand to fix.");
+            add("hopefully it will point to the right place.");
+            add("no guarantees.");
+        }});
     }
 
     public void setReceivedItems(ArrayList<Long> items) {
@@ -179,10 +166,9 @@ public class ItemManager {
         APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
     }
 
-    public void giveItem(Long itemID, ServerPlayer player, int itemIndex) {
+        public void giveItem(Long itemID, ServerPlayer player, int itemIndex) {
         WorldData data = APRandomizer.getWorldData();
         if (data == null) return;
-
         if (APRandomizer.isJailPlayers()) {
             //dont send items to players if game has not started.
             return;
@@ -263,14 +249,22 @@ public class ItemManager {
         //only locate structure if the player is in the same world as the one for the compass
         //otherwise just point it to 0,0 in said dimension.
         BlockPos structurePos = new BlockPos(0, 0, 0);
-
+        ArrayList<String> lore = new ArrayList<>(){{
+            add("Right click with compass in hand to");
+            add("cycle though unlocked compasses.");
+        }};
         var displayName = Component.literal(String.format("Structure Compass (%s)", Utils.getAPStructureName(structureTag)));
         if (player.getCommandSenderWorld().dimension().equals(world)) {
             try {
                 //noinspection DataFlowIssue
                 structurePos = APRandomizer.getServer().getLevel(world).findNearestMapStructure(structureTag, player.blockPosition(), 75, false);
+                lore.add(0,"Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
             } catch (Exception exception) {
                 player.sendSystemMessage(Component.literal("Could not find a nearby " + Utils.getAPStructureName(structureTag)));
+                displayName = Component.literal(
+                        String.format("Structure Compass (%s) Not Found",
+                                Utils.getAPStructureName(structureTag))
+                ).withStyle(ChatFormatting.YELLOW);
             }
         } else {
             displayName = Component.literal(
@@ -281,15 +275,14 @@ public class ItemManager {
 
         if (structurePos == null)
             structurePos = new BlockPos(0, 0, 0);
-        //update the nbt data with our new structure.
 
+        //update the nbt data with our new structure.
         CustomData customData = compass.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         customData.getUnsafe().putString(APRandomizer.MODID + ":tracked_structure", structureTag.location().toString());
         compass.set(DataComponents.CUSTOM_DATA, customData);
 
-
-        compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(world, structurePos)), false));
-        compass.set(DataComponents.CUSTOM_NAME, displayName);
+        Utils.addLodestoneTags(world,structurePos,compass);
+        Utils.setNameAndLore(compass, displayName, lore);
     }
 
     // refresh all compasses in player inventory

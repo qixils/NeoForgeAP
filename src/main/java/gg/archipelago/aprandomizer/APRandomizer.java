@@ -2,7 +2,8 @@ package gg.archipelago.aprandomizer;
 
 import com.google.gson.Gson;
 import dev.koifysh.archipelago.network.client.BouncePacket;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.APClient;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.GoalManager;
@@ -49,7 +50,7 @@ public class APRandomizer {
 
     //store our APClient
     @Nullable
-    static private APClient apClient;
+    static private APClient APClient;
     @Nullable
     static public MinecraftServer server;
     @Nullable
@@ -67,7 +68,6 @@ public class APRandomizer {
         this.add(9); //mc 1.19
         this.add(10);
     }};
-    static private boolean jailPlayers = true;
     @NotNull
     static private BlockPos jailCenter = BlockPos.ZERO;
     @Nullable
@@ -121,16 +121,16 @@ public class APRandomizer {
 
     @Nullable
     public static APClient getAP() {
-        return apClient;
+        return APClient;
     }
 
     @NotNull
     public static Optional<APClient> AP() {
-        return Optional.ofNullable(apClient);
+        return Optional.ofNullable(APClient);
     }
 
     public static boolean isConnected() {
-        return (apClient != null && apClient.isConnected());
+        return (APClient != null && APClient.isConnected());
     }
 
     @Nullable
@@ -180,12 +180,10 @@ public class APRandomizer {
     }
 
     public static boolean isJailPlayers() {
-        return jailPlayers;
+        return worldData.getJailPlayers();
     }
 
     public static void setJailPlayers(boolean jailPlayers) {
-        APRandomizer.jailPlayers = jailPlayers;
-
         if (worldData != null) worldData.setJailPlayers(jailPlayers);
     }
 
@@ -199,8 +197,8 @@ public class APRandomizer {
     }
 
     public static void sendBounce(BouncePacket packet) {
-        if (apClient != null)
-            apClient.sendBounce(packet);
+        if (APClient != null)
+            APClient.sendBounce(packet);
     }
 
     @Nullable
@@ -231,6 +229,10 @@ public class APRandomizer {
 
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+        if (apmcData.state == APMCData.State.MISSING) {
+            LOGGER.error("NO APMC FILE FOUND. PLEASE PLACE A VALID APMC FILE IN THE APDATA FOLDER.");
+            return;
+        }
         if (server == null) server = event.getServer();
 
         // do something when the server starts
@@ -246,8 +248,7 @@ public class APRandomizer {
         server.setDifficulty(Difficulty.NORMAL, true);
 
         //fetch our custom world save data we attach to the worlds.
-        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.factory(), "apdata");
-        jailPlayers = worldData.getJailPlayers();
+        worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.factory(), MODID);
         advancementManager.setCheckedAdvancements(worldData.getLocations());
 
 
@@ -268,12 +269,12 @@ public class APRandomizer {
         }
 
         if (apmcData.state == APMCData.State.VALID) {
-            apClient = new APClient();
+            APClient = new APClient();
         }
 
 
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-        if (jailPlayers && overworld != null) {
+        if (worldData.getJailPlayers() && overworld != null) {
             BlockPos spawn = overworld.getSharedSpawnPos();
             // alter the spawn box position, so it doesn't interfere with spawning
 
@@ -303,15 +304,15 @@ public class APRandomizer {
 
         if (apmcData.state == APMCData.State.VALID && apmcData.server != null) {
 
-            APClient apClient = getAP();
-            if (apClient != null) {
-                apClient.setName(apmcData.player_name);
+            APClient APClient = getAP();
+            if (APClient != null) {
+                APClient.setName(apmcData.player_name);
                 String address = apmcData.server.concat(":" + apmcData.port);
 
                 Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
 
                 try {
-                    apClient.connect(address);
+                    APClient.connect(address);
                 } catch (URISyntaxException e) {
                     Utils.sendMessageToAll("unable to connect");
                 }
@@ -321,13 +322,13 @@ public class APRandomizer {
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
-        if (apClient != null)
-            apClient.close();
+        if (APClient != null)
+            APClient.close();
     }
 
     @SubscribeEvent
     public void onServerStopped(ServerStoppedEvent event) {
-        if (apClient != null)
-            apClient.close();
+        if (APClient != null)
+            APClient.close();
     }
 }

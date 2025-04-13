@@ -2,7 +2,7 @@ package gg.archipelago.aprandomizer.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.APStorage.APMCData;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -35,6 +35,10 @@ public class APStructureModifier implements StructureModifier {
 
     public static void loadTags() {
         if (!structures.isEmpty()) return;
+        if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
+            APRandomizer.LOGGER.error("APMCData is missing, cannot load tags.");
+            return;
+        }
         APRandomizer.LOGGER.info("Loading Tags and Biome info.");
 
         Registry<Biome> biomeRegistry = APRandomizer.server().orElseThrow().registryAccess().lookupOrThrow(Registries.BIOME);
@@ -74,6 +78,10 @@ public class APStructureModifier implements StructureModifier {
         if (APRandomizer.getApmcData().structures == null)
             return;
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
+        if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
+            APRandomizer.LOGGER.error("APMCData is missing, cannot modify structures.");
+            return;
+        }
         if (structures.isEmpty()) loadTags();
         APRandomizer.LOGGER.debug("Altering biome list for {}", structure.unwrapKey().get().location());
 

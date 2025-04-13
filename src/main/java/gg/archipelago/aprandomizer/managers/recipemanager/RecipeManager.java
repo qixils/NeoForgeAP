@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.recipemanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 
 public class RecipeManager {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(RecipeManager.class);
+
     //have a lookup of every advancement
     private final RecipeData recipeData;
 
@@ -23,6 +25,8 @@ public class RecipeManager {
     private final Set<RecipeHolder<?>> initialGranted = new HashSet<>();
     private final Set<RecipeHolder<?>> restricted = new HashSet<>();
     private final Set<RecipeHolder<?>> granted = new HashSet<>();
+
+    private final Set<ResourceLocation> itemAdvancements = new HashSet<>();
 
 
     public RecipeManager() {
@@ -43,22 +47,12 @@ public class RecipeManager {
         granted.addAll(initialGranted);
     }
 
-    public boolean grantRecipeList(List<Long> recipes) {
+    public void grantRecipeList(List<Long> recipes) {
         for (var id : recipes) {
             if (!recipeData.hasID(id))
                 continue;
-            Set<RecipeHolder<?>> toGrant = recipeData.getID(id).getGrantedRecipes();
-            log.trace("Granting and restricting {}", toGrant);
-            granted.addAll(toGrant);
-            restricted.removeAll(toGrant);
+            grantRecipe(id);
         }
-        APRandomizer.server().ifPresent(server -> {
-            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                player.resetRecipes(restricted);
-                player.awardRecipes(granted);
-            }
-        });
-        return true;
     }
 
     public void grantRecipe(long id) {
@@ -69,11 +63,22 @@ public class RecipeManager {
 
         granted.addAll(toGrant);
         restricted.removeAll(toGrant);
+        itemAdvancements.addAll(recipeData.getID(id).getUnlockedTrackingAdvancements());
 
         APRandomizer.server().ifPresent(server -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 player.resetRecipes(restricted);
                 player.awardRecipes(granted);
+                var serverAdvancements = server.getAdvancements();
+                recipeData.getID(id).getUnlockedTrackingAdvancements().forEach(
+                    location -> {
+                        var trackingAdvancement = serverAdvancements.get(location);
+                        if (trackingAdvancement != null) {
+                            APRandomizer.advancementManager().ifPresent(am -> am.syncAdvancement(trackingAdvancement));
+                        }
+
+                    }
+                );
             }
         });
     }
@@ -99,5 +104,9 @@ public class RecipeManager {
         granted.clear();
         granted.addAll(initialGranted);
         recipeData.reset();
+    }
+
+    public boolean hasReceived(ResourceLocation id) {
+        return itemAdvancements.contains(id);
     }
 }

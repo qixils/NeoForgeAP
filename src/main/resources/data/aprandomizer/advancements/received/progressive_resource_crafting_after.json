@@ -1,0 +1,8 @@
+{
+  "parent": "aprandomizer:received/progressive_resource_crafting_2",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

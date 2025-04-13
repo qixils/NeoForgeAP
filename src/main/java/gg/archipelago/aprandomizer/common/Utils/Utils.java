@@ -4,8 +4,11 @@ import dev.koifysh.archipelago.Print.APPrint;
 import dev.koifysh.archipelago.Print.APPrintColor;
 import dev.koifysh.archipelago.Print.APPrintPart;
 import dev.koifysh.archipelago.Print.APPrintType;
-import gg.archipelago.aprandomizer.APClient;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.ap.APClient;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -18,6 +21,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemLore;
+import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
@@ -26,9 +31,9 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static dev.koifysh.archipelago.parts.NetworkItem.flags.*;
 import java.util.Objects;
 
 public class Utils {
@@ -47,7 +52,6 @@ public class Utils {
     public static void sendMessageToAll(Component message) {
         //tell the server to send the message in a thread safe way.
         server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
-
     }
 
     public static void sendFancyMessageToAll(APPrint apPrint) {
@@ -67,28 +71,42 @@ public class Utils {
             APPrintPart part = apPrint.parts[i];
             LOGGER.trace("part[{}]: {}, {}, {}", i, part.text, part.color, part.type);
             //no default color was sent so use our own coloring.
-            Color color = isMe ? Color.RED : Color.WHITE;
+            Color color = isMe ? Color.PINK : Color.WHITE;
             boolean bold = false;
             boolean underline = false;
 
             if (part.color == APPrintColor.none) {
                 if (APRandomizer.getAP().getMyName().equals(part.text)) {
-                    color = APPrintColor.gold.color;
-                    bold = true;
+                    color = Color.decode("#EE00EE");
+                    underline = true;
                 } else if (part.type == APPrintType.playerID) {
-                    color = APPrintColor.yellow.color;
+                    color = Color.decode("#FAFAD2");
                 } else if (part.type == APPrintType.locationID) {
-                    color = APPrintColor.green.color;
+                    color = Color.decode("#00FF7F");
                 } else if (part.type == APPrintType.itemID) {
-                    color = APPrintColor.cyan.color;
+                    if ((part.flags & ADVANCEMENT) == ADVANCEMENT) {
+                        color = Color.decode("#00EEEE"); // advancement
+                    }
+                    else if ((part.flags & USEFUL) == USEFUL) {
+                        color = Color.decode("#6D8BE8"); // useful
+                    }
+                    else if ((part.flags & TRAP) == TRAP) {
+                        color = Color.decode("#FA8072"); // trap
+                    } else {
+                        color = Color.gray;
+                    }
                 }
 
-            } else if (part.color == APPrintColor.underline)
-                underline = true;
-            else if (part.color == APPrintColor.bold)
-                bold = true;
+            }
             else
                 color = part.color.color;
+
+            if (part.color == APPrintColor.underline)
+                underline = true;
+
+            if (part.color == APPrintColor.bold)
+                bold = true;
+
 
             //blank out the first two bits because minecraft doesn't deal with alpha values
             int iColor = color.getRGB() & ~(0xFF << 24);
@@ -168,6 +186,10 @@ public class Utils {
         return new Vec3(x, y, z);
     }
 
+    public static void addLodestoneTags(ResourceKey<Level> worldRegistryKey, BlockPos blockPos, ItemStack item) {
+        item.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(worldRegistryKey, blockPos)),false));
+    }
+
     public static void giveItemToPlayer(ServerPlayer player, ItemStack itemstack) {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {
@@ -185,5 +207,27 @@ public class Utils {
                 itementity.setTarget(player.getUUID());
             }
         }
+    }
+
+    public static void setNameAndLore(ItemStack itemstack, String itemName, Collection<String> itemLore) {
+        setItemName(itemstack, itemName);
+        setItemLore(itemstack, itemLore);
+    }
+
+    public static void setNameAndLore(ItemStack itemstack, Component itemName, Collection<String> itemLore) {
+        setItemName(itemstack, itemName);
+        setItemLore(itemstack, itemLore);
+    }
+
+    public static void setItemName(ItemStack itemstack, String itemName) {
+        setItemName(itemstack, Component.literal(itemName));
+    }
+
+    public static void setItemName(ItemStack itemstack, Component itemName) {
+        itemstack.set(DataComponents.CUSTOM_NAME, itemName);
+    }
+
+    public static void setItemLore(ItemStack iStack, Collection<String> itemLore) {
+        iStack.set(DataComponents.LORE, new ItemLore(itemLore.stream().<Component>map(Component::literal).toList()));
     }
 }

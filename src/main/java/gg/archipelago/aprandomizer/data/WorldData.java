@@ -12,17 +12,18 @@ import java.util.*;
 public class WorldData extends SavedData {
 
     private String seedName = "";
-    private int dragonState = DRAGON_ASLEEP;
+    private int dragonState = ASLEEP;
+    private int witherState = ASLEEP;
     private boolean jailPlayers = false;
     private Set<Long> locations = new HashSet<>();
     private int index = 0;
     private Map<String, Integer> playerIndex = new HashMap<>();
     private boolean witherKilled = false;
 
-    public static final int DRAGON_KILLED = 30;
-    public static final int DRAGON_SPAWNED = 20;
-    public static final int DRAGON_WAITING = 15;
-    public static final int DRAGON_ASLEEP = 10;
+    public static final int KILLED = 30;
+    public static final int SPAWNED = 20;
+    public static final int WAITING = 15;
+    public static final int ASLEEP = 10;
 
     public void setSeedName(String seedName) {
         this.seedName = seedName;
@@ -39,7 +40,7 @@ public class WorldData extends SavedData {
     }
 
     public void setDragonKilled() {
-        setDragonState(DRAGON_KILLED);
+        setDragonState(KILLED);
     }
 
     public int getDragonState() {
@@ -47,7 +48,7 @@ public class WorldData extends SavedData {
     }
 
     public boolean isDragonKilled() {
-        return dragonState == DRAGON_KILLED;
+        return dragonState == KILLED;
     }
 
     public boolean getJailPlayers() {
@@ -104,6 +105,7 @@ public class WorldData extends SavedData {
     public @NotNull CompoundTag save(CompoundTag tag, HolderLookup.@NotNull Provider holder) {
         tag.putString("seedName", seedName);
         tag.putInt("dragonState", dragonState);
+        tag.putInt("witherState", witherState);
         tag.putBoolean("jailPlayers", jailPlayers);
         tag.putLongArray("locations", locations.stream().toList());
         tag.putLong("index", index);
@@ -144,5 +146,14 @@ public class WorldData extends SavedData {
                 tag.getInt("index"),
                 tag.getBoolean("witherKilled")
         );
+    }
+
+    public int getWitherState() {
+        return witherState;
+    }
+
+    public void setWitherState(int waiting) {
+        this.witherState = waiting;
+        this.setDirty();
     }
 }

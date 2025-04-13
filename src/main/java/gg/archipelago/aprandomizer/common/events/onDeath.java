@@ -3,7 +3,6 @@ package gg.archipelago.aprandomizer.common.events;
 import dev.koifysh.archipelago.helper.DeathLink;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
-import gg.archipelago.aprandomizer.common.DeathLinkDamage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameRules;
@@ -16,6 +15,9 @@ import java.util.Objects;
 
 @EventBusSubscriber
 public class onDeath {
+
+    public static boolean sendDeathLink = true;
+
     @SubscribeEvent(priority = EventPriority.LOWEST)
     static void onDeathEvent(LivingDeathEvent event) {
         if (!APRandomizer.isConnected())
@@ -25,15 +27,14 @@ public class onDeath {
         //only trigger on player death
         if (!(event.getEntity() instanceof ServerPlayer player))
             return;
-
         SlotData slotData = APRandomizer.getAP().getSlotData();
         if (slotData == null || !slotData.deathlink)
             return;
-
         //dont send deathlink if the cause of this death was a deathlink
-        if (event.getSource() instanceof DeathLinkDamage)
+        if (!sendDeathLink)
             return;
 
+        // TODO: these args are backwards on kono master
         DeathLink.SendDeathLink(event.getSource().getLocalizedDeathMessage(player).getString(), Objects.requireNonNullElseGet(player.getDisplayName(), player::getName).getString());
 
         MinecraftServer server = APRandomizer.getServer();
@@ -42,11 +43,13 @@ public class onDeath {
         GameRules.BooleanValue deathMessages = server.getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
         boolean death = deathMessages.get();
         deathMessages.set(false, server);
+        sendDeathLink = false;
         for (ServerPlayer serverPlayer : APRandomizer.getServer().getPlayerList().getPlayers()) {
             if (serverPlayer != player) {
-                serverPlayer.hurtServer(serverPlayer.serverLevel(), new DeathLinkDamage(), Float.MAX_VALUE);
+                serverPlayer.kill(player.serverLevel());
             }
         }
         deathMessages.set(death, server);
+        sendDeathLink = true;
     }
 }
