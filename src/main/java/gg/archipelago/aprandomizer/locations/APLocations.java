@@ -74,7 +74,7 @@ public class APLocations {
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_BALANCED_DIET = id("vanilla/husbandry/balanced_diet");
     public static final ResourceKey<APLocation> VANILLA_NETHER_FAST_TRAVEL = id("vanilla/nether/fast_travel");
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_ROOT = id("vanilla/husbandry/root");
-    public static final ResourceKey<APLocation> VANILLA_NETHER_USE_LODESTONE = id("vanilla/nether/use_lodestone");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_USE_LODESTONE = id("vanilla/adventure/use_lodestone");
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_SAFELY_HARVEST_HONEY = id("vanilla/husbandry/safely_harvest_honey");
     public static final ResourceKey<APLocation> VANILLA_ADVENTURE_TRADE = id("vanilla/adventure/trade");
     public static final ResourceKey<APLocation> VANILLA_NETHER_UNEASY_ALLIANCE = id("vanilla/nether/uneasy_alliance");
@@ -195,7 +195,7 @@ public class APLocations {
         context.register(VANILLA_HUSBANDRY_BALANCED_DIET, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/balanced_diet")));
         context.register(VANILLA_NETHER_FAST_TRAVEL, new AdvancementLocation(ResourceLocation.withDefaultNamespace("nether/fast_travel")));
         context.register(VANILLA_HUSBANDRY_ROOT, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/root")));
-        context.register(VANILLA_NETHER_USE_LODESTONE, new AdvancementLocation(ResourceLocation.withDefaultNamespace("nether/use_lodestone")));
+        context.register(VANILLA_ADVENTURE_USE_LODESTONE, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/use_lodestone")));
         context.register(VANILLA_HUSBANDRY_SAFELY_HARVEST_HONEY, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/safely_harvest_honey")));
         context.register(VANILLA_ADVENTURE_TRADE, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/trade")));
         context.register(VANILLA_NETHER_UNEASY_ALLIANCE, new AdvancementLocation(ResourceLocation.withDefaultNamespace("nether/uneasy_alliance")));
