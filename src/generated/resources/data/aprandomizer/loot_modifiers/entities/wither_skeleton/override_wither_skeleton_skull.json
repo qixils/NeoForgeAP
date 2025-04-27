@@ -1,0 +1,13 @@
+{
+  "type": "aprandomizer:remove_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/wither_skeleton"
+    }
+  ],
+  "predicate": {
+    "items": "minecraft:wither_skeleton_skull"
+  },
+  "table": "aprandomizer:entities/wither_skeleton/add_wither_skeleton_skull"
+}

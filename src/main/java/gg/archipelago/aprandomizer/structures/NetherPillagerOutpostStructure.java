@@ -132,7 +132,7 @@ public class NetherPillagerOutpostStructure extends Structure {
         if (y <= seaLevel) {
             return Optional.empty();
         }
-        BlockPos blockPos = new BlockPos(x, y, z);
+        BlockPos blockPos = new BlockPos(x, y + 1, z);
         Optional<Structure.GenerationStub> structurePiecesGenerator =
                 JigsawPlacement.addPieces(
                         context, // Used for StructurePoolBasedGenerator to get all the proper behaviors done.

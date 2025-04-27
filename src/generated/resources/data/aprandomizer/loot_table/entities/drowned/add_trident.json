@@ -1,0 +1,21 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "chance": 0.25,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "name": "minecraft:trident"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "aprandomizer:entities/drowned/add_trident"
+}

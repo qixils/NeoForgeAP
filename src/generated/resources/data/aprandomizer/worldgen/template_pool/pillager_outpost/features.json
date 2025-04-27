@@ -25,6 +25,17 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "location": "aprandomizer:pillager_outpost/feature_cage_with_allays",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_logs",
         "processors": {
           "processors": []

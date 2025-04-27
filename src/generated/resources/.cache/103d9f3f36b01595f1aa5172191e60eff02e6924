@@ -1,4 +1,4 @@
-// 1.21.5	2025-04-16T23:42:42.6987791	Registries
+// 1.21.5	2025-04-26T14:18:50.1527419	Registries
 987c5b743cdc3e151c03750e31848d6bfb094985 data/aprandomizer/aprandomizer/archipelago_item/compass/bastion_remnant.json
 0dbfaf383aff7d9e9311f5a01ef426b5c84b45be data/aprandomizer/aprandomizer/archipelago_item/compass/end_city.json
 c22f12a8fc1aa6999b6d52d6117ef27e3c4ade94 data/aprandomizer/aprandomizer/archipelago_item/compass/fortress.json
@@ -172,7 +172,7 @@ a1191bf69452f0bb1c8e8231e28c8a862e46613e data/aprandomizer/worldgen/structure_se
 9ade4260c0c3fa94b334163098bd50a33c10c950 data/aprandomizer/worldgen/structure_set/village_nether.json
 90ea7c68a66044521b9b47a17e583f032cb7c6bc data/aprandomizer/worldgen/template_pool/bee_groves.json
 3e957ad4669fc802baa05c759a39618c53761486 data/aprandomizer/worldgen/template_pool/pillager_outpost/base_plates.json
-dc1fcdd36157a0cf8d6b9ce27aef76a173275d7d data/aprandomizer/worldgen/template_pool/pillager_outpost/features.json
+4da3198c118b00fa1002c92ebe1bc17b198cb6bd data/aprandomizer/worldgen/template_pool/pillager_outpost/features.json
 9167228d965206b92516fe1ca91e692d007ac525 data/aprandomizer/worldgen/template_pool/pillager_outpost/feature_plates.json
 ed319b7ff2267cc30a5b08c6f44642617ce828e6 data/aprandomizer/worldgen/template_pool/pillager_outpost/towers.json
 c5b419e2aaa9d9ab879a9a073044b0e614fa06bf data/aprandomizer/worldgen/template_pool/village/nether/decor.json

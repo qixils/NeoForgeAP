@@ -18,25 +18,25 @@ import java.util.ArrayList;
 @Mixin(ItemStack.class)
 public abstract class MixinItemStack {
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V", at = @At("RETURN"))
-    private void onInit(ItemLike itemLike, int count, CompoundTag tag, CallbackInfo ci) {
-        if (itemLike == Items.WITHER_SKELETON_SKULL) {
-            ArrayList<String> lore = new ArrayList<>();
-            if (GoalManager.isBossRequired(APMCData.Bosses.WITHER)) {
-                lore.add("Vibrates with power...");
-            } else {
-                lore.add("lies dormant...");
-            }
-
-            Utils.setItemLore((ItemStack) (Object) this, lore);
-        } else if (itemLike == Items.ENDER_PEARL) {
-            ArrayList<String> lore = new ArrayList<>();
-            if (GoalManager.isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
-                lore.add("Vibrates with power...");
-            } else {
-                lore.add("lies dormant...");
-            }
-            Utils.setItemLore((ItemStack) (Object) this, lore);
-        }
-    }
+//    @Inject(method = "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/nbt/CompoundTag;)V", at = @At("RETURN"))
+//    private void onInit(ItemLike itemLike, int count, CompoundTag tag, CallbackInfo ci) {
+//        if (itemLike == Items.WITHER_SKELETON_SKULL) {
+//            ArrayList<String> lore = new ArrayList<>();
+//            if (GoalManager.isBossRequired(APMCData.Bosses.WITHER)) {
+//                lore.add("Vibrates with power...");
+//            } else {
+//                lore.add("lies dormant...");
+//            }
+//
+//            Utils.setItemLore((ItemStack) (Object) this, lore);
+//        } else if (itemLike == Items.ENDER_PEARL) {
+//            ArrayList<String> lore = new ArrayList<>();
+//            if (GoalManager.isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
+//                lore.add("Vibrates with power...");
+//            } else {
+//                lore.add("lies dormant...");
+//            }
+//            Utils.setItemLore((ItemStack) (Object) this, lore);
+//        }
+//    }
 }

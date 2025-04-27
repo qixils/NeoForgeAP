@@ -80,6 +80,9 @@ public class APTemplatePools {
                                         StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_cage2"),
                                         1),
                                 Pair.of(
+                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_cage_with_allays"),
+                                        1),
+                                Pair.of(
                                         StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_logs"),
                                         1),
                                 Pair.of(
