@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.function.Function;
 
 public interface APReward {
-    public static final Codec<APReward> CODEC = APRewardTypes.REGISTRY.byNameCodec().dispatch(APReward::codec, Function.identity());
+    Codec<APReward> CODEC = APRewardTypes.REGISTRY.byNameCodec().dispatch(APReward::codec, Function.identity());
 
     MapCodec<? extends APReward> codec();
 

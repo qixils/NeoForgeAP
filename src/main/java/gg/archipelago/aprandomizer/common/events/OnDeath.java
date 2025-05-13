@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import java.util.Objects;
 
 @EventBusSubscriber
-public class onDeath {
+public class OnDeath {
 
     public static boolean sendDeathLink = true;
 

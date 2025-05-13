@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 import java.util.Objects;
 
 @EventBusSubscriber
-public class onServerChat {
+public class OnServerChat {
     @SubscribeEvent
     static void onServerChatEvent(ServerChatEvent event) {
         APClient apClient = APRandomizer.getAP();

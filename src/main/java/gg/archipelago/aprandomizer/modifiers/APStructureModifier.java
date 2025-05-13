@@ -20,7 +20,6 @@ import net.neoforged.neoforge.common.world.StructureModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +66,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
 
     @Override
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
+
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
         if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
             APRandomizer.LOGGER.error("APMCData is missing, cannot modify structures.");
@@ -81,7 +81,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
 
         ResourceKey<Level> level = structures.get(name);
         HolderSet<Biome> biomes = structure.value().biomes();
-        HolderSet<Biome> defaultBiomes = ServerLifecycleHooks.getCurrentServer().registryAccess().lookupOrThrow(Registries.DIMENSION).getData(APDataMaps.DEFAULT_STRUCTURE_BIOMES, level);
+        HolderSet<Biome> defaultBiomes = APRandomizer.server().orElseThrow().registryAccess().lookupOrThrow(Registries.DIMENSION).getData(APDataMaps.DEFAULT_STRUCTURE_BIOMES, level);
         if (defaultBiomes == null) {
             defaultBiomes = HolderSet.empty();
         }

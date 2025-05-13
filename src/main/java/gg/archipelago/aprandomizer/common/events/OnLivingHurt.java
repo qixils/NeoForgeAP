@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @EventBusSubscriber
-public class onLivingHurt {
+public class OnLivingHurt {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -42,6 +42,7 @@ public class onLivingHurt {
         if (slotData == null || !slotData.MC35) return;
 
         String name = event.getEntity().getEncodeId();
+        if (name == null) return; // TODO: more robust mechanism
 
         CompoundTag nbt = event.getEntity().saveWithoutId(new CompoundTag());
         nbt.remove("UUID");

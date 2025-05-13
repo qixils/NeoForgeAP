@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import java.util.List;
 
 @EventBusSubscriber
-public class onCommand {
+public class OnCommand {
 
     private static final List<String> ALLOWED_COMMANDS = List.of(
             "connect",

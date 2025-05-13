@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.advancementmanager;
 
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.locations.APLocations;
@@ -203,14 +202,14 @@ public class AdvancementManager {
         if (server == null) return;
         if (!hasAdvancement(key)) return;
         // TODO: is the 2nd arg necessary? doesnt hurt?
-        for (ServerPlayer serverPlayerEntity : APRandomizer.getServer().getPlayerList().getPlayers()) {
+        for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()) {
             location.give(serverPlayerEntity);
         }
     }
 
     public void syncAllAdvancements() {
         if (server == null) return;
-        Registry<APLocation> locationRegistry = getServer().registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
+        Registry<APLocation> locationRegistry = server.registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
         for (var a : locationRegistry.registryKeySet()) {
             syncAdvancement(a, locationRegistry.getValueOrThrow(a));
         }

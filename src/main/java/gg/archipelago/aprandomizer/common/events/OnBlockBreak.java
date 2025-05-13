@@ -8,7 +8,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 @EventBusSubscriber
-public class onBlockBreak {
+public class OnBlockBreak {
     @SubscribeEvent
     static void onPlayerBlockInteract(BlockEvent.BreakEvent event) {
         if (!APRandomizer.isJailPlayers())

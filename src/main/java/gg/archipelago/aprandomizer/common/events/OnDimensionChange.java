@@ -7,7 +7,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 @EventBusSubscriber
-public class onDimensionChange {
+public class OnDimensionChange {
 
     @SubscribeEvent
     public static void onChange1(PlayerEvent.PlayerChangedDimensionEvent event) {

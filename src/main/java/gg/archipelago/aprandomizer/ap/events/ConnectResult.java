@@ -58,7 +58,7 @@ public class ConnectResult {
             APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs())));
 
             //catch up all connected players to the list just received.
-            // TODO: broken ish
+            // TODO: broken ish (edit: i don't remember what i meant by this)
             APRandomizer.server().ifPresent(server -> server.execute(() -> {
                 APRandomizer.itemManager().ifPresent(value -> {
                     for (ServerPlayer player : server.getPlayerList().getPlayers()) {

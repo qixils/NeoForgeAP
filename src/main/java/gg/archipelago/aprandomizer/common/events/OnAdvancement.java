@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 @EventBusSubscriber
-public class onAdvancement {
+public class OnAdvancement {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 

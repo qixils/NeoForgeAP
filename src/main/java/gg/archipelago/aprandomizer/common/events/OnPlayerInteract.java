@@ -2,17 +2,14 @@ package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
+import gg.archipelago.aprandomizer.datacomponents.APDataComponents;
+import gg.archipelago.aprandomizer.datacomponents.TrackedStructure;
 import gg.archipelago.aprandomizer.items.CompassReward;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.ICancellableEvent;
@@ -21,10 +18,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.List;
-import java.util.Optional;
 
 @EventBusSubscriber
-public class onPlayerInteract {
+public class OnPlayerInteract {
 
     static void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getSide().isClient())
@@ -45,12 +41,12 @@ public class onPlayerInteract {
 
         if (event.getSide().isClient())
             return;
-        if (!event.getItemStack().getItem().equals(Items.COMPASS) || !event.getItemStack().has(DataComponents.CUSTOM_DATA)) {
+
+        if (!event.getItemStack().has(APDataComponents.TRACKED_STRUCTURE))
             return;
-        }
 
         BlockState block = event.getLevel().getBlockState(event.getHitVec().getBlockPos());
-        if (event.getItemStack().has(DataComponents.CUSTOM_DATA) && event.getItemStack().get(DataComponents.CUSTOM_DATA).copyTag().get("structure") != null && block.is(Blocks.LODESTONE))
+        if (block.is(Blocks.LODESTONE))
             event.setCanceled(true);
 
         MinecraftServer server = event.getEntity().getServer();
@@ -74,29 +70,22 @@ public class onPlayerInteract {
             return;
 
         ItemStack compass = event.getItemStack();
-        CustomData customData = compass.get(DataComponents.CUSTOM_DATA);
-        if (customData == null) return;
-
-        CompoundTag nbt = customData.copyTag();
+        TrackedStructure structure = event.getItemStack().get(APDataComponents.TRACKED_STRUCTURE);
+        if (structure == null)
+            return;
 
         //fetch our current compass list.
         List<CompassReward> compasses = event.getEntity().getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
 
-        HolderLookup.Provider registries = event.getLevel().registryAccess();
-        Optional<CompassReward> currentCompassReward = nbt.read("structure", CompassReward.CODEC, registries.createSerializationContext(NbtOps.INSTANCE));
-        Optional<Integer> currentCompassIndex = nbt.getInt("index");
-
-        if (currentCompassReward.isEmpty() || currentCompassIndex.isEmpty())
-            return;
-
-        int newCompassIndex = currentCompassIndex.get() + 1;
+        int newCompassIndex = structure.index() + 1;
         if (compasses.size() <= newCompassIndex) {
             newCompassIndex = 0;
         }
-        nbt.putInt("index", newCompassIndex);
-        compass.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
-        CompassReward newCompassReward = compasses.get(newCompassIndex);
+        TrackedStructure newStructure = new TrackedStructure(
+                compasses.get(newCompassIndex),
+                newCompassIndex
+        );
 
-        ItemManager.updateCompassLocation(newCompassReward, player, compass);
+        ItemManager.updateCompassLocation(newStructure, player, compass);
     }
 }
