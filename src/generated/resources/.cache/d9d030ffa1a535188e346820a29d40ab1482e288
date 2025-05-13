@@ -1,4 +1,0 @@
-// 1.21.5	2025-04-18T17:20:41.5319648	Global Loot Modifiers : aprandomizer
-19af47d590d5d53e263b39670da7359cc19f9bda data/aprandomizer/loot_modifiers/entities/drowned/add_trident.json
-70c5c4c74abf89209334bcc8bcc7e33dc28f0c3a data/aprandomizer/loot_modifiers/entities/wither_skeleton/override_wither_skeleton_skull.json
-b2598eadae464a02cb16fa28faec14ddc2ea90c0 data/neoforge/loot_modifiers/global_loot_modifiers.json
