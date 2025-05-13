@@ -1,6 +1,8 @@
 package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.data.WorldData;
+import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +14,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public class onPlayerRespawn {
 
     @SubscribeEvent
-    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+    public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if(!(event.getEntity() instanceof ServerPlayer player)) return;
         ItemManager.refreshCompasses(player);
 
@@ -22,8 +24,9 @@ public class onPlayerRespawn {
         }
 
         //if we are leaving because the dragon is dead check if our goals are all done!
-        if(APRandomizer.getGoalManager().isDragonDead()) {
-           APRandomizer.getGoalManager().checkGoalCompletion();
+        GoalManager goalManager = APRandomizer.getGoalManager();
+        if (goalManager != null && APRandomizer.worldData().map(WorldData::isDragonKilled).orElse(false)) {
+            goalManager.checkGoalCompletion();
         }
     }
 

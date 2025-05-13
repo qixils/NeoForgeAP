@@ -6,31 +6,26 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.events.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.managers.GoalManager;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.server.MinecraftServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
 public class APClient extends Client {
 
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
-
+    @Nullable
     public SlotData slotData;
-
-    private final MinecraftServer server;
 
     public APClient(MinecraftServer server) {
         super();
 
         this.setGame("Minecraft");
         this.setItemsHandlingFlags(ItemsHandling.SEND_ITEMS | ItemsHandling.SEND_OWN_ITEMS | ItemsHandling.SEND_STARTING_INVENTORY);
-        this.server = server;
-        APRandomizer.getAdvancementManager().setCheckedAdvancements(new LongOpenHashSet(getLocationManager().getCheckedLocations()));
+        APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(getLocationManager().getCheckedLocations())));
 
         //give our item manager the list of received items to give to players as they log in.
-        APRandomizer.getItemManager().setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs()));
+        APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs())));
 
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
@@ -41,6 +36,7 @@ public class APClient extends Client {
         this.getEventManager().registerListener(new PrintJsonListener());
     }
 
+    @Nullable
     public SlotData getSlotData() {
         return slotData;
     }
@@ -59,6 +55,6 @@ public class APClient extends Client {
         } else {
             Utils.sendMessageToAll(reason);
         }
-        APRandomizer.getGoalManager().updateInfoBar();
+        APRandomizer.goalManager().ifPresent(GoalManager::updateInfoBar);
     }
 }

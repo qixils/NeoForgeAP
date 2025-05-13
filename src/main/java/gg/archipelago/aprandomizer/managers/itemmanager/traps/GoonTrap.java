@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,7 +22,7 @@ import java.util.List;
 public class GoonTrap implements Trap {
 
     private final int numberOfGoons;
-    List<Zombie> zombies = new ArrayList<>();
+    final List<Zombie> zombies = new ArrayList<>();
 
     int timer = 20 * 30;
 
@@ -33,19 +34,20 @@ public class GoonTrap implements Trap {
         NeoForge.EVENT_BUS.register(this);
         this.numberOfGoons = numberOfGoons;
     }
+
     @Override
     public void trigger(ServerPlayer player) {
         ItemStack fish = new ItemStack(Items.SALMON);
-//        fish.enchant(Enchantments.KNOCKBACK,3);
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
 
         APRandomizer.getServer().execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfGoons; i++) {
                 Zombie goon = EntityType.ZOMBIE.create(world, EntitySpawnReason.MOB_SUMMONED);
-                if(goon == null)
-                    continue;
-                goon.setItemInHand(InteractionHand.MAIN_HAND,fish.copy());
+                if (goon == null) continue;
+                goon.setItemInHand(InteractionHand.MAIN_HAND, fish.copy());
                 goon.setTarget(player);
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 goon.snapTo(offset);
@@ -61,7 +63,8 @@ public class GoonTrap implements Trap {
             return;
 
         for (Zombie zombie : zombies) {
-            zombie.kill((ServerLevel) zombie.level());
+            if (zombie.level() instanceof ServerLevel level)
+                zombie.kill(level);
         }
 
         NeoForge.EVENT_BUS.unregister(this);

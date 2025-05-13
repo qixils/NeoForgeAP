@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Blocks;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class WaterTrap implements Trap {
 
-    List<BlockPos> waterBlocks = new LinkedList<>();
+    final List<BlockPos> waterBlocks = new LinkedList<>();
     int timer = 20 * 15;
 
     public WaterTrap() {
@@ -34,7 +35,9 @@ public class WaterTrap implements Trap {
             }
         }
 
-        APRandomizer.getServer().execute(() -> {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+        server.execute(() -> {
             for (BlockPos waterBlock : waterBlocks) {
                 if (world.isEmptyBlock(waterBlock)) {
                     world.setBlock(waterBlock, Blocks.WATER.defaultBlockState(), 3);
@@ -44,12 +47,12 @@ public class WaterTrap implements Trap {
     }
 
     @SubscribeEvent
-    public void onServerTick(ServerTickEvent.Post event) {
+    public void onServerTick(ServerTickEvent event) {
         if (--timer > 0)
             return;
 
         for (BlockPos pos : waterBlocks) {
-            ServerLevel world = APRandomizer.getServer().overworld();
+            ServerLevel world = event.getServer().overworld();
             if (world.getBlockState(pos).getFluidState().isSourceOfType(Fluids.WATER)) {
                 world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }

@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SlotData {
 
@@ -32,7 +33,15 @@ public class SlotData {
     @SerializedName("starting_items")
     public String startingItems;
 
-    transient public ArrayList<ItemStack> startingItemStacks = new ArrayList<>();
+    transient public final List<ItemStack> startingItemStacks = new ArrayList<>();
+
+    public boolean getMC35() {
+        return MC35;
+    }
+
+    public boolean getDeath_link() {
+        return deathlink;
+    }
 
     public int getInclude_hard_advancements() {
         return include_hard_advancements;
@@ -73,7 +82,7 @@ public class SlotData {
                 ItemStack iStack = new ItemStack(item.item(), amount, item.components());
                 // TODO: figure out how to parse a string of components into actual components
 //                if(object.has("nbt"))
-//                    iStack.setTag(TagParser.parseTag(object.get("nbt").getAsString()));
+//                    iStack.set(TagParser.parseTag(object.get("nbt").getAsString()));
 
                 startingItemStacks.add(iStack);
 

@@ -18,8 +18,8 @@ import org.apache.logging.log4j.Logger;
 public class ConnectResult {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    APClient APClient;
-    private HolderLookup.Provider registries;
+    final APClient APClient;
+    private final HolderLookup.Provider registries;
 
     public ConnectResult(APClient APClient, HolderLookup.Provider registries) {
         this.APClient = APClient;
@@ -29,44 +29,55 @@ public class ConnectResult {
     @ArchipelagoEventListener
     public void onConnectResult(ConnectionResultEvent event) {
         if (event.getResult() == ConnectionResult.Success) {
-            Utils.sendMessageToAll("Connected to Archipelago Server.");
+            Utils.sendMessageToAll("Successfully connected to " + APClient.getConnectedAddress());
             try {
                 APClient.slotData = event.getSlotData(SlotData.class);
                 APClient.slotData.parseStartingItems(registries);
             } catch (Exception e) {
-                Utils.sendMessageToAll("Invalid staring item section, check logs for more details.");
-                LOGGER.warn("invalid staring items json string: " + APClient.slotData.startingItems);
+                if (APClient.slotData != null) {
+                    Utils.sendMessageToAll("Invalid starting item section, check logs for more details.");
+                    LOGGER.warn("Invalid staring items json string: {}", APClient.slotData.startingItems, e);
+                } else {
+                    Utils.sendMessageToAll("Invalid slot data, check logs for more details.");
+                    LOGGER.warn("Invalid slot data", e);
+                }
             }
 
-            if(APClient.slotData.MC35) {
+            if (APClient.slotData.MC35) {
+                Utils.sendMessageToAll("Welcome to Minecraft 35.");
                 APClient.addTag("MC35");
             }
-            if(APClient.slotData.deathlink) {
+            if (APClient.slotData.deathlink) {
                 Utils.sendMessageToAll("Welcome to Death Link.");
                 DeathLink.setDeathLinkEnabled(true);
             }
 
-            APRandomizer.getAdvancementManager().setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
+            APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations())));
 
             //give our item manager the list of received items to give to players as they log in.
-            APRandomizer.getItemManager().setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs()));
+            APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs())));
 
             //catch up all connected players to the list just received.
-            APRandomizer.server.execute(() -> {
-                for (ServerPlayer player : APRandomizer.getServer().getPlayerList().getPlayers()) {
-                    APRandomizer.getItemManager().catchUpPlayer(player);
-                }
-                APRandomizer.getGoalManager().updateInfoBar();
-            });
+            // TODO: broken ish
+            APRandomizer.server().ifPresent(server -> server.execute(() -> {
+                APRandomizer.itemManager().ifPresent(value -> {
+                    for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                        value.catchUpPlayer(player);
+                    }
+                });
+            }));
+
+            // ensure server is synced
+            APRandomizer.goalManager().ifPresent(goalManager -> goalManager.updateGoal(true));
 
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {
-            Utils.sendMessageToAll("Invalid Password.");
+            Utils.sendMessageToAll("Connection Failed: Invalid Password.");
         } else if (event.getResult() == ConnectionResult.IncompatibleVersion) {
-            Utils.sendMessageToAll("Server Sent Incompatible Version Error.");
+            Utils.sendMessageToAll("Connection Failed: Server Sent Incompatible Version Error.");
         } else if (event.getResult() == ConnectionResult.InvalidSlot) {
-            Utils.sendMessageToAll("Invalid Slot Name. (this is case sensitive)");
+            Utils.sendMessageToAll("Connection Failed: Invalid Slot Name. (this is case sensitive)");
         } else if (event.getResult() == ConnectionResult.SlotAlreadyTaken) {
-            Utils.sendMessageToAll("Room Slot has all ready been taken.");
+            Utils.sendMessageToAll("Connection Failed: Room Slot has all ready been taken.");
         }
     }
 }

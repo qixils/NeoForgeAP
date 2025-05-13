@@ -1,16 +1,20 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.ap.storage.APMCData;
-import gg.archipelago.aprandomizer.SlotData;
-import gg.archipelago.aprandomizer.common.Utils.Utils;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionAttemptEvent;
+import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.ap.storage.APMCData;
+import gg.archipelago.aprandomizer.common.Utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AttemptedConnection {
 
+    private static final Logger log = LoggerFactory.getLogger(AttemptedConnection.class);
+
     @ArchipelagoEventListener
-    static public void onAttemptConnect(ConnectionAttemptEvent event) {
+    public void onAttemptConnect(ConnectionAttemptEvent event) {
         try {
             SlotData temp = event.getSlotData(SlotData.class);
             APMCData data = APRandomizer.getApmcData();
@@ -23,7 +27,7 @@ public class AttemptedConnection {
                 Utils.sendMessageToAll("Game was generated with an for an incompatible version of the Minecraft Randomizer.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Failed to connect", e);
         }
     }
 }

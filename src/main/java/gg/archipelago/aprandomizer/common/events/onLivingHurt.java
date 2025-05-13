@@ -2,10 +2,13 @@ package gg.archipelago.aprandomizer.common.events;
 
 import dev.koifysh.archipelago.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -29,57 +32,59 @@ public class onLivingHurt {
 
     @SubscribeEvent
     static void onLivingDeathEvent(LivingDeathEvent event) {
-        if(!APRandomizer.isConnected())
-            return;
+        Entity damageSource = event.getSource().getEntity();
+        if (damageSource == null || damageSource.getType() != EntityType.PLAYER) return;
+
+        APClient apClient = APRandomizer.getAP();
+        if (apClient == null || !apClient.isConnected()) return;
+
+        SlotData slotData = apClient.getSlotData();
+        if (slotData == null || !slotData.MC35) return;
 
         String name = event.getEntity().getEncodeId();
-        if(!APRandomizer.getAP().getSlotData().MC35)
-            return;
 
-        Entity damageSource = event.getSource().getEntity();
-        if(damageSource != null && damageSource.getType() == EntityType.PLAYER) {
-            BouncePacket packet = new BouncePacket();
-            packet.tags = new String[]{"MC35"};
-            CompoundTag nbt = event.getEntity().saveWithoutId(new CompoundTag());
-            nbt.remove("UUID");
-            nbt.remove("Motion");
-            nbt.remove("Health");
-            packet.setData(new HashMap<>(Map.of(
+        CompoundTag nbt = event.getEntity().saveWithoutId(new CompoundTag());
+        nbt.remove("UUID");
+        nbt.remove("Motion");
+        nbt.remove("Health");
+
+        BouncePacket packet = new BouncePacket();
+        packet.tags = new String[]{"MC35"};
+        packet.setData(new HashMap<>(Map.of(
                 "enemy", name,
                 "source", APRandomizer.getAP().getSlot(),
-                //LOGGER.info("nbt: {}",nbt.toString());
                 "nbt", nbt.toString()
-            )));
-            APRandomizer.sendBounce(packet);
-        }
+        )));
+        APRandomizer.sendBounce(packet);
     }
 
     @SubscribeEvent
     static void onLivingHurtEvent(LivingDamageEvent.Post event) {
         LivingEntity entity = event.getEntity();
-        if (entity instanceof Pig) {
-            if (entity.getPassengers().size() > 0) {
-                if (entity.getPassengers().get(0) instanceof ServerPlayer) {
-                    if (event.getSource().is(DamageTypes.FALL)) {
-                        ServerPlayer player = (ServerPlayer) entity.getPassengers().get(0);
-                        AdvancementHolder advancement = event.getEntity().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath("aprandomizer", "archipelago/ride_pig"));
-                        AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancement);
-                        if (!ap.isDone()) {
-                            for (String s : ap.getRemainingCriteria()) {
-                                player.getAdvancements().award(advancement, s);
-                            }
-                        }
+        MinecraftServer server = entity.getServer();
+        if (server == null) return;
+
+        if (entity instanceof Pig && entity.getPassengers().isEmpty() && entity.getPassengers().getFirst() instanceof ServerPlayer player && event.getSource().is(DamageTypes.FALL)) {
+            AdvancementHolder advancement = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
+            if (advancement == null) {
+                LOGGER.warn("Missing pigs fly achievement");
+            } else {
+                AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancement);
+                if (!ap.isDone()) {
+                    for (String s : ap.getRemainingCriteria()) {
+                        player.getAdvancements().award(advancement, s);
                     }
                 }
             }
         }
 
         Entity e = event.getSource().getEntity();
-        if (e instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer) e;
+        if (e instanceof ServerPlayer player && event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
             //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
-            if (event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
-                AdvancementHolder a = event.getEntity().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath("aprandomizer", "archipelago/overkill"));
+            AdvancementHolder a = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
+            if (a == null) {
+                LOGGER.warn("Missing overkill achievement");
+            } else {
                 AdvancementProgress ap = player.getAdvancements().getOrStartProgress(a);
                 if (!ap.isDone()) {
                     for (String s : ap.getRemainingCriteria()) {

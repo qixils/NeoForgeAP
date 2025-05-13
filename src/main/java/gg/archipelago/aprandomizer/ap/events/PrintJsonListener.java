@@ -4,6 +4,7 @@ import dev.koifysh.archipelago.Print.APPrintJsonType;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.PrintJSONEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 
 public class PrintJsonListener {
@@ -11,9 +12,9 @@ public class PrintJsonListener {
     @ArchipelagoEventListener
     public void onPrintJson(PrintJSONEvent event) {
         // Don't print chat messages originating from ourselves.
-        if (event.type == APPrintJsonType.Chat)
-            if (event.player != APRandomizer.getAP().getSlot())
-                return;
+        APClient apClient = APRandomizer.getAP();
+        if (apClient != null && APPrintJsonType.Chat == event.type && event.player == apClient.getSlot())
+            return;
 
         Utils.sendFancyMessageToAll(event.apPrint);
     }

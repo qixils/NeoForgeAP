@@ -17,13 +17,13 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
@@ -122,7 +122,7 @@ public class ItemManager {
 
     public void setReceivedItems(LongList items) {
         this.receivedItems = items;
-        APRandomizer.getGoalManager().updateGoal(false);
+        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
     }
 
     public void giveItem(long itemID, ServerPlayer player, int itemIndex) {
@@ -130,7 +130,7 @@ public class ItemManager {
             //dont send items to players if game has not started.
             return;
         }
-        
+
         APPlayerAttachment attachment = player.getData(APAttachmentTypes.AP_PLAYER);
 
         if (attachment.getIndex() >= itemIndex)
@@ -167,13 +167,13 @@ public class ItemManager {
 
         receivedItems.add(itemID);
 
-        APRandomizer.getServer().execute(() -> {
-            for (ServerPlayer serverplayerentity : APRandomizer.getServer().getPlayerList().getPlayers()) {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
+            for (ServerPlayer serverplayerentity : server.getPlayerList().getPlayers()) {
                 giveItem(itemID, serverplayerentity, index);
             }
-        });
+        }));
 
-        APRandomizer.getGoalManager().updateGoal(true);
+        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(true));
     }
 
     /***
@@ -187,16 +187,15 @@ public class ItemManager {
         for (int i = playerIndex; i < receivedItems.size(); i++) {
             giveItem(receivedItems.getLong(i), player, i + 1);
         }
-
     }
 
     public LongList getAllItems() {
         return receivedItems;
     }
 
-    public void grantAllInitialRecipes(ServerPlayer player) {
+    public static Set<ResourceKey<Recipe<?>>> getLockedRecipes(RegistryAccess registryAccess) {
         Set<ResourceKey<Recipe<?>>> lockedRecipes = new HashSet<>();
-        for (APItem item : player.registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
+        for (APItem item : registryAccess.lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
             for (APTier tier : item.tiers()) {
                 for (APReward reward : tier.rewards()) {
                     if (reward instanceof RecipeReward recipeReward) {
@@ -205,11 +204,16 @@ public class ItemManager {
                 }
             }
         }
-        Set<RecipeHolder<?>> recipes = player.getServer().getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
+        return lockedRecipes;
+    }
+
+    public static void grantAllInitialRecipes(ServerPlayer player) {
+        Set<ResourceKey<Recipe<?>>> lockedRecipes = getLockedRecipes(player.registryAccess());
+        Set<RecipeHolder<?>> recipes = player.server.getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
         player.awardRecipes(recipes);
     }
 
-    public static void updateCompassLocation(CompassReward compassReward, Player player, ItemStack compass) {
+    public static void updateCompassLocation(CompassReward compassReward, ServerPlayer player, ItemStack compass) {
 
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.
 
@@ -258,26 +262,21 @@ public class ItemManager {
 
         //update the nbt data with our new structure.
         compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(GlobalPos.of(world, structurePos)), false));
+        Utils.addLodestoneTags(world,structurePos,compass);
         Utils.setNameAndLore(compass, displayName, lore);
-        compass.set(DataComponents.CUSTOM_NAME, displayName);
         player.containerMenu.broadcastChanges();
     }
 
-        // refresh all compasses in player inventory
+    // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
         player.getInventory().forEach( (item) -> {
-            if(item.getItem().equals(Items.COMPASS)) {
-                if (!item.has(DataComponents.CUSTOM_DATA))
-                    return;
-                CompoundTag nbt = item.get(DataComponents.CUSTOM_DATA).copyTag();
-                Optional<CompassReward> structure = nbt.read("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE));
-                if (structure.isEmpty())
-                    return;
+            if (!item.getItem().equals(Items.COMPASS)) return;
+            if (!item.has(DataComponents.CUSTOM_DATA)) return;
+            CompoundTag nbt = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+            Optional<CompassReward> structure = nbt.read("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE));
+            if (structure.isEmpty()) return;
 
-                try {
-                    updateCompassLocation(structure.get(), player, item);
-                } catch (Exception ignored) {}
-            }
+            updateCompassLocation(structure.get(), player, item);
         });
     }
 }

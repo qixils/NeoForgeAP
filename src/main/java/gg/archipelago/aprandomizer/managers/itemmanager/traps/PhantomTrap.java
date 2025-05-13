@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class PhantomTrap implements Trap {
 
-    List<Phantom> phantoms = new LinkedList<>();
+    final List<Phantom> phantoms = new LinkedList<>();
 
     int timer = 20 * 45;
 
@@ -29,14 +30,15 @@ public class PhantomTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+        server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < 3; i++) {
                 Phantom phantom = EntityType.PHANTOM.create(world, EntitySpawnReason.MOB_SUMMONED);
-                if (phantom == null)
-                    continue;
-                phantom.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE,MobEffectInstance.INFINITE_DURATION,0, false, false));
+                if (phantom == null) continue;
+                phantom.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 0, false, false));
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 phantom.snapTo(offset);
                 if (world.addFreshEntity(phantom))

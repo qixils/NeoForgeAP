@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.managers.advancementmanager;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
-import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.locations.APLocations;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -14,7 +13,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 
-import static gg.archipelago.aprandomizer.APRandomizer.getServer;
+import static gg.archipelago.aprandomizer.APRandomizer.*;
 
 public class AdvancementManager {
 
@@ -134,7 +133,29 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_HUSBANDRY_LEASH_ALL_FROG_VARIANTS, 42111L);
         map.put(APLocations.VANILLA_HUSBANDRY_FROGLIGHTS, 42112L);
         map.put(APLocations.VANILLA_HUSBANDRY_ALLAY_DELIVER_ITEM_TO_PLAYER, 42113L);
-
+        // 1.20 advancements
+        // TODO
+//        put("minecraft:husbandry/obtain_sniffer_egg", 42114L); // smells interesting
+//        put("minecraft:husbandry/feed_snifflet", 42115L); // little sniffs
+//        put("husbandry/plant_any_sniffer_seed", 42116L); // planting the past
+//        put("minecraft:adventure/trim_with_any_armor_pattern", 42117L); // crafting a new look
+//        put("minecraft:adventure/trim_with_all_exclusive_armor_patterns", 42118L); // smithing with style
+//        put("minecraft:adventure/salvage_sherd", 42119L); // respecting the remnants
+//        put("minecraft:adventure/craft_decorated_pot_using_only_sherds", 42120L); // careful restoration
+//        put("minecraft:adventure/read_power_of_chiseled_bookshelf", 42120L); // the power of books
+//        put("minecraft:adventure/brush_armadillo", 42122L); // isn't it scute
+//        put("minecraft:husbandry/remove_wolf_armor", 42123L); // Shear Brilliance
+//        put("minecraft:husbandry/repair_wolf_armor", 42124L); // good as new
+//        put("minecraft:husbandry/whole_pack", 42125L); // the whole pack
+        // 1.21 advancements
+//        put("minecraft:adventure/minecraft_trials_edition", 42126L); // Minecraft: Trial(s) Edition
+//        put("minecraft:adventure/under_lock_and_key", 42127L); // Under Lock and Key
+//        put("minecraft:adventure/blowback", 42128L); // blowback
+//        put("minecraft:adventure/who_needs_rockets", 42129L); // Who needs rockets
+//        put("minecraft:adventure/crafters_crafting_crafters", 42130L); // cafters crafting crafters
+//        put("minecraft:adventure/lighten_up", 42131L); // lighten up
+//        put("minecraft:adventure/overoverkill", 42132L); // over overkill
+//        put("minecraft:adventure/revaulting", 42133L); // revaulting
     });
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
@@ -158,9 +179,9 @@ public class AdvancementManager {
 
     public void addAdvancement(long id) {
         earnedAdvancements.add(id);
-        APRandomizer.getAP().checkLocation(id);
-        APRandomizer.getGoalManager().updateGoal( true);
-        APRandomizer.getWorldData().addLocation(id);
+        AP().ifPresent(value -> value.checkLocation(id));
+        goalManager().ifPresent(value -> value.updateGoal(true));
+        worldData().ifPresent(worldData -> worldData.addLocation(id));
         syncAllAdvancements();
     }
 
@@ -171,20 +192,24 @@ public class AdvancementManager {
     }
 
     public void resendAdvancements() {
+        gg.archipelago.aprandomizer.ap.APClient apClient = getAP(); // TODO
+        if (apClient == null) return;
         for (long earnedAdvancement : earnedAdvancements) {
-            APRandomizer.getAP().checkLocation(earnedAdvancement);
+            apClient.checkLocation(earnedAdvancement);
         }
     }
 
     public void syncAdvancement(ResourceKey<APLocation> key, APLocation location) {
-        if (hasAdvancement(key)) {
-            for (ServerPlayer serverPlayerEntity : APRandomizer.getServer().getPlayerList().getPlayers()) {
-                location.give(serverPlayerEntity);
-            }
+        if (server == null) return;
+        if (!hasAdvancement(key)) return;
+        // TODO: is the 2nd arg necessary? doesnt hurt?
+        for (ServerPlayer serverPlayerEntity : APRandomizer.getServer().getPlayerList().getPlayers()) {
+            location.give(serverPlayerEntity);
         }
     }
 
     public void syncAllAdvancements() {
+        if (server == null) return;
         Registry<APLocation> locationRegistry = getServer().registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
         for (var a : locationRegistry.registryKeySet()) {
             syncAdvancement(a, locationRegistry.getValueOrThrow(a));
@@ -197,10 +222,11 @@ public class AdvancementManager {
 
     public void setCheckedAdvancements(LongSet checkedLocations) {
         earnedAdvancements.addAll(checkedLocations);
-        WorldData data = APRandomizer.getWorldData();
-        for (var checkedLocation : checkedLocations) {
-            data.addLocation(checkedLocation);
-        }
+        worldData().ifPresent(data -> {
+            for (var checkedLocation : checkedLocations) {
+                data.addLocation(checkedLocation);
+            }
+        });
 
         syncAllAdvancements();
     }

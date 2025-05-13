@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.phys.Vec3;
@@ -15,21 +16,20 @@ import net.minecraft.world.phys.Vec3;
 public class GhastTrap implements Trap {
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
 
             Ghast ghast = EntityType.GHAST.create(world, EntitySpawnReason.MOB_SUMMONED);
-            if (ghast == null)
-                return;
+            if (ghast == null) return;
 
             ghast.setTarget(player);
-            ghast.getAttribute(Attributes.MAX_HEALTH).setBaseValue(15d);
+            AttributeInstance maxHealth = ghast.getAttribute(Attributes.MAX_HEALTH);
+            if (maxHealth != null) maxHealth.setBaseValue(15d);
             ghast.addEffect(new MobEffectInstance(MobEffects.WITHER, MobEffectInstance.INFINITE_DURATION));
             Vec3 offset = Utils.getRandomPosition(pos, 20);
             ghast.snapTo(offset);
             world.addFreshEntity(ghast);
-
-        });
+        }));
     }
 }

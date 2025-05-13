@@ -1,5 +1,3 @@
-I no longer plan on working on this, anyone is free to use any part of the code to continue maintaing this if they so wish.
-
 # Minecraft Randomizer Setup Guide
 
 ## Required Software
@@ -30,7 +28,7 @@ When you join a multiworld game, you will be asked to provide your YAML file to 
 the host will provide you with either a link to download your data file, or with a zip file containing everyone's data
 files. Your data file should have a `.apmc` extension.
 
-Double-click on your `.apmc` file to have the Minecraft APClient auto-launch the installed forge server. Make sure to
+Double-click on your `.apmc` file to have the Minecraft client auto-launch the installed forge server. Make sure to
 leave this window open as this is your server console.
 
 ### Connect to the MultiServer

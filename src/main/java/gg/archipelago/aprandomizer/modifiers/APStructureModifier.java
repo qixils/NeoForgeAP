@@ -28,6 +28,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// TODO: null safety
+
 public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> levels, ResourceKey<Structure> defaultStructure, ResourceLocation name) implements StructureModifier {
 
     public static final MapCodec<APStructureModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance

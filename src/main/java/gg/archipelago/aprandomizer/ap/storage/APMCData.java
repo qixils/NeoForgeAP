@@ -52,13 +52,29 @@ public class APMCData {
 
     public enum Bosses {
         @SerializedName("none")
-        NONE,
+        NONE(false, false),
         @SerializedName("ender_dragon")
-        ENDER_DRAGON,
+        ENDER_DRAGON(true, false),
         @SerializedName("wither")
-        WITHER,
+        WITHER(false, true),
         @SerializedName("both")
-        BOTH
+        BOTH(true, true);
+
+        private final boolean dragon;
+        private final boolean wither;
+
+        Bosses(boolean dragon, boolean wither) {
+            this.dragon = dragon;
+            this.wither = wither;
+        }
+
+        public boolean hasDragon() {
+            return dragon;
+        }
+
+        public boolean hasWither() {
+            return wither;
+        }
     }
 
 }

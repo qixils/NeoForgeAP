@@ -11,7 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EndDragonFight.class)
 public abstract class MixinSpawnGateways {
 
-    @Shadow public abstract void spawnNewGateway();
+    @Shadow
+    protected abstract void spawnNewGateway();
 
     @Inject(method = "createNewDragon()Lnet/minecraft/world/entity/boss/enderdragon/EnderDragon;", at = @At("RETURN"))
      private void spawnNewDragon(CallbackInfoReturnable<EnderDragon> cir) {

@@ -23,18 +23,17 @@ public class CreeperTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
+        APRandomizer.server().ifPresent(value -> value.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfCreepers; i++) {
                 Creeper creeper = EntityType.CREEPER.create(world, EntitySpawnReason.MOB_SUMMONED);
-                if(creeper == null)
-                    continue;
+                if (creeper == null) continue;
                 creeper.setTarget(player);
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 creeper.snapTo(offset);
                 world.addFreshEntity(creeper);
             }
-        });
+        }));
     }
 }

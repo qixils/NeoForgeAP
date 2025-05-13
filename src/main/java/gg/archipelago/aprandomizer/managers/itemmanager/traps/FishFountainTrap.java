@@ -13,17 +13,16 @@ public class FishFountainTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < 10; i++) {
                 Silverfish fish = EntityType.SILVERFISH.create(world, EntitySpawnReason.MOB_SUMMONED);
-                if (fish == null)
-                    continue;
+                if (fish == null) continue;
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 fish.snapTo(offset);
                 world.addFreshEntity(fish);
             }
-        });
+        }));
     }
 }

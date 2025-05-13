@@ -23,18 +23,18 @@ public class BeeTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
-            ServerLevel world = (ServerLevel)player.level();
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
+            ServerLevel world = player.serverLevel();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfBees; i++) {
                 Bee bee = EntityType.BEE.create(world, EntitySpawnReason.MOB_SUMMONED);
+                if (bee == null) continue;
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 bee.snapTo(offset);
                 bee.setPersistentAngerTarget(player.getUUID());
                 bee.setRemainingPersistentAngerTime(1200);
                 world.addFreshEntity(bee);
             }
-
-        });
+        }));
     }
 }

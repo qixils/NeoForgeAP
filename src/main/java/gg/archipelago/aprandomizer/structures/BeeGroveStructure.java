@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class BeeGroveStructure extends Structure {
     // A custom codec that changes the size limit for our config to not be capped at 7.
     // With this, we can have a structure with a size limit up to 30 if we want to have extremely long branches of pieces in the structure.
@@ -111,7 +112,7 @@ public class BeeGroveStructure extends Structure {
         // Set's our spawning blockpos's y offset to be 60 blocks up.
         // Since we are going to have heightmap/terrain height spawning set to true further down, this will make it so we spawn 60 blocks above terrain.
         // If we wanted to spawn on ocean floor, we would set heightmap/terrain height spawning to false and the grab the y value of the terrain with OCEAN_FLOOR_WG heightmap.
-        int startY = this.startHeight.sample(context.random(),new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
+        int startY = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
 
         // Turns the chunk coordinates into actual coordinates we can use. (Gets corner of that chunk)
         ChunkPos chunkPos = context.chunkPos();
@@ -145,7 +146,7 @@ public class BeeGroveStructure extends Structure {
 
 
     @Override
-    public StructureType<?> type() {
+    public @NotNull StructureType<?> type() {
         return APStructures.BEE_GROVE.get();
     }
 }

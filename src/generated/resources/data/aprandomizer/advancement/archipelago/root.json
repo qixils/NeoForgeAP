@@ -19,5 +19,6 @@
     [
       "auto"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

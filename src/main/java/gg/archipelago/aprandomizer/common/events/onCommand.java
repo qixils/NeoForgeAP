@@ -27,7 +27,8 @@ public class onCommand {
             "pardon-ip",
             "whitelist",
             "me",
-            "say");
+            "say"
+    );
 
     @SubscribeEvent
     static void onPlayerLoginEvent(CommandEvent event) {
@@ -37,7 +38,7 @@ public class onCommand {
         CommandSourceStack source = event.getParseResults().getContext().getSource();
         String command = event.getParseResults().getReader().getRead();
         for (String allowedCommand : ALLOWED_COMMANDS)
-            if (command.startsWith(allowedCommand) || command.startsWith("/"+allowedCommand))
+            if (command.startsWith(allowedCommand) || command.startsWith("/" + allowedCommand))
                 return;
 
         event.setCanceled(true);

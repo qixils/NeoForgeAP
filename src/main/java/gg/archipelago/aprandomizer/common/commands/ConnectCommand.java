@@ -13,16 +13,11 @@ import net.minecraft.commands.Commands;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.net.URISyntaxException;
 
 @EventBusSubscriber
 public class ConnectCommand {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -68,6 +63,8 @@ public class ConnectCommand {
         if (data.state == APMCData.State.VALID) {
 
             APClient APClient = APRandomizer.getAP();
+            if (APClient == null) return 0;
+
             APClient.setName(data.player_name);
             APClient.setPassword(password);
             String address = (port==-1) ? hostname : hostname.concat(":" + port);

@@ -14,12 +14,13 @@ import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+
 public class FakeWither implements Trap {
 
     private static final CustomBossEvent witherBar;
 
     static {
-        witherBar = APRandomizer.getServer().getCustomBossEvents().create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fake_wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
+        witherBar = APRandomizer.server().orElseThrow().getCustomBossEvents().create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
         witherBar.setColor(BossEvent.BossBarColor.PURPLE);
         witherBar.setDarkenScreen(true);
         witherBar.setMax(300);
@@ -31,22 +32,23 @@ public class FakeWither implements Trap {
     public FakeWither() {
         NeoForge.EVENT_BUS.register(this);
     }
+
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
+        APRandomizer.server().ifPresent(server -> server.execute(() -> {
             witherBar.addPlayer(player);
             witherBar.setVisible(true);
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,20*6, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 6, 0));
             player.playNotifySound(SoundEvents.WITHER_SPAWN, SoundSource.MASTER, 1, 1);
-        });
+        }));
     }
 
     @SubscribeEvent
-    public void onTick(ServerTickEvent.Post event) {
-        if(!witherBar.isVisible())
+    public void onTick(ServerTickEvent event) {
+        if (!witherBar.isVisible())
             return;
         int value = witherBar.getValue();
-        if(value >= witherBar.getMax()) {
+        if (value >= witherBar.getMax()) {
             witherBar.setValue(0);
             witherBar.setVisible(false);
             NeoForge.EVENT_BUS.unregister(this);

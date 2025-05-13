@@ -3,6 +3,7 @@ package gg.archipelago.aprandomizer.common.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.koifysh.archipelago.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -16,17 +17,12 @@ import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @EventBusSubscriber
 public class BounceCommand {
-
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext pContext) {
@@ -60,19 +56,22 @@ public class BounceCommand {
     }
 
     private static int bounceEntity(CommandSourceStack commandSource, Holder.Reference<EntityType<?>> entity, CompoundTag nbt) {
+        APClient apClient = APRandomizer.getAP();
+        if (apClient == null) return 0;
+
         BouncePacket packet = new BouncePacket();
         packet.tags = new String[]{"MC35"};
         packet.setData(new HashMap<>(Map.of(
                 "enemy", entity.toString(),
-                "source", APRandomizer.getAP().getSlot(),
+                "source", apClient.getSlot(),
                 "nbt", nbt.toString())));
-        APRandomizer.getAP().sendBounce(packet);
+        apClient.sendBounce(packet);
         return 1;
     }
 
     //wait for register commands event then register ourself as a command.
     @SubscribeEvent
     static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
-        BounceCommand.Register(event.getDispatcher(),event.getBuildContext());
+        BounceCommand.Register(event.getDispatcher(), event.getBuildContext());
     }
 }

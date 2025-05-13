@@ -12,6 +12,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.structures.EndCityPieces;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,7 @@ public class NetherEndCityStructure extends Structure {
             instance.group(settingsCodec(instance)
             ).apply(instance, NetherEndCityStructure::new));
 
-    public NetherEndCityStructure(Structure.StructureSettings config)
-    {
+    public NetherEndCityStructure(Structure.StructureSettings config) {
         super(config);
     }
 
@@ -68,7 +68,7 @@ public class NetherEndCityStructure extends Structure {
     }
 
     @Override
-    public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
+    public @NotNull Optional<Structure.GenerationStub> findGenerationPoint(Structure.@NotNull GenerationContext context) {
 
         // Check if the spot is valid for our structure. This is just as another method for cleanness.
         // Returning an empty optional tells the game to skip this spot as it will not generate the structure.
@@ -88,11 +88,11 @@ public class NetherEndCityStructure extends Structure {
             List<StructurePiece> list = Lists.newArrayList();
             EndCityPieces.startHouseTower(context.structureTemplateManager(), blockpos, rotation, list, context.random());
             list.forEach(structure::addPiece);
-                }));
+        }));
     }
 
     @Override
-    public StructureType<?> type() {
+    public @NotNull StructureType<?> type() {
         return APStructures.END_CITY_NETHER.get();
     }
 

@@ -8,6 +8,6 @@ import net.minecraft.world.effect.MobEffects;
 public class LevitateTrap implements Trap {
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.server.execute(() -> player.addEffect(new MobEffectInstance(MobEffects.LEVITATION,20 * 10)));
+        APRandomizer.server().ifPresent(server -> server.execute(() -> player.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 20 * 10))));
     }
 }

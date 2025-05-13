@@ -1,7 +1,5 @@
 package gg.archipelago.aprandomizer.common.Utils;
 
-import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -12,18 +10,16 @@ import java.util.List;
 @EventBusSubscriber
 public class TitleQueue {
 
-    static List<QueuedTitle> titleQueue = new LinkedList<>();
+    static final List<QueuedTitle> titleQueue = new LinkedList<>();
 
     static int titleTime;
 
-    final private static MinecraftServer server = APRandomizer.getServer();
-
     @SubscribeEvent
     static public void serverTick(ServerTickEvent.Post tick) {
-        if (titleQueue.size() > 0) {
+        if (!titleQueue.isEmpty()) {
             if (titleTime <= 0) {
-                QueuedTitle title = titleQueue.get(0);
-                titleQueue.remove(0);
+                QueuedTitle title = titleQueue.getFirst();
+                titleQueue.removeFirst();
                 titleTime = title.getTicks();
                 title.sendTitle();
             }

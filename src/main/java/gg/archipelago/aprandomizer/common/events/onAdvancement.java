@@ -10,6 +10,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,41 +27,44 @@ public class onAdvancement {
 
     @SubscribeEvent
     static void onAdvancementEvent(AdvancementEvent.AdvancementProgressEvent event) {
-        APRandomizer.server.execute(() -> {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+
+        server.execute(() -> {
             for (String progress : event.getAdvancementProgress().getCompletedCriteria()) {
-                for (ServerPlayer p : APRandomizer.server.getPlayerList().getPlayers()) {
+                for (ServerPlayer p : server.getPlayerList().getPlayers()) {
                     p.getAdvancements().award(event.getAdvancement(), progress);
                 }
             }
         });
-
     }
 
     @SubscribeEvent
     static void onAdvancementEvent(AdvancementEvent.AdvancementEarnEvent event) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return; // !?
+
         //dont do any checking if the apmcdata file is not valid.
-        if (APRandomizer.getApmcData().state != APMCData.State.VALID)
-            return;
+        if (APRandomizer.getApmcData().state != APMCData.State.VALID) return;
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
         Advancement advancement = event.getAdvancement().value();
         ResourceLocation id = event.getAdvancement().id();
 
-        AdvancementManager advancementManager = APRandomizer.getAdvancementManager();
-        Registry<APLocation> locations = event.getEntity().getServer().registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
+        AdvancementManager am = APRandomizer.getAdvancementManager();
+        if (am == null) return;
+        Registry<APLocation> locations = server.registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
         //don't do anything if this advancement has already been had, or is not on our list of tracked advancements.
         for (Map.Entry<ResourceKey<APLocation>, APLocation> entry : locations.entrySet()) {
-            if (entry.getValue() instanceof AdvancementLocation location && location.advancement().equals(id) && !advancementManager.hasAdvancement(entry.getKey()) && advancementManager.getAdvancementID(entry.getKey()) != 0) {
-                LOGGER.debug("{} has gotten the advancement {}", player.getDisplayName().getString(), id);
-                advancementManager.addAdvancement(entry.getKey());
-                advancementManager.syncAdvancement(entry.getKey(), entry.getValue());
-                if (advancement.display().isEmpty())
-                    return;
-                APRandomizer.getServer().getPlayerList().broadcastSystemMessage(
-                        advancement.display().get().getType().createAnnouncement(event.getAdvancement(), player),
-                        false);
-
-            }
+            if (!(entry.getValue() instanceof AdvancementLocation(ResourceLocation advKey) && advKey.equals(id) && !am.hasAdvancement(entry.getKey()) && am.getAdvancementID(entry.getKey()) != 0))
+                continue;
+            LOGGER.debug("{} has gotten the advancement {}", player.getDisplayName().getString(), id);
+            am.addAdvancement(entry.getKey());
+            am.syncAdvancement(entry.getKey(), entry.getValue());
+            advancement.display().ifPresent(it -> server.getPlayerList().broadcastSystemMessage(
+                    advancement.display().get().getType().createAnnouncement(event.getAdvancement(), player),
+                    false
+            ));
         }
     }
 }

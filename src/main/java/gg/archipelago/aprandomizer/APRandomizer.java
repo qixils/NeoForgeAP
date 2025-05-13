@@ -41,9 +41,10 @@ import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,6 +52,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Comparator;
+import java.util.Optional;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -60,30 +62,29 @@ public class APRandomizer {
     public static final String MODID = "aprandomizer";
 
     //store our APClient
+    @Nullable
     static private APClient APClient;
-
+    @Nullable
     static public MinecraftServer server;
-
+    @Nullable
     static private AdvancementManager advancementManager;
+    @Nullable
     static private ItemManager itemManager;
+    @Nullable
     static private GoalManager goalManager;
-    static private APMCData apmcData;
+    @NotNull
+    static private final APMCData apmcData;
     static private final IntSet VALID_VERSIONS = IntSet.of(
             9 // 1.19
     );
+    @NotNull
     static private BlockPos jailCenter = BlockPos.ZERO;
+    @Nullable
     static private WorldData worldData;
-    static private double lastDeathTimestamp;
 
-    public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.20.4 v0.1.3 Randomizer initializing.");
-
-        // Register ourselves for server and other game events we are interested in
-        IEventBus forgeBus = NeoForge.EVENT_BUS;
-        forgeBus.register(this);
-
-
+    static {
         Gson gson = new Gson();
+        APMCData data = null;
         try {
             Path path = Paths.get("./APData/");
             if (!Files.exists(path)) {
@@ -94,20 +95,30 @@ public class APRandomizer {
             File[] files = new File(path.toUri()).listFiles((d, name) -> name.endsWith(".apmc"));
             assert files != null;
             Arrays.sort(files, Comparator.comparingLong(File::lastModified));
-            String b64 = Files.readAllLines(files[0].toPath()).get(0);
+            String b64 = Files.readAllLines(files[0].toPath()).getFirst();
             String json = new String(Base64.getDecoder().decode(b64));
-            apmcData = gson.fromJson(json, APMCData.class);
-            if (!VALID_VERSIONS.contains(apmcData.client_version)) {
-                apmcData.state = APMCData.State.INVALID_VERSION;
+            data = gson.fromJson(json, APMCData.class);
+            if (!VALID_VERSIONS.contains(data.client_version)) {
+                data.state = APMCData.State.INVALID_VERSION;
             }
+            LOGGER.info("Loaded .apmc data");
             //LOGGER.info(apmcData.structures.toString());
-        } catch (IOException | NullPointerException | ArrayIndexOutOfBoundsException | AssertionError e) {
+        } catch (Exception e) {
             LOGGER.error("no .apmc file found. please place .apmc file in './APData/' folder.");
-            if (apmcData == null) {
-                apmcData = new APMCData();
-                apmcData.state = APMCData.State.MISSING;
+            if (data == null) {
+                data = new APMCData();
+                data.state = APMCData.State.MISSING;
             }
         }
+        apmcData = data;
+    }
+
+    public APRandomizer(IEventBus modEventBus) {
+        LOGGER.info("Minecraft Archipelago 1.21.3 v0.2.0 Randomizer initializing.");
+
+        // Register ourselves for server and other game events we are interested in
+        IEventBus forgeBus = NeoForge.EVENT_BUS;
+        forgeBus.register(this);
 
         // For registration and init stuff.
         APStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
@@ -130,43 +141,66 @@ public class APRandomizer {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
 
+    @Nullable
     public static APClient getAP() {
         return APClient;
+    }
+
+    @NotNull
+    public static Optional<APClient> AP() {
+        return Optional.ofNullable(APClient);
     }
 
     public static boolean isConnected() {
         return (APClient != null && APClient.isConnected());
     }
 
+    @Nullable
     public static AdvancementManager getAdvancementManager() {
         return advancementManager;
     }
 
+    public static Optional<AdvancementManager> advancementManager() {
+        return Optional.ofNullable(advancementManager);
+    }
+
+    @NotNull
     public static APMCData getApmcData() {
         return apmcData;
     }
 
+    @Nullable
     public static MinecraftServer getServer() {
         return server;
     }
 
+    public static Optional<MinecraftServer> server() {
+        return Optional.ofNullable(server);
+    }
+
+    @Nullable
     public static ItemManager getItemManager() {
         return itemManager;
     }
 
+    public static Optional<ItemManager> itemManager() {
+        return Optional.ofNullable(itemManager);
+    }
+
+    @NotNull
     public static IntSet getValidVersions() {
         return VALID_VERSIONS;
     }
-
 
     public static boolean isJailPlayers() {
         return worldData.getJailPlayers();
     }
 
     public static void setJailPlayers(boolean jailPlayers) {
-        worldData.setJailPlayers(jailPlayers);
+        if (worldData != null) worldData.setJailPlayers(jailPlayers);
     }
 
+    @NotNull
     public static BlockPos getJailPosition() {
         return jailCenter;
     }
@@ -176,24 +210,26 @@ public class APRandomizer {
     }
 
     public static void sendBounce(BouncePacket packet) {
-        if(APClient != null)
+        if (APClient != null)
             APClient.sendBounce(packet);
     }
 
+    @Nullable
     public static GoalManager getGoalManager() {
         return goalManager;
     }
 
-    public static void setLastDeathTimestamp(double deathTime) {
-        lastDeathTimestamp = deathTime;
+    public static Optional<GoalManager> goalManager() {
+        return Optional.ofNullable(goalManager);
     }
 
-    public static double getLastDeathTimestamp() {
-        return lastDeathTimestamp;
-    }
-
+    @Nullable
     public static WorldData getWorldData() {
         return worldData;
+    }
+
+    public static Optional<WorldData> worldData() {
+        return Optional.ofNullable(worldData);
     }
 
     @SubscribeEvent
@@ -210,6 +246,8 @@ public class APRandomizer {
             LOGGER.error("NO APMC FILE FOUND. PLEASE PLACE A VALID APMC FILE IN THE APDATA FOLDER.");
             return;
         }
+        if (server == null) server = event.getServer();
+
         // do something when the server starts
         advancementManager = new AdvancementManager();
         itemManager = new ItemManager();
@@ -232,8 +270,7 @@ public class APRandomizer {
             if (worldData.getSeedName().isEmpty()) {
                 worldData.setSeedName(apmcData.seed_name);
                 //this is also our first boot so set this flag so we can do first boot stuff.
-            }
-            else {
+            } else {
                 apmcData.state = APMCData.State.INVALID_SEED;
             }
         }
@@ -243,59 +280,66 @@ public class APRandomizer {
             worldData.setSeedName("Invalid");
         }
 
-        if(apmcData.state == APMCData.State.VALID) {
+        if (apmcData.state == APMCData.State.VALID) {
             APClient = new APClient(server);
         }
 
 
-        if(worldData.getJailPlayers()) {
-            ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        if (worldData.getJailPlayers() && overworld != null) {
             BlockPos spawn = overworld.getSharedSpawnPos();
             // alter the spawn box position, so it doesn't interfere with spawning
-            StructureTemplate jail = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID, "spawnjail")).get();
-            BlockPos jailPos = new BlockPos(spawn.getX()+5, 300, spawn.getZ()+5);
-            jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX()/2),jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ()/2));
-            jail.placeInWorld(overworld,jailPos,jailPos,new StructurePlaceSettings(), RandomSource.create(),2);
+            var jailOptional = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID, "spawnjail"));
+            if (jailOptional.isPresent()) {
+                StructureTemplate jail = jailOptional.get();
+                BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
+                jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX() / 2), jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ() / 2));
+                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(), 2);
+            } else {
+                jailCenter = spawn;
+            }
             server.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, server);
             server.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, server);
             server.getGameRules().getRule(GameRules.RULE_DOFIRETICK).set(false, server);
             server.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, server);
-            server.getGameRules().getRule(GameRules.RULE_DO_PATROL_SPAWNING).set(false,server);
-            server.getGameRules().getRule(GameRules.RULE_DO_TRADER_SPAWNING).set(false,server);
-            server.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(false,server);
-            server.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false,server);
-            server.getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(true,server);
-            server.getGameRules().getRule(GameRules.RULE_DOMOBLOOT).set(false,server);
-            server.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).set(false,server);
+            server.getGameRules().getRule(GameRules.RULE_DO_PATROL_SPAWNING).set(false, server);
+            server.getGameRules().getRule(GameRules.RULE_DO_TRADER_SPAWNING).set(false, server);
+            server.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
+            server.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, server);
+            server.getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(true, server);
+            server.getGameRules().getRule(GameRules.RULE_DOMOBLOOT).set(false, server);
+            server.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).set(false, server);
             overworld.setDayTime(0);
 
         }
 
         if (apmcData.state == APMCData.State.VALID && apmcData.server != null) {
 
-            APClient APClient = APRandomizer.getAP();
-            APClient.setName(apmcData.player_name);
-            String address = apmcData.server.concat(":" + apmcData.port);
+            APClient APClient = getAP();
+            if (APClient != null) {
+                APClient.setName(apmcData.player_name);
+                String address = apmcData.server.concat(":" + apmcData.port);
 
-            Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
+                Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
 
-            try {
-                APClient.connect(address);
-            } catch (URISyntaxException e) {
-                Utils.sendMessageToAll("unable to connect");
+                try {
+                    APClient.connect(address);
+                } catch (URISyntaxException e) {
+                    Utils.sendMessageToAll("unable to connect");
+                }
             }
         }
     }
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
-        if(APClient != null)
+        if (APClient != null)
             APClient.close();
     }
 
     @SubscribeEvent
     public void onServerStopped(ServerStoppedEvent event) {
-        if(APClient != null)
+        if (APClient != null)
             APClient.close();
     }
 }

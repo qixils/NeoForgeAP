@@ -10,11 +10,10 @@ import net.minecraft.world.level.saveddata.SavedDataType;
 
 public class WorldData extends SavedData {
 
-
     private String seedName = "";
     private int dragonState = ASLEEP;
     private int witherState = ASLEEP;
-    private boolean jailPlayers = true;
+    private boolean jailPlayers = false;
     private LongSet locations = new LongOpenHashSet();
     private int index = 0;
 
@@ -47,8 +46,16 @@ public class WorldData extends SavedData {
         this.setDirty();
     }
 
+    public void setDragonKilled() {
+        setDragonState(KILLED);
+    }
+
     public int getDragonState() {
         return dragonState;
+    }
+
+    public boolean isDragonKilled() {
+        return dragonState == KILLED;
     }
 
     public boolean getJailPlayers() {
@@ -106,5 +113,13 @@ public class WorldData extends SavedData {
     public void setWitherState(int waiting) {
         this.witherState = waiting;
         this.setDirty();
+    }
+
+    public void setWitherKilled() {
+        setWitherState(KILLED);
+    }
+
+    public boolean isWitherKilled() {
+        return witherState == KILLED;
     }
 }
