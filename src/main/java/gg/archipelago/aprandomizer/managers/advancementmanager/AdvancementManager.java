@@ -83,7 +83,7 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_HUSBANDRY_BALANCED_DIET, 42063L);
         map.put(APLocations.VANILLA_NETHER_FAST_TRAVEL, 42064L);
         map.put(APLocations.VANILLA_HUSBANDRY_ROOT, 42065L);
-        map.put(APLocations.VANILLA_NETHER_USE_LODESTONE, 42066L);
+        map.put(APLocations.VANILLA_ADVENTURE_USE_LODESTONE, 42066L);
         map.put(APLocations.VANILLA_HUSBANDRY_SAFELY_HARVEST_HONEY, 42067L);
         map.put(APLocations.VANILLA_ADVENTURE_TRADE, 42068L);
         map.put(APLocations.VANILLA_NETHER_UNEASY_ALLIANCE, 42069L);

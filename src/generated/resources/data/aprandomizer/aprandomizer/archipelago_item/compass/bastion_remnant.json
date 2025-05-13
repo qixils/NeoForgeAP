@@ -5,7 +5,7 @@
       "type": "aprandomizer:randomized_structure_level",
       "name": "aprandomizer:bastion_remnant"
     },
-    "name": "Pillager Outpost",
+    "name": "Bastion Remnant",
     "structures": "#aprandomizer:bastion_remnant"
   }
 }

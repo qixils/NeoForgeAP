@@ -8,6 +8,7 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
+import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
 import gg.archipelago.aprandomizer.datacomponents.APDataComponents;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import gg.archipelago.aprandomizer.items.APItem;
@@ -129,6 +130,7 @@ public class APRandomizer {
         APRewardTypes.REGISTER.register(modEventBus);
         StructureLevelReferenceTypes.REGISTER.register(modEventBus);
         APAttachmentTypes.REGISTER.register(modEventBus);
+        APLootModifierTypes.REGISTER.register(modEventBus);
         APDataComponents.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
         modEventBus.addListener(APRandomizer::registerDataMapTypes);

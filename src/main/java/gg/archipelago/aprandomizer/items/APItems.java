@@ -323,7 +323,7 @@ public class APItems {
 
         context.register(COMPASS_PILLAGER_OUTPOST,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME), Component.literal("Bastion Remnant"))));
+                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME), Component.literal("Pillager Outpost"))));
 
         context.register(COMPASS_FORTRESS,
                 APItem.ofReward(
@@ -331,7 +331,7 @@ public class APItems {
 
         context.register(COMPASS_BASTION_REMNANT,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME), Component.literal("Pillager Outpost"))));
+                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME), Component.literal("Bastion Remnant"))));
 
         context.register(COMPASS_END_CITY,
                 APItem.ofReward(

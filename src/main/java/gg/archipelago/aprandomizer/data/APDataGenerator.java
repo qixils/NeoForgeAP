@@ -8,6 +8,8 @@ import gg.archipelago.aprandomizer.data.advancements.AfterAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.ReceivedAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.VanillaOverrideAdvancementProvider;
 import gg.archipelago.aprandomizer.data.datamaps.APDataMapProvider;
+import gg.archipelago.aprandomizer.data.loot.APGlobalLootModifierProvider;
+import gg.archipelago.aprandomizer.data.loot.APAddedLootTableProvider;
 import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
@@ -23,7 +25,9 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.packs.*;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
@@ -66,5 +70,10 @@ public class APDataGenerator {
         event.addProvider(new APDataMapProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APBiomeTagsProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APStructureTagsProvider(event.getGenerator().getPackOutput(), registries));
+        event.addProvider(new APGlobalLootModifierProvider(event.getGenerator().getPackOutput(), registries));
+        event.addProvider(new LootTableProvider(event.getGenerator().getPackOutput(), Set.of(),
+                List.of(
+                        new LootTableProvider.SubProviderEntry(APAddedLootTableProvider::new, LootContextParamSets.ALL_PARAMS)),
+                registries));
     }
 }
