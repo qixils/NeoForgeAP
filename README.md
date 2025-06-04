@@ -1,22 +1,29 @@
-# Minecraft Randomizer Setup Guide
+# Minecraft Neoforge Randomizer Setup Guide
+Original (Forge) Implementation by KonoTyran
+NeoForge Rewrite by qixils (Lexi), coehlrich
+
+## THIS PROJECT IS IN ALPHA. DO NOT USE AT THIS TIME
+
+Todo:
+- Refactor APRandomizer functions
+- Implement new APJavaClient library
 
 ## Required Software
 
 - Minecraft Java Edition from
   the [Minecraft Java Edition Store Page](https://www.minecraft.net/en-us/store/minecraft-java-edition)
 - Archipelago from the [Archipelago Releases Page](https://github.com/ArchipelagoMW/Archipelago/releases)
-   - (select `Minecraft Client` during installation.)
 
 ## Configuring your YAML file
 
 ### What is a YAML file and why do I need one?
 
 See the guide on setting up a basic YAML at the Archipelago setup
-guide: [Basic Multiworld Setup Guide](/tutorial/archipelago/setup/en)
+guide: [Basic Multiworld Setup Guide](https://archipelago.gg/tutorial/Archipelago/setup/en)
 
 ### Where do I get a YAML file?
 
-You can customize your settings by visiting the [Minecraft Player Settings Page](/games/Minecraft/player-settings)
+You can customize your settings by visiting the [Minecraft Player Settings Page](https://archipelago.gg/games/Minecraft/player-options)
 
 ## Joining a MultiWorld Game
 
@@ -28,7 +35,7 @@ When you join a multiworld game, you will be asked to provide your YAML file to 
 the host will provide you with either a link to download your data file, or with a zip file containing everyone's data
 files. Your data file should have a `.apmc` extension.
 
-Double-click on your `.apmc` file to have the Minecraft client auto-launch the installed forge server. Make sure to
+Double-click on your `.apmc` file to have the Minecraft client auto-launch the installed NeoForge server. Make sure to
 leave this window open as this is your server console.
 
 ### Connect to the MultiServer
@@ -43,19 +50,19 @@ Archipelago server. `(Port)` is only required if the Archipelago server is not u
 ### Play the game
 
 When the console tells you that you have joined the room, you're all set. Congratulations on successfully joining a
-multiworld game! At this point any additional minecraft players may connect to your forge server. To start the game once
+multiworld game! At this point any additional minecraft players may connect to your NeoForge server. To start the game once
 everyone is ready use the command `/start`.
 
 ## Manual Installation
 
-It is highly recommended to ues the Archipelago installer to handle the installation of the forge server for you.
-support will not be given for those wishing to manually install forge. For those of you who know how, and wish to do so,
+It is highly recommended to ues the Archipelago installer to handle the installation of the NeoForge server for you.
+support will not be given for those wishing to manually install NeoForge. For those of you who know how, and wish to do so,
 the following links are the versions of the software we use.
 
 ### Manual install Software links
 
-- [Minecraft Forge Download Page](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.19.html)
-- [Minecraft Archipelago Randomizer Mod Releases Page](https://github.com/KonoTyran/Minecraft_AP_Randomizer/releases)
+- [Minecraft NeoForge Download Page](https://projects.neoforged.net/neoforged/neoforge)
+- [Minecraft Archipelago Randomizer Mod Releases Page](https://github.com/qixils/NeoForgeAP/releases)
    - **DO NOT INSTALL THIS ON YOUR CLIENT**
-- [Java 17 Download Page](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
+- [Java 21 Download Page](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html)
 
