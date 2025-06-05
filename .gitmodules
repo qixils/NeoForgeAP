@@ -1,0 +1,3 @@
+[submodule "Java-Client"]
+	path = Java-Client
+	url = https://github.com/cjmang/Java-Client.git

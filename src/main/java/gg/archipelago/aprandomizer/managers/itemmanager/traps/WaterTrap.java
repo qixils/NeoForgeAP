@@ -26,6 +26,8 @@ public class WaterTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
         ServerLevel world = (ServerLevel) player.level();
         Vec3 pos = player.position();
         int radius = 2;
@@ -34,9 +36,6 @@ public class WaterTrap implements Trap {
                 waterBlocks.add(new BlockPos(x, (int) pos.y + 3, z));
             }
         }
-
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
         server.execute(() -> {
             for (BlockPos waterBlock : waterBlocks) {
                 if (world.isEmptyBlock(waterBlock)) {

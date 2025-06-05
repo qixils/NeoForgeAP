@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -23,7 +24,9 @@ public class BeeTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.server().ifPresent(server -> server.execute(() -> {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
+        server.execute(() -> {
             ServerLevel world = player.serverLevel();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfBees; i++) {
@@ -35,6 +38,6 @@ public class BeeTrap implements Trap {
                 bee.setRemainingPersistentAngerTime(1200);
                 world.addFreshEntity(bee);
             }
-        }));
+        });
     }
 }

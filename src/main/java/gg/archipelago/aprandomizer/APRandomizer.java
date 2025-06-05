@@ -51,10 +51,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -170,7 +167,7 @@ public class APRandomizer {
     }
 
     @Nullable
-    public static MinecraftServer getServer() {
+    public static MinecraftServer getServer(){
         return server;
     }
 
@@ -215,6 +212,7 @@ public class APRandomizer {
     public static WorldData getWorldData() {
         return worldData;
     }
+
 
     @SubscribeEvent
     public void onServerAboutToStart(ServerAboutToStartEvent event) {

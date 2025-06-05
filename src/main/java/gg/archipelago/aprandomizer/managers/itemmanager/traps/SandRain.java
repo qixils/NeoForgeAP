@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 public class SandRain implements Trap {
     @Override
     public void trigger(ServerPlayer player) {
-        APRandomizer.server().ifPresent(server -> server.execute(() -> {
+        APRandomizer.getServer().execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             int radius = 5;
@@ -21,6 +21,6 @@ public class SandRain implements Trap {
                         world.setBlock(blockPos, Blocks.SAND.defaultBlockState(), 3);
                 }
             }
-        }));
+        });
     }
 }

@@ -37,11 +37,10 @@ public class GoonTrap implements Trap {
 
     @Override
     public void trigger(ServerPlayer player) {
-        ItemStack fish = new ItemStack(Items.SALMON);
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
-
-        APRandomizer.getServer().execute(() -> {
+        ItemStack fish = new ItemStack(Items.SALMON);
+        server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfGoons; i++) {
