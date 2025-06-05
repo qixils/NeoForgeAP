@@ -9,6 +9,7 @@ import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.datacomponents.APDataComponents;
 import gg.archipelago.aprandomizer.datacomponents.TrackedStructure;
 import gg.archipelago.aprandomizer.items.*;
+import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
@@ -119,9 +120,17 @@ public class ItemManager {
 
     private LongList receivedItems = new LongArrayList();
 
+    private final MinecraftServer server;
+    private final GoalManager goalManager;
+
+    public ItemManager(MinecraftServer server, GoalManager goalManager) {
+        this.server = server;
+        this.goalManager = goalManager;
+    }
     public void setReceivedItems(LongList items) {
         this.receivedItems = items;
-        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
+        goalManager.updateGoal(false);
+        //APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
     }
 
     public void giveItem(long itemID, ServerPlayer player, int itemIndex) {
@@ -165,14 +174,12 @@ public class ItemManager {
     public void giveItemToAll(long itemID, int index) {
 
         receivedItems.add(itemID);
-
-        APRandomizer.server().ifPresent(server -> server.execute(() -> {
-            for (ServerPlayer serverplayerentity : server.getPlayerList().getPlayers()) {
-                giveItem(itemID, serverplayerentity, index);
+        server.execute(() -> {
+            for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()){
+                giveItem(itemID, serverPlayerEntity, index);
             }
-        }));
-
-        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(true));
+        });
+        goalManager.updateGoal(true);
     }
 
     /***
@@ -197,8 +204,8 @@ public class ItemManager {
         for (APItem item : registryAccess.lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
             for (APTier tier : item.tiers()) {
                 for (APReward reward : tier.rewards()) {
-                    if (reward instanceof RecipeReward recipeReward) {
-                        lockedRecipes.add(recipeReward.recipe());
+                    if (reward instanceof RecipeReward(ResourceKey<Recipe<?>> recipe)) {
+                        lockedRecipes.add(recipe);
                     }
                 }
             }
@@ -236,7 +243,7 @@ public class ItemManager {
         if (player.serverLevel().dimension().equals(world)) {
             structurePos = player.serverLevel().findNearestMapStructure(compassReward.structures(), player.blockPosition(), 75, false);
             if (structurePos != null) {
-                lore.add(0,"Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
+                lore.addFirst("Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
             } else {
                 player.displayClientMessage(Component.empty()
                         .append("Could not find a nearby ")

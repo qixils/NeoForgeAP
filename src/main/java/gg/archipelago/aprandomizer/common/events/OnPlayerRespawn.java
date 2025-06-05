@@ -1,7 +1,6 @@
 package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.core.BlockPos;
@@ -25,9 +24,7 @@ public class OnPlayerRespawn {
 
         //if we are leaving because the dragon is dead check if our goals are all done!
         GoalManager goalManager = APRandomizer.getGoalManager();
-        if (goalManager != null && APRandomizer.worldData().map(WorldData::isDragonKilled).orElse(false)) {
-            goalManager.checkGoalCompletion();
-        }
+        if (goalManager != null && APRandomizer.getWorldData().isDragonKilled()) goalManager.checkGoalCompletion();
     }
 
 }

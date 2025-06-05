@@ -1,7 +1,7 @@
 # Minecraft Neoforge Randomizer Setup Guide
-Original (Forge) Implementation by KonoTyran
-NeoForge Rewrite by qixils (Lexi), coehlrich
+Original (Forge) Implementation by KonoTyran. 
 
+NeoForge Rewrite by qixils (Lexi), coehlrich.
 ## THIS PROJECT IS IN ALPHA. DO NOT USE AT THIS TIME
 
 Todo:

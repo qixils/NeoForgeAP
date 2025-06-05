@@ -1,8 +1,11 @@
 package gg.archipelago.aprandomizer.managers.advancementmanager;
 
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.ap.APClient;
+import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.locations.APLocations;
+import gg.archipelago.aprandomizer.managers.GoalManager;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import it.unimi.dsi.fastutil.objects.Object2LongMap;
@@ -159,10 +162,14 @@ public class AdvancementManager {
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
 
-    public AdvancementManager() {
-
+    private final APClient apClient;
+    private final GoalManager goalManager;
+    private final WorldData worldData;
+    public AdvancementManager(APClient apClient, GoalManager goalManager, WorldData worldData) {
+        this.apClient = apClient;
+        this.goalManager = goalManager;
+        this.worldData = worldData;
     }
-
 
     public long getAdvancementID(ResourceKey<APLocation> namespacedID) {
         return DEFAULT_LOCATIONS.getLong(namespacedID);
@@ -178,9 +185,9 @@ public class AdvancementManager {
 
     public void addAdvancement(long id) {
         earnedAdvancements.add(id);
-        AP().ifPresent(value -> value.checkLocation(id));
-        goalManager().ifPresent(value -> value.updateGoal(true));
-        worldData().ifPresent(worldData -> worldData.addLocation(id));
+        apClient.checkLocation(id);
+        goalManager.updateGoal(true);
+        worldData.addLocation(id);
         syncAllAdvancements();
     }
 
@@ -221,12 +228,7 @@ public class AdvancementManager {
 
     public void setCheckedAdvancements(LongSet checkedLocations) {
         earnedAdvancements.addAll(checkedLocations);
-        worldData().ifPresent(data -> {
-            for (var checkedLocation : checkedLocations) {
-                data.addLocation(checkedLocation);
-            }
-        });
-
+        checkedLocations.forEach(worldData::addLocation);
         syncAllAdvancements();
     }
 }

@@ -32,10 +32,12 @@ import java.util.Objects;
 @EventBusSubscriber
 public class GoalManager {
 
+
     int advancementsRequired;
     int dragonEggShardsRequired;
     int totalDragonEggShards;
 
+    private final WorldData worldData;
     @NotNull
     private final AdvancementManager advancementManager;
     @Nullable
@@ -48,13 +50,14 @@ public class GoalManager {
     @NotNull
     private final APMCData apmc;
 
-    public GoalManager() {
+    public GoalManager(WorldData worldData) {
         apmc = APRandomizer.getApmcData();
         advancementManager = Objects.requireNonNull(APRandomizer.getAdvancementManager(), "Mod not initialized");
         advancementsRequired = apmc.advancements_required;
         dragonEggShardsRequired = apmc.egg_shards_required;
         totalDragonEggShards = apmc.egg_shards_available;
         initializeInfoBar();
+        this.worldData = worldData;
     }
 
     public void initializeInfoBar() {
@@ -147,9 +150,9 @@ public class GoalManager {
 
         boolean hasGoal = goalsDone();
         if (apmc.required_bosses.hasDragon())
-            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isDragonKilled).orElse(false);
+            hasGoal = hasGoal && APRandomizer.getWorldData().isDragonKilled();
         if (apmc.required_bosses.hasWither())
-            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isWitherKilled).orElse(false);
+            hasGoal = hasGoal && APRandomizer.getWorldData().isWitherKilled();
 
         if (hasGoal)
             apClient.setGameState(ClientStatus.CLIENT_GOAL);
@@ -183,17 +186,17 @@ public class GoalManager {
 
     //subscribe to living death event to check for wither/dragon kills;
     @SubscribeEvent
-    static void onBossDeath(LivingDeathEvent event) {
+    public void onBossDeath(LivingDeathEvent event) {
         LivingEntity mob = event.getEntity();
         GoalManager goalManager = APRandomizer.getGoalManager();
         if (goalManager == null) return;
         if (mob instanceof EnderDragon && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
-            APRandomizer.worldData().ifPresent(WorldData::setDragonKilled);
+            worldData.setDragonKilled();
             Utils.sendMessageToAll("She is no more...");
             goalManager.updateGoal(false);
         }
         if (mob instanceof WitherBoss && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.WITHER)) {
-            APRandomizer.worldData().ifPresent(WorldData::setWitherKilled);
+            worldData.setWitherKilled();
             Utils.sendMessageToAll("The Darkness has lifted...");
             goalManager.updateGoal(true);
         }
@@ -208,8 +211,6 @@ public class GoalManager {
         // a boss is required and you asked about none.
         if (boss == APMCData.Bosses.NONE) return false;
         // if both boses are required and you didn't ask about none return ture;
-        if (required == APMCData.Bosses.BOTH) return true;
-
-        return false;
+        return required == APMCData.Bosses.BOTH;
     }
 }

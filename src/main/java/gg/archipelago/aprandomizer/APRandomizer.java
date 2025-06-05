@@ -116,7 +116,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.3 v0.2.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21.5 v0.2.0 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -164,10 +164,6 @@ public class APRandomizer {
         return advancementManager;
     }
 
-    public static Optional<AdvancementManager> advancementManager() {
-        return Optional.ofNullable(advancementManager);
-    }
-
     @NotNull
     public static APMCData getApmcData() {
         return apmcData;
@@ -178,17 +174,9 @@ public class APRandomizer {
         return server;
     }
 
-    public static Optional<MinecraftServer> server() {
-        return Optional.ofNullable(server);
-    }
-
     @Nullable
     public static ItemManager getItemManager() {
         return itemManager;
-    }
-
-    public static Optional<ItemManager> itemManager() {
-        return Optional.ofNullable(itemManager);
     }
 
     @NotNull
@@ -223,17 +211,9 @@ public class APRandomizer {
         return goalManager;
     }
 
-    public static Optional<GoalManager> goalManager() {
-        return Optional.ofNullable(goalManager);
-    }
-
     @Nullable
     public static WorldData getWorldData() {
         return worldData;
-    }
-
-    public static Optional<WorldData> worldData() {
-        return Optional.ofNullable(worldData);
     }
 
     @SubscribeEvent
@@ -253,9 +233,9 @@ public class APRandomizer {
         if (server == null) server = event.getServer();
 
         // do something when the server starts
-        advancementManager = new AdvancementManager();
-        itemManager = new ItemManager();
-        goalManager = new GoalManager();
+        advancementManager = new AdvancementManager(APClient, goalManager, worldData);
+        itemManager = new ItemManager(server, goalManager);
+        goalManager = new GoalManager(worldData);
 
 
         server.getGameRules().getRule(GameRules.RULE_LIMITED_CRAFTING).set(true, server);
@@ -285,7 +265,7 @@ public class APRandomizer {
         }
 
         if (apmcData.state == APMCData.State.VALID) {
-            APClient = new APClient(server);
+            APClient = new APClient(server, advancementManager, itemManager, goalManager);
         }
 
 

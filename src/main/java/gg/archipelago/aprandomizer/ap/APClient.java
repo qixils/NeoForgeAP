@@ -2,11 +2,12 @@ package gg.archipelago.aprandomizer.ap;
 
 import dev.koifysh.archipelago.Client;
 import dev.koifysh.archipelago.flags.ItemsHandling;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.events.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
+import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
+import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.server.MinecraftServer;
@@ -17,19 +18,21 @@ public class APClient extends Client {
     @Nullable
     public SlotData slotData;
 
-    public APClient(MinecraftServer server) {
+    private final GoalManager goalManager;
+
+    public APClient(MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
         super();
+        this.goalManager = goalManager;
 
         this.setGame("Minecraft");
         this.setItemsHandlingFlags(ItemsHandling.SEND_ITEMS | ItemsHandling.SEND_OWN_ITEMS | ItemsHandling.SEND_STARTING_INVENTORY);
-        APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(getLocationManager().getCheckedLocations())));
-
+        //give the advancement manager the list of checked achievements
+        advancementManager.setCheckedAdvancements(new LongOpenHashSet(getLocationManager().getCheckedLocations()));
         //give our item manager the list of received items to give to players as they log in.
-        APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs())));
-
+        itemManager.setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs()));
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
-        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess()));
+        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess(), advancementManager, itemManager, server, goalManager));
         this.getEventManager().registerListener(new AttemptedConnection());
         this.getEventManager().registerListener(new ReceiveItem());
         this.getEventManager().registerListener(new LocationChecked());
@@ -55,6 +58,6 @@ public class APClient extends Client {
         } else {
             Utils.sendMessageToAll(reason);
         }
-        APRandomizer.goalManager().ifPresent(GoalManager::updateInfoBar);
+        goalManager.updateInfoBar();
     }
 }

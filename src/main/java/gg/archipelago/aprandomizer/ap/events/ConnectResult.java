@@ -4,13 +4,16 @@ import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
 import dev.koifysh.archipelago.helper.DeathLink;
 import dev.koifysh.archipelago.network.ConnectionResult;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.managers.GoalManager;
+import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
+import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,10 +23,18 @@ public class ConnectResult {
     private static final Logger LOGGER = LogManager.getLogger();
     final APClient APClient;
     private final HolderLookup.Provider registries;
+    private final AdvancementManager advancementManager;
+    private final ItemManager itemManager;
+    private final MinecraftServer server;
+    private final GoalManager goalManager;
 
-    public ConnectResult(APClient APClient, HolderLookup.Provider registries) {
+    public ConnectResult(APClient APClient, HolderLookup.Provider registries, AdvancementManager advancementManager, ItemManager itemManager, MinecraftServer server, GoalManager goalManager) {
         this.APClient = APClient;
         this.registries = registries;
+        this.advancementManager = advancementManager;
+        this.itemManager = itemManager;
+        this.server = server;
+        this.goalManager = goalManager;
     }
 
     @ArchipelagoEventListener
@@ -51,25 +62,18 @@ public class ConnectResult {
                 Utils.sendMessageToAll("Welcome to Death Link.");
                 DeathLink.setDeathLinkEnabled(true);
             }
-
-            APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations())));
-
+            advancementManager.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
             //give our item manager the list of received items to give to players as they log in.
-            APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs())));
-
+            itemManager.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs()));
             //catch up all connected players to the list just received.
-            // TODO: broken ish (edit: i don't remember what i meant by this)
-            APRandomizer.server().ifPresent(server -> server.execute(() -> {
-                APRandomizer.itemManager().ifPresent(value -> {
+            // TODO: May have fixed it. Is this intended behavior? -Red
+            server.execute(() -> {
                     for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                        value.catchUpPlayer(player);
+                        itemManager.catchUpPlayer(player);
                     }
-                });
-            }));
-
+            });
             // ensure server is synced
-            APRandomizer.goalManager().ifPresent(goalManager -> goalManager.updateGoal(true));
-
+            goalManager.updateGoal(true);
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {
             Utils.sendMessageToAll("Connection Failed: Invalid Password.");
         } else if (event.getResult() == ConnectionResult.IncompatibleVersion) {

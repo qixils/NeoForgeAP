@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -25,7 +24,7 @@ public class DisconnectCommand {
     }
 
     private static int disconnect(CommandContext<CommandSourceStack> commandContext) {
-        APRandomizer.AP().ifPresent(APClient::disconnect);
+        APClient.client.disconnect();
         //Utils.sendMessageToAll("Disconnected.");
         return 1;
     }
