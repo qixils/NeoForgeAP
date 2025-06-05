@@ -138,6 +138,7 @@ dependencies {
     implementation jarJar('dev.koifysh:archipelago-client:0.1.19') {
         exclude group: "com.google.code.gson"
     }
+    additionalRuntimeClasspath "dev.koifysh:archipelago-client:0.1.19"
 
     implementation jarJar(group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.2')
     implementation jarJar(group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: '5.2.1')
