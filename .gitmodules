@@ -1,4 +1,4 @@
 [submodule "Java-Client"]
 	path = Java-Client
-	url = https://github.com/cjmang/Java-Client.git
-	branch = pr-update
+	url = https://github.com/mattman107/Java-Client.git
+	branch = main
