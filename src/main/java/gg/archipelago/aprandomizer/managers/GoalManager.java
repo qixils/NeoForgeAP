@@ -186,10 +186,12 @@ public class GoalManager {
 
     //subscribe to living death event to check for wither/dragon kills;
     @SubscribeEvent
-    public void onBossDeath(LivingDeathEvent event) {
+    public static void onBossDeath(LivingDeathEvent event) {
         LivingEntity mob = event.getEntity();
         GoalManager goalManager = APRandomizer.getGoalManager();
         if (goalManager == null) return;
+        WorldData worldData = APRandomizer.getWorldData();
+        if (worldData == null) return;
         if (mob instanceof EnderDragon && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
             worldData.setDragonKilled();
             Utils.sendMessageToAll("She is no more...");

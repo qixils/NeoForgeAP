@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public class OnPlayerRespawn {
 
     @SubscribeEvent
-    public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if(!(event.getEntity() instanceof ServerPlayer player)) return;
         ItemManager.refreshCompasses(player);
 
