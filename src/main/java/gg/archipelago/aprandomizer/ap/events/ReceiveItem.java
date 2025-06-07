@@ -14,7 +14,11 @@ import net.minecraft.network.chat.TextColor;
 
 public class ReceiveItem {
 
-    static ItemManager itemManager;
+    private final ItemManager itemManager;
+
+    public ReceiveItem(ItemManager itemManager){
+        this.itemManager = itemManager;
+    }
 
     @ArchipelagoEventListener
     public void onReceiveItem(ReceiveItemEvent event) {

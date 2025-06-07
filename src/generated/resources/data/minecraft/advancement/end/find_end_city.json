@@ -2,7 +2,6 @@
   "parent": "minecraft:end/enter_end_gateway",
   "criteria": {
     "in_city": {
-      "trigger": "minecraft:location",
       "conditions": {
         "player": [
           {
@@ -15,7 +14,8 @@
             }
           }
         ]
-      }
+      },
+      "trigger": "minecraft:location"
     },
     "in_city_nether": {
       "conditions": {

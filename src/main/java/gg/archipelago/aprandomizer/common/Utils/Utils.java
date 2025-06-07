@@ -39,7 +39,7 @@ public class Utils {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @NotNull
-    private static MinecraftServer server() {
+    private static MinecraftServer server(){
         return Objects.requireNonNull(APRandomizer.getServer(), "Server not started");
     }
 
@@ -48,14 +48,14 @@ public class Utils {
     }
 
     public static void sendMessageToAll(Component message) {
-        //tell the server to send the message in a thread safe way.
+        //tell the server() to send the message in a thread safe way.
         server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
     }
 
     public static void sendFancyMessageToAll(APPrint apPrint) {
         Component message = Utils.apPrintToTextComponent(apPrint);
 
-        //tell the server to send the message in a thread safe way.
+        //tell the server() to send the message in a thread safe way.
         server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
 
     }
@@ -191,9 +191,9 @@ public class Utils {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {
             itemstack.setCount(1);
-            ItemEntity itementity1 = player.drop(itemstack, false);
-            if (itementity1 != null) {
-                itementity1.makeFakeItem();
+            ItemEntity itemEntity1 = player.drop(itemstack, false);
+            if (itemEntity1 != null) {
+                itemEntity1.makeFakeItem();
             }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             player.inventoryMenu.broadcastChanges();

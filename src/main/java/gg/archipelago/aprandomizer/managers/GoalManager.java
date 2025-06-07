@@ -32,7 +32,6 @@ import java.util.Objects;
 @EventBusSubscriber
 public class GoalManager {
 
-
     int advancementsRequired;
     int dragonEggShardsRequired;
     int totalDragonEggShards;
@@ -147,12 +146,12 @@ public class GoalManager {
             return;
         APClient apClient = APRandomizer.getAP();
         if (apClient == null) return; // checked by isConnected but a failsafe doesn't hurt
-
+        WorldData worldData = APRandomizer.getWorldData();
         boolean hasGoal = goalsDone();
         if (apmc.required_bosses.hasDragon())
-            hasGoal = hasGoal && APRandomizer.getWorldData().isDragonKilled();
+            hasGoal = hasGoal && worldData.isDragonKilled();
         if (apmc.required_bosses.hasWither())
-            hasGoal = hasGoal && APRandomizer.getWorldData().isWitherKilled();
+            hasGoal = hasGoal && worldData.isWitherKilled();
 
         if (hasGoal)
             apClient.setGameState(ClientStatus.CLIENT_GOAL);

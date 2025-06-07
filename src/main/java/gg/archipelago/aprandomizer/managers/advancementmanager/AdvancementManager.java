@@ -162,11 +162,9 @@ public class AdvancementManager {
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
 
-    private final APClient apClient;
     private final GoalManager goalManager;
     private final WorldData worldData;
-    public AdvancementManager(APClient apClient, GoalManager goalManager, WorldData worldData) {
-        this.apClient = apClient;
+    public AdvancementManager(GoalManager goalManager, WorldData worldData) {
         this.goalManager = goalManager;
         this.worldData = worldData;
     }
@@ -184,6 +182,8 @@ public class AdvancementManager {
     }
 
     public void addAdvancement(long id) {
+        APClient apClient = getAP();
+        if (apClient == null) return;
         earnedAdvancements.add(id);
         apClient.checkLocation(id);
         goalManager.updateGoal(true);
@@ -198,7 +198,7 @@ public class AdvancementManager {
     }
 
     public void resendAdvancements() {
-        gg.archipelago.aprandomizer.ap.APClient apClient = getAP(); // TODO
+        APClient apClient = getAP(); // TODO
         if (apClient == null) return;
         for (long earnedAdvancement : earnedAdvancements) {
             apClient.checkLocation(earnedAdvancement);

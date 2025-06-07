@@ -4,10 +4,13 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 public class QueuedTitle {
+    @NotNull
     private final MinecraftServer server;
     private final int ticks;
     private final List<ServerPlayer> players;

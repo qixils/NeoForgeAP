@@ -159,7 +159,7 @@ public class ItemManager {
                     reward.give(player);
                 }
             } else {
-                LOGGER.error(DEFAULT_ITEMS.get(itemID) + " not found");
+                LOGGER.error("{} not found", DEFAULT_ITEMS.get(itemID));
             }
         }
 
@@ -224,7 +224,6 @@ public class ItemManager {
     public static void updateCompassLocation(TrackedStructure structure, ServerPlayer player, ItemStack compass) {
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
-
         CompassReward compassReward = structure.reward();
 
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.

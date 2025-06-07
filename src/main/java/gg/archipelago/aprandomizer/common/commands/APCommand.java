@@ -46,7 +46,6 @@ public class APCommand {
         );
 
     }
-
     private static int clearTitleQueue(CommandContext<CommandSourceStack> commandSourceStackCommandContext) {
         Utils.sendMessageToAll("Title Queue Cleared");
         TitleQueue.clearTitleQueue();
@@ -54,7 +53,8 @@ public class APCommand {
     }
 
     private static int queryDeathLink(CommandContext<CommandSourceStack> source) {
-        SlotData slotData = APRandomizer.AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
+        assert APRandomizer.getAP() != null;
+        SlotData slotData = APRandomizer.getAP().slotData;  //filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
         if (slotData == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
@@ -65,12 +65,12 @@ public class APCommand {
     }
 
     private static int setDeathLink(CommandContext<CommandSourceStack> source) {
-        SlotData slotData = APRandomizer.AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
+        assert APRandomizer.getAP() != null;
+        SlotData slotData = APRandomizer.getAP().slotData;
         if (slotData == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }
-        assert APRandomizer.getAP() != null;
 
         slotData.deathlink = BoolArgumentType.getBool(source, "value");
         boolean deathlink = slotData.deathlink;
@@ -86,7 +86,8 @@ public class APCommand {
     }
 
     private static int queryMC35(CommandContext<CommandSourceStack> source) {
-        SlotData slotData = APRandomizer.AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
+        assert APRandomizer.getAP() != null;
+        SlotData slotData = APRandomizer.getAP().slotData;//AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
         if (slotData == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
@@ -98,12 +99,12 @@ public class APCommand {
     }
 
     private static int setMC35(CommandContext<CommandSourceStack> source) {
-        SlotData slotData = APRandomizer.AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
+        assert APRandomizer.getAP() != null;
+        SlotData slotData = APRandomizer.getAP().slotData; //filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
         if (slotData == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }
-        assert APRandomizer.getAP() != null;
 
         slotData.MC35 = BoolArgumentType.getBool(source, "value");
         boolean mc35 = slotData.MC35;
