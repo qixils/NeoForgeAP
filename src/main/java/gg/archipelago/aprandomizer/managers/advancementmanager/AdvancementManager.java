@@ -162,10 +162,8 @@ public class AdvancementManager {
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
 
-    private final GoalManager goalManager;
     private final WorldData worldData;
-    public AdvancementManager(GoalManager goalManager, WorldData worldData) {
-        this.goalManager = goalManager;
+    public AdvancementManager(WorldData worldData) {
         this.worldData = worldData;
     }
 
@@ -184,6 +182,8 @@ public class AdvancementManager {
     public void addAdvancement(long id) {
         APClient apClient = getAP();
         if (apClient == null) return;
+        GoalManager goalManager = getGoalManager();
+        if (goalManager == null) return;
         earnedAdvancements.add(id);
         apClient.checkLocation(id);
         goalManager.updateGoal(true);

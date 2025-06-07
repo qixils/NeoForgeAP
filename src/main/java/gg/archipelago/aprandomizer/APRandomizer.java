@@ -233,9 +233,9 @@ public class APRandomizer {
         //fetch our custom world save data we attach to the worlds.
         worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());
 
-        //set up managers and APClient
-        if (advancementManager == null) advancementManager = new AdvancementManager(goalManager, worldData);
-        if (goalManager == null) goalManager = new GoalManager(worldData);
+        //set up managers
+        if (advancementManager == null) advancementManager = new AdvancementManager(worldData);
+        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager);
         if (itemManager == null) itemManager = new ItemManager(server, goalManager);
 
         advancementManager.setCheckedAdvancements(worldData.getLocations());

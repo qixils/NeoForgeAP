@@ -37,28 +37,16 @@ public class APClient extends Client {
         itemManager.setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs()));
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
-        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess()));
+        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess(), server, advancementManager, itemManager, goalManager));
         this.getEventManager().registerListener(new AttemptedConnection());
         this.getEventManager().registerListener(new ReceiveItem(itemManager));
-        this.getEventManager().registerListener(new LocationChecked());
+        this.getEventManager().registerListener(new LocationChecked(advancementManager));
         this.getEventManager().registerListener(new PrintJsonListener());
     }
 
     @Nullable
     public SlotData getSlotData() {
         return slotData;
-    }
-    public MinecraftServer getAPClientServer(){
-        return server;
-    }
-    public AdvancementManager getAPClientAdvancementManager(){
-        return advancementManager;
-    }
-    public GoalManager getAPClientGoalManager(){
-        return goalManager;
-    }
-    public ItemManager getAPClientItemManager(){
-        return itemManager;
     }
 
     @Override
