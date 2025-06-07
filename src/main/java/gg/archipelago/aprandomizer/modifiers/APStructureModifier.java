@@ -12,6 +12,7 @@ import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -66,8 +67,9 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
     }
 
     @Override
-    public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
-
+    public void modify(@NotNull Holder<Structure> structure, @NotNull Phase phase, ModifiableStructureInfo.StructureInfo.@NotNull Builder builder) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server == null) return;
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
         if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
             APRandomizer.LOGGER.error("APMCData is missing, cannot modify structures.");
@@ -78,7 +80,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
         ResourceKey<Structure> currentStructure = structure.unwrapKey().get();
         if (!structures.containsKey(name) || !changedStructures.contains(currentStructure))
             return;
-        APRandomizer.LOGGER.debug("Altering biome list for " + currentStructure.location());
+        APRandomizer.LOGGER.debug("Altering biome list for {}", currentStructure.location());
 
         ResourceKey<Level> level = structures.get(name);
         HolderSet<Biome> biomes = structure.value().biomes();
@@ -105,7 +107,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
     }
 
     @Override
-    public MapCodec<APStructureModifier> codec() {
+    public @NotNull MapCodec<APStructureModifier> codec() {
         return CODEC;
     }
 
