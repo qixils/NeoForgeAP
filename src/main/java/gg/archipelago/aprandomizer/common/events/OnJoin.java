@@ -15,9 +15,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 @EventBusSubscriber
 public class OnJoin {
-    static GoalManager goalManager;
-    static ItemManager itemManager;
-    static AdvancementManager advancementManager;
+    //static GoalManager goalManager;
+    //static ItemManager itemManager;
+    //static AdvancementManager advancementManager;
     @SubscribeEvent
     static void onPlayerLoginEvent(PlayerEvent.PlayerLoggedInEvent event) {
 
@@ -38,9 +38,11 @@ public class OnJoin {
             Utils.sendMessageToAll("Supplied APMC file does not match world loaded. something went very wrong here.");
             return;
         }
-        advancementManager.syncAllAdvancements();
-        goalManager.updateInfoBar();
-        itemManager.catchUpPlayer(player);
+        APRandomizer.getAdvancementManager().syncAllAdvancements();
+        APRandomizer.getGoalManager().updateInfoBar();
+        APRandomizer.getItemManager().catchUpPlayer(player);
+       // goalManager.updateInfoBar();
+        //itemManager.catchUpPlayer(player);
 
         if (APRandomizer.isJailPlayers()) {
             BlockPos jail = APRandomizer.getJailPosition();

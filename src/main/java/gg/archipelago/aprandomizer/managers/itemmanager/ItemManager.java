@@ -128,6 +128,7 @@ public class ItemManager {
         this.goalManager = goalManager;
     }
     public void setReceivedItems(LongList items) {
+        if(goalManager == null) return;
         this.receivedItems = items;
         goalManager.updateGoal(false);
         //APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));

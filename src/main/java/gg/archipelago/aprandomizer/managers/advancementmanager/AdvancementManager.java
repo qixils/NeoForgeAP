@@ -227,8 +227,12 @@ public class AdvancementManager {
     }
 
     public void setCheckedAdvancements(LongSet checkedLocations) {
+        if(worldData == null) return;
         earnedAdvancements.addAll(checkedLocations);
-        checkedLocations.forEach(worldData::addLocation);
+        for (var checkedLocation : checkedLocations) {
+            worldData.addLocation(checkedLocation);
+        }
+        //checkedLocations.forEach(worldData::addLocation);
         syncAllAdvancements();
     }
 }
