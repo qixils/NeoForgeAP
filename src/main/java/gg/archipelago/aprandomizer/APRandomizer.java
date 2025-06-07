@@ -141,7 +141,6 @@ public class APRandomizer {
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
-
     @Nullable
     public static APClient getAP() {
         return APClient;

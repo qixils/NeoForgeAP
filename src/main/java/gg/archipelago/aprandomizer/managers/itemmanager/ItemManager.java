@@ -164,8 +164,9 @@ public class ItemManager {
         }
 
         if (trapData.containsKey(itemID)) {
+            if (server == null) return;
             try {
-                trapData.get(itemID).call().trigger(player);
+                trapData.get(itemID).call().trigger(server, player);
             } catch (Exception ignored) {
             }
         }

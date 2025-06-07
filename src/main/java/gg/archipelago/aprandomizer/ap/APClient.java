@@ -18,10 +18,16 @@ public class APClient extends Client {
     @Nullable
     public SlotData slotData;
 
+    private final MinecraftServer server;
+    private final AdvancementManager advancementManager;
+    private final ItemManager itemManager;
     private final GoalManager goalManager;
 
     public APClient(MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
         super();
+        this.server = server;
+        this.advancementManager = advancementManager;
+        this.itemManager = itemManager;
         this.goalManager = goalManager;
 
         this.setGame("Minecraft");
