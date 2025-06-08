@@ -13,7 +13,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@EventBusSubscriber
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = APRandomizer.MODID)
 public class OnJoin {
     @SubscribeEvent
     static void onPlayerLoginEvent(PlayerEvent.PlayerLoggedInEvent event) {

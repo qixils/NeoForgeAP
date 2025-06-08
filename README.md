@@ -7,6 +7,7 @@ NeoForge Rewrite by qixils (Lexi), coehlrich, MrRedstone54 (Red)
 Todo:
 - Refactor APRandomizer functions
 - Implement new APJavaClient library
+- Fix SpawnJail, Recipe Unlocking, Structure Shuffling
 
 ## Required Software
 
