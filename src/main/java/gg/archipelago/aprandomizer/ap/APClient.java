@@ -15,18 +15,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class APClient extends Client {
 
-    private final MinecraftServer server;
-    private final ItemManager itemManager;
-    private final AdvancementManager advancementManager;
     private final GoalManager goalManager;
     @Nullable
     public SlotData slotData;
 
     public APClient(MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
         super();
-        this.server = server;
-        this.itemManager = itemManager;
-        this. advancementManager = advancementManager;
         this.goalManager = goalManager;
 
         this.setGame("Minecraft");

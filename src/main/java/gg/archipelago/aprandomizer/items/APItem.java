@@ -17,7 +17,7 @@ public record APItem(List<APTier> tiers) {
                                     either -> either.map(
                                             tiers -> tiers,
                                             rewards -> List.of(new APTier(rewards))),
-                                    tiers -> tiers.size() == 1 ? Either.right(tiers.get(0).rewards()) : Either.left(tiers))
+                                    tiers -> tiers.size() == 1 ? Either.right(tiers.getFirst().rewards()) : Either.left(tiers))
                             .forGetter(APItem::tiers))
             .apply(instance, APItem::new));
 
