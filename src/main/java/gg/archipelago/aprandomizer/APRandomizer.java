@@ -101,7 +101,7 @@ public class APRandomizer {
                 data.state = APMCData.State.INVALID_VERSION;
             }
             LOGGER.info("Loaded .apmc data");
-            //LOGGER.info(apmcData.structures.toString());
+            LOGGER.info(data.structures.toString());
         } catch (Exception e) {
             LOGGER.error("no .apmc file found. please place .apmc file in './APData/' folder.");
             if (data == null) {
