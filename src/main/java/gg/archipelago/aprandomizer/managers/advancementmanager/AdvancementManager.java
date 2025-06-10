@@ -162,12 +162,8 @@ public class AdvancementManager {
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
 
-    private final APClient apClient;
-    private final GoalManager goalManager;
     private final WorldData worldData;
-    public AdvancementManager(APClient apClient, GoalManager goalManager, WorldData worldData) {
-        this.apClient = apClient;
-        this.goalManager = goalManager;
+    public AdvancementManager(WorldData worldData) {
         this.worldData = worldData;
     }
 
@@ -184,6 +180,10 @@ public class AdvancementManager {
     }
 
     public void addAdvancement(long id) {
+        APClient apClient = getAP();
+        if (apClient == null) return;
+        GoalManager goalManager = getGoalManager();
+        if (goalManager == null) return;
         earnedAdvancements.add(id);
         apClient.checkLocation(id);
         goalManager.updateGoal(true);
@@ -198,7 +198,7 @@ public class AdvancementManager {
     }
 
     public void resendAdvancements() {
-        gg.archipelago.aprandomizer.ap.APClient apClient = getAP(); // TODO
+        APClient apClient = getAP(); // TODO
         if (apClient == null) return;
         for (long earnedAdvancement : earnedAdvancements) {
             apClient.checkLocation(earnedAdvancement);
@@ -227,8 +227,12 @@ public class AdvancementManager {
     }
 
     public void setCheckedAdvancements(LongSet checkedLocations) {
+        if(worldData == null) return;
         earnedAdvancements.addAll(checkedLocations);
-        checkedLocations.forEach(worldData::addLocation);
+        for (var checkedLocation : checkedLocations) {
+            worldData.addLocation(checkedLocation);
+        }
+        //checkedLocations.forEach(worldData::addLocation);
         syncAllAdvancements();
     }
 }

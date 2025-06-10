@@ -15,10 +15,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class APClient extends Client {
 
+    private final GoalManager goalManager;
     @Nullable
     public SlotData slotData;
-
-    private final GoalManager goalManager;
 
     public APClient(MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
         super();
@@ -32,10 +31,10 @@ public class APClient extends Client {
         itemManager.setReceivedItems(new LongArrayList(getItemManager().getReceivedItemIDs()));
         this.getEventManager().registerListener(new onDeathLink());
         this.getEventManager().registerListener(new onMC35());
-        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess(), advancementManager, itemManager, server, goalManager));
+        this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess(), server, advancementManager, itemManager, goalManager));
         this.getEventManager().registerListener(new AttemptedConnection());
-        this.getEventManager().registerListener(new ReceiveItem());
-        this.getEventManager().registerListener(new LocationChecked());
+        this.getEventManager().registerListener(new ReceiveItem(itemManager));
+        this.getEventManager().registerListener(new LocationChecked(advancementManager));
         this.getEventManager().registerListener(new PrintJsonListener());
     }
 
@@ -43,7 +42,6 @@ public class APClient extends Client {
     public SlotData getSlotData() {
         return slotData;
     }
-
 
     @Override
     public void onError(Exception ex) {

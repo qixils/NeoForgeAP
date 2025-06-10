@@ -23,9 +23,7 @@ public class CreeperTrap implements Trap {
     }
 
     @Override
-    public void trigger(ServerPlayer player) {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
+    public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();

@@ -21,19 +21,19 @@ import org.apache.logging.log4j.Logger;
 public class ConnectResult {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    final APClient APClient;
+    private final APClient APClient;
+    private final MinecraftServer server;
     private final HolderLookup.Provider registries;
     private final AdvancementManager advancementManager;
     private final ItemManager itemManager;
-    private final MinecraftServer server;
     private final GoalManager goalManager;
 
-    public ConnectResult(APClient APClient, HolderLookup.Provider registries, AdvancementManager advancementManager, ItemManager itemManager, MinecraftServer server, GoalManager goalManager) {
+    public ConnectResult(APClient APClient, HolderLookup.Provider registries, MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
         this.APClient = APClient;
+        this.server = server;
         this.registries = registries;
         this.advancementManager = advancementManager;
         this.itemManager = itemManager;
-        this.server = server;
         this.goalManager = goalManager;
     }
 

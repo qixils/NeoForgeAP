@@ -128,6 +128,7 @@ public class ItemManager {
         this.goalManager = goalManager;
     }
     public void setReceivedItems(LongList items) {
+        if(goalManager == null) return;
         this.receivedItems = items;
         goalManager.updateGoal(false);
         //APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
@@ -158,13 +159,14 @@ public class ItemManager {
                     reward.give(player);
                 }
             } else {
-                LOGGER.error(DEFAULT_ITEMS.get(itemID) + " not found");
+                LOGGER.error("{} not found", DEFAULT_ITEMS.get(itemID));
             }
         }
 
         if (trapData.containsKey(itemID)) {
+            if (server == null) return;
             try {
-                trapData.get(itemID).call().trigger(player);
+                trapData.get(itemID).call().trigger(server, player);
             } catch (Exception ignored) {
             }
         }
@@ -222,7 +224,6 @@ public class ItemManager {
     public static void updateCompassLocation(TrackedStructure structure, ServerPlayer player, ItemStack compass) {
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
-
         CompassReward compassReward = structure.reward();
 
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.

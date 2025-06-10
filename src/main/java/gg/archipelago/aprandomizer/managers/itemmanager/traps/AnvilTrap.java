@@ -11,9 +11,9 @@ import net.minecraft.world.phys.Vec3;
 public class AnvilTrap implements Trap {
 
     @Override
-    public void trigger(ServerPlayer player) {
-        APRandomizer.getServer().execute(() -> {
-            ServerLevel world = player.serverLevel();
+    public void trigger(MinecraftServer server, ServerPlayer player) {
+        server.execute(() -> {
+            ServerLevel world = player.serverLevel(); //TODO: Possible issue?
             Vec3 pos = player.position();
             BlockPos blockPos = new BlockPos(player.getBlockX(), (int) pos.y + 6, player.getBlockZ());
             if (world.isEmptyBlock(blockPos))

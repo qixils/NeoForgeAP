@@ -36,9 +36,7 @@ public class FakeWither implements Trap {
     }
 
     @Override
-    public void trigger(ServerPlayer player) {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
+    public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() -> {
             witherBar.addPlayer(player);
             witherBar.setVisible(true);

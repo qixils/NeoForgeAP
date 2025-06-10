@@ -141,15 +141,9 @@ public class APRandomizer {
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
-
     @Nullable
     public static APClient getAP() {
         return APClient;
-    }
-
-    @NotNull
-    public static Optional<APClient> AP() {
-        return Optional.ofNullable(APClient);
     }
 
     public static boolean isConnected() {
@@ -213,7 +207,6 @@ public class APRandomizer {
         return worldData;
     }
 
-
     @SubscribeEvent
     public void onServerAboutToStart(ServerAboutToStartEvent event) {
         if (apmcData.state != APMCData.State.VALID) {
@@ -231,10 +224,6 @@ public class APRandomizer {
         if (server == null) server = event.getServer();
 
         // do something when the server starts
-        advancementManager = new AdvancementManager(APClient, goalManager, worldData);
-        itemManager = new ItemManager(server, goalManager);
-        goalManager = new GoalManager(worldData);
-
 
         server.getGameRules().getRule(GameRules.RULE_LIMITED_CRAFTING).set(true, server);
         server.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).set(true, server);
@@ -243,12 +232,17 @@ public class APRandomizer {
 
         //fetch our custom world save data we attach to the worlds.
         worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());
-        advancementManager.setCheckedAdvancements(worldData.getLocations());
 
+        //set up managers
+        if (advancementManager == null) advancementManager = new AdvancementManager(worldData);
+        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager);
+        if (itemManager == null) itemManager = new ItemManager(server, goalManager);
+
+        advancementManager.setCheckedAdvancements(worldData.getLocations());
 
         //check if APMC data is present and if the seed matches what we expect
         if (apmcData.state == APMCData.State.VALID && !worldData.getSeedName().equals(apmcData.seed_name)) {
-            //check to see if our worlddata is empty if it is then save the aproom data.
+            //check to see if our worldData is empty. If it is, then save the apRoom data.
             if (worldData.getSeedName().isEmpty()) {
                 worldData.setSeedName(apmcData.seed_name);
                 //this is also our first boot so set this flag so we can do first boot stuff.

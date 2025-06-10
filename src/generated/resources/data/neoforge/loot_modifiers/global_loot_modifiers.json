@@ -1,7 +1,7 @@
 {
   "entries": [
-    "aprandomizer:entities/wither_skeleton/override_wither_skeleton_skull",
-    "aprandomizer:entities/drowned/add_trident"
+    "aprandomizer:entities/drowned/add_trident",
+    "aprandomizer:entities/wither_skeleton/override_wither_skeleton_skull"
   ],
   "replace": false
 }

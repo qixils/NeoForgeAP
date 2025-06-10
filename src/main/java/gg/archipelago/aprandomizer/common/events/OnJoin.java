@@ -13,15 +13,27 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@EventBusSubscriber
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = APRandomizer.MODID)
 public class OnJoin {
-    static GoalManager goalManager;
-    static ItemManager itemManager;
-    static AdvancementManager advancementManager;
     @SubscribeEvent
     static void onPlayerLoginEvent(PlayerEvent.PlayerLoggedInEvent event) {
-
         ServerPlayer player = (ServerPlayer) event.getEntity();
+        GoalManager goalManager = APRandomizer.getGoalManager();
+        if (goalManager == null){
+            Utils.sendMessageToAll("Goal Manager did not initialize");
+            return;
+        }
+        ItemManager itemManager = APRandomizer.getItemManager();
+        if (itemManager == null){
+            Utils.sendMessageToAll("Item Manager did not initialize");
+            return;
+        }
+        AdvancementManager advancementManager = APRandomizer.getAdvancementManager();
+        if (advancementManager == null){
+            Utils.sendMessageToAll("Advancement Manager did not initialize");
+            return;
+        }
+
         if (APRandomizer.isRace())
             player.setGameMode(GameType.SURVIVAL);
 

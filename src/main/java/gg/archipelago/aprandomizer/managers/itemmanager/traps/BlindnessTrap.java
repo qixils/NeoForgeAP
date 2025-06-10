@@ -8,9 +8,7 @@ import net.minecraft.world.effect.MobEffects;
 
 public class BlindnessTrap implements Trap {
     @Override
-    public void trigger(ServerPlayer player) {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
+    public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() -> {
             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 10));
             player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 10));
