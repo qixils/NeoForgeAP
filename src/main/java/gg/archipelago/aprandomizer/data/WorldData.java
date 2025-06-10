@@ -13,7 +13,7 @@ public class WorldData extends SavedData {
     private String seedName = "";
     private int dragonState = ASLEEP;
     private int witherState = ASLEEP;
-    private boolean jailPlayers = false;
+    private boolean jailPlayers = true;
     private LongSet locations = new LongOpenHashSet();
     private int index = 0;
 
