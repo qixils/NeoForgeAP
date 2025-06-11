@@ -10,6 +10,7 @@ import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import gg.archipelago.aprandomizer.structures.level.StructureLevelReference;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -35,7 +36,7 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
 
     public static final Codec<CompassReward> CODEC = MAP_CODEC.codec();
 
-    private static final ItemStack DEFAULT_COMPASS = new ItemStack(Items.COMPASS.builtInRegistryHolder(), 1, DataComponentPatch.builder()
+    private static final ItemStack DEFAULT_COMPASS = new ItemStack(BuiltInRegistries.ITEM.wrapAsHolder(Items.COMPASS), 1, DataComponentPatch.builder()
             .set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.empty(), false))
             .set(DataComponents.ITEM_NAME, Component.literal("uninitialized structure compass"))
             .set(DataComponents.LORE, new ItemLore(List.of(

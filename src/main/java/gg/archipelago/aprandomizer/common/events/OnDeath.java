@@ -30,7 +30,7 @@ public class OnDeath {
         SlotData slotData = APRandomizer.getAP().getSlotData();
         if (slotData == null || !slotData.deathlink)
             return;
-        //dont send deathlink if the cause of this death was a deathlink
+        //don't send deathlink if the cause of this death was a deathlink
         if (!sendDeathLink)
             return;
 

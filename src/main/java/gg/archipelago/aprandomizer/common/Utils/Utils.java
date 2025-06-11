@@ -191,9 +191,9 @@ public class Utils {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {
             itemstack.setCount(1);
-            ItemEntity itemEntity1 = player.drop(itemstack, false);
-            if (itemEntity1 != null) {
-                itemEntity1.makeFakeItem();
+            ItemEntity itementity1 = player.drop(itemstack, false);
+            if (itementity1 != null) {
+                itementity1.makeFakeItem();
             }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             player.inventoryMenu.broadcastChanges();

@@ -24,7 +24,7 @@ public class SlotData {
     public long minecraft_world_seed;
     public int client_version;
 
-    public boolean connected = false; //TODO: See if we can find out if we're connected through here
+    //public boolean connected = false; //TODO: See if we can find out if we're connected through here
 
     @SerializedName("MC35")
     public boolean MC35 = false;
@@ -37,9 +37,9 @@ public class SlotData {
 
     transient public final List<ItemStack> startingItemStacks = new ArrayList<>();
 
-    public boolean isConnected(){
-        return connected;
-    }
+    //public boolean isConnected(){
+    //    return connected;
+    //}
     public boolean getMC35() {
         return MC35;
     }

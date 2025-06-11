@@ -43,13 +43,10 @@ public class GoalManager {
     @Nullable
     private CustomBossEvent connectionInfoBar;
 
-    @NotNull
-    private final MinecraftServer server;
     private final APMCData apmc;
     private final AdvancementManager advancementManager;
 
     public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager) {
-        this.server = server;
         this.apmc = apmc;
         this.advancementManager = advancementManager;
         advancementsRequired = apmc.advancements_required;
@@ -65,7 +62,7 @@ public class GoalManager {
         CustomBossEvents bossInfoManager = server.getCustomBossEvents();
         advancementInfoBar = bossInfoManager.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
         advancementInfoBar.setMax(advancementsRequired);
-        advancementInfoBar.setColor(BossEvent.BossBarColor.PINK);
+        advancementInfoBar.setColor(BossEvent.BossBarColor.BLUE);
         advancementInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
 
         eggInfoBar = bossInfoManager.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));

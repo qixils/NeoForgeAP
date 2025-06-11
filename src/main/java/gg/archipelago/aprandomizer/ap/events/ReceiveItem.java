@@ -24,7 +24,7 @@ public class ReceiveItem {
     public void onReceiveItem(ReceiveItemEvent event) {
         NetworkItem item = event.getItem();
         itemManager.giveItemToAll(item.itemID, (int) event.getIndex());
-        // Dont fire if we have all ready recevied this location
+        // Don't fire if we have already received this location
         WorldData worldData = APRandomizer.getWorldData();
         if (worldData == null) return;
         if (event.getIndex() <= worldData.getItemIndex()) return;

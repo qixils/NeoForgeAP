@@ -48,7 +48,7 @@ public class OverrideItemLootModifier extends LootModifier {
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         ObjectArrayList<ItemStack> newLoot = generatedLoot.stream().filter(Predicate.not(predicate)).collect(ObjectArrayList.toList());
-        context.getResolver().lookupOrThrow(Registries.LOOT_TABLE).get(table).ifPresent(newTable -> newTable.value().getRandomItemsRaw(context, LootTable.createStackSplitter(context.getLevel(), newLoot::add)));
+        context.getResolver().lookupOrThrow(Registries.LOOT_TABLE).get(table).ifPresent(newTable -> newTable.value().getRandomItems(context, LootTable.createStackSplitter(context.getLevel(), newLoot::add)));
         return newLoot;
     }
 
