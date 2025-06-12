@@ -205,8 +205,8 @@ public class ItemManager {
         for (APItem item : registryAccess.lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
             for (APTier tier : item.tiers()) {
                 for (APReward reward : tier.rewards()) {
-                    if (reward instanceof RecipeReward(ResourceKey<Recipe<?>> recipe)) {
-                        lockedRecipes.add(recipe);
+                    if (reward instanceof RecipeReward recipeReward) {
+                        lockedRecipes.add(recipeReward.recipe());
                     }
                 }
             }

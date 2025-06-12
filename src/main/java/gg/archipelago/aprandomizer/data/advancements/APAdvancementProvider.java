@@ -58,8 +58,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                 .requirements(AdvancementRequirements.Strategy.AND)
                 .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/bake_bread"));
 
-        //PropertyMap cowTexturePropertyMap = new PropertyMap();
-        //cowTexturePropertyMap.put("textures", new Property("textures", "ewogICJ0aW1lc3RhbXAiIDogMTc0MzQwMzc3NDE2MSwKICAicHJvZmlsZUlkIiA6ICJmMTU5YjI3NGMyMmU0MzQwYjdjMTUyYWJkZTE0NzcxMyIsCiAgInByb2ZpbGVOYW1lIiA6ICJNSEZfQ293IiwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2QwZTRlNmZiZjVmM2RjZjk0NDIyYTFmMzE5NDQ4ZjE1MjM2OWQxNzlkYmZiY2RmMDBlNWJmZTg0OTVmYTk3NyIKICAgIH0KICB9Cn0=", null));
         AdvancementHolder leather = Advancement.Builder.recipeAdvancement()
                 .parent(root)
                 .display(
