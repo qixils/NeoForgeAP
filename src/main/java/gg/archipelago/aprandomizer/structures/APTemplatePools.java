@@ -8,10 +8,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.Pools;
 import net.minecraft.data.worldgen.ProcessorLists;
+import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.data.worldgen.placement.VillagePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.pools.FeaturePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
@@ -21,7 +23,9 @@ import java.util.List;
 public class APTemplatePools {
 
     // Bee Grove
-    public static final ResourceKey<StructureTemplatePool> BEE_GROVES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_groves"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BASES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bases"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_TREES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/trees"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BEE_NESTS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bee_nests"));
 
     // Nether Pillager Outpost
     public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_BASE_PLATES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/base_plates"));
@@ -42,15 +46,45 @@ public class APTemplatePools {
         HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);
         HolderGetter<StructureProcessorList> processors = context.lookup(Registries.PROCESSOR_LIST);
         HolderGetter<PlacedFeature> features = context.lookup(Registries.PLACED_FEATURE);
-        context.register(BEE_GROVES,
+        context.register(BEE_GROVE_BASES,
                 new StructureTemplatePool(
                         pools.getOrThrow(Pools.EMPTY),
                         List.of(
                                 Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":bee_grove"),
+                                        StructurePoolElement.single(APRandomizer.MODID + ":bee_grove/base"),
                                         50)),
                         StructureTemplatePool.Projection.TERRAIN_MATCHING));
+
+        context.register(BEE_GROVE_TREES,
+                new StructureTemplatePool(
+                        pools.getOrThrow(Pools.EMPTY),
+                        List.of(
+                                Pair.of(
+                                        FeaturePoolElement.feature(features.getOrThrow(TreePlacements.ACACIA_CHECKED)),
+                                        50),
+                                Pair.of(
+                                        FeaturePoolElement.feature(features.getOrThrow(TreePlacements.BIRCH_CHECKED)),
+                                        50),
+                                Pair.of(
+                                        FeaturePoolElement.feature(features.getOrThrow(TreePlacements.SPRUCE_CHECKED)),
+                                        50),
+                                Pair.of(
+                                        FeaturePoolElement.feature(features.getOrThrow(TreePlacements.OAK_CHECKED)),
+                                        50)),
+                        StructureTemplatePool.Projection.RIGID));
         
+        context.register(BEE_GROVE_BEE_NESTS,
+                new StructureTemplatePool(
+                        pools.getOrThrow(Pools.EMPTY),
+                        List.of(
+                                Pair.of(
+                                        StructurePoolElement.single(APRandomizer.MODID + ":bee_grove/bee_nests/bee_nests_1"),
+                                        50),
+                                Pair.of(
+                                        StructurePoolElement.single(APRandomizer.MODID + ":bee_grove/bee_nests/bee_nests_2"),
+                                        50)),
+                        StructureTemplatePool.Projection.RIGID));
+
         context.register(PILLAGER_OUTPOST_BASE_PLATES,
                 new StructureTemplatePool(
                         pools.getOrThrow(Pools.EMPTY),
