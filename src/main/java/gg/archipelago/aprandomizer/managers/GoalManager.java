@@ -105,15 +105,11 @@ public class GoalManager {
     }
 
     private int currentEggShards() {
-        ItemManager itemManager = APRandomizer.getItemManager();
-        if (itemManager == null) return 0;
-        int current = 0;
-        for (var item : APRandomizer.getItemManager().getAllItems()) {
-            if (item == ItemManager.DRAGON_EGG_SHARD) {
-                ++current;
-            }
-        }
-        return current;
+        return APRandomizer.worldData().map(WorldData::getDragonEggShards).orElse(0);
+    }
+
+    public void incrementDragonEggShards() {
+        APRandomizer.worldData().ifPresent(WorldData::incrementDragonEggShards);
     }
 
     public void updateInfoBar() {

@@ -3,7 +3,7 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "aprandomizer:bee_grove",
+        "location": "aprandomizer:bee_grove/base",
         "processors": {
           "processors": []
         },

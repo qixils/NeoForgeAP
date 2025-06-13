@@ -62,16 +62,9 @@ public class ConnectResult {
                 Utils.sendMessageToAll("Welcome to Death Link.");
                 DeathLink.setDeathLinkEnabled(true);
             }
+
             advancementManager.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
-            //give our item manager the list of received items to give to players as they log in.
-            itemManager.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs()));
-            //catch up all connected players to the list just received.
-            // TODO: May have fixed it. Is this intended behavior? -Red
-            server.execute(() -> {
-                    for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                        itemManager.catchUpPlayer(player);
-                    }
-            });
+
             // ensure server is synced
             goalManager.updateGoal(true);
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {

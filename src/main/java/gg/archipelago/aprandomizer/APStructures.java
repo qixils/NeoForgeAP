@@ -25,6 +25,7 @@ import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -38,7 +39,6 @@ public class APStructures {
     public static final DeferredHolder<StructureType<?>, StructureType<NetherVillageStructure>> VILLAGE_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("village_nether", () -> () -> NetherVillageStructure.CODEC);
     public static final DeferredHolder<StructureType<?>, StructureType<NetherEndCityStructure>> END_CITY_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("end_city_nether", () -> () -> NetherEndCityStructure.CODEC);
     public static final DeferredHolder<StructureType<?>, StructureType<NetherPillagerOutpostStructure>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> () -> NetherPillagerOutpostStructure.CODEC);
-    public static final DeferredHolder<StructureType<?>, StructureType<BeeGroveStructure>> BEE_GROVE = DEFERRED_REGISTRY_STRUCTURE.register("bee_grove", () -> () -> BeeGroveStructure.CODEC);
 
     public static final ResourceKey<Structure> VILLAGE_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
     public static final ResourceKey<Structure> END_CITY_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
@@ -49,16 +49,16 @@ public class APStructures {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);
         context.register(BEEGROVE_STRUCTURE,
-                new BeeGroveStructure(
+                new JigsawStructure(
                         new StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.BEE_GROVE_BIOMES))
                                 .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                                .terrainAdapation(TerrainAdjustment.BEARD_THIN)
                                 .build(),
-                        pools.getOrThrow(APTemplatePools.BEE_GROVES),
-                        Optional.empty(),
+                        pools.getOrThrow(APTemplatePools.BEE_GROVE_BASES),
                         6,
                         ConstantHeight.of(VerticalAnchor.absolute(0)),
-                        Optional.of(Heightmap.Types.WORLD_SURFACE_WG),
-                        80));
+                        false,
+                        Heightmap.Types.WORLD_SURFACE_WG));
 
         context.register(END_CITY_NETHER_STRUCTURE,
                 new NetherEndCityStructure(

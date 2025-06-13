@@ -11,30 +11,30 @@ import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.server.MinecraftServer;
 
 public class ReceiveItem {
 
+    private final MinecraftServer server;
     private final ItemManager itemManager;
 
-    public ReceiveItem(ItemManager itemManager){
+    public ReceiveItem(MinecraftServer server, ItemManager itemManager){
+        this.server = server;
         this.itemManager = itemManager;
     }
 
     @ArchipelagoEventListener
     public void onReceiveItem(ReceiveItemEvent event) {
-        NetworkItem item = event.getItem();
-        itemManager.giveItemToAll(item.itemID, (int) event.getIndex());
-        // Don't fire if we have already received this location
-        WorldData worldData = APRandomizer.getWorldData();
-        if (worldData == null) return;
-        if (event.getIndex() <= worldData.getItemIndex()) return;
+        server.execute(() -> {
+            NetworkItem item = event.getItem();
 
-        APRandomizer.getWorldData().setItemIndex((int) event.getIndex());
+            boolean newItem = itemManager.map(value -> value.giveItemToAll(item.itemID, (int) event.getIndex())).orElse(false);
 
-        Component textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.gold.color.getRGB())));
-        Component title = Component.literal("Received").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.red.color.getRGB())));
-        Utils.sendTitleToAll(title, textItem, 10, 60, 10);
-
-
+            if (newItem) {
+                Component textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.gold.color.getRGB())));
+                Component title = Component.literal("Received").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.red.color.getRGB())));
+                Utils.sendTitleToAll(title, textItem, 10, 60, 10);
+            }
+        });
     }
 }

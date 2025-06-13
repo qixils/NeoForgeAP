@@ -13,7 +13,7 @@ public class PrintJsonListener {
     public void onPrintJson(PrintJSONEvent event) {
         // Don't print chat messages originating from ourselves.
         APClient apClient = APRandomizer.getAP();
-        if (apClient != null && APPrintJsonType.Chat == event.type && event.player == apClient.getSlot())
+        if (apClient != null && APPrintJsonType.Chat == event.type && event.apPrint.slot == apClient.getSlot())
             return;
 
         Utils.sendFancyMessageToAll(event.apPrint);

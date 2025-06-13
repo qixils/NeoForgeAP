@@ -1,20 +1,21 @@
 package gg.archipelago.aprandomizer.managers.itemmanager;
 
+import com.google.common.base.Predicates;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.attachments.APPlayerAttachment;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import gg.archipelago.aprandomizer.datacomponents.APDataComponents;
-import gg.archipelago.aprandomizer.datacomponents.TrackedStructure;
+import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.items.*;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -22,11 +23,14 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -35,7 +39,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 public class ItemManager {
@@ -96,44 +99,71 @@ public class ItemManager {
 
         map.put(45042L, APItems.ITEMSTACK_SHULKER_BOX);
 
+        map.put(45043L, APItems.DRAGON_EGG_SHARD);
+
         map.put(45044L, APItems.GROUP_RECIPES_SPYGLASS);
         map.put(45045L, APItems.GROUP_RECIPES_LEAD);
+
+        map.put(45100L, APItems.TRAP_BEES);
     });
 
-    long index = 45100L;
-    private final HashMap<Long, Callable<Trap>> trapData = new HashMap<>() {{
-        put(index++, BeeTrap::new);
-        put(index++, CreeperTrap::new);
-        put(index++, SandRain::new);
-        put(index++, FakeWither::new);
-        put(index++, GoonTrap::new);
-        put(index++, FishFountainTrap::new);
-        put(index++, MiningFatigueTrap::new);
-        put(index++, BlindnessTrap::new);
-        put(index++, PhantomTrap::new);
-        put(index++, WaterTrap::new);
-        put(index++, GhastTrap::new);
-        put(index++, LevitateTrap::new);
-        put(index++, AboutFaceTrap::new);
-        put(index++, AnvilTrap::new);
-    }};
+//    long index = 45100L;
+//    private final HashMap<Long, Callable<Trap>> trapData = new HashMap<>() {{
+//        put(index++, BeeTrap::new);
+//        put(index++, CreeperTrap::new);
+//        put(index++, SandRain::new);
+//        put(index++, FakeWither::new);
+//        put(index++, GoonTrap::new);
+//        put(index++, FishFountainTrap::new);
+//        put(index++, MiningFatigueTrap::new);
+//        put(index++, BlindnessTrap::new);
+//        put(index++, PhantomTrap::new);
+//        put(index++, WaterTrap::new);
+//        put(index++, GhastTrap::new);
+//        put(index++, LevitateTrap::new);
+//        put(index++, AboutFaceTrap::new);
+//        put(index++, AnvilTrap::new);
+//    }};
 
-    private LongList receivedItems = new LongArrayList();
-
-    private final MinecraftServer server;
+    private Object2IntMap<ResourceKey<APItem>> tiers = new Object2IntOpenHashMap<>();
+    private List<Tier> receivedItems = new ArrayList<>();
+    private int index = 0;
+    private MinecraftServer server;
     private final GoalManager goalManager;
 
     public ItemManager(MinecraftServer server, GoalManager goalManager) {
         this.server = server;
         this.goalManager = goalManager;
     }
+
     public void setReceivedItems(LongList items) {
-        this.receivedItems = items;
+        tiers = new Object2IntOpenHashMap<>();
+        receivedItems = items.longStream()
+                .mapToObj(this::getTier)
+                .filter(Predicates.notNull())
+                .collect(Collectors.toList());
         goalManager.updateGoal(false);
-        //APRandomizer.goalManager().ifPresent(value -> value.updateGoal(false));
     }
 
-    public void giveItem(long itemID, ServerPlayer player, int itemIndex) {
+    private Tier getTier(long itemID) {
+        MinecraftServer server = APRandomizer.getServer();
+        if (server != null && DEFAULT_ITEMS.containsKey(itemID)) {
+            ResourceKey<APItem> itemKey = DEFAULT_ITEMS.get(itemID);
+            int tierIndex = tiers.getInt(itemKey);
+            tiers.put(itemKey, tierIndex + 1);
+            Optional<Holder.Reference<APItem>> itemOptional = server.registryAccess().get(itemKey);
+            if (itemOptional.isPresent()) {
+                APItem item = itemOptional.get().value();
+                APTier tier = item.tiers().get(Math.min(item.tiers().size() - 1, tierIndex));
+                return new Tier(tier, itemKey, tierIndex);
+            } else {
+                LOGGER.error(DEFAULT_ITEMS.get(itemID) + " not found");
+            }
+        }
+        return null;
+    }
+
+    public void giveItem(APTier tier, ResourceKey<APItem> key, ServerPlayer player, int itemIndex, int tierIndex) {
         if (APRandomizer.isJailPlayers()) {
             //dont send items to players if game has not started.
             return;
@@ -144,43 +174,51 @@ public class ItemManager {
         if (attachment.getIndex() >= itemIndex)
             return;
 
+        APCriteriaTriggers.RECEIVED_ITEM.get().trigger(player, key, tierIndex + 1);
+
         //update the player's index of received items for syncing later.
         attachment.setIndex(itemIndex);
-        if (DEFAULT_ITEMS.containsKey(itemID)) {
-            ResourceKey<APItem> itemKey = DEFAULT_ITEMS.get(itemID);
-            int tier = attachment.getTiers().getInt(itemKey);
-            attachment.getTiers().put(itemKey, tier + 1);
-            APCriteriaTriggers.RECEIVED_ITEM.get().trigger(player, itemKey, tier + 1);
-            Optional<Holder.Reference<APItem>> itemOptional = player.registryAccess().get(itemKey);
-            if (itemOptional.isPresent()) {
-                APItem item = itemOptional.get().value();
-                for (APReward reward : item.tiers().get(Math.min(item.tiers().size() - 1, tier)).rewards()) {
-                    reward.give(player);
-                }
-            } else {
-                LOGGER.error("{} not found", DEFAULT_ITEMS.get(itemID));
-            }
+        for (APReward reward : tier.rewards()) {
+            reward.give(player);
         }
 
-        if (trapData.containsKey(itemID)) {
-            if (server == null) return;
-            try {
-                trapData.get(itemID).call().trigger(server, player);
-            } catch (Exception ignored) {
-            }
-        }
+//        if (trapData.containsKey(itemID)) {
+//            try {
+//                trapData.get(itemID).call().trigger(player);
+//            } catch (Exception ignored) {
+//            }
+//        }
     }
 
 
-    public void giveItemToAll(long itemID, int index) {
+    public boolean giveItemToAll(long itemID, int index) {
 
-        receivedItems.add(itemID);
-        server.execute(() -> {
-            for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()){
-                giveItem(itemID, serverPlayerEntity, index);
+        if (index <= this.index)
+            return false;
+        this.index = index;
+        Tier tier = getTier(itemID);
+        if (tier != null) {
+            receivedItems.add(tier);
+            // Dont fire if we have all ready recevied this location
+            WorldData worldData = APRandomizer.getWorldData();
+            if (worldData == null)
+                return false;
+            if (index <= worldData.getItemIndex())
+                return false;
+
+            for (APReward reward : tier.tier.rewards()) {
+                reward.give(server);
             }
-        });
-        goalManager.updateGoal(true);
+            for (ServerPlayer serverplayerentity : server.getPlayerList().getPlayers()) {
+                giveItem(tier.tier, tier.key, serverplayerentity, index, tier.tierIndex);
+            }
+            worldData.setItemIndex(index);
+        } else {
+            return false;
+        }
+
+        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(true));
+        return true;
     }
 
     /***
@@ -192,12 +230,24 @@ public class ItemManager {
         int playerIndex = player.getData(APAttachmentTypes.AP_PLAYER).getIndex();
 
         for (int i = playerIndex; i < receivedItems.size(); i++) {
-            giveItem(receivedItems.getLong(i), player, i + 1);
+            Tier tier = receivedItems.get(i);
+            giveItem(tier.tier, tier.key, player, i + 1, tier.tierIndex);
         }
     }
 
-    public LongList getAllItems() {
-        return receivedItems;
+    public void catchUp(MinecraftServer server) {
+        WorldData data = APRandomizer.getWorldData();
+        if (data != null) {
+            for (int i = data.getItemIndex(); i < receivedItems.size(); i++) {
+                for (APReward reward : receivedItems.get(i).tier.rewards()) {
+                    reward.give(server);
+                }
+            }
+            data.setItemIndex(receivedItems.size());
+            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                catchUpPlayer(player);
+            }
+        }
     }
 
     public static Set<ResourceKey<Recipe<?>>> getLockedRecipes(RegistryAccess registryAccess) {
@@ -211,6 +261,7 @@ public class ItemManager {
                 }
             }
         }
+        APRandomizer.worldData().ifPresent(worldData -> lockedRecipes.removeAll(worldData.getUnlockedRecipes()));
         return lockedRecipes;
     }
 
@@ -220,11 +271,7 @@ public class ItemManager {
         player.awardRecipes(recipes);
     }
 
-    public static void updateCompassLocation(TrackedStructure structure, ServerPlayer player, ItemStack compass) {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
-        CompassReward compassReward = structure.reward();
-
+    public static void updateCompassLocation(CompassReward compassReward, ServerPlayer player, ItemStack compass) {
         //get the actual structure data from forge, and make sure its changed to the AP one if needed.
 
         //get our local custom structure if needed.
@@ -266,7 +313,9 @@ public class ItemManager {
             structurePos = new BlockPos(0,0,0);
 
         //update the nbt data with our new structure.
-        compass.set(APDataComponents.TRACKED_STRUCTURE, new TrackedStructure(compassReward, structure.index()));
+        CompoundTag nbt = compass.has(DataComponents.CUSTOM_DATA) ? compass.get(DataComponents.CUSTOM_DATA).copyTag() : new CompoundTag();
+        nbt.store("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE), compassReward);
+        compass.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
 
         //update the nbt data with our new structure.
         compass.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(GlobalPos.of(world, structurePos)), false));
@@ -278,10 +327,16 @@ public class ItemManager {
     // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
         player.getInventory().forEach((item) -> {
-            TrackedStructure structure = item.get(APDataComponents.TRACKED_STRUCTURE);
-            if (structure == null) return;
+            if (!item.has(DataComponents.CUSTOM_DATA)) return;
+            CompoundTag nbt = item.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+            Optional<CompassReward> structure = nbt.read("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE));
+            if (structure.isEmpty()) return;
 
-            updateCompassLocation(structure, player, item);
+            updateCompassLocation(structure.get(), player, item);
         });
+    }
+
+    private record Tier(APTier tier, ResourceKey<APItem> key, int tierIndex) {
+
     }
 }
