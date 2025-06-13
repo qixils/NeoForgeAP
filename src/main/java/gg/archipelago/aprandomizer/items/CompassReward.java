@@ -5,18 +5,19 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import gg.archipelago.aprandomizer.datacomponents.TrackedStructure;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import gg.archipelago.aprandomizer.structures.level.StructureLevelReference;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -56,8 +57,10 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
         compassRewards.add(this);
 
         ItemStack compass = DEFAULT_COMPASS.copy();
-        TrackedStructure structure = new TrackedStructure(this, compassRewards.size() - 1);
-        ItemManager.updateCompassLocation(structure, player, compass);
+        ItemManager.updateCompassLocation(this, player, compass);
+        CompoundTag tag = compass.get(DataComponents.CUSTOM_DATA).copyTag();
+        tag.putInt("index", compassRewards.size() - 1);
+        compass.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         Utils.giveItemToPlayer(player, compass);
     }
 

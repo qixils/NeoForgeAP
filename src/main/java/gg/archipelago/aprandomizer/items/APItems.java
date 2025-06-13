@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.items.traps.MobTrap;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
@@ -15,12 +16,14 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 import java.util.List;
+import java.util.Optional;
 
 public class APItems {
     // Group Recipes
@@ -76,6 +79,11 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_FORTRESS = id("compass/fortress");
     public static final ResourceKey<APItem> COMPASS_BASTION_REMNANT = id("compass/bastion_remnant");
     public static final ResourceKey<APItem> COMPASS_END_CITY = id("compass/end_city");
+
+    // Traps
+    public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
+
+    public static final ResourceKey<APItem> DRAGON_EGG_SHARD = id("dragon_egg_shard");
 
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
@@ -336,6 +344,14 @@ public class APItems {
         context.register(COMPASS_END_CITY,
                 APItem.ofReward(
                         new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME), Component.literal("End City"))));
+
+        context.register(TRAP_BEES,
+                APItem.ofReward(
+                        new MobTrap(EntityType.BEE, 3, 5, true, Optional.of(1200))));
+
+        context.register(DRAGON_EGG_SHARD,
+                APItem.ofReward(
+                        new DragonEggShardReward()));
     }
 
     private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {

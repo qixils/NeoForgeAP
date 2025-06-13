@@ -1,0 +1,10 @@
+{
+  "rewards": {
+    "type": "aprandomizer:mob_trap",
+    "anger_time": 1200,
+    "count": 3,
+    "entity_type": "minecraft:bee",
+    "radius": 5,
+    "target": true
+  }
+}
