@@ -51,9 +51,8 @@ public class APCommand {
     }
 
     private static int queryDeathLink(CommandContext<CommandSourceStack> source) {
-        assert APRandomizer.getAP() != null;
-        SlotData slotData = APRandomizer.getAP().slotData;  //filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
-        if (slotData == null) {
+        SlotData slotData;
+        if (APRandomizer.getAP() == null || (slotData = APRandomizer.getAP().getSlotData()) == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }
@@ -63,9 +62,8 @@ public class APCommand {
     }
 
     private static int setDeathLink(CommandContext<CommandSourceStack> source) {
-        assert APRandomizer.getAP() != null;
-        SlotData slotData = APRandomizer.getAP().slotData;
-        if (slotData == null) {
+        SlotData slotData;
+        if (APRandomizer.getAP() == null || (slotData = APRandomizer.getAP().getSlotData()) == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }
@@ -84,9 +82,8 @@ public class APCommand {
     }
 
     private static int queryMC35(CommandContext<CommandSourceStack> source) {
-        assert APRandomizer.getAP() != null;
-        SlotData slotData = APRandomizer.getAP().slotData;//AP().filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
-        if (slotData == null) {
+        SlotData slotData;
+        if (APRandomizer.getAP() == null || (slotData = APRandomizer.getAP().getSlotData()) == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }
@@ -97,9 +94,8 @@ public class APCommand {
     }
 
     private static int setMC35(CommandContext<CommandSourceStack> source) {
-        assert APRandomizer.getAP() != null;
-        SlotData slotData = APRandomizer.getAP().slotData; //filter(Client::isConnected).map(APClient::getSlotData).orElse(null);
-        if (slotData == null) {
+        SlotData slotData;
+        if (APRandomizer.getAP() == null || (slotData = APRandomizer.getAP().getSlotData()) == null) {
             source.getSource().sendFailure(Component.literal("Must be connected to an AP server to use this command"));
             return 0;
         }

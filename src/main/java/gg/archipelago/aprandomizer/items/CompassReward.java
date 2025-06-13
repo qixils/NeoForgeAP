@@ -59,7 +59,7 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
 
         ItemStack compass = DEFAULT_COMPASS.copy();
         ItemManager.updateCompassLocation(this, player, compass);
-        CompoundTag tag = compass.get(DataComponents.CUSTOM_DATA).copyTag();
+        CompoundTag tag = compass.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         tag.putInt("index", compassRewards.size() - 1);
         compass.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         Utils.giveItemToPlayer(player, compass);

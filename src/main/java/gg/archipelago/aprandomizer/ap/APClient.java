@@ -33,7 +33,7 @@ public class APClient extends Client {
         this.getEventManager().registerListener(new onMC35());
         this.getEventManager().registerListener(new ConnectResult(this, server.registryAccess(), server, advancementManager, itemManager, goalManager));
         this.getEventManager().registerListener(new AttemptedConnection());
-        this.getEventManager().registerListener(new ReceiveItem(itemManager));
+        this.getEventManager().registerListener(new ReceiveItem(server, itemManager));
         this.getEventManager().registerListener(new LocationChecked(advancementManager));
         this.getEventManager().registerListener(new PrintJsonListener());
     }

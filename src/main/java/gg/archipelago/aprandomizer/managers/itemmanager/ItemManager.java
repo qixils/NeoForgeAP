@@ -10,7 +10,6 @@ import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.items.*;
 import gg.archipelago.aprandomizer.managers.GoalManager;
-import gg.archipelago.aprandomizer.managers.itemmanager.traps.*;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.LongList;
@@ -128,12 +127,14 @@ public class ItemManager {
     private Object2IntMap<ResourceKey<APItem>> tiers = new Object2IntOpenHashMap<>();
     private List<Tier> receivedItems = new ArrayList<>();
     private int index = 0;
-    private MinecraftServer server;
+    private final MinecraftServer server;
     private final GoalManager goalManager;
+    private final WorldData worldData;
 
-    public ItemManager(MinecraftServer server, GoalManager goalManager) {
+    public ItemManager(MinecraftServer server, GoalManager goalManager, WorldData worldData) {
         this.server = server;
         this.goalManager = goalManager;
+        this.worldData = worldData;
     }
 
     public void setReceivedItems(LongList items) {
@@ -217,7 +218,7 @@ public class ItemManager {
             return false;
         }
 
-        APRandomizer.goalManager().ifPresent(value -> value.updateGoal(true));
+        goalManager.updateGoal(true);
         return true;
     }
 
@@ -250,7 +251,7 @@ public class ItemManager {
         }
     }
 
-    public static Set<ResourceKey<Recipe<?>>> getLockedRecipes(RegistryAccess registryAccess) {
+    public Set<ResourceKey<Recipe<?>>> getLockedRecipes(RegistryAccess registryAccess) {
         Set<ResourceKey<Recipe<?>>> lockedRecipes = new HashSet<>();
         for (APItem item : registryAccess.lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
             for (APTier tier : item.tiers()) {
@@ -261,11 +262,11 @@ public class ItemManager {
                 }
             }
         }
-        APRandomizer.worldData().ifPresent(worldData -> lockedRecipes.removeAll(worldData.getUnlockedRecipes()));
+        lockedRecipes.removeAll(worldData.getUnlockedRecipes());
         return lockedRecipes;
     }
 
-    public static void grantAllInitialRecipes(ServerPlayer player) {
+    public void grantAllInitialRecipes(ServerPlayer player) {
         Set<ResourceKey<Recipe<?>>> lockedRecipes = getLockedRecipes(player.registryAccess());
         Set<RecipeHolder<?>> recipes = player.server.getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
         player.awardRecipes(recipes);
@@ -313,7 +314,7 @@ public class ItemManager {
             structurePos = new BlockPos(0,0,0);
 
         //update the nbt data with our new structure.
-        CompoundTag nbt = compass.has(DataComponents.CUSTOM_DATA) ? compass.get(DataComponents.CUSTOM_DATA).copyTag() : new CompoundTag();
+        CompoundTag nbt = compass.has(DataComponents.CUSTOM_DATA) ? compass.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag() : new CompoundTag();
         nbt.store("structure", CompassReward.CODEC, player.registryAccess().createSerializationContext(NbtOps.INSTANCE), compassReward);
         compass.set(DataComponents.CUSTOM_DATA, CustomData.of(nbt));
 

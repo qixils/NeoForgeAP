@@ -24,10 +24,8 @@ public class OnPlayerRespawn {
 
         //if we are leaving because the dragon is dead check if our goals are all done!
         GoalManager goalManager = APRandomizer.getGoalManager();
-        if (goalManager != null) {
-            assert APRandomizer.getWorldData() != null;
-            if (APRandomizer.getWorldData().isDragonKilled()) goalManager.checkGoalCompletion();
-        }
+        if (goalManager != null && APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isDragonKilled())
+            goalManager.checkGoalCompletion();
     }
 
 }

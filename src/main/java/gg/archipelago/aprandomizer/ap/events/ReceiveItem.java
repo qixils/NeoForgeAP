@@ -4,9 +4,7 @@ import dev.koifysh.archipelago.Print.APPrintColor;
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ReceiveItemEvent;
 import dev.koifysh.archipelago.parts.NetworkItem;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -28,7 +26,7 @@ public class ReceiveItem {
         server.execute(() -> {
             NetworkItem item = event.getItem();
 
-            boolean newItem = itemManager.map(value -> value.giveItemToAll(item.itemID, (int) event.getIndex())).orElse(false);
+            boolean newItem = itemManager.giveItemToAll(item.itemID, (int) event.getIndex());
 
             if (newItem) {
                 Component textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.gold.color.getRGB())));

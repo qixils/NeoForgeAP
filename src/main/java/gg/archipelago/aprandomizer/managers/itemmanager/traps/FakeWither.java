@@ -15,24 +15,21 @@ import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class FakeWither implements Trap {
 
-    private static final CustomBossEvent witherBar;
+    private final CustomBossEvent witherBar;
 
-    static {
-        witherBar = ServerLifecycleHooks.getCurrentServer().getCustomBossEvents().create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
+    public FakeWither(MinecraftServer server) {
+        NeoForge.EVENT_BUS.register(this);
+
+        witherBar = server.getCustomBossEvents().create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
         witherBar.setColor(BossEvent.BossBarColor.PURPLE);
         witherBar.setDarkenScreen(true);
         witherBar.setMax(300);
         witherBar.setValue(0);
         witherBar.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
         witherBar.setVisible(false);
-    }
-
-    public FakeWither() {
-        NeoForge.EVENT_BUS.register(this);
     }
 
     @Override

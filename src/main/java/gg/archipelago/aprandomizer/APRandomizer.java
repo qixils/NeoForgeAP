@@ -7,9 +7,9 @@ import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.common.commands.StartCommand;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
-import gg.archipelago.aprandomizer.datacomponents.APDataComponents;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.APRewardTypes;
@@ -35,6 +35,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -51,7 +52,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Comparator;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -128,7 +131,6 @@ public class APRandomizer {
         StructureLevelReferenceTypes.REGISTER.register(modEventBus);
         APAttachmentTypes.REGISTER.register(modEventBus);
         APLootModifierTypes.REGISTER.register(modEventBus);
-        APDataComponents.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
         modEventBus.addListener(APRandomizer::registerDataMapTypes);
     }
@@ -235,8 +237,8 @@ public class APRandomizer {
 
         //set up managers
         if (advancementManager == null) advancementManager = new AdvancementManager(worldData);
-        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager);
-        if (itemManager == null) itemManager = new ItemManager(server, goalManager);
+        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager, worldData);
+        if (itemManager == null) itemManager = new ItemManager(server, goalManager, worldData);
 
         advancementManager.setCheckedAdvancements(worldData.getLocations());
 
@@ -317,5 +319,12 @@ public class APRandomizer {
     public void onServerStopped(ServerStoppedEvent event) {
         if (APClient != null)
             APClient.close();
+    }
+
+    //wait for register commands event then register us as a command.
+    @SubscribeEvent
+    static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
+        // i'm assuming this fires after the server loads lol
+        new StartCommand(itemManager).Register(event.getDispatcher());
     }
 }

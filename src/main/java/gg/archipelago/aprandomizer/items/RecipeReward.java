@@ -3,6 +3,7 @@ package gg.archipelago.aprandomizer.items;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.data.WorldData;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +36,9 @@ public record RecipeReward(ResourceKey<Recipe<?>> recipe) implements APReward {
 
     @Override
     public void give(MinecraftServer server) {
-        APRandomizer.getWorldData().addUnlockedRecipe(recipe);
+        WorldData worldData = APRandomizer.getWorldData();
+        if (worldData == null) return;
+        worldData.addUnlockedRecipe(recipe);
     }
 
 }

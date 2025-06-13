@@ -7,7 +7,6 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
-import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -43,12 +41,16 @@ public class GoalManager {
     @Nullable
     private CustomBossEvent connectionInfoBar;
 
+    private final MinecraftServer server;
     private final APMCData apmc;
     private final AdvancementManager advancementManager;
+    private final WorldData worldData;
 
-    public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager) {
+    public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager, WorldData worldData) {
+        this.server = server;
         this.apmc = apmc;
         this.advancementManager = advancementManager;
+        this.worldData = worldData;
         advancementsRequired = apmc.advancements_required;
         dragonEggShardsRequired = apmc.egg_shards_required;
         totalDragonEggShards = apmc.egg_shards_available;
@@ -56,9 +58,6 @@ public class GoalManager {
     }
 
     public void initializeInfoBar() {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
-
         CustomBossEvents bossInfoManager = server.getCustomBossEvents();
         advancementInfoBar = bossInfoManager.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
         advancementInfoBar.setMax(advancementsRequired);
@@ -92,7 +91,7 @@ public class GoalManager {
 
     public String getAdvancementRemainingString() {
         if (advancementsRequired > 0) {
-            return String.format(" Advancements (%d / %d)", APRandomizer.getAdvancementManager().getFinishedAmount(), advancementsRequired);
+            return String.format(" Advancements (%d / %d)", advancementManager.getFinishedAmount(), advancementsRequired);
         }
         return "";
     }
@@ -105,11 +104,11 @@ public class GoalManager {
     }
 
     private int currentEggShards() {
-        return APRandomizer.worldData().map(WorldData::getDragonEggShards).orElse(0);
+        return worldData.getDragonEggShards();
     }
 
     public void incrementDragonEggShards() {
-        APRandomizer.worldData().ifPresent(WorldData::incrementDragonEggShards);
+        worldData.incrementDragonEggShards();
     }
 
     public void updateInfoBar() {
