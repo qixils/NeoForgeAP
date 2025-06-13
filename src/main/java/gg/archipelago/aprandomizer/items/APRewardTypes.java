@@ -3,6 +3,7 @@ package gg.archipelago.aprandomizer.items;
 import com.mojang.serialization.MapCodec;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.items.traps.MobTrap;
 import net.minecraft.core.Registry;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -16,4 +17,6 @@ public class APRewardTypes {
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<ItemReward>> ITEM = REGISTER.register("item", () -> ItemReward.CODEC);
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<ExperienceReward>> EXPERIENCE = REGISTER.register("experience", () -> ExperienceReward.CODEC);
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<CompassReward>> COMPASS = REGISTER.register("compass", () -> CompassReward.MAP_CODEC);
+    public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<MobTrap>> MOB_TRAP = REGISTER.register("mob_trap", () -> MobTrap.MAP_CODEC);
+    public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<DragonEggShardReward>> DRAGON_EGG_SHARD = REGISTER.register("dragon_egg_shard", () -> DragonEggShardReward.MAP_CODEC);
 }

@@ -22,7 +22,6 @@ public record APItem(List<APTier> tiers) {
             .apply(instance, APItem::new));
 
     public static APItem ofTiers(List<APTier> tiers) {
-//        .forGetter(APItem::rewards);
         return new APItem(tiers);
     }
 

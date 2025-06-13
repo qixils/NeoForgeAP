@@ -54,19 +54,6 @@ public class ConnectResult {
 
             APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations())));
 
-            //give our item manager the list of received items to give to players as they log in.
-            APRandomizer.itemManager().ifPresent(value -> value.setReceivedItems(new LongArrayList(APClient.getItemManager().getReceivedItemIDs())));
-
-            //catch up all connected players to the list just received.
-            // TODO: broken ish (edit: i don't remember what i meant by this)
-            APRandomizer.server().ifPresent(server -> server.execute(() -> {
-                APRandomizer.itemManager().ifPresent(value -> {
-                    for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                        value.catchUpPlayer(player);
-                    }
-                });
-            }));
-
             // ensure server is synced
             APRandomizer.goalManager().ifPresent(goalManager -> goalManager.updateGoal(true));
 

@@ -5,17 +5,25 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.APRandomizer;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldData extends SavedData {
 
     private String seedName = "";
     private int dragonState = ASLEEP;
     private int witherState = ASLEEP;
-    private boolean jailPlayers = false;
+    private boolean jailPlayers = true;
     private LongSet locations = new LongOpenHashSet();
     private int index = 0;
+    private int dragonEggShards = 0;
+    private List<ResourceKey<Recipe<?>>> unlockedRecipes = new ArrayList<>();
 
     public static final int KILLED = 30;
     public static final int SPAWNED = 20;
@@ -29,7 +37,9 @@ public class WorldData extends SavedData {
                     Codec.INT.optionalFieldOf("witherState", ASLEEP).forGetter(WorldData::getWitherState),
                     Codec.BOOL.fieldOf("jailPlayers").forGetter(WorldData::getJailPlayers),
                     Codec.LONG_STREAM.<LongSet>xmap(stream -> new LongOpenHashSet(stream.toArray()), LongSet::longStream).fieldOf("locations").forGetter(WorldData::getLocations),
-                    Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex))
+                    Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex),
+                    Codec.INT.optionalFieldOf("dragonEggShards", 0).forGetter(WorldData::getDragonEggShards),
+                    ResourceKey.codec(Registries.RECIPE).listOf().fieldOf("unlockedRecipes").forGetter(WorldData::getUnlockedRecipes))
             .apply(instance, WorldData::new));
 
     public void setSeedName(String seedName) {
@@ -97,13 +107,15 @@ public class WorldData extends SavedData {
     public WorldData() {
     }
 
-    private WorldData(String seedName, int dragonState, int witherState, boolean jailPlayers, LongSet locations, int itemIndex) {
+    private WorldData(String seedName, int dragonState, int witherState, boolean jailPlayers, LongSet locations, int itemIndex, int dragonEggShards, List<ResourceKey<Recipe<?>>> unlockedRecipes) {
         this.seedName = seedName;
         this.dragonState = dragonState;
         this.witherState = witherState;
         this.jailPlayers = jailPlayers;
         this.locations = locations;
         this.index = itemIndex;
+        this.dragonEggShards = dragonEggShards;
+        this.unlockedRecipes = unlockedRecipes;
     }
 
     public int getWitherState() {
@@ -121,5 +133,23 @@ public class WorldData extends SavedData {
 
     public boolean isWitherKilled() {
         return witherState == KILLED;
+    }
+
+    public void incrementDragonEggShards() {
+        this.dragonEggShards++;
+        this.setDirty();
+    }
+
+    public int getDragonEggShards() {
+        return dragonEggShards;
+    }
+
+    public List<ResourceKey<Recipe<?>>> getUnlockedRecipes() {
+        return unlockedRecipes;
+    }
+
+    public void addUnlockedRecipe(ResourceKey<Recipe<?>> recipe) {
+        unlockedRecipes.add(recipe);
+        this.setDirty();
     }
 }
