@@ -7,7 +7,6 @@ import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import gg.archipelago.aprandomizer.common.commands.StartCommand;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
@@ -35,7 +34,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -116,7 +114,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.5 v0.2.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21.5 v0.3.0-alpha Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -319,12 +317,5 @@ public class APRandomizer {
     public void onServerStopped(ServerStoppedEvent event) {
         if (APClient != null)
             APClient.close();
-    }
-
-    //wait for register commands event then register us as a command.
-    @SubscribeEvent
-    static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
-        // i'm assuming this fires after the server loads lol
-        new StartCommand(itemManager).Register(event.getDispatcher());
     }
 }

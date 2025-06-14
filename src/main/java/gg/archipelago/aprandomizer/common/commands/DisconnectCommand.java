@@ -11,7 +11,6 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @EventBusSubscriber
 public class DisconnectCommand {
-
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
@@ -29,7 +28,7 @@ public class DisconnectCommand {
         return 1;
     }
 
-    //wait for register commands event then register ourself as a command.
+    //wait for register commands event then register us as a command.
     @SubscribeEvent
     static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
         DisconnectCommand.Register(event.getDispatcher());

@@ -69,7 +69,7 @@ public class BounceCommand {
         return 1;
     }
 
-    //wait for register commands event then register ourself as a command.
+    //wait for register commands event then register us as a command.
     @SubscribeEvent
     static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
         BounceCommand.Register(event.getDispatcher(), event.getBuildContext());
