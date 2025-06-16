@@ -158,7 +158,7 @@ public class ItemManager {
                 APTier tier = item.tiers().get(Math.min(item.tiers().size() - 1, tierIndex));
                 return new Tier(tier, itemKey, tierIndex);
             } else {
-                LOGGER.error(DEFAULT_ITEMS.get(itemID) + " not found");
+                LOGGER.error("{} not found", DEFAULT_ITEMS.get(itemID));
             }
         }
         return null;
@@ -183,12 +183,13 @@ public class ItemManager {
             reward.give(player);
         }
 
-//        if (trapData.containsKey(itemID)) {
-//            try {
-//                trapData.get(itemID).call().trigger(player);
-//            } catch (Exception ignored) {
-//            }
-//        }
+/*        if (trapData.containsKey(itemID)) {
+            try {
+                trapData.get(itemID).call().trigger(player);
+            } catch (Exception ignored) {
+           }
+        }
+*/
     }
 
 
@@ -200,7 +201,7 @@ public class ItemManager {
         Tier tier = getTier(itemID);
         if (tier != null) {
             receivedItems.add(tier);
-            // Dont fire if we have all ready recevied this location
+            // Don't fire if we have already received this location
             WorldData worldData = APRandomizer.getWorldData();
             if (worldData == null)
                 return false;
@@ -210,8 +211,8 @@ public class ItemManager {
             for (APReward reward : tier.tier.rewards()) {
                 reward.give(server);
             }
-            for (ServerPlayer serverplayerentity : server.getPlayerList().getPlayers()) {
-                giveItem(tier.tier, tier.key, serverplayerentity, index, tier.tierIndex);
+            for (ServerPlayer serverPlayerEntity : server.getPlayerList().getPlayers()) {
+                giveItem(tier.tier, tier.key, serverPlayerEntity, index, tier.tierIndex);
             }
             worldData.setItemIndex(index);
         } else {
@@ -256,13 +257,13 @@ public class ItemManager {
         for (APItem item : registryAccess.lookupOrThrow(APRegistries.ARCHIPELAGO_ITEM)) {
             for (APTier tier : item.tiers()) {
                 for (APReward reward : tier.rewards()) {
-                    if (reward instanceof RecipeReward recipeReward) {
-                        lockedRecipes.add(recipeReward.recipe());
+                    if (reward instanceof RecipeReward(ResourceKey<Recipe<?>> recipe)) {
+                        lockedRecipes.add(recipe);
                     }
                 }
             }
         }
-        lockedRecipes.removeAll(worldData.getUnlockedRecipes());
+        worldData.getUnlockedRecipes().removeAll(lockedRecipes);
         return lockedRecipes;
     }
 

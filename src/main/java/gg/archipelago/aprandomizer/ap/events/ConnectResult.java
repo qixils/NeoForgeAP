@@ -9,12 +9,8 @@ import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
-import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
-import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,18 +18,14 @@ public class ConnectResult {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final APClient APClient;
-    private final MinecraftServer server;
     private final HolderLookup.Provider registries;
     private final AdvancementManager advancementManager;
-    private final ItemManager itemManager;
     private final GoalManager goalManager;
 
-    public ConnectResult(APClient APClient, HolderLookup.Provider registries, MinecraftServer server, AdvancementManager advancementManager, ItemManager itemManager, GoalManager goalManager) {
+    public ConnectResult(APClient APClient, HolderLookup.Provider registries, AdvancementManager advancementManager, GoalManager goalManager) {
         this.APClient = APClient;
-        this.server = server;
         this.registries = registries;
         this.advancementManager = advancementManager;
-        this.itemManager = itemManager;
         this.goalManager = goalManager;
     }
 

@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
-import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;

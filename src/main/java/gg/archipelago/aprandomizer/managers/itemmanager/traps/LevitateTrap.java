@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
-import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
