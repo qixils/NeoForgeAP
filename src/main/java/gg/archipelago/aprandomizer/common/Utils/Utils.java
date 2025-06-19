@@ -39,7 +39,7 @@ public class Utils {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @NotNull
-    private static MinecraftServer server(){
+    private static MinecraftServer server() {
         return Objects.requireNonNull(APRandomizer.getServer(), "Server not started");
     }
 
@@ -48,14 +48,14 @@ public class Utils {
     }
 
     public static void sendMessageToAll(Component message) {
-        //tell the server() to send the message in a thread safe way.
+        //tell the server to send the message in a thread safe way.
         server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
     }
 
     public static void sendFancyMessageToAll(APPrint apPrint) {
         Component message = Utils.apPrintToTextComponent(apPrint);
 
-        //tell the server() to send the message in a thread safe way.
+        //tell the server to send the message in a thread safe way.
         server().execute(() -> server().getPlayerList().broadcastSystemMessage(message, false));
 
     }
