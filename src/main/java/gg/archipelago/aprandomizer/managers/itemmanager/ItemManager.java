@@ -263,7 +263,7 @@ public class ItemManager {
                 }
             }
         }
-        worldData.getUnlockedRecipes().removeAll(lockedRecipes);
+        lockedRecipes.removeAll(worldData.getUnlockedRecipes());
         return lockedRecipes;
     }
 
