@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
-import gg.archipelago.aprandomizer.APRandomizer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +24,7 @@ public class WaterTrap implements Trap {
     }
 
     @Override
-    public void trigger(ServerPlayer player) {
+    public void trigger(MinecraftServer server, ServerPlayer player) {
         ServerLevel world = (ServerLevel) player.level();
         Vec3 pos = player.position();
         int radius = 2;
@@ -34,9 +33,6 @@ public class WaterTrap implements Trap {
                 waterBlocks.add(new BlockPos(x, (int) pos.y + 3, z));
             }
         }
-
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
         server.execute(() -> {
             for (BlockPos waterBlock : waterBlocks) {
                 if (world.isEmptyBlock(waterBlock)) {

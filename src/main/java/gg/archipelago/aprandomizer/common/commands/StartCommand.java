@@ -6,6 +6,7 @@ import dev.koifysh.archipelago.ClientStatus;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,6 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 public class StartCommand {
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
-
         dispatcher.register(
                 Commands.literal("start") //base slash command is "start"
                         .executes(context -> Start(context, false))
@@ -50,10 +50,9 @@ public class StartCommand {
             commandSourceCommandContext.getSource().sendFailure(Component.literal("The game has already started! what are you doing? START PLAYING!"));
             return 1;
         }
-
         Utils.sendMessageToAll("GO!");
         if (APRandomizer.isConnected()) {
-            assert APRandomizer.getAP() != null;
+            assert APRandomizer.getAP() != null; // safe because isConnected verifies this
             APRandomizer.getAP().setGameState(ClientStatus.CLIENT_PLAYING);
         }
         APRandomizer.setJailPlayers(false);
@@ -61,7 +60,8 @@ public class StartCommand {
         if (server == null) return 0;
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
         if (overworld == null) return 0;
-
+        ItemManager itemManager = APRandomizer.getItemManager();
+        if (itemManager == null) return 0;
         BlockPos spawn = overworld.getSharedSpawnPos();
         StructureTemplate jailStruct = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "spawnjail")).orElseThrow();
         BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
@@ -88,7 +88,7 @@ public class StartCommand {
                 player.teleportTo(spawn.getX(), spawn.getY(), spawn.getZ());
 
                 if (APRandomizer.isConnected()) {
-                    assert APRandomizer.getAP() != null;
+                    assert APRandomizer.getAP() != null; // safe because isConnected verifies this
                     SlotData slotData = APRandomizer.getAP().getSlotData();
                     if (slotData != null) {
                         for (ItemStack iStack : slotData.startingItemStacks) {
@@ -97,14 +97,14 @@ public class StartCommand {
                     }
                 }
             }
-            APRandomizer.itemManager().ifPresent(value -> value.catchUp(server));
+            itemManager.catchUp(server);
         });
         return 1;
     }
-
-    //wait for register commands event then register ourself as a command.
+    //wait for register commands event then register us as a command.
     @SubscribeEvent
     static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
+        // I'm assuming this fires after the server loads lol
         StartCommand.Register(event.getDispatcher());
     }
 }

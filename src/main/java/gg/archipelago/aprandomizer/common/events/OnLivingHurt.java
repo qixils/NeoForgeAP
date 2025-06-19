@@ -64,32 +64,34 @@ public class OnLivingHurt {
         LivingEntity entity = event.getEntity();
         MinecraftServer server = entity.getServer();
         if (server == null) return;
-
-        if (entity instanceof Pig && entity.getPassengers().isEmpty() && entity.getPassengers().getFirst() instanceof ServerPlayer player && event.getSource().is(DamageTypes.FALL)) {
-            AdvancementHolder advancement = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
-            if (advancement == null) {
-                LOGGER.warn("Missing pigs fly achievement");
-            } else {
-                AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancement);
-                if (!ap.isDone()) {
-                    for (String s : ap.getRemainingCriteria()) {
-                        player.getAdvancements().award(advancement, s);
+        if (entity instanceof Pig && event.getSource().is(DamageTypes.FALL)) {
+            if (entity.getPassengers().isEmpty()) return;
+            if (entity.getPassengers().getFirst() instanceof ServerPlayer player) {
+                AdvancementHolder advancement = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
+                if (advancement == null) {
+                    LOGGER.warn("Missing pigs fly achievement");
+                } else {
+                    AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancement);
+                    if (!ap.isDone()) {
+                        for (String s : ap.getRemainingCriteria()) {
+                            player.getAdvancements().award(advancement, s);
+                        }
                     }
                 }
             }
-        }
 
-        Entity e = event.getSource().getEntity();
-        if (e instanceof ServerPlayer player && event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
-            //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
-            AdvancementHolder a = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
-            if (a == null) {
-                LOGGER.warn("Missing overkill achievement");
-            } else {
-                AdvancementProgress ap = player.getAdvancements().getOrStartProgress(a);
-                if (!ap.isDone()) {
-                    for (String s : ap.getRemainingCriteria()) {
-                        player.getAdvancements().award(a, s);
+            Entity e = event.getSource().getEntity();
+            if (e instanceof ServerPlayer player && event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
+                //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
+                AdvancementHolder a = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
+                if (a == null) {
+                    LOGGER.warn("Missing overkill achievement");
+                } else {
+                    AdvancementProgress ap = player.getAdvancements().getOrStartProgress(a);
+                    if (!ap.isDone()) {
+                        for (String s : ap.getRemainingCriteria()) {
+                            player.getAdvancements().award(a, s);
+                        }
                     }
                 }
             }

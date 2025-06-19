@@ -16,7 +16,9 @@ public record DragonEggShardReward() implements APReward {
 
     @Override
     public void give(MinecraftServer server) {
-        APRandomizer.goalManager().ifPresent(GoalManager::incrementDragonEggShards);
+        GoalManager goalManager = APRandomizer.getGoalManager();
+        if (goalManager == null) return;
+        goalManager.incrementDragonEggShards();
     }
 
 }

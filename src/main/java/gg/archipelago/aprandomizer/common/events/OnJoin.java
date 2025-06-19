@@ -5,6 +5,7 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
+import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
@@ -16,8 +17,23 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public class OnJoin {
     @SubscribeEvent
     static void onPlayerLoginEvent(PlayerEvent.PlayerLoggedInEvent event) {
-
         ServerPlayer player = (ServerPlayer) event.getEntity();
+        GoalManager goalManager = APRandomizer.getGoalManager();
+        if (goalManager == null){
+            Utils.sendMessageToAll("Goal Manager did not initialize");
+            return;
+        }
+        ItemManager itemManager = APRandomizer.getItemManager();
+        if (itemManager == null){
+            Utils.sendMessageToAll("Item Manager did not initialize");
+            return;
+        }
+        AdvancementManager advancementManager = APRandomizer.getAdvancementManager();
+        if (advancementManager == null){
+            Utils.sendMessageToAll("Advancement Manager did not initialize");
+            return;
+        }
+
         if (APRandomizer.isRace())
             player.setGameMode(GameType.SURVIVAL);
 
@@ -34,10 +50,9 @@ public class OnJoin {
             Utils.sendMessageToAll("Supplied APMC file does not match world loaded. something went very wrong here.");
             return;
         }
-        APRandomizer.advancementManager().ifPresent(AdvancementManager::syncAllAdvancements);
-
-        APRandomizer.goalManager().ifPresent(GoalManager::updateInfoBar);
-        APRandomizer.itemManager().ifPresent(value -> value.catchUpPlayer(player));
+        advancementManager.syncAllAdvancements();
+        goalManager.updateInfoBar();
+        itemManager.catchUpPlayer(player);
 
         if (APRandomizer.isJailPlayers()) {
             BlockPos jail = APRandomizer.getJailPosition();

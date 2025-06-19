@@ -7,7 +7,6 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
-import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -24,10 +23,9 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.awt.*;
 
 @EventBusSubscriber
 public class GoalManager {
@@ -36,8 +34,6 @@ public class GoalManager {
     int dragonEggShardsRequired;
     int totalDragonEggShards;
 
-    @NotNull
-    private final AdvancementManager advancementManager;
     @Nullable
     private CustomBossEvent advancementInfoBar;
     @Nullable
@@ -45,12 +41,16 @@ public class GoalManager {
     @Nullable
     private CustomBossEvent connectionInfoBar;
 
-    @NotNull
+    private final MinecraftServer server;
     private final APMCData apmc;
+    private final AdvancementManager advancementManager;
+    private final WorldData worldData;
 
-    public GoalManager() {
-        apmc = APRandomizer.getApmcData();
-        advancementManager = Objects.requireNonNull(APRandomizer.getAdvancementManager(), "Mod not initialized");
+    public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager, WorldData worldData) {
+        this.server = server;
+        this.apmc = apmc;
+        this.advancementManager = advancementManager;
+        this.worldData = worldData;
         advancementsRequired = apmc.advancements_required;
         dragonEggShardsRequired = apmc.egg_shards_required;
         totalDragonEggShards = apmc.egg_shards_available;
@@ -58,13 +58,10 @@ public class GoalManager {
     }
 
     public void initializeInfoBar() {
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
-
         CustomBossEvents bossInfoManager = server.getCustomBossEvents();
         advancementInfoBar = bossInfoManager.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
         advancementInfoBar.setMax(advancementsRequired);
-        advancementInfoBar.setColor(BossEvent.BossBarColor.PINK);
+        advancementInfoBar.setColor(BossEvent.BossBarColor.BLUE);
         advancementInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
 
         eggInfoBar = bossInfoManager.create(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));
@@ -107,11 +104,11 @@ public class GoalManager {
     }
 
     private int currentEggShards() {
-        return APRandomizer.worldData().map(WorldData::getDragonEggShards).orElse(0);
+        return worldData.getDragonEggShards();
     }
 
     public void incrementDragonEggShards() {
-        APRandomizer.worldData().ifPresent(WorldData::incrementDragonEggShards);
+        worldData.incrementDragonEggShards();
     }
 
     public void updateInfoBar() {
@@ -140,12 +137,11 @@ public class GoalManager {
             return;
         APClient apClient = APRandomizer.getAP();
         if (apClient == null) return; // checked by isConnected but a failsafe doesn't hurt
-
         boolean hasGoal = goalsDone();
         if (apmc.required_bosses.hasDragon())
-            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isDragonKilled).orElse(false);
+            hasGoal = hasGoal && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isDragonKilled());
         if (apmc.required_bosses.hasWither())
-            hasGoal = hasGoal && APRandomizer.worldData().map(WorldData::isWitherKilled).orElse(false);
+            hasGoal = hasGoal && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isWitherKilled());
 
         if (hasGoal)
             apClient.setGameState(ClientStatus.CLIENT_GOAL);
@@ -160,7 +156,7 @@ public class GoalManager {
             worldData.setDragonState(WorldData.WAITING);
             Utils.PlaySoundToAll(SoundEvents.ENDER_DRAGON_AMBIENT);
             Utils.sendMessageToAll("The Dragon is waiting...");
-            Utils.sendTitleToAll(Component.literal("The Dragon").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(java.awt.Color.ORANGE.getRGB()))), Component.literal("is waiting..."), 40, 120, 40);
+            Utils.sendTitleToAll(Component.literal("The Dragon").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.ORANGE.getRGB()))), Component.literal("is waiting..."), 40, 120, 40);
         }
 
         //check if the wither message has been sent, and send it if needed.
@@ -168,7 +164,7 @@ public class GoalManager {
             worldData.setWitherState(WorldData.WAITING);
             Utils.PlaySoundToAll(SoundEvents.WITHER_AMBIENT);
             Utils.sendMessageToAll("The Darkness is calling...");
-            Utils.sendTitleToAll(Component.literal("The Darkness").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(java.awt.Color.BLACK.getRGB()))), Component.literal("is calling..."), 40, 120, 40);
+            Utils.sendTitleToAll(Component.literal("The Darkness").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.BLACK.getRGB()))), Component.literal("is calling..."), 40, 120, 40);
         }
     }
 
@@ -179,17 +175,19 @@ public class GoalManager {
 
     //subscribe to living death event to check for wither/dragon kills;
     @SubscribeEvent
-    static void onBossDeath(LivingDeathEvent event) {
+    public static void onBossDeath(LivingDeathEvent event) {
         LivingEntity mob = event.getEntity();
         GoalManager goalManager = APRandomizer.getGoalManager();
         if (goalManager == null) return;
+        WorldData worldData = APRandomizer.getWorldData();
+        if (worldData == null) return;
         if (mob instanceof EnderDragon && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
-            APRandomizer.worldData().ifPresent(WorldData::setDragonKilled);
+            worldData.setDragonKilled();
             Utils.sendMessageToAll("She is no more...");
             goalManager.updateGoal(false);
         }
         if (mob instanceof WitherBoss && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.WITHER)) {
-            APRandomizer.worldData().ifPresent(WorldData::setWitherKilled);
+            worldData.setWitherKilled();
             Utils.sendMessageToAll("The Darkness has lifted...");
             goalManager.updateGoal(true);
         }
@@ -203,9 +201,7 @@ public class GoalManager {
         if (required == boss) return true;
         // a boss is required and you asked about none.
         if (boss == APMCData.Bosses.NONE) return false;
-        // if both boses are required and you didn't ask about none return ture;
-        if (required == APMCData.Bosses.BOTH) return true;
-
-        return false;
+        // if both bosses are required, and you didn't ask about none, return ture;
+        return required == APMCData.Bosses.BOTH;
     }
 }

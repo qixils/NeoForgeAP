@@ -116,11 +116,11 @@ public class Utils {
     }
 
     public static void sendTitleToAll(Component title, Component subTitle, int fadeIn, int stay, int fadeOut) {
-        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title)));
+        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server(), server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title)));
     }
 
     public static void sendTitleToAll(Component title, Component subTitle, Component chatMessage, int fadeIn, int stay, int fadeOut) {
-        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title, chatMessage)));
+        server().execute(() -> TitleQueue.queueTitle(new QueuedTitle(server(), server().getPlayerList().getPlayers(), fadeIn, stay, fadeOut, subTitle, title, chatMessage)));
     }
 
     public static void sendActionBarToAll(String actionBarMessage, int fadeIn, int stay, int fadeOut) {

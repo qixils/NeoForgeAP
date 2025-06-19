@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -12,7 +11,6 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @EventBusSubscriber
 public class DisconnectCommand {
-
     //build our command structure and submit it
     public static void Register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
@@ -25,12 +23,12 @@ public class DisconnectCommand {
     }
 
     private static int disconnect(CommandContext<CommandSourceStack> commandContext) {
-        APRandomizer.AP().ifPresent(APClient::disconnect);
+        APClient.client.disconnect();
         //Utils.sendMessageToAll("Disconnected.");
         return 1;
     }
 
-    //wait for register commands event then register ourself as a command.
+    //wait for register commands event then register us as a command.
     @SubscribeEvent
     static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
         DisconnectCommand.Register(event.getDispatcher());

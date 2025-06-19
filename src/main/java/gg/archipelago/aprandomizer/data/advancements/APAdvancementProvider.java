@@ -1,15 +1,11 @@
 package gg.archipelago.aprandomizer.data.advancements;
 
-import com.mojang.authlib.properties.Property;
-import com.mojang.authlib.properties.PropertyMap;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.tags.APDamageTypeTags;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.data.recipes.RecipeBuilder;
@@ -20,9 +16,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.ResolvableProfile;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -64,17 +58,10 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                 .requirements(AdvancementRequirements.Strategy.AND)
                 .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/bake_bread"));
 
-        PropertyMap cowTexturePropertyMap = new PropertyMap();
-        cowTexturePropertyMap.put("textures", new Property("textures", "ewogICJ0aW1lc3RhbXAiIDogMTc0MzQwMzc3NDE2MSwKICAicHJvZmlsZUlkIiA6ICJmMTU5YjI3NGMyMmU0MzQwYjdjMTUyYWJkZTE0NzcxMyIsCiAgInByb2ZpbGVOYW1lIiA6ICJNSEZfQ293IiwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2QwZTRlNmZiZjVmM2RjZjk0NDIyYTFmMzE5NDQ4ZjE1MjM2OWQxNzlkYmZiY2RmMDBlNWJmZTg0OTVmYTk3NyIKICAgIH0KICB9Cn0=", null));
         AdvancementHolder leather = Advancement.Builder.recipeAdvancement()
                 .parent(root)
                 .display(
-                        new ItemStack(
-                                Items.PLAYER_HEAD.builtInRegistryHolder(),
-                                1,
-                                DataComponentPatch.builder()
-                                        .set(DataComponents.PROFILE, new ResolvableProfile(Optional.empty(), Optional.empty(), cowTexturePropertyMap))
-                                        .build()),
+                        Items.LEATHER,
                         Component.literal("Cow Tipper"),
                         Component.literal("Harvest some leather"),
                         null,

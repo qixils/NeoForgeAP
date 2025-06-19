@@ -4,26 +4,29 @@ import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
 import dev.koifysh.archipelago.helper.DeathLink;
 import dev.koifysh.archipelago.network.ConnectionResult;
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
-import it.unimi.dsi.fastutil.longs.LongArrayList;
+import gg.archipelago.aprandomizer.managers.GoalManager;
+import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.server.level.ServerPlayer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ConnectResult {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    final APClient APClient;
+    private final APClient APClient;
     private final HolderLookup.Provider registries;
+    private final AdvancementManager advancementManager;
+    private final GoalManager goalManager;
 
-    public ConnectResult(APClient APClient, HolderLookup.Provider registries) {
+    public ConnectResult(APClient APClient, HolderLookup.Provider registries, AdvancementManager advancementManager, GoalManager goalManager) {
         this.APClient = APClient;
         this.registries = registries;
+        this.advancementManager = advancementManager;
+        this.goalManager = goalManager;
     }
 
     @ArchipelagoEventListener
@@ -52,11 +55,10 @@ public class ConnectResult {
                 DeathLink.setDeathLinkEnabled(true);
             }
 
-            APRandomizer.advancementManager().ifPresent(value -> value.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations())));
+            advancementManager.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
 
             // ensure server is synced
-            APRandomizer.goalManager().ifPresent(goalManager -> goalManager.updateGoal(true));
-
+            goalManager.updateGoal(true);
         } else if (event.getResult() == ConnectionResult.InvalidPassword) {
             Utils.sendMessageToAll("Connection Failed: Invalid Password.");
         } else if (event.getResult() == ConnectionResult.IncompatibleVersion) {

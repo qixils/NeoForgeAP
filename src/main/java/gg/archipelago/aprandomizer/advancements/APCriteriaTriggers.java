@@ -9,5 +9,5 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class APCriteriaTriggers {
     public static final DeferredRegister<CriterionTrigger<?>> CRITERION_TRIGGERS = DeferredRegister.create(Registries.TRIGGER_TYPE, APRandomizer.MODID);
 
-    public static final DeferredHolder<CriterionTrigger<?>, ReceivedItemCriteria> RECEIVED_ITEM = CRITERION_TRIGGERS.register("received_item", () -> new ReceivedItemCriteria());
+    public static final DeferredHolder<CriterionTrigger<?>, ReceivedItemCriteria> RECEIVED_ITEM = CRITERION_TRIGGERS.register("received_item", ReceivedItemCriteria::new);
 }

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.event.level.ModifyCustomSpawnersEvent;
 public class OnModifyCustomSpawners {
     @SubscribeEvent
     public static void onModifyCustomSpawners(ModifyCustomSpawnersEvent event) {
-        if (event.getLevel().dimension() != Level.OVERWORLD && !event.getCustomSpawners().stream().anyMatch(spawner -> spawner instanceof CatSpawner)) {
+        if (event.getLevel().dimension() != Level.OVERWORLD && event.getCustomSpawners().stream().noneMatch(spawner -> spawner instanceof CatSpawner)) {
             event.addCustomSpawner(new CatSpawner());
         }
     }

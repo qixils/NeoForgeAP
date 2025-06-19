@@ -12,6 +12,7 @@ import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -67,7 +68,8 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
 
     @Override
     public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
-
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer(); // odd load order
+        if (server == null) return;
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;
         if (APRandomizer.getApmcData().state == APMCData.State.MISSING) {
             APRandomizer.LOGGER.error("APMCData is missing, cannot modify structures.");
@@ -78,17 +80,16 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
         ResourceKey<Structure> currentStructure = structure.unwrapKey().get();
         if (!structures.containsKey(name) || !changedStructures.contains(currentStructure))
             return;
-        APRandomizer.LOGGER.debug("Altering biome list for " + currentStructure.location());
+        APRandomizer.LOGGER.debug("Altering biome list for {}", currentStructure.location());
 
         ResourceKey<Level> level = structures.get(name);
-        HolderSet<Biome> biomes = structure.value().biomes();
-        HolderSet<Biome> defaultBiomes = ServerLifecycleHooks.getCurrentServer().registryAccess().lookupOrThrow(Registries.DIMENSION).getData(APDataMaps.DEFAULT_STRUCTURE_BIOMES, level);
+        HolderSet<Biome> defaultBiomes = server.registryAccess().lookupOrThrow(Registries.DIMENSION).getData(APDataMaps.DEFAULT_STRUCTURE_BIOMES, level);
         if (defaultBiomes == null) {
             defaultBiomes = HolderSet.empty();
         }
         Map<ResourceKey<Structure>, HolderSet<Biome>> currentReplacements = levels.containsKey(level) ? levels.get(level).replacements() : Map.of(defaultStructure, defaultBiomes);
 
-        biomes = currentReplacements.getOrDefault(currentStructure, HolderSet.empty());
+        HolderSet<Biome> biomes = currentReplacements.getOrDefault(currentStructure, HolderSet.empty());
 
         builder.getStructureSettings().setBiomes(biomes);
     }

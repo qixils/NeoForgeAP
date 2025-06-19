@@ -10,6 +10,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -296,7 +297,7 @@ public class APItems {
 
         context.register(ITEMSTACK_THE_ARROW,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.ARROW.builtInRegistryHolder(), 1,
+                        new ItemReward(new ItemStack(BuiltInRegistries.ITEM.wrapAsHolder(Items.ARROW), 1,
                                 DataComponentPatch.builder()
                                         .set(DataComponents.ITEM_NAME, Component.literal("The Arrow"))
                                         .build()))));

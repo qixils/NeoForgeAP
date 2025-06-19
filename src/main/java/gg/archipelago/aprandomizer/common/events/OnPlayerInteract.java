@@ -45,7 +45,7 @@ public class OnPlayerInteract {
         if (event.getSide().isClient())
             return;
 
-        if (!event.getItemStack().has(DataComponents.CUSTOM_DATA) || !event.getItemStack().get(DataComponents.CUSTOM_DATA).copyTag().contains("structure"))
+        if (!event.getItemStack().has(DataComponents.CUSTOM_DATA) || !event.getItemStack().getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag().contains("structure"))
             return;
 
         BlockState block = event.getLevel().getBlockState(event.getHitVec().getBlockPos());

@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.managers.itemmanager.traps;
 
-import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -36,12 +35,9 @@ public class GoonTrap implements Trap {
     }
 
     @Override
-    public void trigger(ServerPlayer player) {
+    public void trigger(MinecraftServer server, ServerPlayer player) {
         ItemStack fish = new ItemStack(Items.SALMON);
-        MinecraftServer server = APRandomizer.getServer();
-        if (server == null) return;
-
-        APRandomizer.getServer().execute(() -> {
+        server.execute(() -> {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfGoons; i++) {

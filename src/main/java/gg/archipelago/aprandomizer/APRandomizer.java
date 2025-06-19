@@ -53,7 +53,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Comparator;
-import java.util.Optional;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -103,7 +102,7 @@ public class APRandomizer {
                 data.state = APMCData.State.INVALID_VERSION;
             }
             LOGGER.info("Loaded .apmc data");
-            //LOGGER.info(apmcData.structures.toString());
+            LOGGER.info(data.structures.toString());
         } catch (Exception e) {
             LOGGER.error("no .apmc file found. please place .apmc file in './APData/' folder.");
             if (data == null) {
@@ -115,7 +114,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.3 v0.2.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21.5 v0.3.0-alpha Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -142,15 +141,9 @@ public class APRandomizer {
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
-
     @Nullable
     public static APClient getAP() {
         return APClient;
-    }
-
-    @NotNull
-    public static Optional<APClient> AP() {
-        return Optional.ofNullable(APClient);
     }
 
     public static boolean isConnected() {
@@ -162,31 +155,19 @@ public class APRandomizer {
         return advancementManager;
     }
 
-    public static Optional<AdvancementManager> advancementManager() {
-        return Optional.ofNullable(advancementManager);
-    }
-
     @NotNull
     public static APMCData getApmcData() {
         return apmcData;
     }
 
     @Nullable
-    public static MinecraftServer getServer() {
+    public static MinecraftServer getServer(){
         return server;
-    }
-
-    public static Optional<MinecraftServer> server() {
-        return Optional.ofNullable(server);
     }
 
     @Nullable
     public static ItemManager getItemManager() {
         return itemManager;
-    }
-
-    public static Optional<ItemManager> itemManager() {
-        return Optional.ofNullable(itemManager);
     }
 
     @NotNull
@@ -221,17 +202,9 @@ public class APRandomizer {
         return goalManager;
     }
 
-    public static Optional<GoalManager> goalManager() {
-        return Optional.ofNullable(goalManager);
-    }
-
     @Nullable
     public static WorldData getWorldData() {
         return worldData;
-    }
-
-    public static Optional<WorldData> worldData() {
-        return Optional.ofNullable(worldData);
     }
 
     @SubscribeEvent
@@ -251,10 +224,6 @@ public class APRandomizer {
         if (server == null) server = event.getServer();
 
         // do something when the server starts
-        advancementManager = new AdvancementManager();
-        itemManager = new ItemManager(event.getServer());
-        goalManager = new GoalManager();
-
 
         server.getGameRules().getRule(GameRules.RULE_LIMITED_CRAFTING).set(true, server);
         server.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).set(true, server);
@@ -263,12 +232,17 @@ public class APRandomizer {
 
         //fetch our custom world save data we attach to the worlds.
         worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());
-        advancementManager.setCheckedAdvancements(worldData.getLocations());
 
+        //set up managers
+        if (advancementManager == null) advancementManager = new AdvancementManager(worldData);
+        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager, worldData);
+        if (itemManager == null) itemManager = new ItemManager(server, goalManager, worldData);
+
+        advancementManager.setCheckedAdvancements(worldData.getLocations());
 
         //check if APMC data is present and if the seed matches what we expect
         if (apmcData.state == APMCData.State.VALID && !worldData.getSeedName().equals(apmcData.seed_name)) {
-            //check to see if our worlddata is empty if it is then save the aproom data.
+            //check to see if our worldData is empty. If it is, then save the apRoom data.
             if (worldData.getSeedName().isEmpty()) {
                 worldData.setSeedName(apmcData.seed_name);
                 //this is also our first boot so set this flag so we can do first boot stuff.
@@ -283,7 +257,7 @@ public class APRandomizer {
         }
 
         if (apmcData.state == APMCData.State.VALID) {
-            APClient = new APClient(server);
+            APClient = new APClient(server, advancementManager, itemManager, goalManager);
         }
 
 
