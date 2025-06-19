@@ -5,15 +5,17 @@ NeoForge Rewrite by qixils (Lexi), coehlrich, MrRedstone54 (Red)
 ## THIS PROJECT IS IN ALPHA. DO NOT USE AT THIS TIME
 
 Todo:
-- Refactor APRandomizer functions
+- ~~Refactor APRandomizer functions~~ Done, for now.
+- ~~Fix SpawnJail, Recipe Unlocking, Structure Shuffling~~
 - Implement new APJavaClient library
-- Fix SpawnJail, Recipe Unlocking, Structure Shuffling
+- Add 1.20->1.21.5 Advancements
 
 ## Required Software
 
 - Minecraft Java Edition from
   the [Minecraft Java Edition Store Page](https://www.minecraft.net/en-us/store/minecraft-java-edition)
 - Archipelago from the [Archipelago Releases Page](https://github.com/ArchipelagoMW/Archipelago/releases)
+- Minecraft APWorld file from the eventual Github Repository
 
 ## Configuring your YAML file
 
@@ -24,7 +26,8 @@ guide: [Basic Multiworld Setup Guide](https://archipelago.gg/tutorial/Archipelag
 
 ### Where do I get a YAML file?
 
-You can customize your settings by visiting the [Minecraft Player Settings Page](https://archipelago.gg/games/Minecraft/player-options)
+Currently, there is no easy way to set up a YAML file for the 1.21.5 version since the removal of Minecraft from the webhost.
+Once there is a repository set up for the Minecraft APworld, it will be linked here and included in the setup instructions.
 
 ## Joining a MultiWorld Game
 
@@ -32,7 +35,8 @@ You can customize your settings by visiting the [Minecraft Player Settings Page]
 
 **Only one yaml file needs to be submitted per minecraft world regardless of how many players play on it.**
 
-When you join a multiworld game, you will be asked to provide your YAML file to whoever is hosting. Once that is done,
+When you join a multiworld game, you will be asked to provide your YAML file to whoever is hosting. The host also needs
+to install the Minecraft APworld into thier Archipelago Instance, or else it will not generate.  Once that is done,
 the host will provide you with either a link to download your data file, or with a zip file containing everyone's data
 files. Your data file should have a `.apmc` extension.
 
@@ -41,7 +45,7 @@ leave this window open as this is your server console.
 
 ### Connect to the MultiServer
 
-Using minecraft 1.19 connect to the server `localhost`.
+Using Minecraft 1.21.5, connect to the server `localhost` in direct connections.
 
 Once you are in game type `/connect <AP-Address> (Port) (Password)` where `<AP-Address>` is the address of the
 Archipelago server. `(Port)` is only required if the Archipelago server is not using the default port of
@@ -57,7 +61,7 @@ everyone is ready use the command `/start`.
 ## Manual Installation
 
 It is highly recommended to ues the Archipelago installer to handle the installation of the NeoForge server for you.
-support will not be given for those wishing to manually install NeoForge. For those of you who know how, and wish to do so,
+Support will not be given for those wishing to manually install NeoForge. For those of you who know how, and wish to do so,
 the following links are the versions of the software we use.
 
 ### Manual install Software links
