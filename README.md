@@ -9,13 +9,14 @@ Todo:
 - ~~Fix SpawnJail, Recipe Unlocking, Structure Shuffling~~
 - ~~Implement new APJavaClient library~~
 - Add 1.20->1.21.5 Advancements
+- Gifting API Support
 
 ## Required Software
 
 - Minecraft Java Edition from
   the [Minecraft Java Edition Store Page](https://www.minecraft.net/en-us/store/minecraft-java-edition)
 - Archipelago from the [Archipelago Releases Page](https://github.com/ArchipelagoMW/Archipelago/releases)
-- Minecraft APWorld file from the eventual Github Repository
+- Minecraft APWorld File [REWRITE IN PROGRESS.](https://github.com/Seatori/Archipelago/tree/minecraft-rewrite)
 
 ## Configuring your YAML file
 
@@ -27,7 +28,8 @@ guide: [Basic Multiworld Setup Guide](https://archipelago.gg/tutorial/Archipelag
 ### Where do I get a YAML file?
 
 Currently, there is no easy way to set up a YAML file for the 1.21.5 version since the removal of Minecraft from the webhost.
-Once there is a repository set up for the Minecraft APworld, it will be linked here and included in the setup instructions.
+We are rewriting the logic [HERE](https://github.com/Seatori/Archipelago/tree/minecraft-rewrite), where there will eventually
+be a YAML file and the APWorld for use.
 
 ## Joining a MultiWorld Game
 
