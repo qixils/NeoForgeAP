@@ -12,7 +12,7 @@ public class AnvilTrap implements Trap {
     @Override
     public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() -> {
-            ServerLevel world = player.serverLevel(); //TODO: Possible issue?
+            ServerLevel world = player.level(); //TODO: Possible issue?
             Vec3 pos = player.position();
             BlockPos blockPos = new BlockPos(player.getBlockX(), (int) pos.y + 6, player.getBlockZ());
             if (world.isEmptyBlock(blockPos))

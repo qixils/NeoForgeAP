@@ -8,8 +8,8 @@ import gg.archipelago.aprandomizer.data.advancements.AfterAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.ReceivedAdvancementProvider;
 import gg.archipelago.aprandomizer.data.advancements.VanillaOverrideAdvancementProvider;
 import gg.archipelago.aprandomizer.data.datamaps.APDataMapProvider;
-import gg.archipelago.aprandomizer.data.loot.APGlobalLootModifierProvider;
 import gg.archipelago.aprandomizer.data.loot.APAddedLootTableProvider;
+import gg.archipelago.aprandomizer.data.loot.APGlobalLootModifierProvider;
 import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
@@ -30,7 +30,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -39,7 +38,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = Bus.MOD, modid = APRandomizer.MODID)
+@EventBusSubscriber(modid = APRandomizer.MODID)
 public class APDataGenerator {
 
     @SubscribeEvent

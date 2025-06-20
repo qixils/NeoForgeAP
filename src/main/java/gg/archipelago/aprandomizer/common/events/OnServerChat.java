@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.ServerChatEvent;
 
 import java.util.Objects;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME, modid = APRandomizer.MODID)
+@EventBusSubscriber(modid = APRandomizer.MODID)
 public class OnServerChat {
     @SubscribeEvent
     static void onServerChatEvent(ServerChatEvent event) {

@@ -268,8 +268,9 @@ public class ItemManager {
     }
 
     public void grantAllInitialRecipes(ServerPlayer player) {
+        if (player.getServer() == null) return;
         Set<ResourceKey<Recipe<?>>> lockedRecipes = getLockedRecipes(player.registryAccess());
-        Set<RecipeHolder<?>> recipes = player.server.getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
+        Set<RecipeHolder<?>> recipes = player.getServer().getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
         player.awardRecipes(recipes);
     }
 
@@ -289,8 +290,8 @@ public class ItemManager {
                 .append("Structure Compass (")
                 .append(compassReward.name())
                 .append(")");
-        if (player.serverLevel().dimension().equals(world)) {
-            structurePos = player.serverLevel().findNearestMapStructure(compassReward.structures(), player.blockPosition(), 75, false);
+        if (player.level().dimension().equals(world)) {
+            structurePos = player.level().findNearestMapStructure(compassReward.structures(), player.blockPosition(), 75, false);
             if (structurePos != null) {
                 lore.addFirst("Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
             } else {

@@ -6,15 +6,16 @@ import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
@@ -44,7 +45,9 @@ public class OnLivingHurt {
         String name = event.getEntity().getEncodeId();
         if (name == null) return; // TODO: more robust mechanism
 
-        CompoundTag nbt = event.getEntity().saveWithoutId(new CompoundTag());
+        var output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, damageSource.registryAccess());
+        event.getEntity().saveWithoutId(output);
+        var nbt = output.buildResult();
         nbt.remove("UUID");
         nbt.remove("Motion");
         nbt.remove("Health");

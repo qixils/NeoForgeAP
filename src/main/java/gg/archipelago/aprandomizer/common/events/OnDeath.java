@@ -46,7 +46,7 @@ public class OnDeath {
         sendDeathLink = false;
         for (ServerPlayer serverPlayer : APRandomizer.getServer().getPlayerList().getPlayers()) {
             if (serverPlayer != player) {
-                serverPlayer.kill(serverPlayer.serverLevel());
+                serverPlayer.kill(serverPlayer.level());
             }
         }
         deathMessages.set(death, server);

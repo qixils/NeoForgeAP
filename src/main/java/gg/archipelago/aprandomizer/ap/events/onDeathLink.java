@@ -36,7 +36,7 @@ public class onDeathLink {
         showDeathMessages.set(false, server);
         OnDeath.sendDeathLink = false;
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            player.kill(player.serverLevel());
+            player.kill(player.level());
         }
         OnDeath.sendDeathLink = true;
         showDeathMessages.set(showDeaths, server);

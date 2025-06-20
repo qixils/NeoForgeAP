@@ -8,7 +8,7 @@ public class AboutFaceTrap implements Trap {
     @Override
     public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() ->{
-            player.teleportTo(player.serverLevel(), 0, 0, 0, Relative.union(Relative.DELTA, Relative.ROTATION), 180f, 0, false);
+            player.teleportTo(player.level(), 0, 0, 0, Relative.union(Relative.DELTA, Relative.ROTATION), 180f, 0, false);
         });
     }
 }

@@ -32,7 +32,7 @@ public class BounceCommand {
                 .requires((CommandSource) -> (!CommandSource.getServer().isDedicatedServer() || CommandSource.hasPermission(1)))
                 //take the first argument as a string and name it "Address"
                 .then(Commands.argument("entity", ResourceArgument.resource(pContext, Registries.ENTITY_TYPE))
-                        .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
+                        .suggests(SuggestionProviders.cast(SuggestionProviders.SUMMONABLE_ENTITIES))
                         .executes(context ->
                                 bounceEntity(context.getSource(),
                                         ResourceArgument.getSummonableEntityType(context, "entity"),

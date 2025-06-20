@@ -7,6 +7,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 
+import java.util.Optional;
 import java.util.OptionalLong;
 
 public class APDimensionTypes {
@@ -27,6 +28,7 @@ public class APDimensionTypes {
                         BlockTags.INFINIBURN_OVERWORLD,
                         BuiltinDimensionTypes.OVERWORLD_EFFECTS,
                         0,
+                        Optional.of(192),
                         new DimensionType.MonsterSettings(
                                 true,
                                 true,
@@ -48,6 +50,7 @@ public class APDimensionTypes {
                         BlockTags.INFINIBURN_NETHER,
                         BuiltinDimensionTypes.NETHER_EFFECTS,
                         0.1F,
+                        Optional.empty(),
                         new DimensionType.MonsterSettings(
                                 true,
                                 true,
@@ -69,6 +72,7 @@ public class APDimensionTypes {
                         BlockTags.INFINIBURN_OVERWORLD,
                         BuiltinDimensionTypes.OVERWORLD_EFFECTS,
                         0,
+                        Optional.of(192),
                         new DimensionType.MonsterSettings(
                                 true,
                                 true,

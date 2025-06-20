@@ -24,7 +24,7 @@ public class BeeTrap implements Trap {
     @Override
     public void trigger(MinecraftServer server, ServerPlayer player) {
         server.execute(() -> {
-            ServerLevel world = player.serverLevel();
+            ServerLevel world = player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfBees; i++) {
                 Bee bee = EntityType.BEE.create(world, EntitySpawnReason.MOB_SUMMONED);

@@ -20,7 +20,9 @@ public record AdvancementLocation(ResourceLocation advancement) implements APLoc
 
     @Override
     public void give(ServerPlayer player) {
-        AdvancementHolder advancementHolder = player.server.getAdvancements().get(advancement);
+        if (player.getServer() == null)
+            return;
+        AdvancementHolder advancementHolder = player.getServer().getAdvancements().get(advancement);
         if (advancementHolder == null)
             return;
         AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancementHolder);
@@ -34,7 +36,9 @@ public record AdvancementLocation(ResourceLocation advancement) implements APLoc
 
     @Override
     public boolean hasFound(ServerPlayer player) {
-        AdvancementHolder advancementHolder = player.server.getAdvancements().get(advancement);
+        if (player.getServer() == null)
+            return false;
+        AdvancementHolder advancementHolder = player.getServer().getAdvancements().get(advancement);
         if (advancementHolder == null)
             return false;
         AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancementHolder);

@@ -30,7 +30,7 @@ public record MobTrap(EntityType<?> type, int count, int radius, boolean target,
 
     @Override
     public void give(ServerPlayer player) {
-        ServerLevel world = player.serverLevel();
+        ServerLevel world = player.level();
         Vec3 pos = player.position();
         for (int i = 0; i < count; i++) {
             Entity entity = type.create(world, EntitySpawnReason.MOB_SUMMONED);
