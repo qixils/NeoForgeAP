@@ -114,9 +114,9 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
-    minecraftLibrary {}
-    additionalRuntimeClasspath.extendsFrom minecraftLibrary
-    implementation.extendsFrom minecraftLibrary
+    library {}
+    additionalRuntimeClasspath.extendsFrom library
+    implementation.extendsFrom library
 }
 
 dependencies {
@@ -140,12 +140,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
     // Archipelago Client Java Library
-    implementation jarJar(project(path: ':client', configuration: 'shadow'))
-    // Fix for "Run Client" & "Run Server" tasks missing client
-    // (Per https://github.com/neoforged/ModDevGradle#external-dependencies-runs)
-    additionalRuntimeClasspath project(path: ':client', configuration: 'shadow')
+    jarJar project(path: ':client', configuration: 'shadow')
+    library project(path: ':client')
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
