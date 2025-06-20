@@ -1,0 +1,17 @@
+plugins {
+    id("java-library")
+    id("com.gradleup.shadow") version "8.3.0"
+}
+
+dependencies {
+    api("io.github.archipelagomw:Java-Client:0.1.20-SNAPSHOT") {
+        exclude group: "com.google.code.gson"
+        exclude group: "org.slf4j"
+    }
+}
+
+tasks.shadowJar {
+    // TODO: test `minimize()`
+    relocate("org.java_websocket", "io.github.archipelagomw.shaded.org.java_websocket")
+    relocate("org.apache.hc", "io.github.archipelagomw.shaded.org.apache.hc")
+}
