@@ -13,6 +13,7 @@ import net.minecraft.world.level.saveddata.SavedDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class WorldData extends SavedData {
 
@@ -39,7 +40,7 @@ public class WorldData extends SavedData {
                     Codec.LONG_STREAM.<LongSet>xmap(stream -> new LongOpenHashSet(stream.toArray()), LongSet::longStream).fieldOf("locations").forGetter(WorldData::getLocations),
                     Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex),
                     Codec.INT.optionalFieldOf("dragonEggShards", 0).forGetter(WorldData::getDragonEggShards),
-                    ResourceKey.codec(Registries.RECIPE).listOf().fieldOf("unlockedRecipes").forGetter(WorldData::getUnlockedRecipes))
+                    ResourceKey.codec(Registries.RECIPE).listOf().xmap(list -> (List<ResourceKey<Recipe<?>>>) new ArrayList<>(list), Function.identity()).fieldOf("unlockedRecipes").forGetter(WorldData::getUnlockedRecipes))
             .apply(instance, WorldData::new));
 
     public void setSeedName(String seedName) {
