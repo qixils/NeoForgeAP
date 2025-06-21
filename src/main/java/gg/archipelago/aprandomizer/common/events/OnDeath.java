@@ -1,6 +1,5 @@
 package gg.archipelago.aprandomizer.common.events;
 
-import dev.koifysh.archipelago.helper.DeathLink;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import net.minecraft.server.MinecraftServer;
@@ -34,8 +33,7 @@ public class OnDeath {
         if (!sendDeathLink)
             return;
 
-        // TODO: these args are backwards on kono master
-        DeathLink.SendDeathLink(event.getSource().getLocalizedDeathMessage(player).getString(), Objects.requireNonNullElseGet(player.getDisplayName(), player::getName).getString());
+        APRandomizer.getAP().sendDeathlink(Objects.requireNonNullElseGet(player.getDisplayName(), player::getName).getString(), event.getSource().getLocalizedDeathMessage(player).getString());
 
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
