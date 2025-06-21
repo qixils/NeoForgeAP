@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.ap.events;
 
 import dev.koifysh.archipelago.events.ArchipelagoEventListener;
 import dev.koifysh.archipelago.events.ConnectionResultEvent;
-import dev.koifysh.archipelago.helper.DeathLink;
 import dev.koifysh.archipelago.network.ConnectionResult;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
@@ -52,7 +51,7 @@ public class ConnectResult {
             }
             if (APClient.slotData.deathlink) {
                 Utils.sendMessageToAll("Welcome to Death Link.");
-                DeathLink.setDeathLinkEnabled(true);
+                APClient.setDeathLinkEnabled(true);
             }
 
             advancementManager.setCheckedAdvancements(new LongOpenHashSet(APClient.getLocationManager().getCheckedLocations()));
