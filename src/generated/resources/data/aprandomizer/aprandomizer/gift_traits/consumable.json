@@ -1,0 +1,8 @@
+{
+  "craft_inheritance": {},
+  "matching": {
+    "distance_weight": 1.8,
+    "is_required": true
+  },
+  "name": "Consumable"
+}

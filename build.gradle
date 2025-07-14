@@ -1,6 +1,7 @@
 plugins {
     id 'idea'
     id 'java-library'
+    id 'org.jetbrains.kotlin.jvm' version '2.2.0'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.95'
 }
@@ -11,6 +12,12 @@ tasks.named('wrapper', Wrapper).configure {
     // file size for Gradle. If you do switch this to ALL, run the Gradle wrapper task twice afterwards.
     // (Verify by checking gradle/wrapper/gradle-wrapper.properties to see if distributionUrl now points to `-all`)
     distributionType = Wrapper.DistributionType.BIN
+}
+
+kotlin {
+    compilerOptions{
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }
 
 version = mod_version
@@ -28,6 +35,11 @@ allprojects {
             }
         }
         mavenCentral()
+        maven {
+            name = 'Kotlin for Forge'
+            url = 'https://thedarkcolour.github.io/KotlinForForge/'
+            content { includeGroup "thedarkcolour" }
+        }
     }
 }
 
@@ -142,6 +154,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     // Archipelago Client Java Library
     jarJar project(path: ':client', configuration: 'shadow')
+    library 'thedarkcolour:kotlinforforge-neoforge:5.9.0'
     library project(path: ':client')
 }
 
@@ -153,6 +166,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             minecraft_version_range: minecraft_version_range,
             neo_version            : neo_version,
             neo_version_range      : neo_version_range,
+            loader                 : loader,
             loader_version_range   : loader_version_range,
             mod_id                 : mod_id,
             mod_name               : mod_name,

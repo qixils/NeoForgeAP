@@ -1,0 +1,8 @@
+{
+  "craft_inheritance": {
+    "minecraft:smelting": {
+      "quality_kept_multiplier": 1.2
+    }
+  },
+  "name": "Ore"
+}

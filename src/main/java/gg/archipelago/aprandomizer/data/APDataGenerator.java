@@ -15,6 +15,8 @@ import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APStructureTagsProvider;
 import gg.archipelago.aprandomizer.dimensions.APDimensionTypes;
+import gg.archipelago.aprandomizer.gifting.DefaultTags;
+import gg.archipelago.aprandomizer.gifting.GiftTraitDefinition;
 import gg.archipelago.aprandomizer.items.APItems;
 import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
@@ -28,6 +30,7 @@ import net.minecraft.data.advancements.packs.*;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
@@ -42,7 +45,7 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(bus = Bus.MOD, modid = APRandomizer.MODID)
 public class APDataGenerator {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void onDataGen(GatherDataEvent.Client event) {
         CompletableFuture<HolderLookup.Provider> registries = event.addProvider(new DatapackBuiltinEntriesProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(),
                 new RegistrySetBuilder()
@@ -52,6 +55,7 @@ public class APDataGenerator {
                         .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
                         .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap)
                         .add(APRegistries.ARCHIPELAGO_ITEM, APItems::bootstrap)
+                        .add(APRegistries.GIFT_TRAITS, GiftTraitDefinition::bootstrap)
                         .add(Registries.DIMENSION_TYPE, APDimensionTypes::bootstrap),
                 Set.of(APRandomizer.MODID, "minecraft"))).getRegistryProvider();
         event.addProvider(new AdvancementProvider(event.getGenerator().getPackOutput(), registries, List.of(
@@ -66,6 +70,7 @@ public class APDataGenerator {
                         id -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
                 new VanillaOverrideAdvancementProvider())));
         event.addProvider(new APDamageTypeTagsProvider(event.getGenerator().getPackOutput(), registries));
+        event.addProvider(new DefaultTags.GiftTagsProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APRecipeProvider.Runner(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APDataMapProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APBiomeTagsProvider(event.getGenerator().getPackOutput(), registries));

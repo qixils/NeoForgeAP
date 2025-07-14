@@ -10,6 +10,9 @@ import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
+import gg.archipelago.aprandomizer.gifting.GiftHandler;
+import gg.archipelago.aprandomizer.gifting.GiftTraitDefinition;
+import gg.archipelago.aprandomizer.gifting.MinecraftGiftMatcher;
 import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.APRewardTypes;
 import gg.archipelago.aprandomizer.locations.APLocation;
@@ -34,6 +37,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -81,6 +85,8 @@ public class APRandomizer {
     static private BlockPos jailCenter = BlockPos.ZERO;
     @Nullable
     static private WorldData worldData;
+    static private GiftHandler giftHandler;
+    static private final MinecraftGiftMatcher giftMatcher;
 
     static {
         Gson gson = new Gson();
@@ -111,6 +117,7 @@ public class APRandomizer {
             }
         }
         apmcData = data;
+        giftMatcher = new MinecraftGiftMatcher(apmcData.world_seed);
     }
 
     public APRandomizer(IEventBus modEventBus) {
@@ -119,6 +126,7 @@ public class APRandomizer {
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
         forgeBus.register(this);
+        forgeBus.addListener(APRandomizer::addReloadListeners);
 
         // For registration and init stuff.
         APStructures.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
@@ -136,11 +144,20 @@ public class APRandomizer {
     public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, APItem.CODEC);
         event.dataPackRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
+        event.dataPackRegistry(APRegistries.GIFT_TRAITS, GiftTraitDefinition.CODEC);
     }
 
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
+        event.register(APDataMaps.ITEMS_GIFTS_BASE_TRAITS);
+        event.register(APDataMaps.ITEMS_GIFTS_FINAL_TRAITS);
+        event.register(APDataMaps.FLUIDS_GIFTS_TRAITS);
     }
+
+    public static void addReloadListeners(AddServerReloadListenersEvent event) {
+        giftMatcher.registerReloadListeners(event);
+    }
+
     @Nullable
     public static APClient getAP() {
         return APClient;
@@ -207,12 +224,42 @@ public class APRandomizer {
         return worldData;
     }
 
+    public static GiftHandler getGiftHandler() {
+        return giftHandler;
+    }
+
+    public static void tryEnableGifting() {
+        if (APClient == null || !APClient.isConnected() || giftHandler != null) {
+            return;
+        }
+        giftHandler = new GiftHandler(APClient,giftMatcher);
+    }
+
+    public static void tryEnableGiftReception() {
+        if (giftHandler == null) return;
+        assert server != null;
+        boolean anyPlayerConnected = !server.getPlayerList().getPlayers().isEmpty();
+        if (anyPlayerConnected) {
+            LOGGER.info("Enabling gift reception");
+            giftHandler.startReception(server.registryAccess(),server.getRecipeManager());
+            giftHandler.openGiftBox();
+        } else {
+            giftHandler.closeGiftBox();
+        }
+    }
+
     @SubscribeEvent
     public void onServerAboutToStart(ServerAboutToStartEvent event) {
         if (apmcData.state != APMCData.State.VALID) {
             LOGGER.error("invalid APMC file");
         }
         server = event.getServer();
+        //todo try to move in reload listener, but tags are not available there yet.
+        giftMatcher.registerAllMinecraftGifts(
+                server.getWorldData().enabledFeatures(),
+                server.registryAccess(),
+                server.getRecipeManager()
+        );
     }
 
     @SubscribeEvent
@@ -309,12 +356,16 @@ public class APRandomizer {
 
     @SubscribeEvent
     public void onServerStopping(ServerStoppingEvent event) {
+        if (giftHandler != null)
+            giftHandler.closeGiftBox();
         if (APClient != null)
             APClient.close();
     }
 
     @SubscribeEvent
     public void onServerStopped(ServerStoppedEvent event) {
+        if (giftHandler != null)
+            giftHandler.closeGiftBox();
         if (APClient != null)
             APClient.close();
     }

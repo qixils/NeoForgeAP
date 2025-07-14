@@ -1,6 +1,7 @@
 package gg.archipelago.aprandomizer.data.datamaps;
 
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
+import gg.archipelago.aprandomizer.gifting.BaseTraitsKt;
 import gg.archipelago.aprandomizer.tags.APBiomeTags;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
@@ -25,6 +26,8 @@ public class APDataMapProvider extends DataMapProvider {
                 .add(Level.OVERWORLD, biomes.getOrThrow(APBiomeTags.OVERWORLD_STRUCTURE), false)
                 .add(Level.NETHER, biomes.getOrThrow(APBiomeTags.NETHER_STRUCTURE), false)
                 .add(Level.END, biomes.getOrThrow(APBiomeTags.END_STRUCTURE), false);
+        BaseTraitsKt.baseItemTraits(builder(APDataMaps.ITEMS_GIFTS_BASE_TRAITS),provider);
+        BaseTraitsKt.baseFluidTraits(builder(APDataMaps.FLUIDS_GIFTS_TRAITS),provider);
     }
 
 }

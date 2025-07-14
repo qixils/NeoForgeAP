@@ -1,6 +1,7 @@
 package gg.archipelago.aprandomizer;
 
 import com.mojang.serialization.MapCodec;
+import gg.archipelago.aprandomizer.gifting.GiftTraitDefinition;
 import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.APReward;
 import gg.archipelago.aprandomizer.locations.APLocation;
@@ -15,4 +16,5 @@ public class APRegistries {
     public static final ResourceKey<Registry<MapCodec<? extends APReward>>> ARCHIPELAGO_REWARD_TYPE = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago_item_type"));
     public static final ResourceKey<Registry<MapCodec<? extends APLocation>>> ARCHIPELAGO_LOCATION_TYPE = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago_location_type"));
     public static final ResourceKey<Registry<MapCodec<? extends StructureLevelReference>>> STRUCTURE_LEVEL_REFERENCE = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "structure_level_reference"));
+    public static final ResourceKey<Registry<GiftTraitDefinition>> GIFT_TRAITS = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "gift_traits"));
 }

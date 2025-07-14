@@ -1,0 +1,17 @@
+{
+  "values": [
+    "aprandomizer:buff",
+    "aprandomizer:trap",
+    "aprandomizer:heal",
+    "aprandomizer:mana",
+    "aprandomizer:cure",
+    "aprandomizer:slowness",
+    "aprandomizer:damage",
+    "aprandomizer:fire",
+    "aprandomizer:ice",
+    "aprandomizer:attack_speed",
+    "aprandomizer:suspicious",
+    "aprandomizer:ominous",
+    "aprandomizer:fertilizer"
+  ]
+}

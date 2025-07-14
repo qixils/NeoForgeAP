@@ -1,0 +1,10 @@
+{
+  "values": [
+    "aprandomizer:bomb",
+    "aprandomizer:consumable",
+    "aprandomizer:saddle",
+    "aprandomizer:throwing",
+    "#aprandomizer:equipment",
+    "#aprandomizer:containers"
+  ]
+}

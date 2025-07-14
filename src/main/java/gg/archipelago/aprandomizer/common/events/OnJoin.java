@@ -53,6 +53,7 @@ public class OnJoin {
         advancementManager.syncAllAdvancements();
         goalManager.updateInfoBar();
         itemManager.catchUpPlayer(player);
+        APRandomizer.tryEnableGiftReception();
 
         if (APRandomizer.isJailPlayers()) {
             BlockPos jail = APRandomizer.getJailPosition();
