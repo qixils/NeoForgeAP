@@ -1,0 +1,13 @@
+{
+  "craft_inheritance": {
+    "minecraft:crafting": {
+      "min_quality": 0.01
+    },
+    "minecraft:smelting": {}
+  },
+  "matching": {
+    "distance_weight": 1.4,
+    "is_required": true
+  },
+  "name": "Fish"
+}

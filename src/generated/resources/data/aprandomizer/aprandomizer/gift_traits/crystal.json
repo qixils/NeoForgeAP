@@ -1,0 +1,15 @@
+{
+  "craft_inheritance": {
+    "minecraft:crafting": {
+      "min_quality": 0.01
+    },
+    "minecraft:smelting": {
+      "quality_kept_multiplier": 1.2
+    }
+  },
+  "matching": {
+    "distance_weight": 1.4,
+    "is_required": true
+  },
+  "name": "Crystal"
+}

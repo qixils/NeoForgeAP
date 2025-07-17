@@ -1,0 +1,611 @@
+{
+  "values": {
+    "#c:armors": {
+      "aprandomizer:armor": {}
+    },
+    "#c:barrels": {
+      "aprandomizer:container": {}
+    },
+    "#c:bones": {
+      "aprandomizer:bone": {}
+    },
+    "#c:bookshelves": {
+      "aprandomizer:book": {},
+      "aprandomizer:paper": {}
+    },
+    "#c:buckets/entity_water": {
+      "aprandomizer:animal": {},
+      "aprandomizer:water": {}
+    },
+    "#c:buds": {
+      "aprandomizer:crystal": {}
+    },
+    "#c:chests": {
+      "aprandomizer:container": {}
+    },
+    "#c:clusters": {
+      "aprandomizer:crystal": {}
+    },
+    "#c:cobblestones": {
+      "aprandomizer:stone": {
+        "quality": 0.8
+      }
+    },
+    "#c:crops": {
+      "aprandomizer:grass": {}
+    },
+    "#c:crops/cactus": {
+      "aprandomizer:desert": {}
+    },
+    "#c:drinks": {
+      "aprandomizer:drink": {}
+    },
+    "#c:drinks/juice": {
+      "aprandomizer:juice": {}
+    },
+    "#c:drinks/milk": {
+      "aprandomizer:animal_product": {},
+      "aprandomizer:milk": {}
+    },
+    "#c:drinks/watery": {
+      "aprandomizer:water": {}
+    },
+    "#c:dusts": {
+      "aprandomizer:powder": {}
+    },
+    "#c:dyed/black": {
+      "aprandomizer:black": {}
+    },
+    "#c:dyed/blue": {
+      "aprandomizer:blue": {}
+    },
+    "#c:dyed/brown": {
+      "aprandomizer:brown": {}
+    },
+    "#c:dyed/cyan": {
+      "aprandomizer:cyan": {}
+    },
+    "#c:dyed/gray": {
+      "aprandomizer:gray": {}
+    },
+    "#c:dyed/green": {
+      "aprandomizer:green": {}
+    },
+    "#c:dyed/light_blue": {
+      "aprandomizer:light_blue": {}
+    },
+    "#c:dyed/light_gray": {
+      "aprandomizer:light_gray": {}
+    },
+    "#c:dyed/lime": {
+      "aprandomizer:lime": {}
+    },
+    "#c:dyed/magenta": {
+      "aprandomizer:magenta": {}
+    },
+    "#c:dyed/orange": {
+      "aprandomizer:orange": {}
+    },
+    "#c:dyed/pink": {
+      "aprandomizer:pink": {}
+    },
+    "#c:dyed/purple": {
+      "aprandomizer:purple": {}
+    },
+    "#c:dyed/red": {
+      "aprandomizer:red": {}
+    },
+    "#c:dyed/white": {
+      "aprandomizer:white": {}
+    },
+    "#c:dyed/yellow": {
+      "aprandomizer:yellow": {}
+    },
+    "#c:dyes": {
+      "aprandomizer:dye": {}
+    },
+    "#c:dyes/black": {
+      "aprandomizer:black": {}
+    },
+    "#c:dyes/blue": {
+      "aprandomizer:blue": {}
+    },
+    "#c:dyes/brown": {
+      "aprandomizer:brown": {}
+    },
+    "#c:dyes/cyan": {
+      "aprandomizer:cyan": {}
+    },
+    "#c:dyes/gray": {
+      "aprandomizer:gray": {}
+    },
+    "#c:dyes/green": {
+      "aprandomizer:green": {}
+    },
+    "#c:dyes/light_blue": {
+      "aprandomizer:light_blue": {}
+    },
+    "#c:dyes/light_gray": {
+      "aprandomizer:light_gray": {}
+    },
+    "#c:dyes/lime": {
+      "aprandomizer:lime": {}
+    },
+    "#c:dyes/magenta": {
+      "aprandomizer:magenta": {}
+    },
+    "#c:dyes/orange": {
+      "aprandomizer:orange": {}
+    },
+    "#c:dyes/pink": {
+      "aprandomizer:pink": {}
+    },
+    "#c:dyes/purple": {
+      "aprandomizer:purple": {}
+    },
+    "#c:dyes/red": {
+      "aprandomizer:red": {}
+    },
+    "#c:dyes/white": {
+      "aprandomizer:white": {}
+    },
+    "#c:dyes/yellow": {
+      "aprandomizer:yellow": {}
+    },
+    "#c:eggs": {
+      "aprandomizer:egg": {}
+    },
+    "#c:fertilizers": {
+      "aprandomizer:fertilizer": {}
+    },
+    "#c:flowers": {
+      "aprandomizer:flower": {}
+    },
+    "#c:foods": {
+      "aprandomizer:food": {}
+    },
+    "#c:foods/berry": {
+      "aprandomizer:berry": {}
+    },
+    "#c:foods/cooked_fish": {
+      "aprandomizer:fish": {}
+    },
+    "#c:foods/cooked_meat": {
+      "aprandomizer:meat": {}
+    },
+    "#c:foods/cookie": {
+      "aprandomizer:cooking": {}
+    },
+    "#c:foods/fruit": {
+      "aprandomizer:fruit": {}
+    },
+    "#c:foods/raw_fish": {
+      "aprandomizer:fish": {}
+    },
+    "#c:foods/raw_meat": {
+      "aprandomizer:meat": {}
+    },
+    "#c:foods/soup": {
+      "aprandomizer:cooking": {}
+    },
+    "#c:foods/vegetable": {
+      "aprandomizer:vegetable": {}
+    },
+    "#c:gems": {
+      "aprandomizer:gem": {}
+    },
+    "#c:gems/amethyst": {
+      "aprandomizer:crystal": {
+        "quality": 0.8
+      }
+    },
+    "#c:gems/diamond": {
+      "aprandomizer:diamond": {}
+    },
+    "#c:gems/emerald": {
+      "aprandomizer:currency": {}
+    },
+    "#c:gems/quartz": {
+      "aprandomizer:crystal": {
+        "quality": 1.0
+      }
+    },
+    "#c:gunpowders": {
+      "aprandomizer:explosive": {},
+      "aprandomizer:powder": {}
+    },
+    "#c:ingots": {
+      "aprandomizer:metal": {
+        "quality": 1.0
+      }
+    },
+    "#c:ingots/copper": {
+      "aprandomizer:copper": {
+        "quality": 1.0
+      }
+    },
+    "#c:ingots/gold": {
+      "aprandomizer:gold": {
+        "quality": 1.0
+      }
+    },
+    "#c:ingots/iron": {
+      "aprandomizer:iron": {
+        "quality": 1.0
+      }
+    },
+    "#c:ingots/netherite": {
+      "aprandomizer:metal": {
+        "quality": 5.0
+      }
+    },
+    "#c:leathers": {
+      "aprandomizer:leather": {}
+    },
+    "#c:mushrooms": {
+      "aprandomizer:mushroom": {}
+    },
+    "#c:netherracks": {
+      "aprandomizer:fire": {
+        "quality": 0.2
+      },
+      "aprandomizer:stone": {}
+    },
+    "#c:obsidians": {
+      "aprandomizer:gem": {},
+      "aprandomizer:mineral": {}
+    },
+    "#c:ores": {
+      "aprandomizer:ore": {}
+    },
+    "#c:ores/coal": {
+      "aprandomizer:coal": {
+        "quality": 1.0
+      }
+    },
+    "#c:ores/copper": {
+      "aprandomizer:copper": {}
+    },
+    "#c:ores/gold": {
+      "aprandomizer:gold": {}
+    },
+    "#c:ores/netherite_scrap": {
+      "aprandomizer:metal": {
+        "quality": 4.0
+      }
+    },
+    "#c:player_workstations/crafting_tables": {
+      "aprandomizer:crafting": {},
+      "aprandomizer:machine": {}
+    },
+    "#c:player_workstations/furnaces": {
+      "aprandomizer:furnace": {},
+      "aprandomizer:machine": {}
+    },
+    "#c:potions": {
+      "aprandomizer:potion": {}
+    },
+    "#c:raw_materials": {
+      "aprandomizer:material": {}
+    },
+    "#c:rods/blaze": {
+      "aprandomizer:fire": {}
+    },
+    "#c:sands": {
+      "aprandomizer:desert": {}
+    },
+    "#c:seeds": {
+      "aprandomizer:seed": {}
+    },
+    "#c:shulker_boxes": {
+      "aprandomizer:container": {}
+    },
+    "#c:slime_balls": {
+      "aprandomizer:goo": {}
+    },
+    "#c:stones": {
+      "aprandomizer:rock": {}
+    },
+    "#c:storage_blocks/coal": {
+      "aprandomizer:coal": {}
+    },
+    "#c:storage_blocks/slime": {
+      "aprandomizer:goo": {}
+    },
+    "#c:stripped_logs": {
+      "aprandomizer:lumber": {},
+      "aprandomizer:wood": {
+        "quality": 4.0
+      }
+    },
+    "#c:tools": {
+      "aprandomizer:tool": {}
+    },
+    "#c:tools/melee_weapon": {
+      "aprandomizer:melee_weapon": {},
+      "aprandomizer:weapon": {}
+    },
+    "#c:tools/mining_tool": {
+      "aprandomizer:ore": {
+        "quality": 0.5
+      },
+      "aprandomizer:stone": {
+        "quality": 0.5
+      }
+    },
+    "#c:tools/ranged_weapon": {
+      "aprandomizer:ranged_weapon": {},
+      "aprandomizer:weapon": {}
+    },
+    "#minecraft:axes": {
+      "aprandomizer:axe": {},
+      "aprandomizer:lumber": {
+        "quality": 0.5
+      },
+      "aprandomizer:wood": {
+        "quality": 0.5
+      }
+    },
+    "#minecraft:bookshelf_books": {
+      "aprandomizer:book": {},
+      "aprandomizer:paper": {}
+    },
+    "#minecraft:decorated_pot_sherds": {
+      "aprandomizer:ceramic": {}
+    },
+    "#minecraft:dirt": {
+      "aprandomizer:grass": {
+        "quality": 0.5
+      }
+    },
+    "#minecraft:flowers": {
+      "aprandomizer:flower": {},
+      "aprandomizer:grass": {}
+    },
+    "#minecraft:hoes": {
+      "aprandomizer:grain": {
+        "quality": 0.5
+      },
+      "aprandomizer:grass": {
+        "quality": 0.5
+      },
+      "aprandomizer:hoe": {}
+    },
+    "#minecraft:leaves": {
+      "aprandomizer:grass": {
+        "quality": 0.8
+      },
+      "aprandomizer:tree": {
+        "quality": 0.8
+      }
+    },
+    "#minecraft:logs": {
+      "aprandomizer:tree": {},
+      "aprandomizer:wood": {
+        "quality": 4.0
+      }
+    },
+    "#minecraft:pickaxes": {
+      "aprandomizer:pickaxe": {}
+    },
+    "#minecraft:planks": {
+      "aprandomizer:lumber": {},
+      "aprandomizer:wood": {
+        "quality": 1.0
+      }
+    },
+    "#minecraft:saplings": {
+      "aprandomizer:tree_seed": {}
+    },
+    "#minecraft:shovels": {
+      "aprandomizer:grass": {
+        "quality": 0.5
+      },
+      "aprandomizer:sand": {
+        "quality": 0.5
+      },
+      "aprandomizer:shovel": {}
+    },
+    "minecraft:armor_stand": {
+      "aprandomizer:luxury": {
+        "quality": 0.1
+      }
+    },
+    "minecraft:bamboo": {
+      "aprandomizer:bamboo": {},
+      "aprandomizer:grass": {}
+    },
+    "minecraft:beef": {
+      "aprandomizer:beef": {},
+      "aprandomizer:cow": {}
+    },
+    "minecraft:blue_ice": {
+      "aprandomizer:ice": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:bone": {
+      "aprandomizer:bone": {}
+    },
+    "minecraft:bone_block": {
+      "aprandomizer:bone": {},
+      "aprandomizer:fossil": {}
+    },
+    "minecraft:bone_meal": {
+      "aprandomizer:bone": {}
+    },
+    "minecraft:chicken": {
+      "aprandomizer:chicken": {}
+    },
+    "minecraft:clay": {
+      "aprandomizer:beach": {},
+      "aprandomizer:clay": {}
+    },
+    "minecraft:comparator": {
+      "aprandomizer:electronics": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:cooked_beef": {
+      "aprandomizer:beef": {},
+      "aprandomizer:cow": {}
+    },
+    "minecraft:cooked_chicken": {
+      "aprandomizer:chicken": {}
+    },
+    "minecraft:dark_prismarine": {
+      "aprandomizer:aquamarine": {},
+      "aprandomizer:ocean": {},
+      "aprandomizer:prismarine": {},
+      "aprandomizer:water": {}
+    },
+    "minecraft:dead_bush": {
+      "aprandomizer:bush": {},
+      "aprandomizer:dry": {}
+    },
+    "minecraft:decorated_pot": {
+      "aprandomizer:ceramic": {}
+    },
+    "minecraft:enchanted_book": {
+      "aprandomizer:buff": {},
+      "aprandomizer:iq": {},
+      "aprandomizer:scroll": {}
+    },
+    "minecraft:ender_pearl": {
+      "aprandomizer:teleport": {},
+      "aprandomizer:throwing": {}
+    },
+    "minecraft:firework_rocket": {
+      "aprandomizer:firework": {},
+      "aprandomizer:rocket": {}
+    },
+    "minecraft:flower_pot": {
+      "aprandomizer:ceramic": {}
+    },
+    "minecraft:glowstone": {
+      "aprandomizer:light": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:glowstone_dust": {
+      "aprandomizer:light": {
+        "quality": 0.1
+      }
+    },
+    "minecraft:goat_horn": {
+      "aprandomizer:goat": {},
+      "aprandomizer:instrument": {}
+    },
+    "minecraft:heart_of_the_sea": {
+      "aprandomizer:ancient": {},
+      "aprandomizer:artifact": {},
+      "aprandomizer:ocean": {}
+    },
+    "minecraft:ice": {
+      "aprandomizer:ice": {}
+    },
+    "minecraft:item_frame": {
+      "aprandomizer:luxury": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:jukebox": {
+      "aprandomizer:instrument": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:lingering_potion": {
+      "aprandomizer:throwing": {}
+    },
+    "minecraft:nautilus_shell": {
+      "aprandomizer:ancient": {},
+      "aprandomizer:ocean": {}
+    },
+    "minecraft:note_block": {
+      "aprandomizer:instrument": {}
+    },
+    "minecraft:packed_ice": {
+      "aprandomizer:ice": {}
+    },
+    "minecraft:painting": {
+      "aprandomizer:luxury": {}
+    },
+    "minecraft:paper": {
+      "aprandomizer:paper": {}
+    },
+    "minecraft:prismarine": {
+      "aprandomizer:aquamarine": {},
+      "aprandomizer:ocean": {},
+      "aprandomizer:prismarine": {},
+      "aprandomizer:water": {}
+    },
+    "minecraft:redstone": {
+      "aprandomizer:energy": {
+        "quality": 0.1
+      }
+    },
+    "minecraft:redstone_block": {
+      "aprandomizer:energy": {
+        "quality": 0.5
+      }
+    },
+    "minecraft:redstone_torch": {
+      "aprandomizer:light": {}
+    },
+    "minecraft:repeater": {
+      "aprandomizer:electronics": {
+        "quality": 0.1
+      }
+    },
+    "minecraft:snow": {
+      "aprandomizer:ice": {
+        "quality": 0.05
+      }
+    },
+    "minecraft:snow_block": {
+      "aprandomizer:ice": {
+        "quality": 0.1
+      }
+    },
+    "minecraft:snowball": {
+      "aprandomizer:ice": {},
+      "aprandomizer:throwing": {}
+    },
+    "minecraft:soul_torch": {
+      "aprandomizer:light": {}
+    },
+    "minecraft:splash_potion": {
+      "aprandomizer:throwing": {}
+    },
+    "minecraft:tnt": {
+      "aprandomizer:bomb": {}
+    },
+    "minecraft:torch": {
+      "aprandomizer:light": {}
+    },
+    "minecraft:totem_of_undying": {
+      "aprandomizer:ancient": {},
+      "aprandomizer:artifact": {}
+    },
+    "minecraft:trident": {
+      "aprandomizer:ancient": {},
+      "aprandomizer:ocean": {},
+      "aprandomizer:trident": {}
+    },
+    "minecraft:twisting_vines": {
+      "aprandomizer:grass": {},
+      "aprandomizer:vine": {}
+    },
+    "minecraft:vine": {
+      "aprandomizer:grass": {},
+      "aprandomizer:vine": {}
+    },
+    "minecraft:weeping_vines": {
+      "aprandomizer:grass": {},
+      "aprandomizer:vine": {}
+    },
+    "minecraft:wheat": {
+      "aprandomizer:grain": {}
+    }
+  }
+}

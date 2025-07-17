@@ -1,0 +1,16 @@
+{
+  "craft_inheritance": {},
+  "duration": {
+    "type": "item_durability",
+    "multiplier": 1.0
+  },
+  "matching": {
+    "distance_weight": 2.0,
+    "is_required": true
+  },
+  "name": "Armor",
+  "quality": {
+    "type": "armor",
+    "multiplier": 1.0
+  }
+}

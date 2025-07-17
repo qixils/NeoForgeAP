@@ -1,0 +1,13 @@
+{
+  "craft_inheritance": {
+    "minecraft:crafting": {
+      "duration_kept_multiplier": 0.0,
+      "quality_kept_multiplier": 0.5
+    }
+  },
+  "matching": {
+    "distance_weight": 1.8,
+    "is_required": true
+  },
+  "name": "LiquidContainer"
+}

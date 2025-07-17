@@ -1,0 +1,14 @@
+{
+  "values": {
+    "#c:lava": {
+      "aprandomizer:fire": {},
+      "aprandomizer:lava": {}
+    },
+    "#c:milk": {
+      "aprandomizer:milk": {}
+    },
+    "#c:water": {
+      "aprandomizer:water": {}
+    }
+  }
+}

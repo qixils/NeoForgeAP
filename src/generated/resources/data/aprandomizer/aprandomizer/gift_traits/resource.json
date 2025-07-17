@@ -1,0 +1,8 @@
+{
+  "craft_inheritance": {
+    "minecraft:crafting": {
+      "min_quality": 0.01
+    }
+  },
+  "name": "Resource"
+}

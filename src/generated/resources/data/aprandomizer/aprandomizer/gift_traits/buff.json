@@ -1,0 +1,12 @@
+{
+  "craft_inheritance": {
+    "minecraft:crafting": {
+      "duration_kept_multiplier": 0.0,
+      "quality_kept_multiplier": 0.2
+    }
+  },
+  "matching": {
+    "distance_weight": 1.6
+  },
+  "name": "Buff"
+}
