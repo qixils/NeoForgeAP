@@ -136,28 +136,30 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_HUSBANDRY_FROGLIGHTS, 42112L);
         map.put(APLocations.VANILLA_HUSBANDRY_ALLAY_DELIVER_ITEM_TO_PLAYER, 42113L);
         // 1.20 advancements
-        // TODO
-//        put("minecraft:husbandry/obtain_sniffer_egg", 42114L); // smells interesting
-//        put("minecraft:husbandry/feed_snifflet", 42115L); // little sniffs
-//        put("husbandry/plant_any_sniffer_seed", 42116L); // planting the past
-//        put("minecraft:adventure/trim_with_any_armor_pattern", 42117L); // crafting a new look
-//        put("minecraft:adventure/trim_with_all_exclusive_armor_patterns", 42118L); // smithing with style
-//        put("minecraft:adventure/salvage_sherd", 42119L); // respecting the remnants
-//        put("minecraft:adventure/craft_decorated_pot_using_only_sherds", 42120L); // careful restoration
-//        put("minecraft:adventure/read_power_of_chiseled_bookshelf", 42120L); // the power of books
-//        put("minecraft:adventure/brush_armadillo", 42122L); // isn't it scute
-//        put("minecraft:husbandry/remove_wolf_armor", 42123L); // Shear Brilliance
-//        put("minecraft:husbandry/repair_wolf_armor", 42124L); // good as new
-//        put("minecraft:husbandry/whole_pack", 42125L); // the whole pack
+        map.put(APLocations.VANILLA_HUSBANDRY_OBTAIN_SNIFFER_EGG, 42114L);
+        map.put(APLocations.VANILLA_HUSBANDRY_FEED_SNIFFLET, 42115L); //
+        map.put(APLocations.VANILLA_HUSBANDRY_PLANT_ANY_SNIFFER_SEED, 42116L);
+        map.put(APLocations.VANILLA_ADVENTURE_TRIM_WITH_ANY_ARMOR_PATTERN, 42117L);
+        map.put(APLocations.VANILLA_ADVENTURE_TRIM_WITH_ALL_EXCLUSIVE_ARMOR_PATTERNS, 42118L);
+        map.put(APLocations.VANILLA_ADVENTURE_SALVAGE_SHERD, 42119L);
+        map.put(APLocations.VANILLA_ADVENTURE_CRAFT_DECORATED_POT_USING_ONLY_SHERDS, 42120L);
+        map.put(APLocations.VANILLA_ADVENTURE_READ_POWER_OF_CHISELED_BOOKSHELF, 42120L);
+        map.put(APLocations.VANILLA_ADVENTURE_BRUSH_ARMADILLO, 42122L);
+        map.put(APLocations.VANILLA_HUSBANDRY_REMOVE_WOLF_ARMOR, 42123L);
+        map.put(APLocations.VANILLA_HUSBANDRY_REPAIR_WOLF_ARMOR, 42124L);
+        map.put(APLocations.VANILLA_HUSBANDRY_WHOLE_PACK, 42125L);
         // 1.21 advancements
-//        put("minecraft:adventure/minecraft_trials_edition", 42126L); // Minecraft: Trial(s) Edition
-//        put("minecraft:adventure/under_lock_and_key", 42127L); // Under Lock and Key
-//        put("minecraft:adventure/blowback", 42128L); // blowback
-//        put("minecraft:adventure/who_needs_rockets", 42129L); // Who needs rockets
-//        put("minecraft:adventure/crafters_crafting_crafters", 42130L); // cafters crafting crafters
-//        put("minecraft:adventure/lighten_up", 42131L); // lighten up
-//        put("minecraft:adventure/overoverkill", 42132L); // over overkill
-//        put("minecraft:adventure/revaulting", 42133L); // revaulting
+        map.put(APLocations.VANILLA_ADVENTURE_BLOWBACK, 42126L);
+        map.put(APLocations.VANILLA_ADVENTURE_CRAFTERS_CRAFTING_CRAFTERS, 42127L);
+        map.put(APLocations.VANILLA_ADVENTURE_LIGHTEN_UP, 42128L);
+        map.put(APLocations.VANILLA_ADVENTURE_MINECRAFT_TRIALS_EDITION, 42129L);
+        map.put(APLocations.VANILLA_ADVENTURE_OVEROVERKILL, 42130L);
+        map.put(APLocations.VANILLA_ADVENTURE_REVAULTING, 42131L);
+        map.put(APLocations.VANILLA_ADVENTURE_UNDER_LOCK_AND_KEY, 42132L);
+        map.put(APLocations.VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS, 42133L);
+        // 1.21.6 advancements
+  //    map.put(APLocations.VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, 42134L);
+  //    map.put(APLocations.VANILLA_ADVENTURE_HEART_TRANSPLANTER, 42135L);
     });
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();

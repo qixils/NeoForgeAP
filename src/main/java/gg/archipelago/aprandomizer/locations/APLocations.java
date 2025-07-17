@@ -123,7 +123,31 @@ public class APLocations {
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_LEASH_ALL_FROG_VARIANTS = id("vanilla/husbandry/leash_all_frog_variants");
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_FROGLIGHTS = id("vanilla/husbandry/froglights");
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_ALLAY_DELIVER_ITEM_TO_PLAYER = id("vanilla/husbandry/allay_deliver_item_to_player");
-    
+    // 1.20 advancements
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_OBTAIN_SNIFFER_EGG = id("vanilla/husbandry/obtain_sniffer_egg");
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_FEED_SNIFFLET = id("vanilla/husbandry/feed_snifflet");
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_PLANT_ANY_SNIFFER_SEED = id("vanilla/husbandry/plant_any_sniffer_seed");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_TRIM_WITH_ANY_ARMOR_PATTERN = id("vanilla/adventure/trim_with_any_armor_pattern");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_TRIM_WITH_ALL_EXCLUSIVE_ARMOR_PATTERNS = id("vanilla/adventure/trim_with_all_exclusive_armor_patterns");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_SALVAGE_SHERD = id("vanilla/adventure/salvage_sherd");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_CRAFT_DECORATED_POT_USING_ONLY_SHERDS = id("vanilla/adventure/craft_decorated_pot_using_only_sherds");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_READ_POWER_OF_CHISELED_BOOKSHELF = id("vanilla/adventure/read_power_of_chiseled_bookshelf");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_BRUSH_ARMADILLO = id("vanilla/adventure/brush_armadillo");
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_REMOVE_WOLF_ARMOR = id("vanilla/husbandry/remove_wolf_armor");
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_REPAIR_WOLF_ARMOR = id("vanilla/husbandry/repair_wolf_armor");
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_WHOLE_PACK = id("vanilla/husbandry/whole_pack");
+    //1.21 advancements
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_BLOWBACK = id("vanilla/adventure/blowback");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_CRAFTERS_CRAFTING_CRAFTERS = id("vanilla/adventure/crafters_crafting_crafters");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_LIGHTEN_UP = id("vanilla/adventure/lighten_up");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_MINECRAFT_TRIALS_EDITION = id("vanilla/adventure/minecraft_trials_edition");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_OVEROVERKILL = id("vanilla/adventure/overoverkill");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_REVAULTING = id("vanilla/adventure/revaulting");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_UNDER_LOCK_AND_KEY = id("vanilla/adventure/under_lock_and_key");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS = id("vanilla/adventure/who_needs_rockets");
+    //1.21.6 "Chase The Skies" advancements
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER = id("vanilla/husbandry/place_dried_ghast_in_water");
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_HEART_TRANSPLANTER = id("vanilla/adventure/heart_transplanter");
     private static ResourceKey<APLocation> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_LOCATION, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
@@ -244,5 +268,30 @@ public class APLocations {
         context.register(VANILLA_HUSBANDRY_LEASH_ALL_FROG_VARIANTS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/leash_all_frog_variants")));
         context.register(VANILLA_HUSBANDRY_FROGLIGHTS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/froglights")));
         context.register(VANILLA_HUSBANDRY_ALLAY_DELIVER_ITEM_TO_PLAYER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/allay_deliver_item_to_player")));
+        // 1.20 advancements
+        context.register(VANILLA_HUSBANDRY_OBTAIN_SNIFFER_EGG, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/obtain_sniffer_egg")));
+        context.register(VANILLA_HUSBANDRY_FEED_SNIFFLET, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/feed_snifflet")));
+        context.register(VANILLA_HUSBANDRY_PLANT_ANY_SNIFFER_SEED, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/plant_any_sniffer_seed")));
+        context.register(VANILLA_ADVENTURE_TRIM_WITH_ANY_ARMOR_PATTERN, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/trim_with_any_armor_pattern")));
+        context.register(VANILLA_ADVENTURE_TRIM_WITH_ALL_EXCLUSIVE_ARMOR_PATTERNS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/trim_with_all_exclusive_armor_patterns")));
+        context.register(VANILLA_ADVENTURE_SALVAGE_SHERD, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/salvage_sherd")));
+        context.register(VANILLA_ADVENTURE_CRAFT_DECORATED_POT_USING_ONLY_SHERDS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/craft_decorated_pot_using_only_sherds")));
+        context.register(VANILLA_ADVENTURE_READ_POWER_OF_CHISELED_BOOKSHELF, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/read_power_of_chiseled_bookshelf")));
+        context.register(VANILLA_ADVENTURE_BRUSH_ARMADILLO, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/brush_armadillo")));
+        context.register(VANILLA_HUSBANDRY_REMOVE_WOLF_ARMOR, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/remove_wolf_armor")));
+        context.register(VANILLA_HUSBANDRY_REPAIR_WOLF_ARMOR, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/repair_wolf_armor")));
+        context.register(VANILLA_HUSBANDRY_WHOLE_PACK, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/whole_pack")));
+        //1.21 advancements
+        context.register(VANILLA_ADVENTURE_BLOWBACK, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/blowback")));
+        context.register(VANILLA_ADVENTURE_CRAFTERS_CRAFTING_CRAFTERS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/crafters_crafting_crafters")));
+        context.register(VANILLA_ADVENTURE_LIGHTEN_UP, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/lighten_up")));
+        context.register(VANILLA_ADVENTURE_MINECRAFT_TRIALS_EDITION, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/minecraft_trials_edition")));
+        context.register(VANILLA_ADVENTURE_OVEROVERKILL, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/overoverkill")));
+        context.register(VANILLA_ADVENTURE_REVAULTING, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/revaulting")));
+        context.register(VANILLA_ADVENTURE_UNDER_LOCK_AND_KEY, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/under_lock_and_key")));
+        context.register(VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/who_needs_rockets")));
+        //1.21.6 advancements
+        //context.register(VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/place_dried_ghast_in_water")));
+        //context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/heart_transporter")));
     }
 }

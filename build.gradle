@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.95'
+    id 'net.neoforged.moddev' version '2.0.99'
 }
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
@@ -21,7 +21,6 @@ allprojects {
         maven {
             name = 'Central Portal Snapshots'
             url = 'https://central.sonatype.com/repository/maven-snapshots/'
-
             // Only search this repository for the specific dependency
             content {
                 includeModule("io.github.archipelagomw", "Java-Client")
