@@ -1,32 +1,18 @@
-{
-  "release": [
-    {
-      "version": 1,
-      "java": "21",
-      "neoforge": "",
-      "url": ""
-    },
-    {
-      "version": -1,
-      "java": "",
-      "neoforge": "",
-      "url": ""
-    }
-  ],
-  "beta": [
-    {
-      "version": -2,
-      "java": "21",
-      "neoforge": "",
-      "url": ""
-    }
-  ],
-  "old": [
-    {
-      "version": 9,
-      "java": "",
-      "neoforge": "",
-      "url": ""
-    }
-  ]
-}
+[
+  {
+    "version": "0.3.0-SNAPSHOT+1.21.6",
+    "channel": "release",
+    "data": 9,
+    "java": 21,
+    "minecraft": "1.21.6",
+    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v1.1.0/aprandomizer-0.3.0-SNAPSHOT+1.21.6.jar"
+  },
+  {
+    "version": "0.3.0-SNAPSHOT+1.21.5",
+    "channel": "release",
+    "data": 9,
+    "java": 21,
+    "minecraft": "1.21.5",
+    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v1.1.0/aprandomizer-0.3.0-SNAPSHOT+1.21.5.jar"
+  }
+]
