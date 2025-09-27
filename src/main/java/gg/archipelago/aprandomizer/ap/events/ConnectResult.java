@@ -1,8 +1,8 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
-import dev.koifysh.archipelago.events.ConnectionResultEvent;
-import dev.koifysh.archipelago.network.ConnectionResult;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.ConnectionResultEvent;
+import io.github.archipelagomw.network.ConnectionResult;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;

@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.common.Utils;
 
-import dev.koifysh.archipelago.Print.APPrint;
-import dev.koifysh.archipelago.Print.APPrintColor;
-import dev.koifysh.archipelago.Print.APPrintPart;
-import dev.koifysh.archipelago.Print.APPrintType;
+import io.github.archipelagomw.Print.APPrint;
+import io.github.archipelagomw.Print.APPrintColor;
+import io.github.archipelagomw.Print.APPrintPart;
+import io.github.archipelagomw.Print.APPrintType;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.core.BlockPos;
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.*;
 
-import static dev.koifysh.archipelago.flags.NetworkItem.*;
+import static io.github.archipelagomw.flags.NetworkItem.*;
 
 public class Utils {
     // Directly reference a log4j logger.

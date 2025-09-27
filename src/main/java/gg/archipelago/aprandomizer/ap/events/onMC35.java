@@ -1,8 +1,8 @@
 package gg.archipelago.aprandomizer.ap.events;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
-import dev.koifysh.archipelago.events.BouncedEvent;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.BouncedEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;

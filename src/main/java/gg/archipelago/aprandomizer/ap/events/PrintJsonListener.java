@@ -1,8 +1,8 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.Print.APPrintJsonType;
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
-import dev.koifysh.archipelago.events.PrintJSONEvent;
+import io.github.archipelagomw.Print.APPrintJsonType;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.PrintJSONEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;

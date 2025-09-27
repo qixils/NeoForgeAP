@@ -1,6 +1,6 @@
 package gg.archipelago.aprandomizer.common.events;
 
-import dev.koifysh.archipelago.network.client.BouncePacket;
+import io.github.archipelagomw.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
