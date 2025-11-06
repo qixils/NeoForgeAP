@@ -2,7 +2,7 @@ package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import dev.koifysh.archipelago.ClientStatus;
+import io.github.archipelagomw.ClientStatus;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;

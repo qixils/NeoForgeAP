@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.ap;
 
-import dev.koifysh.archipelago.Client;
-import dev.koifysh.archipelago.flags.ItemsHandling;
+import io.github.archipelagomw.Client;
+import io.github.archipelagomw.flags.ItemsHandling;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.events.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;

@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
-import dev.koifysh.archipelago.events.CheckedLocationsEvent;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.CheckedLocationsEvent;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 
 public class LocationChecked {

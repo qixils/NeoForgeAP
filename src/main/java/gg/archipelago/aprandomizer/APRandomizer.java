@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer;
 
 import com.google.gson.Gson;
-import dev.koifysh.archipelago.network.client.BouncePacket;
+import io.github.archipelagomw.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;

@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import dev.koifysh.archipelago.Print.APPrintColor;
-import dev.koifysh.archipelago.events.ArchipelagoEventListener;
-import dev.koifysh.archipelago.events.ReceiveItemEvent;
-import dev.koifysh.archipelago.parts.NetworkItem;
+import io.github.archipelagomw.Print.APPrintColor;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.ReceiveItemEvent;
+import io.github.archipelagomw.parts.NetworkItem;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.network.chat.Component;
