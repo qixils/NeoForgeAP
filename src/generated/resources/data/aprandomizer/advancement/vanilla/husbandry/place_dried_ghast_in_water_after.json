@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/place_dried_ghast_in_water",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

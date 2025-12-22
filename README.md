@@ -8,7 +8,7 @@ Todo:
 - ~~Refactor APRandomizer functions~~ Done, for now.
 - ~~Fix SpawnJail, Recipe Unlocking, Structure Shuffling~~
 - ~~Implement new APJavaClient library~~
-- Add 1.20->1.21.5 Advancements
+- Add 1.20->1.21.8 Advancements
 - Gifting API Support
 
 ## Required Software
@@ -16,7 +16,7 @@ Todo:
 - Minecraft Java Edition from
   the [Minecraft Java Edition Store Page](https://www.minecraft.net/en-us/store/minecraft-java-edition)
 - Archipelago from the [Archipelago Releases Page](https://github.com/ArchipelagoMW/Archipelago/releases)
-- Minecraft APWorld File [REWRITE IN PROGRESS.](https://github.com/Seatori/Archipelago/tree/minecraft-rewrite)
+- Minecraft APWorld File [REWRITE IN PROGRESS.](https://github.com/qixils/Archipelago/tree/merge-c)
 
 ## Configuring your YAML file
 
@@ -27,8 +27,8 @@ guide: [Basic Multiworld Setup Guide](https://archipelago.gg/tutorial/Archipelag
 
 ### Where do I get a YAML file?
 
-Currently, there is no easy way to set up a YAML file for the 1.21.5 version since the removal of Minecraft from the webhost.
-We are rewriting the logic [HERE](https://github.com/Seatori/Archipelago/tree/minecraft-rewrite), where there will eventually
+Currently, there is no easy way to set up a YAML file for the 1.21.8 version since the removal of Minecraft from the webhost.
+We are rewriting the logic [HERE](https://github.com/qixils/Archipelago/tree/merge-c), where there will eventually
 be a YAML file and the APWorld for use.
 
 ## Joining a MultiWorld Game
@@ -38,7 +38,7 @@ be a YAML file and the APWorld for use.
 **Only one yaml file needs to be submitted per minecraft world regardless of how many players play on it.**
 
 When you join a multiworld game, you will be asked to provide your YAML file to whoever is hosting. The host also needs
-to install the Minecraft APworld into thier Archipelago Instance, or else it will not generate.  Once that is done,
+to install the Minecraft APworld into their Archipelago Instance, or else it will not generate.  Once that is done,
 the host will provide you with either a link to download your data file, or with a zip file containing everyone's data
 files. Your data file should have a `.apmc` extension.
 
@@ -47,7 +47,7 @@ leave this window open as this is your server console.
 
 ### Connect to the MultiServer
 
-Using Minecraft 1.21.5, connect to the server `localhost` in direct connections.
+Using Minecraft 1.21.8, connect to the server `localhost` in direct connections.
 
 Once you are in game type `/connect <AP-Address> (Port) (Password)` where `<AP-Address>` is the address of the
 Archipelago server. `(Port)` is only required if the Archipelago server is not using the default port of
