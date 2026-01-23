@@ -1,11 +1,11 @@
 [
   {
-    "version": "0.3.0-SNAPSHOT+1.21.8",
+    "version": "2.0.0+1.21.8",
     "channel": "release",
     "data": 9,
     "java": 21,
     "minecraft": "1.21.8",
-    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v1.1.0/aprandomizer-0.3.0-SNAPSHOT+1.21.8.jar"
+    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v2.0.0/aprandomizer-2.0.0+1.21.8.jar"
   },
   {
     "version": "0.3.0-SNAPSHOT+1.21.6",
