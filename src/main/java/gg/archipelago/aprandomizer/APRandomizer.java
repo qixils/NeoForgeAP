@@ -114,7 +114,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.5 v0.3.0-alpha Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21.8 v2.0.0 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;

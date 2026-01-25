@@ -143,7 +143,7 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_ADVENTURE_TRIM_WITH_ALL_EXCLUSIVE_ARMOR_PATTERNS, 42118L);
         map.put(APLocations.VANILLA_ADVENTURE_SALVAGE_SHERD, 42119L);
         map.put(APLocations.VANILLA_ADVENTURE_CRAFT_DECORATED_POT_USING_ONLY_SHERDS, 42120L);
-        map.put(APLocations.VANILLA_ADVENTURE_READ_POWER_OF_CHISELED_BOOKSHELF, 42120L);
+        map.put(APLocations.VANILLA_ADVENTURE_READ_POWER_OF_CHISELED_BOOKSHELF, 42121L);
         map.put(APLocations.VANILLA_ADVENTURE_BRUSH_ARMADILLO, 42122L);
         map.put(APLocations.VANILLA_HUSBANDRY_REMOVE_WOLF_ARMOR, 42123L);
         map.put(APLocations.VANILLA_HUSBANDRY_REPAIR_WOLF_ARMOR, 42124L);
@@ -158,8 +158,8 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_ADVENTURE_UNDER_LOCK_AND_KEY, 42132L);
         map.put(APLocations.VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS, 42133L);
         // 1.21.6 advancements
-  //    map.put(APLocations.VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, 42134L);
-  //    map.put(APLocations.VANILLA_ADVENTURE_HEART_TRANSPLANTER, 42135L);
+        map.put(APLocations.VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, 42134L);
+        map.put(APLocations.VANILLA_ADVENTURE_HEART_TRANSPLANTER, 42135L);
     });
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();

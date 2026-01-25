@@ -291,7 +291,7 @@ public class APLocations {
         context.register(VANILLA_ADVENTURE_UNDER_LOCK_AND_KEY, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/under_lock_and_key")));
         context.register(VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/who_needs_rockets")));
         //1.21.6 advancements
-        //context.register(VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/place_dried_ghast_in_water")));
-        //context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/heart_transporter")));
+        context.register(VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("husbandry/place_dried_ghast_in_water")));
+        context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(ResourceLocation.withDefaultNamespace("adventure/heart_transporter")));
     }
 }
