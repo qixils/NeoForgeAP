@@ -1,6 +1,7 @@
 package gg.archipelago.aprandomizer.ap.storage;
 
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class APMCData {
     public Bosses required_bosses = Bosses.ENDER_DRAGON;
 
     @SerializedName("server")
+    @Nullable
     public String server;
 
     @SerializedName("port")
@@ -75,6 +77,12 @@ public class APMCData {
         public boolean hasWither() {
             return wither;
         }
+    }
+
+    public static APMCData createInvalid() {
+        APMCData data = new APMCData();
+        data.state = APMCData.State.MISSING;
+        return data;
     }
 
 }

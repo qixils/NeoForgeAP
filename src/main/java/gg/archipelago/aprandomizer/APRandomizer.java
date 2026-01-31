@@ -1,10 +1,10 @@
 package gg.archipelago.aprandomizer;
 
 import com.google.gson.Gson;
-import io.github.archipelagomw.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
+import gg.archipelago.aprandomizer.ap.storage.APMCMetaData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
@@ -19,6 +19,7 @@ import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManage
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifier;
 import gg.archipelago.aprandomizer.structures.level.StructureLevelReferenceTypes;
+import io.github.archipelagomw.network.client.BouncePacket;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -45,14 +46,17 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Comparator;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(APRandomizer.MODID)
@@ -60,6 +64,7 @@ public class APRandomizer {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "aprandomizer";
+    private static final byte[] ZIP_HEADER = new byte[]{ 0x50, 0x4B, 0x03, 0x04 };
 
     //store our APClient
     @Nullable
@@ -82,35 +87,120 @@ public class APRandomizer {
     @Nullable
     static private WorldData worldData;
 
-    static {
-        Gson gson = new Gson();
-        APMCData data = null;
+    static private final Gson gson = new Gson();
+
+    private static APMCData readApmcInputStream(InputStream inputStream) throws IOException {
+        byte[] bytes = inputStream.readAllBytes();
+        String string = new String(bytes, StandardCharsets.UTF_8).trim();
+        String jsonString;
+        if (string.startsWith("{")) {
+            jsonString = string;
+        } else {
+            byte[] b64 = Base64.getDecoder().decode(string);
+            jsonString = new String(b64, StandardCharsets.UTF_8);
+        }
+        APMCData data = gson.fromJson(jsonString, APMCData.class);
+        if (!VALID_VERSIONS.contains(data.client_version)) {
+            data.state = APMCData.State.INVALID_VERSION;
+        }
+        LOGGER.info("Loaded .apmc data");
+        return data;
+    }
+
+    private static APMCData createApmcData() {
         try {
-            Path path = Paths.get("./APData/");
-            if (!Files.exists(path)) {
-                Files.createDirectories(path);
+            Path apDataDir = Paths.get("./APData/");
+            if (!Files.exists(apDataDir)) {
+                Files.createDirectories(apDataDir);
                 LOGGER.info("APData folder missing, creating.");
             }
 
-            File[] files = new File(path.toUri()).listFiles((d, name) -> name.endsWith(".apmc"));
-            assert files != null;
-            Arrays.sort(files, Comparator.comparingLong(File::lastModified));
-            String b64 = Files.readAllLines(files[0].toPath()).getFirst();
-            String json = new String(Base64.getDecoder().decode(b64));
-            data = gson.fromJson(json, APMCData.class);
-            if (!VALID_VERSIONS.contains(data.client_version)) {
-                data.state = APMCData.State.INVALID_VERSION;
+            Path apmcFile;
+            try (Stream<Path> listFiles = Files.list(apDataDir)) {
+                // todo: shouldn't this be reversed? we want the newest first right?
+                Optional<Path> maybeFile = listFiles
+                        .filter(item -> item.getFileName().toString().endsWith(".apmc"))
+                        .min(Comparator.comparingLong(path -> {
+                            // todo: i just set this up the same as the previous File-based logic but... shouldn't this be `max` not `min`? cus we want the newest first right?
+                            try {
+                                return Files.getLastModifiedTime(path).toMillis();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
+                if (maybeFile.isEmpty()) {
+                    LOGGER.error("Could not find '.apmc' file. Please place '.apmc' file in './APData/' folder!");
+                    return APMCData.createInvalid();
+                }
+                apmcFile = maybeFile.get();
             }
-            LOGGER.info("Loaded .apmc data");
-            LOGGER.info(data.structures.toString());
+
+            boolean isZip = false;
+            try (InputStream inputStream = Files.newInputStream(apmcFile)) {
+                byte[] header = new byte[ZIP_HEADER.length];
+                int read = inputStream.read(header, 0, ZIP_HEADER.length);
+                isZip = read >= ZIP_HEADER.length && Arrays.equals(header, ZIP_HEADER);
+            }
+
+            APMCData apmc = null;
+            APMCMetaData metadata = null;
+
+            if (isZip) {
+                try (ZipFile zipFile = new ZipFile(apmcFile.toFile())) {
+                    Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                    while (entries.hasMoreElements()) {
+                        ZipEntry entry = entries.nextElement();
+                        if (entry.isDirectory()) continue;
+
+                        if (apmc == null && entry.getName().endsWith(".apmc")) {
+                            try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                                apmc = readApmcInputStream(inputStream);
+                            } catch (IOException e) {
+                                // we catch the error here to allow iteration to continue
+                                // in case there's a 2nd valid apmc file lmao?
+                                LOGGER.warn("Could not read zipped apmc", e);
+                            }
+                        }
+
+                        if (metadata == null && entry.getName().equals("archipelago.json")) {
+                            try (InputStream inputStream = zipFile.getInputStream(entry)) {
+                                byte[] bytes = inputStream.readAllBytes();
+                                String jsonString = new String(bytes, StandardCharsets.UTF_8).trim();
+                                metadata = gson.fromJson(jsonString, APMCMetaData.class);
+                            } catch (IOException e) {
+                                // see above catch comment
+                                LOGGER.warn("Could not read zipped metadata", e);
+                            }
+                        }
+
+                        if (apmc != null && metadata != null) break;
+                    }
+                }
+            } else {
+                try (InputStream inputStream = Files.newInputStream(apmcFile)) {
+                    apmc = readApmcInputStream(inputStream);
+                }
+            }
+
+            if (apmc == null) {
+                LOGGER.error("Unable to parse '.apmc'");
+                return APMCData.createInvalid();
+            }
+
+            if (apmc.server == null && metadata != null) {
+                apmc.server = metadata.server();
+            }
+
+            LOGGER.info("Finished APMC initialization");
+            return apmc;
         } catch (Exception e) {
-            LOGGER.error("no .apmc file found. please place .apmc file in './APData/' folder.");
-            if (data == null) {
-                data = new APMCData();
-                data.state = APMCData.State.MISSING;
-            }
+            LOGGER.error("An unknown error occurred attempting to load '.apmc' data", e);
+            return APMCData.createInvalid();
         }
-        apmcData = data;
+    }
+
+    static {
+        apmcData = createApmcData();
     }
 
     public APRandomizer(IEventBus modEventBus) {
@@ -294,7 +384,9 @@ public class APRandomizer {
             APClient APClient = getAP();
             if (APClient != null) {
                 APClient.setName(apmcData.player_name);
-                String address = apmcData.server.concat(":" + apmcData.port);
+
+                String address = apmcData.server;
+                if (apmcData.port > 0 && !address.contains(":")) address += ":" + apmcData.port;
 
                 Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
 

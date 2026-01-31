@@ -60,14 +60,19 @@ public class ConnectCommand {
             hostname = data.server;
             port = data.port;
         }
-        if (data.state == APMCData.State.VALID) {
+        if (hostname == null)
+            Utils.sendMessageToAll("APMC did not supply a server address; please supply manually");
+        else if (data.state == APMCData.State.VALID) {
 
             APClient APClient = APRandomizer.getAP();
             if (APClient == null) return 0;
 
             APClient.setName(data.player_name);
             APClient.setPassword(password);
-            String address = (port==-1) ? hostname : hostname.concat(":" + port);
+
+            String address = hostname;
+            if (port > 0 && !address.contains(":")) address += ":" + port;
+
             Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
             try {
                 APClient.connect(address);
