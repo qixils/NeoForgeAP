@@ -172,6 +172,20 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.GROUP_RECIPES_LEAD))
                 .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "received/lead"));
 
+        AdvancementHolder brush = Advancement.Builder.recipeAdvancement()
+                .display(
+                        Items.BRUSH,
+                        Component.literal("Brush"),
+                        Component.empty(),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        false,
+                        false)
+                .parent(root)
+                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.GROUP_RECIPES_BRUSH))
+                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "received/brush"));
+
         AdvancementHolder progressiveArmor1 = Advancement.Builder.recipeAdvancement()
                 .display(
                         Items.IRON_CHESTPLATE,

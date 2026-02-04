@@ -107,7 +107,7 @@ public class Utils {
 
 
             //blank out the first two bits because minecraft doesn't deal with alpha values
-            int iColor = color.getRGB() & ~(0xFF << 24);
+           int iColor = color.getRGB() & ~(0xFF << 24);
             Style style = Style.EMPTY.withColor(iColor).withBold(bold).withUnderlined(underline);
 
             message.append(Component.literal(part.text).withStyle(style));

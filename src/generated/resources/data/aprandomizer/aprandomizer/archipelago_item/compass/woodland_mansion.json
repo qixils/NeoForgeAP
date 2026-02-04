@@ -1,0 +1,11 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:woodland_mansion"
+    },
+    "name": "Woodland Mansion",
+    "structures": "#aprandomizer:woodland_mansion"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:ocean_monument"
+    },
+    "name": "Ocean Monument",
+    "structures": "#aprandomizer:ocean_monument"
+  }
+}

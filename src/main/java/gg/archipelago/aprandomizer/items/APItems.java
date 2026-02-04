@@ -40,6 +40,7 @@ public class APItems {
     public static final ResourceKey<APItem> GROUP_RECIPES_CAMPFIRES = id("group_recipes/campfires");
     public static final ResourceKey<APItem> GROUP_RECIPES_SPYGLASS = id("group_recipes/spyglass");
     public static final ResourceKey<APItem> GROUP_RECIPES_LEAD = id("group_recipes/lead");
+    public static final ResourceKey<APItem> GROUP_RECIPES_BRUSH = id("group_recipes/brush");
 
     // Progressive Recipes
     public static final ResourceKey<APItem> PROGRESSIVE_RECIPES_WEAPONS = id("progressive_recipes/weapons");
@@ -80,6 +81,11 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_FORTRESS = id("compass/fortress");
     public static final ResourceKey<APItem> COMPASS_BASTION_REMNANT = id("compass/bastion_remnant");
     public static final ResourceKey<APItem> COMPASS_END_CITY = id("compass/end_city");
+    public static final ResourceKey<APItem> COMPASS_OCEAN_MONUMENT = id("compass/ocean_monument");
+    public static final ResourceKey<APItem> COMPASS_WOODLAND_MANSION = id("compass/woodland_mansion");
+    public static final ResourceKey<APItem> COMPASS_ANCIENT_CITY = id("compass/ancient_city");
+    public static final ResourceKey<APItem> COMPASS_TRAIL_RUINS = id("compass/trail_ruins");
+    public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
 
     // Traps
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
@@ -163,6 +169,10 @@ public class APItems {
         context.register(GROUP_RECIPES_LEAD,
                 APItem.ofRewards(List.of(
                         new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LEAD)))));
+
+        context.register(GROUP_RECIPES_BRUSH,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BRUSH)))));
 
         context.register(PROGRESSIVE_RECIPES_WEAPONS,
                 APItem.ofTiers(List.of(
@@ -345,6 +355,27 @@ public class APItems {
         context.register(COMPASS_END_CITY,
                 APItem.ofReward(
                         new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME), Component.literal("End City"))));
+
+        context.register(COMPASS_WOODLAND_MANSION,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.WOODLAND_MANSION, new RandomizedStructureLevel(APStructureModifiers.WOODLAND_MANSION_NAME), Component.literal("Woodland Mansion"))));
+
+        context.register(COMPASS_OCEAN_MONUMENT,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.OCEAN_MONUMENT, new RandomizedStructureLevel(APStructureModifiers.OCEAN_MONUMENT_NAME), Component.literal("Ocean Monument"))));
+
+        context.register(COMPASS_ANCIENT_CITY,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.ANCIENT_CITY, new RandomizedStructureLevel(APStructureModifiers.ANCIENT_CITY_NAME), Component.literal("Ancient City"))));
+
+        context.register(COMPASS_TRAIL_RUINS,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.TRAIL_RUINS, new RandomizedStructureLevel(APStructureModifiers.TRAIL_RUINS_NAME), Component.literal("Trail Ruins"))));
+
+        context.register(COMPASS_TRIAL_CHAMBERS,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
+
 
         context.register(TRAP_BEES,
                 APItem.ofReward(

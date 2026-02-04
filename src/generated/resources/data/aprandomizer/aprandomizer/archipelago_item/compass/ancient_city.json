@@ -1,0 +1,11 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:ancient_city"
+    },
+    "name": "Ancient City",
+    "structures": "#aprandomizer:ancient_city"
+  }
+}

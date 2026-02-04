@@ -80,7 +80,7 @@ public class APRandomizer {
     @NotNull
     static private final APMCData apmcData;
     static private final IntSet VALID_VERSIONS = IntSet.of(
-            9 // 1.19
+            9 // 1.21.8
     );
     @NotNull
     static private BlockPos jailCenter = BlockPos.ZERO;
@@ -204,7 +204,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.8 v2.0.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 1.21.8 v2.0.1 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;

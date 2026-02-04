@@ -1,0 +1,11 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "level": {
+      "type": "aprandomizer:randomized_structure_level",
+      "name": "aprandomizer:trail_ruins"
+    },
+    "name": "Trail Ruins",
+    "structures": "#aprandomizer:trail_ruins"
+  }
+}

@@ -39,6 +39,21 @@ public class APStructureTagsProvider extends StructureTagsProvider {
                 .add(BuiltinStructures.VILLAGE_SNOWY)
                 .add(BuiltinStructures.VILLAGE_TAIGA)
                 .add(APStructures.VILLAGE_NETHER_STRUCTURE);
+
+        tag(APStructureTags.ANCIENT_CITY)
+                .add(BuiltinStructures.ANCIENT_CITY);
+
+        tag(APStructureTags.WOODLAND_MANSION)
+                .add(BuiltinStructures.WOODLAND_MANSION);
+
+        tag(APStructureTags.OCEAN_MONUMENT)
+                .add(BuiltinStructures.OCEAN_MONUMENT);
+
+        tag(APStructureTags.TRAIL_RUINS)
+                .add(BuiltinStructures.TRAIL_RUINS);
+
+        tag(APStructureTags.TRIAL_CHAMBERS)
+                .add(BuiltinStructures.TRIAL_CHAMBERS);
     }
 
 }
