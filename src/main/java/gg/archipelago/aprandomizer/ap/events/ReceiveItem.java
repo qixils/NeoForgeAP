@@ -11,6 +11,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.MinecraftServer;
 
+import java.awt.*;
+
+import static io.github.archipelagomw.flags.NetworkItem.*;
 public class ReceiveItem {
 
     private final MinecraftServer server;
@@ -29,9 +32,22 @@ public class ReceiveItem {
             boolean newItem = itemManager.giveItemToAll(item.itemID, (int) event.getIndex());
 
             if (newItem) {
-                Component textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.gold.color.getRGB())));
-                Component title = Component.literal("Received").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.red.color.getRGB())));
-                Utils.sendTitleToAll(title, textItem, 10, 60, 10);
+                Component textItem;
+                if ((item.flags & ADVANCEMENT) == ADVANCEMENT) {
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(11508207)));
+                }
+
+                else if ((item.flags & USEFUL) == USEFUL){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(7179240)));
+                }
+                else if ((item.flags & TRAP) == TRAP){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16416882)));
+                }
+                else{
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(61166)));
+                }
+                Component title = Component.literal("Received").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(APPrintColor.white.color.getRGB())));
+                Utils.sendTitleToAll(title, textItem, 5, 30, 5);
             }
         });
     }

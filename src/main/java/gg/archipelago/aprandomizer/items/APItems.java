@@ -85,7 +85,7 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_WOODLAND_MANSION = id("compass/woodland_mansion");
     public static final ResourceKey<APItem> COMPASS_ANCIENT_CITY = id("compass/ancient_city");
     public static final ResourceKey<APItem> COMPASS_TRAIL_RUINS = id("compass/trail_ruins");
-    public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
+    //public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
 
     // Traps
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
@@ -372,9 +372,9 @@ public class APItems {
                 APItem.ofReward(
                         new CompassReward(APStructureTags.TRAIL_RUINS, new RandomizedStructureLevel(APStructureModifiers.TRAIL_RUINS_NAME), Component.literal("Trail Ruins"))));
 
-        context.register(COMPASS_TRIAL_CHAMBERS,
-                APItem.ofReward(
-                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
+       // context.register(COMPASS_TRIAL_CHAMBERS,
+        //        APItem.ofReward(
+        //                new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
 
 
         context.register(TRAP_BEES,

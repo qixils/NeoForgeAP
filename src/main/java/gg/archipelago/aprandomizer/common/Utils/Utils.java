@@ -83,15 +83,16 @@ public class Utils {
                     color = Color.decode("#00FF7F");
                 } else if (part.type == APPrintType.itemID) {
                     if ((part.flags & ADVANCEMENT) == ADVANCEMENT) {
-                        color = Color.decode("#00EEEE"); // advancement
+                        color = Color.decode("#AF99EF"); // advancement
                     }
                     else if ((part.flags & USEFUL) == USEFUL) {
                         color = Color.decode("#6D8BE8"); // useful
                     }
                     else if ((part.flags & TRAP) == TRAP) {
-                        color = Color.decode("#FA8072"); // trap
-                    } else {
-                        color = Color.gray;
+                        color = Color.decode("#FA8072");// trap
+                    }
+                    else {
+                        color = Color.decode("#00EEEE");
                     }
                 }
 

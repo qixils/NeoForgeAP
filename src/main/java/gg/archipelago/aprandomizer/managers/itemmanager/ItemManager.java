@@ -95,19 +95,18 @@ public class ItemManager {
         map.put(45039L, APItems.COMPASS_FORTRESS);
         map.put(45040L, APItems.COMPASS_BASTION_REMNANT);
         map.put(45041L, APItems.COMPASS_END_CITY);
-        map.put(45042L, APItems.COMPASS_OCEAN_MONUMENT);
-        map.put(45043L, APItems.COMPASS_WOODLAND_MANSION);
-        map.put(45044L, APItems.COMPASS_ANCIENT_CITY);
-        map.put(45045L, APItems.COMPASS_TRAIL_RUINS);
-        map.put(45046L, APItems.COMPASS_TRIAL_CHAMBERS);
 
-        map.put(45047L, APItems.ITEMSTACK_SHULKER_BOX);
+        map.put(45042L, APItems.ITEMSTACK_SHULKER_BOX);
 
-        map.put(45048L, APItems.DRAGON_EGG_SHARD);
+        map.put(45044L, APItems.GROUP_RECIPES_SPYGLASS);
+        map.put(45045L, APItems.GROUP_RECIPES_LEAD);
+        map.put(45046L, APItems.GROUP_RECIPES_BRUSH);
 
-        map.put(45049L, APItems.GROUP_RECIPES_SPYGLASS);
-        map.put(45050L, APItems.GROUP_RECIPES_LEAD);
-        map.put(45051L, APItems.GROUP_RECIPES_BRUSH);
+        map.put(45047L, APItems.COMPASS_OCEAN_MONUMENT);
+        map.put(45048L, APItems.COMPASS_WOODLAND_MANSION);
+        map.put(45049L, APItems.COMPASS_ANCIENT_CITY);
+        map.put(45050L, APItems.COMPASS_TRAIL_RUINS);
+        //map.put(45051L, APItems.COMPASS_TRIAL_CHAMBERS);
 
         map.put(45100L, APItems.TRAP_BEES);
     });
@@ -332,6 +331,8 @@ public class ItemManager {
         Utils.setNameAndLore(compass, displayName, lore);
         player.containerMenu.broadcastChanges();
     }
+
+    //TODO: Test a function to reduce compass clutter
 
     // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
