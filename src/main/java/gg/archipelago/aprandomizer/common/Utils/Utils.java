@@ -82,7 +82,20 @@ public class Utils {
                 } else if (part.type == APPrintType.locationID) {
                     color = Color.decode("#00FF7F");
                 } else if (part.type == APPrintType.itemID) {
-                    if ((part.flags & ADVANCEMENT) == ADVANCEMENT) {
+                    LOGGER.debug(part.flags);
+                    if ((part.flags & (ADVANCEMENT + USEFUL + TRAP)) == (ADVANCEMENT + USEFUL + TRAP)) {
+                        color = Color.decode("#80FF80");// advancement+useful+trap (Cursed)
+                    }
+                    else if ((part.flags & (ADVANCEMENT + USEFUL)) == (ADVANCEMENT + USEFUL)) {
+                        color = Color.decode("#FFDF00");// advancement+useful
+                    }
+                    else if ((part.flags & (ADVANCEMENT + TRAP)) == (ADVANCEMENT + TRAP)) {
+                        color = Color.decode("#FFAC1D");// advancement+trap
+                    }
+                    else if ((part.flags & (USEFUL + TRAP)) == (USEFUL + TRAP)) {
+                        color = Color.decode("#9B59B7");// useful+trap
+                    }
+                    else if ((part.flags & ADVANCEMENT) == ADVANCEMENT) {
                         color = Color.decode("#AF99EF"); // advancement
                     }
                     else if ((part.flags & USEFUL) == USEFUL) {

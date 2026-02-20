@@ -33,10 +33,22 @@ public class ReceiveItem {
 
             if (newItem) {
                 Component textItem;
-                if ((item.flags & ADVANCEMENT) == ADVANCEMENT) {
+
+                if ((item.flags & (ADVANCEMENT + USEFUL + TRAP)) == (ADVANCEMENT + USEFUL + TRAP)){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(8454016)));
+                }
+                else if ((item.flags & (ADVANCEMENT + USEFUL)) == (ADVANCEMENT + USEFUL)){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16768768)));
+                }
+                else if ((item.flags & (ADVANCEMENT + TRAP)) == (ADVANCEMENT + TRAP)){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(16755741)));
+                }
+                else if ((item.flags & (USEFUL + TRAP)) == (USEFUL + TRAP)){
+                    textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(10181047)));
+                }
+                else if ((item.flags & ADVANCEMENT) == ADVANCEMENT) {
                     textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(11508207)));
                 }
-
                 else if ((item.flags & USEFUL) == USEFUL){
                     textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(7179240)));
                 }
