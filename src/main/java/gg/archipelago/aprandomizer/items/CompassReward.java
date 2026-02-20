@@ -63,6 +63,7 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
         tag.putInt("index", compassRewards.size() - 1);
         compass.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         Utils.giveItemToPlayer(player, compass);
+        ItemManager.cleanCompasses(player);
     }
 
 }

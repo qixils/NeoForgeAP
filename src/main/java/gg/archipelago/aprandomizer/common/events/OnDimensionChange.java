@@ -12,12 +12,14 @@ public class OnDimensionChange {
     @SubscribeEvent
     public static void onChange1(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        ItemManager.cleanCompasses(player);
         ItemManager.refreshCompasses(player);
     }
 
     @SubscribeEvent
     public static void onChange1(PlayerEvent.PlayerRespawnEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        ItemManager.cleanCompasses(player);
         ItemManager.refreshCompasses(player);
     }
 }

@@ -38,6 +38,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class ItemManager {
@@ -322,7 +323,17 @@ public class ItemManager {
         player.containerMenu.broadcastChanges();
     }
 
-    //TODO: Test a function to reduce compass clutter
+    // remove all compasses but one in player inventory
+    public static void cleanCompasses(ServerPlayer player) {
+        AtomicInteger cCount = new AtomicInteger();
+        player.getInventory().forEach(item -> {
+            if (!item.has(DataComponents.CUSTOM_DATA)) return;
+            cCount.getAndIncrement();
+            if (cCount.get() >1){
+            player.getInventory().removeItem(item);
+            }
+        });
+    }
 
     // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {
