@@ -1,0 +1,25 @@
+{
+  "parent": "aprandomizer:received/root",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:group_recipes/saddle"
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:saddle"
+    },
+    "title": "Saddle"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}
