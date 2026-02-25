@@ -67,7 +67,7 @@ public class APItems {
     public static final ResourceKey<APItem> ITEMSTACK_ROTTEN_FLESH = id("itemstack/rotten_flesh");
     public static final ResourceKey<APItem> ITEMSTACK_THE_ARROW = id("itemstack/the_arrow");
     public static final ResourceKey<APItem> ITEMSTACK_THIRTY_TWO_ARROW = id("itemstack/thirty_two_arrow");
-    public static final ResourceKey<APItem> ITEMSTACK_SADDLE = id("itemstack/saddle");
+    public static final ResourceKey<APItem> GROUP_RECIPES_SADDLE = id("itemstack/saddle");
     public static final ResourceKey<APItem> ITEMSTACK_SHULKER_BOX = id("itemstack/shulker_box");
 
     // Experience
@@ -316,9 +316,9 @@ public class APItems {
                 APItem.ofReward(
                         new ItemReward(new ItemStack(Items.ARROW, 32))));
 
-        context.register(ITEMSTACK_SADDLE,
-                APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.SADDLE, 1))));
+        context.register(GROUP_RECIPES_SADDLE,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SADDLE)))));
 
         context.register(ITEMSTACK_SHULKER_BOX,
                 APItem.ofReward(
