@@ -38,6 +38,7 @@ public class APItems {
     public static final ResourceKey<APItem> GROUP_RECIPES_SHIELD = id("group_recipes/shield");
     public static final ResourceKey<APItem> GROUP_RECIPES_FISHING = id("group_recipes/fishing");
     public static final ResourceKey<APItem> GROUP_RECIPES_CAMPFIRES = id("group_recipes/campfires");
+    public static final ResourceKey<APItem> GROUP_RECIPES_SADDLE = id("group_recipes/saddle");
     public static final ResourceKey<APItem> GROUP_RECIPES_SPYGLASS = id("group_recipes/spyglass");
     public static final ResourceKey<APItem> GROUP_RECIPES_LEAD = id("group_recipes/lead");
     public static final ResourceKey<APItem> GROUP_RECIPES_BRUSH = id("group_recipes/brush");
@@ -67,7 +68,6 @@ public class APItems {
     public static final ResourceKey<APItem> ITEMSTACK_ROTTEN_FLESH = id("itemstack/rotten_flesh");
     public static final ResourceKey<APItem> ITEMSTACK_THE_ARROW = id("itemstack/the_arrow");
     public static final ResourceKey<APItem> ITEMSTACK_THIRTY_TWO_ARROW = id("itemstack/thirty_two_arrow");
-    public static final ResourceKey<APItem> GROUP_RECIPES_SADDLE = id("itemstack/saddle");
     public static final ResourceKey<APItem> ITEMSTACK_SHULKER_BOX = id("itemstack/shulker_box");
 
     // Experience
@@ -173,6 +173,10 @@ public class APItems {
         context.register(GROUP_RECIPES_BRUSH,
                 APItem.ofRewards(List.of(
                         new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BRUSH)))));
+
+        context.register(GROUP_RECIPES_SADDLE,
+                APItem.ofRewards(List.of(
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SADDLE)))));
 
         context.register(PROGRESSIVE_RECIPES_WEAPONS,
                 APItem.ofTiers(List.of(
@@ -315,10 +319,6 @@ public class APItems {
         context.register(ITEMSTACK_THIRTY_TWO_ARROW,
                 APItem.ofReward(
                         new ItemReward(new ItemStack(Items.ARROW, 32))));
-
-        context.register(GROUP_RECIPES_SADDLE,
-                APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SADDLE)))));
 
         context.register(ITEMSTACK_SHULKER_BOX,
                 APItem.ofReward(
