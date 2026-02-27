@@ -1,9 +1,0 @@
-{
-  "rewards": {
-    "type": "aprandomizer:item",
-    "item": {
-      "count": 1,
-      "id": "minecraft:saddle"
-    }
-  }
-}

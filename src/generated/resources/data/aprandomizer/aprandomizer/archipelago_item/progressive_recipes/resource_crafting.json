@@ -88,7 +88,19 @@
         },
         {
           "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_ingot"
+        },
+        {
+          "type": "aprandomizer:recipe",
           "recipe": "minecraft:copper_block"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:resin_clump"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:resin_block"
         }
       ]
     }

@@ -88,7 +88,7 @@ public class ItemManager {
         map.put(45033L, APItems.ITEMSTACK_ROTTEN_FLESH);
         map.put(45034L, APItems.ITEMSTACK_THE_ARROW);
         map.put(45035L, APItems.ITEMSTACK_THIRTY_TWO_ARROW);
-        map.put(45036L, APItems.ITEMSTACK_SADDLE);
+        map.put(45036L, APItems.GROUP_RECIPES_SADDLE);
 
         map.put(45037L, APItems.COMPASS_VILLAGE);
         map.put(45038L, APItems.COMPASS_PILLAGER_OUTPOST);

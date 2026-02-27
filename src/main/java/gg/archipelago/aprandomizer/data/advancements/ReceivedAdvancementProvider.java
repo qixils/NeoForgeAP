@@ -346,6 +346,20 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("auto", PlayerTrigger.TriggerInstance.tick())
                 .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_weapons_after"));
 
+        AdvancementHolder saddle = Advancement.Builder.recipeAdvancement()
+                .display(
+                        Items.SADDLE,
+                        Component.literal("Saddle"),
+                        Component.empty(),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        false,
+                        false)
+                .parent(root)
+                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.GROUP_RECIPES_SADDLE))
+                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "received/saddle"));
+
         AdvancementHolder shield = Advancement.Builder.recipeAdvancement()
                 .display(
                         Items.SHIELD,
