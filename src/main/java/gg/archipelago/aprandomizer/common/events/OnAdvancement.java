@@ -9,7 +9,7 @@ import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManage
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -49,14 +49,14 @@ public class OnAdvancement {
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
         Advancement advancement = event.getAdvancement().value();
-        ResourceLocation id = event.getAdvancement().id();
+        Identifier id = event.getAdvancement().id();
 
         AdvancementManager am = APRandomizer.getAdvancementManager();
         if (am == null) return;
         Registry<APLocation> locations = server.registryAccess().lookupOrThrow(APRegistries.ARCHIPELAGO_LOCATION);
         //don't do anything if this advancement has already been had, or is not on our list of tracked advancements.
         for (Map.Entry<ResourceKey<APLocation>, APLocation> entry : locations.entrySet()) {
-            if (!(entry.getValue() instanceof AdvancementLocation(ResourceLocation advKey) && advKey.equals(id) && !am.hasAdvancement(entry.getKey()) && am.getAdvancementID(entry.getKey()) != 0))
+            if (!(entry.getValue() instanceof AdvancementLocation(Identifier advKey) && advKey.equals(id) && !am.hasAdvancement(entry.getKey()) && am.getAdvancementID(entry.getKey()) != 0))
                 continue;
             LOGGER.debug("{} has gotten the advancement {}", player.getDisplayName().getString(), id);
             am.addAdvancement(entry.getKey());

@@ -4,7 +4,8 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -38,16 +39,16 @@ public class OnDeath {
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
 
-        GameRules.BooleanValue deathMessages = server.getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
-        boolean death = deathMessages.get();
-        deathMessages.set(false, server);
+        Boolean deathMessages = server.getLevel(Level.OVERWORLD).getGameRules().get(GameRules.SHOW_DEATH_MESSAGES);
+        boolean death = deathMessages;
+        server.getLevel(Level.OVERWORLD).getGameRules().set(GameRules.SHOW_DEATH_MESSAGES, false, server);
         sendDeathLink = false;
         for (ServerPlayer serverPlayer : APRandomizer.getServer().getPlayerList().getPlayers()) {
             if (serverPlayer != player) {
                 serverPlayer.kill(serverPlayer.level());
             }
         }
-        deathMessages.set(death, server);
+        server.getLevel(Level.OVERWORLD).getGameRules().set(GameRules.SHOW_DEATH_MESSAGES, death, server);
         sendDeathLink = true;
     }
 }

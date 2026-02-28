@@ -3,7 +3,7 @@ package gg.archipelago.aprandomizer.data.advancements;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.tags.APDamageTypeTags;
 import net.minecraft.advancements.*;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -11,7 +11,7 @@ import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
@@ -26,7 +26,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
     @Override
     public void generate(Provider registries, Consumer<AdvancementHolder> writer) {
         HolderGetter<Item> items = registries.lookupOrThrow(Registries.ITEM);
-        HolderGetter<ResourceLocation> customStats = registries.lookupOrThrow(Registries.CUSTOM_STAT);
+        HolderGetter<Identifier> customStats = registries.lookupOrThrow(Registries.CUSTOM_STAT);
         HolderGetter<EntityType<?>> entityTypes = registries.lookupOrThrow(Registries.ENTITY_TYPE);
 
         AdvancementHolder root = Advancement.Builder.recipeAdvancement()
@@ -34,14 +34,14 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.ENDER_PEARL,
                         Component.literal("Archipelago"),
                         Component.literal("Welcome to the AP Randomizer"),
-                        ResourceLocation.withDefaultNamespace("gui/advancements/backgrounds/end"),
+                        Identifier.withDefaultNamespace("gui/advancements/backgrounds/end"),
                         AdvancementType.TASK,
                         false,
                         false,
                         false)
                 .addCriterion("auto", PlayerTrigger.TriggerInstance.tick())
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/root"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/root"));
 
         AdvancementHolder bread = Advancement.Builder.recipeAdvancement()
                 .parent(root)
@@ -56,7 +56,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_bread", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.BREAD))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/bake_bread"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/bake_bread"));
 
         AdvancementHolder leather = Advancement.Builder.recipeAdvancement()
                 .parent(root)
@@ -71,7 +71,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_leather", InventoryChangeTrigger.TriggerInstance.hasItems(Items.LEATHER))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/cow_tipper"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/cow_tipper"));
 
         AdvancementHolder wood = Advancement.Builder.recipeAdvancement()
                 .parent(root)
@@ -86,7 +86,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_logs", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(items, ItemTags.LOGS)))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/get_wood"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/get_wood"));
 
         AdvancementHolder sword = Advancement.Builder.recipeAdvancement()
                 .parent(wood)
@@ -101,7 +101,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_sword", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.WOODEN_SWORD))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/craft_sword"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/craft_sword"));
 
         AdvancementHolder pickaxe = Advancement.Builder.recipeAdvancement()
                 .parent(wood)
@@ -116,7 +116,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_pick", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.WOODEN_PICKAXE))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/get_pickaxe"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/get_pickaxe"));
 
         AdvancementHolder furnace = Advancement.Builder.recipeAdvancement()
                 .parent(pickaxe)
@@ -131,7 +131,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_furnace", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.FURNACE))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/hot_topic"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/hot_topic"));
 
         AdvancementHolder bookshelf = Advancement.Builder.recipeAdvancement()
                 .parent(leather)
@@ -146,7 +146,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("get_bookshelf", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.BOOKSHELF))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/obtain_bookshelf"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/obtain_bookshelf"));
 
         AdvancementHolder overkill = Advancement.Builder.recipeAdvancement()
                 .parent(sword)
@@ -164,7 +164,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         .type(DamageSourcePredicate.Builder.damageType()
                                 .tag(TagPredicate.isNot(APDamageTypeTags.FIREBALL)))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
 
         AdvancementHolder overpowered = Advancement.Builder.recipeAdvancement()
                 .parent(bread)
@@ -179,7 +179,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("consumed_item", ConsumeItemTrigger.TriggerInstance.usedItem(items, Items.ENCHANTED_GOLDEN_APPLE))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overpowered"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overpowered"));
 
         AdvancementHolder onARail = Advancement.Builder.recipeAdvancement()
                 .parent(root)
@@ -197,7 +197,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                                 .addStat(Stats.CUSTOM, customStats.getOrThrow(ResourceKey.create(Registries.CUSTOM_STAT, Stats.MINECART_ONE_CM)), MinMaxBounds.Ints.atLeast(100000))
                                 .build()))))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_minecart"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_minecart"));
 
         AdvancementHolder ridePig = Advancement.Builder.recipeAdvancement()
                 .parent(leather)
@@ -219,7 +219,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                                         .tag(TagPredicate.is(APDamageTypeTags.FALL)))
                                 .build()))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
 
         AdvancementHolder cake = Advancement.Builder.recipeAdvancement()
                 .parent(bread)
@@ -234,7 +234,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         false)
                 .addCriterion("bake_cake", RecipeCraftedTrigger.TriggerInstance.craftedItem(ResourceKey.create(Registries.RECIPE, RecipeBuilder.getDefaultRecipeId(Items.CAKE))))
                 .requirements(AdvancementRequirements.Strategy.AND)
-                .save(writer, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/the_lie"));
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/the_lie"));
 
     }
 

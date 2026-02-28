@@ -9,7 +9,8 @@ import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.common.events.OnDeath;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 
 public class onDeathLink {
 
@@ -24,8 +25,8 @@ public class onDeathLink {
         MinecraftServer server = APRandomizer.getServer();
         if (server == null) return;
 
-        GameRules.BooleanValue showDeathMessages = server.getGameRules().getRule(GameRules.RULE_SHOWDEATHMESSAGES);
-        boolean showDeaths = showDeathMessages.get();
+        Boolean showDeathMessages = server.getLevel(Level.OVERWORLD).getGameRules().get(GameRules.SHOW_DEATH_MESSAGES);
+        boolean showDeaths = showDeathMessages;
         if (showDeaths) {
             String cause = event.cause;
             if (cause != null && !cause.isBlank())
@@ -33,12 +34,12 @@ public class onDeathLink {
             else
                 Utils.sendMessageToAll("This Death brought to you by " + event.source);
         }
-        showDeathMessages.set(false, server);
+        server.getLevel(Level.OVERWORLD).getGameRules().set(GameRules.SHOW_DEATH_MESSAGES, false, server);
         OnDeath.sendDeathLink = false;
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             player.kill(player.level());
         }
         OnDeath.sendDeathLink = true;
-        showDeathMessages.set(showDeaths, server);
+        server.getLevel(Level.OVERWORLD).getGameRules().set(GameRules.SHOW_DEATH_MESSAGES, showDeaths, server);
     }
 }

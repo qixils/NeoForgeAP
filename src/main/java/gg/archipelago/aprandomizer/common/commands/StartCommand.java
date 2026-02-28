@@ -11,13 +11,13 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -62,23 +62,23 @@ public class StartCommand {
         if (overworld == null) return 0;
         ItemManager itemManager = APRandomizer.getItemManager();
         if (itemManager == null) return 0;
-        BlockPos spawn = overworld.getSharedSpawnPos();
-        StructureTemplate jailStruct = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "spawnjail")).orElseThrow();
+        BlockPos spawn = overworld.getRespawnData().pos();
+        StructureTemplate jailStruct = overworld.getStructureManager().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "spawnjail")).orElseThrow();
         BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
         for (BlockPos blockPos : BlockPos.betweenClosed(jailPos, jailPos.offset(jailStruct.getSize()))) {
             overworld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
         }
-        server.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_DOFIRETICK).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(3, server);
-        server.getGameRules().getRule(GameRules.RULE_DO_PATROL_SPAWNING).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_DO_TRADER_SPAWNING).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(false, server);
-        server.getGameRules().getRule(GameRules.RULE_DOMOBLOOT).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).set(true, server);
+        overworld.getGameRules().set(GameRules.ADVANCE_TIME, true, server);
+        overworld.getGameRules().set(GameRules.ADVANCE_WEATHER, true, server);
+        overworld.getGameRules().set(GameRules.FIRE_SPREAD_RADIUS_AROUND_PLAYER, 128, server);
+        overworld.getGameRules().set(GameRules.RANDOM_TICK_SPEED, 3, server);
+        overworld.getGameRules().set(GameRules.SPAWN_PATROLS, true, server);
+        overworld.getGameRules().set(GameRules.SPAWN_WANDERING_TRADERS, true, server);
+        overworld.getGameRules().set(GameRules.MOB_GRIEFING, true, server);
+        overworld.getGameRules().set(GameRules.SPAWN_MOBS, true, server);
+        overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, true, server);
+        overworld.getGameRules().set(GameRules.MOB_DROPS, true, server);
+        overworld.getGameRules().set(GameRules.ENTITY_DROPS, true, server);
         server.execute(() -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 player.getFoodData().eat(20, 20);

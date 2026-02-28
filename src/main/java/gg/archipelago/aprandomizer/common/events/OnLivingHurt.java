@@ -6,7 +6,7 @@ import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
@@ -14,7 +14,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -65,12 +65,12 @@ public class OnLivingHurt {
     @SubscribeEvent
     static void onLivingHurtEvent(LivingDamageEvent.Post event) {
         LivingEntity entity = event.getEntity();
-        MinecraftServer server = entity.getServer();
+        MinecraftServer server = entity.level().getServer();
         if (server == null) return;
         if (entity instanceof Pig && event.getSource().is(DamageTypes.FALL)) {
             if (entity.getPassengers().isEmpty()) return;
             if (entity.getPassengers().getFirst() instanceof ServerPlayer player) {
-                AdvancementHolder advancement = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
+                AdvancementHolder advancement = server.getAdvancements().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/ride_pig"));
                 if (advancement == null) {
                     LOGGER.warn("Missing pigs fly achievement");
                 } else {
@@ -86,7 +86,7 @@ public class OnLivingHurt {
             Entity e = event.getSource().getEntity();
             if (e instanceof ServerPlayer player && event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
                 //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
-                AdvancementHolder a = server.getAdvancements().get(ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
+                AdvancementHolder a = server.getAdvancements().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
                 if (a == null) {
                     LOGGER.warn("Missing overkill achievement");
                 } else {

@@ -11,7 +11,7 @@ import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.data.worldgen.placement.VillagePlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.pools.FeaturePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
@@ -23,24 +23,24 @@ import java.util.List;
 public class APTemplatePools {
 
     // Bee Grove
-    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BASES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bases"));
-    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_TREES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/trees"));
-    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BEE_NESTS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bee_nests"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BASES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bases"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_TREES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/trees"));
+    public static final ResourceKey<StructureTemplatePool> BEE_GROVE_BEE_NESTS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove/bee_nests"));
 
     // Nether Pillager Outpost
-    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_BASE_PLATES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/base_plates"));
-    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_FEATURE_PLATES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/feature_plates"));
-    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_FEATURES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/features"));
-    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_TOWERS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/towers"));
+    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_BASE_PLATES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/base_plates"));
+    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_FEATURE_PLATES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/feature_plates"));
+    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_FEATURES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/features"));
+    public static final ResourceKey<StructureTemplatePool> PILLAGER_OUTPOST_TOWERS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost/towers"));
 
     // Nether village
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_DECOR = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/decor"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_HOUSES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/houses"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_STREETS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/streets"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TERMINATORS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/terminators"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TOWN_CENTERS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/town_centers"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TREES = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/trees"));
-    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_VILLAGERS = ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/villagers"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_DECOR = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/decor"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_HOUSES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/houses"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_STREETS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/streets"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TERMINATORS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/terminators"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TOWN_CENTERS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/town_centers"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_TREES = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/trees"));
+    public static final ResourceKey<StructureTemplatePool> VILLAGE_NETHER_VILLAGERS = ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village/nether/villagers"));
 
     public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {
         HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);

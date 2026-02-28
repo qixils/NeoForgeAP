@@ -5,14 +5,14 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.criterion.LocationPredicate;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderLookup.RegistryLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -25,7 +25,7 @@ public class VanillaOverrideAdvancementProvider implements AdvancementSubProvide
     public void generate(Provider registries, Consumer<AdvancementHolder> writer) {
         RegistryLookup<Structure> structures = registries.lookupOrThrow(Registries.STRUCTURE);
         Advancement.Builder.advancement()
-                .parent(ResourceLocation.withDefaultNamespace("end/enter_end_gateway"))
+                .parent(Identifier.withDefaultNamespace("end/enter_end_gateway"))
                 .addCriterion("in_city", PlayerTrigger.TriggerInstance.located(
                         LocationPredicate.Builder.inStructure(structures.getOrThrow(BuiltinStructures.END_CITY))))
                 .addCriterion("in_city_nether", PlayerTrigger.TriggerInstance.located(
@@ -40,7 +40,7 @@ public class VanillaOverrideAdvancementProvider implements AdvancementSubProvide
                         true,
                         false)
                 .requirements(AdvancementRequirements.Strategy.OR)
-                .save(writer, ResourceLocation.withDefaultNamespace("end/find_end_city"));
+                .save(writer, Identifier.withDefaultNamespace("end/find_end_city"));
     }
 
 }

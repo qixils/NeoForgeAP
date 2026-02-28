@@ -4,13 +4,13 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
-public record AdvancementLocation(ResourceLocation advancement) implements APLocation {
+public record AdvancementLocation(Identifier advancement) implements APLocation {
     public static final MapCodec<AdvancementLocation> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(
-                    ResourceLocation.CODEC.fieldOf("advancement").forGetter(AdvancementLocation::advancement))
+                    Identifier.CODEC.fieldOf("advancement").forGetter(AdvancementLocation::advancement))
             .apply(instance, AdvancementLocation::new));
 
     @Override
@@ -20,9 +20,9 @@ public record AdvancementLocation(ResourceLocation advancement) implements APLoc
 
     @Override
     public void give(ServerPlayer player) {
-        if (player.getServer() == null)
+        if (player.level().getServer() == null)
             return;
-        AdvancementHolder advancementHolder = player.getServer().getAdvancements().get(advancement);
+        AdvancementHolder advancementHolder = player.level().getServer().getAdvancements().get(advancement);
         if (advancementHolder == null)
             return;
         AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancementHolder);
@@ -36,9 +36,9 @@ public record AdvancementLocation(ResourceLocation advancement) implements APLoc
 
     @Override
     public boolean hasFound(ServerPlayer player) {
-        if (player.getServer() == null)
+        if (player.level().getServer() == null)
             return false;
-        AdvancementHolder advancementHolder = player.getServer().getAdvancements().get(advancement);
+        AdvancementHolder advancementHolder = player.level().getServer().getAdvancements().get(advancement);
         if (advancementHolder == null)
             return false;
         AdvancementProgress ap = player.getAdvancements().getOrStartProgress(advancementHolder);

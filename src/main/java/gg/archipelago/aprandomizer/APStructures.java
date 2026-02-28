@@ -7,7 +7,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
@@ -40,10 +40,10 @@ public class APStructures {
     public static final DeferredHolder<StructureType<?>, StructureType<NetherEndCityStructure>> END_CITY_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("end_city_nether", () -> () -> NetherEndCityStructure.CODEC);
     public static final DeferredHolder<StructureType<?>, StructureType<NetherPillagerOutpostStructure>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> () -> NetherPillagerOutpostStructure.CODEC);
 
-    public static final ResourceKey<Structure> VILLAGE_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
-    public static final ResourceKey<Structure> END_CITY_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
-    public static final ResourceKey<Structure> PILLAGER_OUTPOST_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
-    public static final ResourceKey<Structure> BEEGROVE_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
+    public static final ResourceKey<Structure> VILLAGE_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
+    public static final ResourceKey<Structure> END_CITY_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
+    public static final ResourceKey<Structure> PILLAGER_OUTPOST_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
+    public static final ResourceKey<Structure> BEEGROVE_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
 
     public static void bootstrap(BootstrapContext<Structure> context) {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
@@ -86,7 +86,7 @@ public class APStructures {
                                 VerticalAnchor.aboveBottom(16),
                                 VerticalAnchor.belowTop(10)),
                         Optional.empty(),
-                        80));
+                        new JigsawStructure.MaxDistance(80)));
 
         context.register(VILLAGE_NETHER_STRUCTURE,
                 new NetherVillageStructure(
@@ -101,6 +101,6 @@ public class APStructures {
                                 VerticalAnchor.aboveBottom(16),
                                 VerticalAnchor.belowTop(10)),
                         Optional.empty(),
-                        80));
+                        new JigsawStructure.MaxDistance(80)));
     }
 }

@@ -26,7 +26,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.packs.*;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -62,7 +62,7 @@ public class APDataGenerator {
                         new VanillaTheEndAdvancements(),
                         new VanillaHusbandryAdvancements(),
                         new VanillaAdventureAdvancements()),
-                        id -> ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
+                        id -> Identifier.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
                 new VanillaOverrideAdvancementProvider())));
         event.addProvider(new APDamageTypeTagsProvider(event.getGenerator().getPackOutput(), registries));
         event.addProvider(new APRecipeProvider.Runner(event.getGenerator().getPackOutput(), registries));

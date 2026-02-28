@@ -16,7 +16,7 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -93,7 +93,7 @@ public class APItems {
     public static final ResourceKey<APItem> DRAGON_EGG_SHARD = id("dragon_egg_shard");
 
     private static ResourceKey<APItem> id(String name) {
-        return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, name));
+        return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, Identifier.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
 
     public static void bootstrap(BootstrapContext<APItem> context) {
@@ -222,9 +222,9 @@ public class APItems {
         context.register(PROGRESSIVE_RECIPES_RESOURCE_CRAFTING,
                 APItem.ofTiers(List.of(
                         new APTier(List.of(
-                                new RecipeReward(ResourceLocation.withDefaultNamespace("iron_ingot_from_nuggets")),
+                                new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_nuggets")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_NUGGET)),
-                                new RecipeReward(ResourceLocation.withDefaultNamespace("gold_ingot_from_nuggets")),
+                                new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_nuggets")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_NUGGET)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FURNACE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAST_FURNACE)))),
@@ -232,14 +232,14 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLOWSTONE)),
-                                new RecipeReward(ResourceLocation.withDefaultNamespace("iron_ingot_from_iron_block")),
+                                new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_iron_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BLOCK)),
-                                new RecipeReward(ResourceLocation.withDefaultNamespace("gold_ingot_from_gold_block")),
+                                new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_gold_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_BLOCK)),
-                                new RecipeReward(ResourceLocation.withDefaultNamespace("netherite_ingot_from_netherite_block")),
+                                new RecipeReward(Identifier.withDefaultNamespace("netherite_ingot_from_netherite_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)),

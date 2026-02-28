@@ -22,12 +22,13 @@ import gg.archipelago.aprandomizer.structures.level.StructureLevelReferenceTypes
 import io.github.archipelagomw.network.client.BouncePacket;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -312,12 +313,13 @@ public class APRandomizer {
             return;
         }
         if (server == null) server = event.getServer();
+        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
 
         // do something when the server starts
 
-        server.getGameRules().getRule(GameRules.RULE_LIMITED_CRAFTING).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).set(true, server);
-        server.getGameRules().getRule(GameRules.RULE_ANNOUNCE_ADVANCEMENTS).set(false, server);
+        overworld.getGameRules().set(GameRules.LIMITED_CRAFTING, true, server);
+        overworld.getGameRules().set(GameRules.KEEP_INVENTORY, true, server);
+        overworld.getGameRules().set(GameRules.SHOW_ADVANCEMENT_MESSAGES, false, server);
         server.setDifficulty(Difficulty.NORMAL, true);
 
         //fetch our custom world save data we attach to the worlds.
@@ -350,31 +352,29 @@ public class APRandomizer {
             APClient = new APClient(server, advancementManager, itemManager, goalManager);
         }
 
-
-        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
         if (worldData.getJailPlayers() && overworld != null) {
-            BlockPos spawn = overworld.getSharedSpawnPos();
+            BlockPos spawn = overworld.getRespawnData().pos();
             // alter the spawn box position, so it doesn't interfere with spawning
-            var jailOptional = overworld.getStructureManager().get(ResourceLocation.fromNamespaceAndPath(MODID, "spawnjail"));
+            var jailOptional = overworld.getStructureManager().get(Identifier.fromNamespaceAndPath(MODID, "spawnjail"));
             if (jailOptional.isPresent()) {
                 StructureTemplate jail = jailOptional.get();
                 BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
                 jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX() / 2), jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ() / 2));
-                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(), 2);
+                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(), Block.UPDATE_CLIENTS);
             } else {
                 jailCenter = spawn;
             }
-            server.getGameRules().getRule(GameRules.RULE_DAYLIGHT).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_WEATHER_CYCLE).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_DOFIRETICK).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(0, server);
-            server.getGameRules().getRule(GameRules.RULE_DO_PATROL_SPAWNING).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_DO_TRADER_SPAWNING).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_MOBGRIEFING).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_DOMOBSPAWNING).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(true, server);
-            server.getGameRules().getRule(GameRules.RULE_DOMOBLOOT).set(false, server);
-            server.getGameRules().getRule(GameRules.RULE_DOENTITYDROPS).set(false, server);
+            overworld.getGameRules().set(GameRules.ADVANCE_TIME, false, server);
+            overworld.getGameRules().set(GameRules.ADVANCE_WEATHER, false, server);
+            overworld.getGameRules().set(GameRules.FIRE_SPREAD_RADIUS_AROUND_PLAYER, 0, server);
+            overworld.getGameRules().set(GameRules.RANDOM_TICK_SPEED, 0, server);
+            overworld.getGameRules().set(GameRules.SPAWN_PATROLS, false, server);
+            overworld.getGameRules().set(GameRules.SPAWN_WANDERING_TRADERS, false, server);
+            overworld.getGameRules().set(GameRules.MOB_GRIEFING, false, server);
+            overworld.getGameRules().set(GameRules.SPAWN_MOBS, false, server);
+            overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, true, server);
+            overworld.getGameRules().set(GameRules.MOB_DROPS, false, server);
+            overworld.getGameRules().set(GameRules.ENTITY_DROPS, false, server);
             overworld.setDayTime(0);
 
         }

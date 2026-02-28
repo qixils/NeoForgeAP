@@ -6,7 +6,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
@@ -15,10 +15,10 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import java.util.List;
 
 public class APStructureSets {
-    public static final ResourceKey<StructureSet> BEE_GROVE = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
-    public static final ResourceKey<StructureSet> END_CITY_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
-    public static final ResourceKey<StructureSet> PILLAGER_OUTPOST_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
-    public static final ResourceKey<StructureSet> VILLAGE_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
+    public static final ResourceKey<StructureSet> BEE_GROVE = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
+    public static final ResourceKey<StructureSet> END_CITY_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
+    public static final ResourceKey<StructureSet> PILLAGER_OUTPOST_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
+    public static final ResourceKey<StructureSet> VILLAGE_NETHER = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
 
     public static void bootstrap(BootstrapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);

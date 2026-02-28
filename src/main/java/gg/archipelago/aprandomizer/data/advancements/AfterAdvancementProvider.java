@@ -4,10 +4,10 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.critereon.PlayerTrigger;
+import net.minecraft.advancements.criterion.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -16,16 +16,16 @@ import java.util.function.Function;
 public class AfterAdvancementProvider implements AdvancementSubProvider {
 
     private final List<AdvancementSubProvider> baseAdvancements;
-    private final Function<ResourceLocation, ResourceLocation> idConverter;
+    private final Function<Identifier, Identifier> idConverter;
 
-    public AfterAdvancementProvider(List<AdvancementSubProvider> baseAdvancements, Function<ResourceLocation, ResourceLocation> idConverter) {
+    public AfterAdvancementProvider(List<AdvancementSubProvider> baseAdvancements, Function<Identifier, Identifier> idConverter) {
         this.baseAdvancements = baseAdvancements;
         this.idConverter = idConverter;
     }
 
     @Override
     public void generate(Provider registries, Consumer<AdvancementHolder> writer) {
-        Object2BooleanMap<ResourceLocation> noChildren = new Object2BooleanOpenHashMap<>();
+        Object2BooleanMap<Identifier> noChildren = new Object2BooleanOpenHashMap<>();
         for (AdvancementSubProvider provider : baseAdvancements) {
             provider.generate(registries, holder -> {
                 if (holder.value().display().isPresent() && !holder.value().display().get().isHidden()) {
@@ -39,7 +39,7 @@ public class AfterAdvancementProvider implements AdvancementSubProvider {
             });
         }
 
-        for (Object2BooleanMap.Entry<ResourceLocation> entry : noChildren.object2BooleanEntrySet()) {
+        for (Object2BooleanMap.Entry<Identifier> entry : noChildren.object2BooleanEntrySet()) {
             if (entry.getBooleanValue()) {
                 Advancement.Builder.recipeAdvancement()
                         .parent(entry.getKey())

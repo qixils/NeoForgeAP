@@ -13,6 +13,7 @@ import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.permissions.PermissionSet;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -29,7 +30,7 @@ public class BounceCommand {
 
         dispatcher.register(Commands.literal("bounce") //base slash command is "connect"
                 // first make sure its NOT a dedicated server (aka single player or hosted via in game client, OR user has an op level of 1)
-                .requires((CommandSource) -> (!CommandSource.getServer().isDedicatedServer() || CommandSource.hasPermission(1)))
+                .requires((CommandSource) -> (!CommandSource.getServer().isDedicatedServer() || CommandSource.withPermission(PermissionSet.ALL_PERMISSIONS).isPlayer()))
                 //take the first argument as a string and name it "Address"
                 .then(Commands.argument("entity", ResourceArgument.resource(pContext, Registries.ENTITY_TYPE))
                         .suggests(SuggestionProviders.cast(SuggestionProviders.SUMMONABLE_ENTITIES))

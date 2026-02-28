@@ -6,7 +6,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -17,16 +17,16 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import java.util.Map;
 
 public class APStructureModifiers {
-    public static final ResourceLocation VILLAGE_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "village");
-    public static final ResourceLocation PILLAGER_OUTPOST_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost");
-    public static final ResourceLocation FORTRESS_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "fortress");
-    public static final ResourceLocation BASTION_REMNANT_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant");
-    public static final ResourceLocation END_CITY_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "end_city");
-    public static final ResourceLocation WOODLAND_MANSION_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "woodland_mansion");
-    public static final ResourceLocation OCEAN_MONUMENT_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "ocean_monument");
-    public static final ResourceLocation ANCIENT_CITY_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "ancient_city");
-    public static final ResourceLocation TRAIL_RUINS_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "trail_ruins");
-    public static final ResourceLocation TRIAL_CHAMBERS_NAME = ResourceLocation.fromNamespaceAndPath(APRandomizer.MODID, "trial_chambers");
+    public static final Identifier VILLAGE_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village");
+    public static final Identifier PILLAGER_OUTPOST_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost");
+    public static final Identifier FORTRESS_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fortress");
+    public static final Identifier BASTION_REMNANT_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant");
+    public static final Identifier END_CITY_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city");
+    public static final Identifier WOODLAND_MANSION_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "woodland_mansion");
+    public static final Identifier OCEAN_MONUMENT_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "ocean_monument");
+    public static final Identifier ANCIENT_CITY_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "ancient_city");
+    public static final Identifier TRAIL_RUINS_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "trail_ruins");
+    public static final Identifier TRIAL_CHAMBERS_NAME = Identifier.fromNamespaceAndPath(APRandomizer.MODID, "trial_chambers");
 
     public static final ResourceKey<StructureModifier> VILLAGE = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, VILLAGE_NAME);
     public static final ResourceKey<StructureModifier> PILLAGER_OUTPOST = ResourceKey.create(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, PILLAGER_OUTPOST_NAME);

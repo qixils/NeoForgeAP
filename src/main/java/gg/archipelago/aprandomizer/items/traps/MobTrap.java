@@ -43,7 +43,7 @@ public record MobTrap(EntityType<?> type, int count, int radius, boolean target,
             }
 
             if (angerTime.isPresent() && entity instanceof NeutralMob neutralMob) {
-                neutralMob.setRemainingPersistentAngerTime(angerTime.get());
+                neutralMob.setTimeToRemainAngry(angerTime.get());
                 neutralMob.setPersistentAngerTarget(null);
             }
 

@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -154,12 +154,12 @@ public class Utils {
     public static void PlaySoundToAll(SoundEvent sound) {
         server().execute(() -> {
             for (ServerPlayer player : server().getPlayerList().getPlayers()) {
-                player.playNotifySound(sound, SoundSource.MASTER, 1, 1);
+                player.playSound(sound, 1, 1);
             }
         });
     }
 
-    public static ResourceKey<Level> getStructureWorld(ResourceLocation id) {
+    public static ResourceKey<Level> getStructureWorld(Identifier id) {
 
         String structureName = getAPStructureName(id);
         //fetch what structures are where from our APMC data.
@@ -177,7 +177,7 @@ public class Utils {
         return Level.OVERWORLD;
     }
 
-    public static String getAPStructureName(ResourceLocation id) {
+    public static String getAPStructureName(Identifier id) {
         return switch (id.toString()) {
             case "aprandomizer:village" -> "Village";
             case "aprandomizer:end_city" -> "End City";

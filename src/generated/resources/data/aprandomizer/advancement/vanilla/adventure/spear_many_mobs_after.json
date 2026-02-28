@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:adventure/spear_many_mobs",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}
