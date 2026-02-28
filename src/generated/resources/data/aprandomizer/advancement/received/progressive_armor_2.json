@@ -11,10 +11,10 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Diamond:\n  Helmet\n  Chestplate\n  Leggings\n  Boots",
+    "description": "Iron:\n  Helmet\n  Chestplate\n  Leggings\n  Boots",
     "icon": {
       "count": 1,
-      "id": "minecraft:diamond_chestplate"
+      "id": "minecraft:iron_chestplate"
     },
     "title": "Progressive Armor 2"
   },

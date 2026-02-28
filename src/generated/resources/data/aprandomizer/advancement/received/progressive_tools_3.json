@@ -11,10 +11,10 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Diamond:\n  Pickaxe\n  Shovel\n  Hoe\nNetherite Ingots",
+    "description": "Iron:\n  Pickaxe\n  Shovel\n  Hoe",
     "icon": {
       "count": 1,
-      "id": "minecraft:diamond_pickaxe"
+      "id": "minecraft:iron_pickaxe"
     },
     "title": "Progressive Tools 3"
   },

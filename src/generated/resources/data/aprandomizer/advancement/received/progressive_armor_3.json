@@ -1,9 +1,9 @@
 {
-  "parent": "aprandomizer:received/progressive_weapons_2",
+  "parent": "aprandomizer:received/progressive_armor_2",
   "criteria": {
     "received": {
       "conditions": {
-        "item": "aprandomizer:progressive_recipes/weapons",
+        "item": "aprandomizer:progressive_recipes/armor",
         "tier": 3
       },
       "trigger": "aprandomizer:received_item"
@@ -11,12 +11,12 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Iron:\n  Sword\n  Axe\n Spear",
+    "description": "Diamond:\n  Helmet\n  Chestplate\n  Leggings\n  Boots",
     "icon": {
       "count": 1,
-      "id": "minecraft:iron_sword"
+      "id": "minecraft:diamond_chestplate"
     },
-    "title": "Progressive Weapons 3"
+    "title": "Progressive Armor 3"
   },
   "requirements": [
     [

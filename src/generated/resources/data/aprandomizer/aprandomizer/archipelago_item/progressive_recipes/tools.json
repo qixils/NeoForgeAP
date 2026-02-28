@@ -20,6 +20,22 @@
       "rewards": [
         {
           "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_pickaxe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_shovel"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_hoe"
+        }
+      ]
+    },
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
           "recipe": "minecraft:iron_pickaxe"
         },
         {

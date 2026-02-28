@@ -1,22 +1,22 @@
 {
-  "parent": "aprandomizer:received/progressive_tools_1",
+  "parent": "aprandomizer:received/progressive_tools_3",
   "criteria": {
     "received": {
       "conditions": {
         "item": "aprandomizer:progressive_recipes/tools",
-        "tier": 2
+        "tier": 4
       },
       "trigger": "aprandomizer:received_item"
     }
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Stone:\n  Pickaxe\n  Shovel\n  Hoe",
+    "description": "Diamond:\n  Pickaxe\n  Shovel\n  Hoe\nNetherite Ingots",
     "icon": {
       "count": 1,
-      "id": "minecraft:copper_pickaxe"
+      "id": "minecraft:diamond_pickaxe"
     },
-    "title": "Progressive Tools 2"
+    "title": "Progressive Tools 4"
   },
   "requirements": [
     [

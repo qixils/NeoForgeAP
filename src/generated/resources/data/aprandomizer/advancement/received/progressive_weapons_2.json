@@ -11,10 +11,10 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Iron:\n  Sword\n  Axe",
+    "description": "Copper:\n  Sword\n  Axe\n Spear",
     "icon": {
       "count": 1,
-      "id": "minecraft:iron_sword"
+      "id": "minecraft:copper_sword"
     },
     "title": "Progressive Weapons 2"
   },

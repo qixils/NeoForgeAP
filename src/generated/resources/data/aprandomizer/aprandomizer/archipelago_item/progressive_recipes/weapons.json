@@ -16,6 +16,18 @@
       "rewards": [
         {
           "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_sword"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_axe"
+        }
+      ]
+    },
+    {
+      "rewards": [
+        {
+          "type": "aprandomizer:recipe",
           "recipe": "minecraft:iron_sword"
         },
         {

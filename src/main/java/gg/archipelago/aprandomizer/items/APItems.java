@@ -85,7 +85,7 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_WOODLAND_MANSION = id("compass/woodland_mansion");
     public static final ResourceKey<APItem> COMPASS_ANCIENT_CITY = id("compass/ancient_city");
     public static final ResourceKey<APItem> COMPASS_TRAIL_RUINS = id("compass/trail_ruins");
-    //public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
+    public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
 
     // Traps
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
@@ -184,6 +184,9 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SWORD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_AXE)))),
                         new APTier(List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_SWORD)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_AXE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SWORD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_AXE)))),
                         new APTier(List.of(
@@ -197,6 +200,10 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SHOVEL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_HOE)))),
                         new APTier(List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_PICKAXE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_SHOVEL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_HOE)))),
+                        new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_PICKAXE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SHOVEL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HOE)))),
@@ -208,6 +215,11 @@ public class APItems {
 
         context.register(PROGRESSIVE_RECIPES_ARMOR,
                 APItem.ofTiers(List.of(
+                        new APTier(List.of(
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_HELMET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_CHESTPLATE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_LEGGINGS)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BOOTS)))),
                         new APTier(List.of(
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HELMET)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_CHESTPLATE)),
@@ -222,6 +234,8 @@ public class APItems {
         context.register(PROGRESSIVE_RECIPES_RESOURCE_CRAFTING,
                 APItem.ofTiers(List.of(
                         new APTier(List.of(
+                                new RecipeReward(Identifier.withDefaultNamespace("copper_ingot_from_nuggets")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_NUGGET)),
                                 new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_nuggets")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_NUGGET)),
                                 new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_nuggets")),
@@ -232,6 +246,8 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLOWSTONE)),
+                                new RecipeReward(Identifier.withDefaultNamespace("copper_ingot_from_copper_block")),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK)),
                                 new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_iron_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BLOCK)),
                                 new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_gold_block")),
@@ -242,8 +258,7 @@ public class APItems {
                                 new RecipeReward(Identifier.withDefaultNamespace("netherite_ingot_from_netherite_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK)))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)))))));
 
         context.register(ITEMSTACK_NETHERITE_SCRAP,
                 APItem.ofReward(
@@ -372,9 +387,9 @@ public class APItems {
                 APItem.ofReward(
                         new CompassReward(APStructureTags.TRAIL_RUINS, new RandomizedStructureLevel(APStructureModifiers.TRAIL_RUINS_NAME), Component.literal("Trail Ruins"))));
 
-       // context.register(COMPASS_TRIAL_CHAMBERS,
-        //        APItem.ofReward(
-        //                new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
+        context.register(COMPASS_TRIAL_CHAMBERS,
+                APItem.ofReward(
+                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
 
 
         context.register(TRAP_BEES,

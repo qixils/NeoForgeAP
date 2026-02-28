@@ -4,6 +4,14 @@
       "rewards": [
         {
           "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_ingot_from_nuggets"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_nugget"
+        },
+        {
+          "type": "aprandomizer:recipe",
           "recipe": "minecraft:iron_ingot_from_nuggets"
         },
         {
@@ -41,6 +49,14 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:glowstone"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_ingot_from_copper_block"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_block"
         },
         {
           "type": "aprandomizer:recipe",
@@ -85,10 +101,6 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:emerald_block"
-        },
-        {
-          "type": "aprandomizer:recipe",
-          "recipe": "minecraft:copper_block"
         }
       ]
     }
