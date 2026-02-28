@@ -5,7 +5,8 @@ NeoForge Rewrite by qixils (Lexi), coehlrich, MrRedstone54 (Red)
 Original (Forge) Implementation by KonoTyran.
 
 Todo:
-- 1.21.9 -> 1.21.11/26.1 Advancements and Items
+- Python Side Changes to implement this branch properly
+- 26.1 Advancements and Items
 - Gifting API Support
 
 ## Required Software
@@ -64,7 +65,7 @@ When you are finished with the Minecraft World, you may delete it from the list.
 
 ### Connect to the MultiServer
 
-Using Minecraft 1.21.8, connect to the server `localhost` in direct connections.
+Using Minecraft 1.21.11, connect to the server `localhost` in direct connections.
 
 Once you are in game type `/connect <AP-Address> (Port) (Password)` where `<AP-Address>` is the address of the
 Archipelago server. `(Port)` is only required if the Archipelago server is not using the default port of
