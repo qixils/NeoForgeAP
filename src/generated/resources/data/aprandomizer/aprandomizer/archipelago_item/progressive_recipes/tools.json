@@ -13,11 +13,7 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:stone_hoe"
-        }
-      ]
-    },
-    {
-      "rewards": [
+        },
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:copper_pickaxe"

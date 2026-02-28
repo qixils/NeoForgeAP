@@ -11,10 +11,10 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Copper:\n  Pickaxe\n  Shovel\n  Hoe",
+    "description": "Iron:\n  Pickaxe\n  Shovel\n  Hoe",
     "icon": {
       "count": 1,
-      "id": "minecraft:copper_pickaxe"
+      "id": "minecraft:iron_pickaxe"
     },
     "title": "Progressive Tools 2"
   },

@@ -9,11 +9,11 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:stone_axe"
-        }
-      ]
-    },
-    {
-      "rewards": [
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:stone_spear"
+        },
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:copper_sword"
@@ -21,6 +21,10 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:copper_axe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:copper_spear"
         }
       ]
     },
@@ -33,6 +37,10 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:iron_axe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:iron_spear"
         }
       ]
     },
@@ -45,6 +53,10 @@
         {
           "type": "aprandomizer:recipe",
           "recipe": "minecraft:diamond_axe"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:diamond_spear"
         }
       ]
     }

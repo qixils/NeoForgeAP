@@ -188,9 +188,9 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
 
         AdvancementHolder progressiveArmor1 = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.COPPER_CHESTPLATE,
+                        Items.IRON_CHESTPLATE,
                         Component.literal("Progressive Armor 1"),
-                        Component.literal("Copper:\n  Helmet\n  Chestplate\n  Leggings\n  Boots"),
+                        Component.literal("Iron:\n  Helmet\n  Chestplate\n  Leggings\n  Boots"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -202,9 +202,9 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
 
         AdvancementHolder progressiveArmor2 = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.IRON_CHESTPLATE,
+                        Items.DIAMOND_CHESTPLATE,
                         Component.literal("Progressive Armor 2"),
-                        Component.literal("Iron:\n  Helmet\n  Chestplate\n  Leggings\n  Boots"),
+                        Component.literal("Diamond:\n  Helmet\n  Chestplate\n  Leggings\n  Boots"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -214,22 +214,8 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_ARMOR, 2))
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_armor_2"));
 
-        AdvancementHolder progressiveArmor3 = Advancement.Builder.recipeAdvancement()
-                .display(
-                        Items.DIAMOND_CHESTPLATE,
-                        Component.literal("Progressive Armor 3"),
-                        Component.literal("Diamond:\n  Helmet\n  Chestplate\n  Leggings\n  Boots"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        false,
-                        false)
-                .parent(progressiveArmor2)
-                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_ARMOR, 3))
-                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_armor_3"));
-
         AdvancementHolder progressiveArmorAfter = Advancement.Builder.recipeAdvancement()
-                .parent(progressiveArmor3)
+                .parent(progressiveArmor2)
                 .addCriterion("auto", PlayerTrigger.TriggerInstance.tick())
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_armor_after"));
 
@@ -270,7 +256,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.STONE_PICKAXE,
                         Component.literal("Progressive Tools 1"),
-                        Component.literal("Stone:\n  Pickaxe\n  Shovel\n  Hoe"),
+                        Component.literal("Stone:\n  Pickaxe\n  Shovel\n  Hoe\nCopper:\n  Pickaxe\n  Shovel\n  Hoe"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -280,11 +266,11 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_TOOLS, 1))
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_tools_1"));
 
-        AdvancementHolder progressiveTools2 = Advancement.Builder.recipeAdvancement()
+        AdvancementHolder progressiveTools3 = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.COPPER_PICKAXE,
+                        Items.IRON_PICKAXE,
                         Component.literal("Progressive Tools 2"),
-                        Component.literal("Copper:\n  Pickaxe\n  Shovel\n  Hoe"),
+                        Component.literal("Iron:\n  Pickaxe\n  Shovel\n  Hoe"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -294,24 +280,10 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_TOOLS, 2))
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_tools_2"));
 
-        AdvancementHolder progressiveTools3 = Advancement.Builder.recipeAdvancement()
-                .display(
-                        Items.IRON_PICKAXE,
-                        Component.literal("Progressive Tools 3"),
-                        Component.literal("Iron:\n  Pickaxe\n  Shovel\n  Hoe"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        false,
-                        false)
-                .parent(progressiveTools2)
-                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_TOOLS, 3))
-                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_tools_3"));
-
         AdvancementHolder progressiveTools4 = Advancement.Builder.recipeAdvancement()
                 .display(
                         Items.DIAMOND_PICKAXE,
-                        Component.literal("Progressive Tools 4"),
+                        Component.literal("Progressive Tools 3"),
                         Component.literal("Diamond:\n  Pickaxe\n  Shovel\n  Hoe\nNetherite Ingots"),
                         null,
                         AdvancementType.TASK,
@@ -319,8 +291,8 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                         false,
                         false)
                 .parent(progressiveTools3)
-                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_TOOLS, 4))
-                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_tools_4"));
+                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_TOOLS, 3))
+                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_tools_3"));
 
         AdvancementHolder progressiveToolsAfter = Advancement.Builder.recipeAdvancement()
                 .parent(progressiveTools4)
@@ -331,7 +303,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.STONE_SWORD,
                         Component.literal("Progressive Weapons 1"),
-                        Component.literal("Stone:\n  Sword\n  Axe\n  Spear"),
+                        Component.literal("Stone:\n  Sword\n  Axe\n  Spear\nCopper:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -343,9 +315,9 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
 
         AdvancementHolder progressiveWeapons2 = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.COPPER_SWORD,
+                        Items.IRON_SWORD,
                         Component.literal("Progressive Weapons 2"),
-                        Component.literal("Copper:\n  Sword\n  Axe\n  Spear"),
+                        Component.literal("Iron:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -357,9 +329,9 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
 
         AdvancementHolder progressiveWeapons3 = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.IRON_SWORD,
+                        Items.DIAMOND_SWORD,
                         Component.literal("Progressive Weapons 3"),
-                        Component.literal("Iron:\n  Sword\n  Axe\n  Spear"),
+                        Component.literal("Diamond:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -369,22 +341,8 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_WEAPONS, 3))
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_weapons_3"));
 
-        AdvancementHolder progressiveWeapons4 = Advancement.Builder.recipeAdvancement()
-                .display(
-                        Items.DIAMOND_SWORD,
-                        Component.literal("Progressive Weapons 4"),
-                        Component.literal("Diamond:\n  Sword\n  Axe\n  Spear"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        false,
-                        false)
-                .parent(progressiveWeapons3)
-                .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.PROGRESSIVE_RECIPES_WEAPONS, 4))
-                .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_weapons_4"));
-
         AdvancementHolder progressiveWeaponsAfter = Advancement.Builder.recipeAdvancement()
-                .parent(progressiveWeapons4)
+                .parent(progressiveWeapons3)
                 .addCriterion("auto", PlayerTrigger.TriggerInstance.tick())
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_weapons_after"));
 

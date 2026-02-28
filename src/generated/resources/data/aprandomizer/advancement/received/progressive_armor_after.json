@@ -1,5 +1,5 @@
 {
-  "parent": "aprandomizer:received/progressive_armor_3",
+  "parent": "aprandomizer:received/progressive_armor_2",
   "criteria": {
     "auto": {
       "trigger": "minecraft:tick"

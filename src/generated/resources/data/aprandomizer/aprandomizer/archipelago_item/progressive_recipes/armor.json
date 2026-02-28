@@ -4,26 +4,6 @@
       "rewards": [
         {
           "type": "aprandomizer:recipe",
-          "recipe": "minecraft:copper_helmet"
-        },
-        {
-          "type": "aprandomizer:recipe",
-          "recipe": "minecraft:copper_chestplate"
-        },
-        {
-          "type": "aprandomizer:recipe",
-          "recipe": "minecraft:copper_leggings"
-        },
-        {
-          "type": "aprandomizer:recipe",
-          "recipe": "minecraft:copper_boots"
-        }
-      ]
-    },
-    {
-      "rewards": [
-        {
-          "type": "aprandomizer:recipe",
           "recipe": "minecraft:iron_helmet"
         },
         {

@@ -1,5 +1,5 @@
 {
-  "parent": "aprandomizer:received/progressive_tools_4",
+  "parent": "aprandomizer:received/progressive_tools_3",
   "criteria": {
     "auto": {
       "trigger": "minecraft:tick"
