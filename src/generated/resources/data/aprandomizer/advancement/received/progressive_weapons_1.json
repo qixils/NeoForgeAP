@@ -10,7 +10,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Stone:\n  Sword\n  Axe\n Spear",
+    "description": "Stone:\n  Sword\n  Axe\n  Spear",
     "icon": {
       "count": 1,
       "id": "minecraft:stone_sword"

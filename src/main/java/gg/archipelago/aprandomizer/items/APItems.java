@@ -257,6 +257,8 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_BLOCK)),
                                 new RecipeReward(Identifier.withDefaultNamespace("netherite_ingot_from_netherite_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RESIN_CLUMP)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RESIN_BLOCK)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)))))));
 

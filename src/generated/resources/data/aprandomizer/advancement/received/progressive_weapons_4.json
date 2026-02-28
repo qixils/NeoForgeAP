@@ -11,7 +11,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Diamond:\n  Sword\n  Axe\n Spear",
+    "description": "Diamond:\n  Sword\n  Axe\n  Spear",
     "icon": {
       "count": 1,
       "id": "minecraft:diamond_sword"

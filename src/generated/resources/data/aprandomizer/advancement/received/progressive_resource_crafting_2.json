@@ -11,7 +11,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Anvil\n  Redstone Blocks <-> Dust\n  Glowstone Dust -> Blocks\n  Iron Ingots <-> Blocks\n  Gold Ingots <-> Blocks\n  Diamond Ingots <-> Blocks\n  Nethrite Ingots <-> Blocks\n  Emeralds <-> Blocks\n  Copper Ingots <-> Blocks\n Resin Clumps <-> Blocks",
+    "description": "Anvil\n  Redstone Blocks <-> Dust\n  Glowstone Dust -> Blocks\n  Iron Ingots <-> Blocks\n  Gold Ingots <-> Blocks\n  Diamond Ingots <-> Blocks\n  Nethrite Ingots <-> Blocks\n  Emeralds <-> Blocks\n  Copper Ingots <-> Blocks\n  Resin Clumps <-> Blocks",
     "icon": {
       "count": 1,
       "id": "minecraft:anvil"

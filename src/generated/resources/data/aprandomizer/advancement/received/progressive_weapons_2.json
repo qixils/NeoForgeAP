@@ -11,7 +11,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "description": "Copper:\n  Sword\n  Axe\n Spear",
+    "description": "Copper:\n  Sword\n  Axe\n  Spear",
     "icon": {
       "count": 1,
       "id": "minecraft:copper_sword"

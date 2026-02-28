@@ -96,6 +96,14 @@
         },
         {
           "type": "aprandomizer:recipe",
+          "recipe": "minecraft:resin_clump"
+        },
+        {
+          "type": "aprandomizer:recipe",
+          "recipe": "minecraft:resin_block"
+        },
+        {
+          "type": "aprandomizer:recipe",
           "recipe": "minecraft:emerald"
         },
         {

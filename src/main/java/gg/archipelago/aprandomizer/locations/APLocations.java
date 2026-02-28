@@ -148,6 +148,8 @@ public class APLocations {
     //1.21.6 "Chase The Skies" advancements
     public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER = id("vanilla/husbandry/place_dried_ghast_in_water");
     public static final ResourceKey<APLocation> VANILLA_ADVENTURE_HEART_TRANSPLANTER = id("vanilla/adventure/heart_transplanter");
+    //1.21.11 "Mounts of Mayhem" advancements
+    public static final ResourceKey<APLocation> VANILLA_ADVENTURE_SPEAR_MANY_MOBS = id("vanilla/adventure/spear_many_mobs");
     private static ResourceKey<APLocation> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_LOCATION, Identifier.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
@@ -292,6 +294,8 @@ public class APLocations {
         context.register(VANILLA_ADVENTURE_WHO_NEEDS_ROCKETS, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/who_needs_rockets")));
         //1.21.6 advancements
         context.register(VANILLA_HUSBANDRY_PLACE_DRIED_GHAST_IN_WATER, new AdvancementLocation(Identifier.withDefaultNamespace("husbandry/place_dried_ghast_in_water")));
-        context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/heart_transporter")));
+        context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/heart_transplanter")));
+        //1.21.11 advancements
+        context.register(VANILLA_ADVENTURE_SPEAR_MANY_MOBS, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/spear_many_mobs")));
     }
 }

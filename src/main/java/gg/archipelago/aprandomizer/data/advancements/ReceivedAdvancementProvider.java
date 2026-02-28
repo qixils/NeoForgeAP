@@ -237,7 +237,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.BLAST_FURNACE,
                         Component.literal("Progressive Resource Crafting 1"),
-                        Component.literal("Iron Nuggets <-> Bars\n  Gold Nuggets <-> Bars\n  Furnace\n  Blast Furnace"),
+                        Component.literal("Iron Nuggets <-> Bars\n  Gold Nuggets <-> Bars\n  Copper Nuggets <-> Bars\n  Furnace\n  Blast Furnace"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -251,7 +251,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.ANVIL,
                         Component.literal("Progressive Resource Crafting 2"),
-                        Component.literal("Anvil\n  Redstone Blocks <-> Dust\n  Glowstone Dust -> Blocks\n  Iron Ingots <-> Blocks\n  Gold Ingots <-> Blocks\n  Diamond Ingots <-> Blocks\n  Nethrite Ingots <-> Blocks\n  Emeralds <-> Blocks\n  Copper Ingots <-> Blocks\n Resin Clumps <-> Blocks"),
+                        Component.literal("Anvil\n  Redstone Blocks <-> Dust\n  Glowstone Dust -> Blocks\n  Iron Ingots <-> Blocks\n  Gold Ingots <-> Blocks\n  Diamond Ingots <-> Blocks\n  Nethrite Ingots <-> Blocks\n  Emeralds <-> Blocks\n  Copper Ingots <-> Blocks\n  Resin Clumps <-> Blocks"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -284,7 +284,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.COPPER_PICKAXE,
                         Component.literal("Progressive Tools 2"),
-                        Component.literal("Stone:\n  Pickaxe\n  Shovel\n  Hoe"),
+                        Component.literal("Copper:\n  Pickaxe\n  Shovel\n  Hoe"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -331,7 +331,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.STONE_SWORD,
                         Component.literal("Progressive Weapons 1"),
-                        Component.literal("Stone:\n  Sword\n  Axe\n Spear"),
+                        Component.literal("Stone:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -345,7 +345,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.COPPER_SWORD,
                         Component.literal("Progressive Weapons 2"),
-                        Component.literal("Copper:\n  Sword\n  Axe\n Spear"),
+                        Component.literal("Copper:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -359,7 +359,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.IRON_SWORD,
                         Component.literal("Progressive Weapons 3"),
-                        Component.literal("Iron:\n  Sword\n  Axe\n Spear"),
+                        Component.literal("Iron:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -373,7 +373,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .display(
                         Items.DIAMOND_SWORD,
                         Component.literal("Progressive Weapons 4"),
-                        Component.literal("Diamond:\n  Sword\n  Axe\n Spear"),
+                        Component.literal("Diamond:\n  Sword\n  Axe\n  Spear"),
                         null,
                         AdvancementType.TASK,
                         true,
