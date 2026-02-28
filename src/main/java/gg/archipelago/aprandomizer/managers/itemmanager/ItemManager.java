@@ -38,80 +38,71 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class ItemManager {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final long DRAGON_EGG_SHARD = 45043L;
+    public static final long DRAGON_EGG_SHARD = 43L;
 
     private static final Long2ObjectMap<ResourceKey<APItem>> DEFAULT_ITEMS = Util.make(new Long2ObjectOpenHashMap<>(), map -> {
-        map.put(45000L, APItems.GROUP_RECIPES_ARCHERY);
-        map.put(45001L, APItems.PROGRESSIVE_RECIPES_RESOURCE_CRAFTING);
-        map.put(45003L, APItems.GROUP_RECIPES_BREWING);
-        map.put(45004L, APItems.GROUP_RECIPES_ENCHANTING);
-        map.put(45005L, APItems.GROUP_RECIPES_BUCKET);
-        map.put(45006L, APItems.GROUP_RECIPES_FLINT_AND_STEEL);
-        map.put(45007L, APItems.GROUP_RECIPES_BEDS);
-        map.put(45008L, APItems.GROUP_RECIPES_BOTTLES);
-        map.put(45009L, APItems.GROUP_RECIPES_SHIELD);
-        map.put(45010L, APItems.GROUP_RECIPES_FISHING);
-        map.put(45011L, APItems.GROUP_RECIPES_CAMPFIRES);
-
-        map.put(45012L, APItems.PROGRESSIVE_RECIPES_WEAPONS);
-        map.put(45013L, APItems.PROGRESSIVE_RECIPES_TOOLS);
-        map.put(45014L, APItems.PROGRESSIVE_RECIPES_ARMOR);
-
-        map.put(45015L, APItems.ITEMSTACK_NETHERITE_SCRAP);
-        map.put(45016L, APItems.ITEMSTACK_EIGHT_EMERALD);
-        map.put(45017L, APItems.ITEMSTACK_FOUR_EMERALD);
-
-        map.put(45018L, APItems.ITEMSTACK_ENCHANTMENT_CHANNELING_ONE);
-        map.put(45019L, APItems.ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE);
-        map.put(45020L, APItems.ITEMSTACK_ENCHANTMENT_SHARPNESS_THREE);
-        map.put(45021L, APItems.ITEMSTACK_ENCHANTMENT_PIERCING_FOUR);
-        map.put(45022L, APItems.ITEMSTACK_ENCHANTMENT_MOB_LOOTING_THREE);
-        map.put(45023L, APItems.ITEMSTACK_ENCHANTMENT_INFINITY_ARROWS_ONE);
-
-        map.put(45024L, APItems.ITEMSTACK_DIAMOND_ORE);
-        map.put(45025L, APItems.ITEMSTACK_IRON_ORE);
-
-        map.put(45026L, APItems.EXPERIENCE_FIVE_HUNDRED);
-        map.put(45027L, APItems.EXPERIENCE_ONE_HUNDRED);
-        map.put(45028L, APItems.EXPERIENCE_FIFTY);
-
-        map.put(45029L, APItems.ITEMSTACK_ENDER_PEARL);
-        map.put(45030L, APItems.ITEMSTACK_LAPIS_LAZULI);
-        map.put(45031L, APItems.ITEMSTACK_COOKED_PORKCHOP);
-        map.put(45032L, APItems.ITEMSTACK_GOLD_ORE);
-        map.put(45033L, APItems.ITEMSTACK_ROTTEN_FLESH);
-        map.put(45034L, APItems.ITEMSTACK_THE_ARROW);
-        map.put(45035L, APItems.ITEMSTACK_THIRTY_TWO_ARROW);
-        map.put(45036L, APItems.GROUP_RECIPES_SADDLE);
-
-        map.put(45037L, APItems.COMPASS_VILLAGE);
-        map.put(45038L, APItems.COMPASS_PILLAGER_OUTPOST);
-        map.put(45039L, APItems.COMPASS_FORTRESS);
-        map.put(45040L, APItems.COMPASS_BASTION_REMNANT);
-        map.put(45041L, APItems.COMPASS_END_CITY);
-
-        map.put(45042L, APItems.ITEMSTACK_SHULKER_BOX);
-
-        map.put(45044L, APItems.GROUP_RECIPES_SPYGLASS);
-        map.put(45045L, APItems.GROUP_RECIPES_LEAD);
-        map.put(45046L, APItems.GROUP_RECIPES_BRUSH);
-
-        map.put(45047L, APItems.COMPASS_OCEAN_MONUMENT);
-        map.put(45048L, APItems.COMPASS_WOODLAND_MANSION);
-        map.put(45049L, APItems.COMPASS_ANCIENT_CITY);
-        map.put(45050L, APItems.COMPASS_TRAIL_RUINS);
-        //map.put(45051L, APItems.COMPASS_TRIAL_CHAMBERS);
-
-        map.put(45100L, APItems.TRAP_BEES);
+        map.put(1L, APItems.GROUP_RECIPES_ARCHERY);
+        map.put(2L, APItems.PROGRESSIVE_RECIPES_RESOURCE_CRAFTING);
+        map.put(3L, APItems.GROUP_RECIPES_BREWING);
+        map.put(4L, APItems.GROUP_RECIPES_ENCHANTING);
+        map.put(5L, APItems.GROUP_RECIPES_BUCKET);
+        map.put(6L, APItems.GROUP_RECIPES_FLINT_AND_STEEL);
+        map.put(7L, APItems.GROUP_RECIPES_BEDS);
+        map.put(8L, APItems.GROUP_RECIPES_BOTTLES);
+        map.put(9L, APItems.GROUP_RECIPES_SHIELD);
+        map.put(10L, APItems.GROUP_RECIPES_FISHING);
+        map.put(11L, APItems.GROUP_RECIPES_CAMPFIRES);
+        map.put(12L, APItems.PROGRESSIVE_RECIPES_WEAPONS);
+        map.put(13L, APItems.PROGRESSIVE_RECIPES_TOOLS);
+        map.put(14L, APItems.PROGRESSIVE_RECIPES_ARMOR);
+        map.put(15L, APItems.ITEMSTACK_NETHERITE_SCRAP);
+        map.put(16L, APItems.ITEMSTACK_EIGHT_EMERALD);
+        map.put(17L, APItems.ITEMSTACK_FOUR_EMERALD);
+        map.put(18L, APItems.ITEMSTACK_ENCHANTMENT_CHANNELING_ONE);
+        map.put(19L, APItems.ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE);
+        map.put(20L, APItems.ITEMSTACK_ENCHANTMENT_SHARPNESS_THREE);
+        map.put(21L, APItems.ITEMSTACK_ENCHANTMENT_PIERCING_FOUR);
+        map.put(22L, APItems.ITEMSTACK_ENCHANTMENT_MOB_LOOTING_THREE);
+        map.put(23L, APItems.ITEMSTACK_ENCHANTMENT_INFINITY_ARROWS_ONE);
+        map.put(24L, APItems.ITEMSTACK_DIAMOND_ORE);
+        map.put(25L, APItems.ITEMSTACK_IRON_ORE);
+        map.put(26L, APItems.EXPERIENCE_FIVE_HUNDRED);
+        map.put(27L, APItems.EXPERIENCE_ONE_HUNDRED);
+        map.put(28L, APItems.EXPERIENCE_FIFTY);
+        map.put(29L, APItems.ITEMSTACK_ENDER_PEARL);
+        map.put(30L, APItems.ITEMSTACK_LAPIS_LAZULI);
+        map.put(31L, APItems.ITEMSTACK_COOKED_PORKCHOP);
+        map.put(32L, APItems.ITEMSTACK_GOLD_ORE);
+        map.put(33L, APItems.ITEMSTACK_ROTTEN_FLESH);
+        map.put(34L, APItems.ITEMSTACK_THE_ARROW);
+        map.put(35L, APItems.ITEMSTACK_THIRTY_TWO_ARROW);
+        map.put(36L, APItems.GROUP_RECIPES_SADDLE);
+        map.put(37L, APItems.COMPASS_VILLAGE);
+        map.put(38L, APItems.COMPASS_PILLAGER_OUTPOST);
+        map.put(39L, APItems.COMPASS_FORTRESS);
+        map.put(40L, APItems.COMPASS_BASTION_REMNANT);
+        map.put(41L, APItems.COMPASS_END_CITY);
+        map.put(42L, APItems.ITEMSTACK_SHULKER_BOX);
+        //Dragon Egg Shard (If Applicable)
+        map.put(44L, APItems.GROUP_RECIPES_SPYGLASS);
+        map.put(45L, APItems.GROUP_RECIPES_LEAD);
+        map.put(46L, APItems.TRAP_BEES);
+        map.put(47L, APItems.GROUP_RECIPES_BRUSH);
+        map.put(48L, APItems.COMPASS_OCEAN_MONUMENT);
+        map.put(49L, APItems.COMPASS_WOODLAND_MANSION);
+        map.put(50L, APItems.COMPASS_ANCIENT_CITY);
+        map.put(51L, APItems.COMPASS_TRAIL_RUINS);
+        //map.put(52L, APItems.COMPASS_TRIAL_CHAMBERS);
     });
 
-//    long index = 45100L;
+//    long index = 51L;
 //    private final HashMap<Long, Callable<Trap>> trapData = new HashMap<>() {{
 //        put(index++, BeeTrap::new);
 //        put(index++, CreeperTrap::new);
@@ -171,7 +162,7 @@ public class ItemManager {
 
     public void giveItem(APTier tier, ResourceKey<APItem> key, ServerPlayer player, int itemIndex, int tierIndex) {
         if (APRandomizer.isJailPlayers()) {
-            //dont send items to players if game has not started.
+            //don't send items to players if game has not started.
             return;
         }
 
@@ -332,7 +323,17 @@ public class ItemManager {
         player.containerMenu.broadcastChanges();
     }
 
-    //TODO: Test a function to reduce compass clutter
+    // remove all compasses but one in player inventory
+    public static void cleanCompasses(ServerPlayer player) {
+        AtomicInteger cCount = new AtomicInteger();
+        player.getInventory().forEach(item -> {
+            if (!item.has(DataComponents.CUSTOM_DATA)) return;
+            cCount.getAndIncrement();
+            if (cCount.get() >1){
+            player.getInventory().removeItem(item);
+            }
+        });
+    }
 
     // refresh all compasses in player inventory
     public static void refreshCompasses(ServerPlayer player) {

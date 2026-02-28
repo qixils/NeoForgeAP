@@ -12,6 +12,7 @@ public class OnPlayerChangedDimension {
     @SubscribeEvent
     public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if(!(event.getEntity() instanceof ServerPlayer player)) return;
+        ItemManager.cleanCompasses(player);
         ItemManager.refreshCompasses(player);
     }
 }

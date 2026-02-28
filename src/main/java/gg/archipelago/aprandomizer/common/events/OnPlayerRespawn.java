@@ -15,6 +15,7 @@ public class OnPlayerRespawn {
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if(!(event.getEntity() instanceof ServerPlayer player)) return;
+        ItemManager.cleanCompasses(player);
         ItemManager.refreshCompasses(player);
 
         if (APRandomizer.isJailPlayers()) {
