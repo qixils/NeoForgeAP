@@ -11,6 +11,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -22,7 +23,7 @@ public class FakeWither implements Trap {
     public FakeWither(MinecraftServer server) {
         NeoForge.EVENT_BUS.register(this);
 
-        witherBar = server.getCustomBossEvents().create(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
+        witherBar = server.getCustomBossEvents().create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
         witherBar.setColor(BossEvent.BossBarColor.PURPLE);
         witherBar.setDarkenScreen(true);
         witherBar.setMax(300);
@@ -45,8 +46,8 @@ public class FakeWither implements Trap {
     public void onTick(ServerTickEvent event) {
         if (!witherBar.isVisible())
             return;
-        int value = witherBar.getValue();
-        if (value >= witherBar.getMax()) {
+        int value = witherBar.value();
+        if (value >= witherBar.max()) {
             witherBar.setValue(0);
             witherBar.setVisible(false);
             NeoForge.EVENT_BUS.unregister(this);

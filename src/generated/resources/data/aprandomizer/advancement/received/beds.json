@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "",
     "icon": {
-      "count": 1,
       "id": "minecraft:pink_bed"
     },
     "title": "Beds"

@@ -31,7 +31,6 @@
     "description": "Reach 1km by minecart in your statistics.",
     "frame": "goal",
     "icon": {
-      "count": 1,
       "id": "minecraft:minecart"
     },
     "title": "On A Rail"

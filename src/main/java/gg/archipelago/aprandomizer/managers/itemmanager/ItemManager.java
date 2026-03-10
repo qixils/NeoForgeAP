@@ -264,7 +264,6 @@ public class ItemManager {
     }
 
     public void grantAllInitialRecipes(ServerPlayer player) {
-        if (player.level().getServer() == null) return;
         Set<ResourceKey<Recipe<?>>> lockedRecipes = getLockedRecipes(player.registryAccess());
         Set<RecipeHolder<?>> recipes = player.level().getServer().getRecipeManager().getRecipes().stream().filter(recipe -> !lockedRecipes.contains(recipe.id())).collect(Collectors.toSet());
         player.awardRecipes(recipes);
@@ -291,7 +290,7 @@ public class ItemManager {
             if (structurePos != null) {
                 lore.addFirst("Location X: " + structurePos.getX() + ", Z: " + structurePos.getZ());
             } else {
-                player.displayClientMessage(Component.empty()
+                player.sendSystemMessage(Component.empty()
                         .append("Could not find a nearby ")
                         .append(compassReward.name()), false);
                 displayName = Component.empty()

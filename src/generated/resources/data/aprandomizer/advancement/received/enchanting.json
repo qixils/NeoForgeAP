@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Enchanting Table\nBookshelf",
     "icon": {
-      "count": 1,
       "id": "minecraft:enchanting_table"
     },
     "title": "Enchanting"

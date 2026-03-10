@@ -18,10 +18,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.List;
 import java.util.Optional;
@@ -101,190 +102,189 @@ public class APItems {
 
         context.register(GROUP_RECIPES_ARCHERY,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOW)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ARROW)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CROSSBOW)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BOW))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.ARROW))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.CROSSBOW))))));
 
         context.register(GROUP_RECIPES_BREWING,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAZE_POWDER)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BREWING_STAND)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLAZE_POWDER))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BREWING_STAND))))));
 
         context.register(GROUP_RECIPES_ENCHANTING,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ENCHANTING_TABLE)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BOOKSHELF)),
-                        new ItemReward(new ItemStack(Items.LAPIS_LAZULI, 4)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.ENCHANTING_TABLE))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BOOKSHELF))),
+                        new ItemReward(new ItemStackTemplate(Items.LAPIS_LAZULI, 4)))));
 
         context.register(GROUP_RECIPES_BUCKET,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BUCKET)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BUCKET))))));
 
         context.register(GROUP_RECIPES_FLINT_AND_STEEL,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FLINT_AND_STEEL)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.FLINT_AND_STEEL))))));
 
         context.register(GROUP_RECIPES_BEDS,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLACK_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLUE_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BROWN_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CYAN_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GRAY_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GREEN_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIGHT_BLUE_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIGHT_GRAY_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LIME_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.MAGENTA_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ORANGE_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.PINK_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.PURPLE_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RED_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.WHITE_BED)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.YELLOW_BED)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLACK_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLUE_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BROWN_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.CYAN_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GRAY_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GREEN_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIGHT_BLUE_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIGHT_GRAY_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIME_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.MAGENTA_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.ORANGE_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.PINK_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.PURPLE_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.RED_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.WHITE_BED))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.YELLOW_BED))))));
 
         context.register(GROUP_RECIPES_BOTTLES,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLASS_BOTTLE)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GLASS_BOTTLE))))));
 
         context.register(GROUP_RECIPES_SHIELD,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SHIELD)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SHIELD))))));
 
         context.register(GROUP_RECIPES_FISHING,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FISHING_ROD)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CARROT_ON_A_STICK)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.WARPED_FUNGUS_ON_A_STICK)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.FISHING_ROD))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.CARROT_ON_A_STICK))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.WARPED_FUNGUS_ON_A_STICK))))));
 
         context.register(GROUP_RECIPES_CAMPFIRES,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.CAMPFIRE)),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SOUL_CAMPFIRE)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.CAMPFIRE))),
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SOUL_CAMPFIRE))))));
 
         context.register(GROUP_RECIPES_SPYGLASS,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SPYGLASS)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SPYGLASS))))));
 
         context.register(GROUP_RECIPES_LEAD,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.LEAD)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LEAD))))));
 
         context.register(GROUP_RECIPES_BRUSH,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BRUSH)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BRUSH))))));
 
         context.register(GROUP_RECIPES_SADDLE,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.SADDLE)))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SADDLE))))));
 
         context.register(PROGRESSIVE_RECIPES_WEAPONS,
                 APItem.ofTiers(List.of(
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_AXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SPEAR)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_AXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_SPEAR)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_SWORD))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_AXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_SPEAR))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_SWORD))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_AXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_SPEAR))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_AXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SPEAR)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_SWORD))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_AXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_SPEAR))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SWORD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_AXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SPEAR)))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_SWORD))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_AXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_SPEAR))))))));
 
         context.register(PROGRESSIVE_RECIPES_TOOLS,
                 APItem.ofTiers(List.of(
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_PICKAXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.STONE_HOE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_PICKAXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_HOE)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_PICKAXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_SHOVEL))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.STONE_HOE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_PICKAXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_SHOVEL))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_HOE))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_PICKAXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HOE)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_PICKAXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_SHOVEL))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_HOE))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_PICKAXE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_SHOVEL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HOE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_INGOT)))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_PICKAXE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_SHOVEL))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_HOE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.NETHERITE_INGOT))))))));
 
         context.register(PROGRESSIVE_RECIPES_ARMOR,
                 APItem.ofTiers(List.of(
                         /*new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_HELMET)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_CHESTPLATE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_LEGGINGS)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BOOTS))
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_HELMET))
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_CHESTPLATE))
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_LEGGINGS))
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_BOOTS)))),*/
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_HELMET))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_CHESTPLATE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_LEGGINGS))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_BOOTS))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_HELMET))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_CHESTPLATE)))
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_LEGGINGS)))
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_BOOTS))))),*/
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_HELMET)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_CHESTPLATE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_LEGGINGS)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BOOTS)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_HELMET))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_CHESTPLATE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_LEGGINGS))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_BOOTS))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_HELMET)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_CHESTPLATE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_LEGGINGS)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BOOTS)))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_HELMET))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_CHESTPLATE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_LEGGINGS))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_BOOTS))))))));
 
         context.register(PROGRESSIVE_RECIPES_RESOURCE_CRAFTING,
                 APItem.ofTiers(List.of(
                         new APTier(List.of(
                                 new RecipeReward(Identifier.withDefaultNamespace("copper_ingot_from_nuggets")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_NUGGET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_NUGGET))),
                                 new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_nuggets")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_NUGGET)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_NUGGET))),
                                 new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_nuggets")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_NUGGET)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.FURNACE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.BLAST_FURNACE)))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_NUGGET))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.FURNACE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLAST_FURNACE))))),
                         new APTier(List.of(
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.REDSTONE_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GLOWSTONE)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.REDSTONE))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.REDSTONE_BLOCK))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GLOWSTONE))),
                                 new RecipeReward(Identifier.withDefaultNamespace("copper_ingot_from_copper_block")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.COPPER_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_BLOCK))),
                                 new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_iron_block")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.IRON_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_BLOCK))),
                                 new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_gold_block")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.GOLD_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.DIAMOND_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.NETHERITE_BLOCK)),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GOLD_BLOCK))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.DIAMOND_BLOCK))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.NETHERITE_BLOCK))),
                                 new RecipeReward(Identifier.withDefaultNamespace("netherite_ingot_from_netherite_block")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.ANVIL)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RESIN_CLUMP)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.RESIN_BLOCK)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD)),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(Items.EMERALD_BLOCK)))))));
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.ANVIL))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.RESIN_CLUMP))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.RESIN_BLOCK))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.EMERALD))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.EMERALD_BLOCK))))))));
 
         context.register(ITEMSTACK_NETHERITE_SCRAP,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.NETHERITE_SCRAP, 8))));
+                        new ItemReward(new ItemStackTemplate(Items.NETHERITE_SCRAP, 8))));
 
         context.register(ITEMSTACK_EIGHT_EMERALD,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.EMERALD, 8))));
+                        new ItemReward(new ItemStackTemplate(Items.EMERALD, 8))));
 
         context.register(ITEMSTACK_FOUR_EMERALD,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.EMERALD, 4))));
+                        new ItemReward(new ItemStackTemplate(Items.EMERALD, 4))));
 
         context.register(ITEMSTACK_ENCHANTMENT_CHANNELING_ONE,
-                APItem.ofReward(
-                        new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.CHANNELING), 1))));
+                APItem.ofReward(new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.CHANNELING), 1))));
 
-        context.register(ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE,
+       context.register(ITEMSTACK_ENCHANTMENT_SILK_TOUCH_ONE,
                 APItem.ofReward(
                         new ItemReward(enchantment(enchantments.getOrThrow(Enchantments.SILK_TOUCH), 1))));
 
@@ -306,46 +306,46 @@ public class APItems {
 
         context.register(ITEMSTACK_DIAMOND_ORE,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.DIAMOND_ORE, 4))));
+                        new ItemReward(new ItemStackTemplate(Items.DIAMOND_ORE, 4))));
 
         context.register(ITEMSTACK_IRON_ORE,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.IRON_ORE, 16))));
+                        new ItemReward(new ItemStackTemplate(Items.IRON_ORE, 16))));
 
         context.register(ITEMSTACK_ENDER_PEARL,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.ENDER_PEARL, 3))));
+                        new ItemReward(new ItemStackTemplate(Items.ENDER_PEARL, 3))));
 
         context.register(ITEMSTACK_LAPIS_LAZULI,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.LAPIS_LAZULI, 4))));
+                        new ItemReward(new ItemStackTemplate(Items.LAPIS_LAZULI, 4))));
 
         context.register(ITEMSTACK_COOKED_PORKCHOP,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.COOKED_PORKCHOP, 16))));
+                        new ItemReward(new ItemStackTemplate(Items.COOKED_PORKCHOP, 16))));
 
         context.register(ITEMSTACK_GOLD_ORE,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.GOLD_ORE, 8))));
+                        new ItemReward(new ItemStackTemplate(Items.GOLD_ORE, 8))));
 
         context.register(ITEMSTACK_ROTTEN_FLESH,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.ROTTEN_FLESH, 8))));
+                        new ItemReward(new ItemStackTemplate(Items.ROTTEN_FLESH, 8))));
 
         context.register(ITEMSTACK_THE_ARROW,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(BuiltInRegistries.ITEM.wrapAsHolder(Items.ARROW), 1,
+                        new ItemReward(new ItemStackTemplate(BuiltInRegistries.ITEM.wrapAsHolder(Items.ARROW), 1,
                                 DataComponentPatch.builder()
                                         .set(DataComponents.ITEM_NAME, Component.literal("The Arrow"))
                                         .build()))));
 
         context.register(ITEMSTACK_THIRTY_TWO_ARROW,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.ARROW, 32))));
+                        new ItemReward(new ItemStackTemplate(Items.ARROW, 32))));
 
         context.register(ITEMSTACK_SHULKER_BOX,
                 APItem.ofReward(
-                        new ItemReward(new ItemStack(Items.SHULKER_BOX, 1))));
+                        new ItemReward(new ItemStackTemplate(Items.SHULKER_BOX, 1))));
 
         context.register(EXPERIENCE_FIVE_HUNDRED,
                 APItem.ofReward(
@@ -409,9 +409,12 @@ public class APItems {
                         new DragonEggShardReward()));
     }
 
-    private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {
-        ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
-        stack.enchant(enchantment, level);
-        return stack;
+    private static ItemStackTemplate enchantment(Holder<Enchantment> enchantment, int level) {
+        var mutable = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        mutable.set(enchantment, level);
+        return new ItemStackTemplate(Items.ENCHANTED_BOOK, 1,
+                DataComponentPatch.builder()
+                        .set(DataComponents.STORED_ENCHANTMENTS, mutable.toImmutable())
+                        .build());
     }
 }

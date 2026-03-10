@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Brewing Stand\nBlaze Powder",
     "icon": {
-      "count": 1,
       "id": "minecraft:brewing_stand"
     },
     "title": "Brewing"

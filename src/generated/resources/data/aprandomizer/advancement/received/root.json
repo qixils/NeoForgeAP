@@ -9,7 +9,6 @@
     "background": "minecraft:block/basalt_side",
     "description": "This tab will track items that you have received from Archipelago",
     "icon": {
-      "count": 1,
       "id": "minecraft:structure_block"
     },
     "show_toast": false,

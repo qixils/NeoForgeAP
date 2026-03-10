@@ -5,7 +5,6 @@
       "components": {
         "minecraft:item_name": "The Arrow"
       },
-      "count": 1,
       "id": "minecraft:arrow"
     }
   }

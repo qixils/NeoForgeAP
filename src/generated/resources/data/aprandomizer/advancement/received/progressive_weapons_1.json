@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Stone:\n  Sword\n  Axe\n  Spear\nCopper:\n  Sword\n  Axe\n  Spear",
     "icon": {
-      "count": 1,
       "id": "minecraft:stone_sword"
     },
     "title": "Progressive Weapons 1"

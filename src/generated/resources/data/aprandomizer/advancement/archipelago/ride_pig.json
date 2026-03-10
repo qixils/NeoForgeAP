@@ -32,7 +32,6 @@
     "description": "Fly a pig off a cliff of at least 5 blocks",
     "frame": "challenge",
     "icon": {
-      "count": 1,
       "id": "minecraft:saddle"
     },
     "title": "When Pigs Fly"

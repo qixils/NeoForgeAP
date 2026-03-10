@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Stone:\n  Pickaxe\n  Shovel\n  Hoe\nCopper:\n  Pickaxe\n  Shovel\n  Hoe",
     "icon": {
-      "count": 1,
       "id": "minecraft:stone_pickaxe"
     },
     "title": "Progressive Tools 1"

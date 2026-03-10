@@ -9,7 +9,6 @@
     "background": "minecraft:gui/advancements/backgrounds/end",
     "description": "Welcome to the AP Randomizer",
     "icon": {
-      "count": 1,
       "id": "minecraft:ender_pearl"
     },
     "show_toast": false,

@@ -13,7 +13,6 @@
     "announce_to_chat": false,
     "description": "Iron:\n  Pickaxe\n  Shovel\n  Hoe",
     "icon": {
-      "count": 1,
       "id": "minecraft:iron_pickaxe"
     },
     "title": "Progressive Tools 2"

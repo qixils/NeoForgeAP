@@ -15,7 +15,6 @@
   "display": {
     "description": "Attack a tree until a block of wood pops out.",
     "icon": {
-      "count": 1,
       "id": "minecraft:oak_log"
     },
     "title": "Getting Wood"

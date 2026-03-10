@@ -17,6 +17,7 @@ import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
@@ -37,7 +38,7 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
 
     public static final Codec<CompassReward> CODEC = MAP_CODEC.codec();
 
-    private static final ItemStack DEFAULT_COMPASS = new ItemStack(BuiltInRegistries.ITEM.wrapAsHolder(Items.COMPASS), 1, DataComponentPatch.builder()
+    private static final ItemStackTemplate DEFAULT_COMPASS = new ItemStackTemplate(BuiltInRegistries.ITEM.wrapAsHolder(Items.COMPASS), 1, DataComponentPatch.builder()
             .set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.empty(), false))
             .set(DataComponents.ITEM_NAME, Component.literal("uninitialized structure compass"))
             .set(DataComponents.LORE, new ItemLore(List.of(
@@ -57,7 +58,7 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
         List<CompassReward> compassRewards = player.getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
         compassRewards.add(this);
 
-        ItemStack compass = DEFAULT_COMPASS.copy();
+        ItemStack compass = DEFAULT_COMPASS.create().copy();
         ItemManager.updateCompassLocation(this, player, compass);
         CompoundTag tag = compass.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         tag.putInt("index", compassRewards.size() - 1);

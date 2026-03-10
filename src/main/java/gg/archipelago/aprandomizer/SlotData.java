@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.arguments.item.ItemParser;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -82,7 +83,7 @@ public class SlotData {
             int amount = object.has("amount") ? object.get("amount").getAsInt() : 1;
 
             try {
-                ItemParser.ItemResult item = itemParser.parse(new StringReader(itemName));
+                ItemInput item = itemParser.parse(new StringReader(itemName));
 
                 ItemStack iStack = new ItemStack(item.item(), amount, item.components());
                 // TODO: figure out how to parse a string of components into actual components

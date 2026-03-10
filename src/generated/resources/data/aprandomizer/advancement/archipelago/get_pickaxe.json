@@ -11,7 +11,6 @@
   "display": {
     "description": "Use planks and sticks to make a pickaxe",
     "icon": {
-      "count": 1,
       "id": "minecraft:wooden_pickaxe"
     },
     "title": "Time to Mine!"

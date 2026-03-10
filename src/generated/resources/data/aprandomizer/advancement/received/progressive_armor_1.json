@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Iron:\n  Helmet\n  Chestplate\n  Leggings\n  Boots",
     "icon": {
-      "count": 1,
       "id": "minecraft:iron_chestplate"
     },
     "title": "Progressive Armor 1"

@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Campfire\nSoul Campfire",
     "icon": {
-      "count": 1,
       "id": "minecraft:campfire"
     },
     "title": "Campfires"

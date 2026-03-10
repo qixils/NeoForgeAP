@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Build a bookshelf to improve your enchantment table.",
     "icon": {
-      "count": 1,
       "id": "minecraft:bookshelf"
     },
     "title": "Librarian"

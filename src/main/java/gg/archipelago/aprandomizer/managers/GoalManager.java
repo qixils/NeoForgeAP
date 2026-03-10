@@ -20,6 +20,7 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -59,17 +60,17 @@ public class GoalManager {
 
     public void initializeInfoBar() {
         CustomBossEvents bossInfoManager = server.getCustomBossEvents();
-        advancementInfoBar = bossInfoManager.create(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
+        advancementInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
         advancementInfoBar.setMax(advancementsRequired);
         advancementInfoBar.setColor(BossEvent.BossBarColor.BLUE);
         advancementInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
 
-        eggInfoBar = bossInfoManager.create(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));
+        eggInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));
         eggInfoBar.setMax(dragonEggShardsRequired);
         eggInfoBar.setColor(BossEvent.BossBarColor.WHITE);
         eggInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
 
-        connectionInfoBar = bossInfoManager.create(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "connectioninfobar"), Component.literal("Not connected to Archipelago").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+        connectionInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "connectioninfobar"), Component.literal("Not connected to Archipelago").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
         connectionInfoBar.setMax(1);
         connectionInfoBar.setValue(1);
         connectionInfoBar.setColor(BossEvent.BossBarColor.RED);

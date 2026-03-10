@@ -11,7 +11,6 @@
   "display": {
     "description": "Construct a furnace out of eight cobblestone blocks.",
     "icon": {
-      "count": 1,
       "id": "minecraft:furnace"
     },
     "title": "Hot Topic"

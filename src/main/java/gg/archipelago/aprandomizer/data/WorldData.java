@@ -6,6 +6,7 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -102,7 +103,7 @@ public class WorldData extends SavedData {
     }
 
     public static SavedDataType<WorldData> getFactory() {
-        return new SavedDataType<>(APRandomizer.MODID, WorldData::new, WorldData.CODEC);
+        return new SavedDataType<>(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "aprandomizer/worlddata"), WorldData::new, WorldData.CODEC);
     }
 
     public WorldData() {

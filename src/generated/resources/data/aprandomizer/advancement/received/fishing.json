@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Fishing Rod\nCarrot on a Stick\nWarped Fungus on a Stick",
     "icon": {
-      "count": 1,
       "id": "minecraft:fishing_rod"
     },
     "title": "Fishing Rods"

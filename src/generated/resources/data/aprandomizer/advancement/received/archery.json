@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Bow\nArrow\nCrossbow",
     "icon": {
-      "count": 1,
       "id": "minecraft:bow"
     },
     "title": "Archery"

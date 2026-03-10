@@ -10,13 +10,13 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.attribute.BedRule;
 import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.level.CardinalLighting;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.timeline.Timeline;
 import net.minecraft.world.timeline.Timelines;
 
 import java.util.Optional;
-import java.util.OptionalLong;
 
 public class APDimensionTypes {
     public static void bootstrap(BootstrapContext<DimensionType> context) {
@@ -26,6 +26,7 @@ public class APDimensionTypes {
                         true,
                         false,
                         true,
+                        false,
                         8.0,
                         0,
                         256,
@@ -34,7 +35,7 @@ public class APDimensionTypes {
                         0.1F,
                         new DimensionType.MonsterSettings(ConstantInt.of(11), 15),
                         DimensionType.Skybox.NONE,
-                        DimensionType.CardinalLightType.NETHER,
+                        CardinalLighting.Type.NETHER,
                         EnvironmentAttributeMap.builder()
                                 .set(EnvironmentAttributes.FOG_START_DISTANCE, 10.0F)
                                 .set(EnvironmentAttributes.FOG_END_DISTANCE, 96.0F)
@@ -50,6 +51,7 @@ public class APDimensionTypes {
                                 .set(EnvironmentAttributes.CAN_START_RAID, true)
                                 .set(EnvironmentAttributes.SNOW_GOLEM_MELTS, true)
                                 .build(),
-                        holdergetter.getOrThrow(TimelineTags.IN_NETHER)));
+                        holdergetter.getOrThrow(TimelineTags.IN_NETHER),
+                        Optional.empty()));
     }
 }

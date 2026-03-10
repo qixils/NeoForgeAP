@@ -5,8 +5,7 @@ NeoForge Rewrite by qixils (Lexi), coehlrich, MrRedstone54 (Red)
 Original (Forge) Implementation by KonoTyran.
 
 Todo:
-- Python Side Changes to implement this branch properly
-- 26.1 Advancements and Items
+- Wait for NeoForge and Minecraft to stabilize 26.1 versions
 - Gifting API Support
 
 ## Required Software
@@ -65,7 +64,7 @@ When you are finished with the Minecraft World, you may delete it from the list.
 
 ### Connect to the MultiServer
 
-Using Minecraft 1.21.11, connect to the server `localhost` in direct connections.
+Using Minecraft 26.1, connect to the server `localhost` in direct connections.
 
 Once you are in game type `/connect <AP-Address> (Port) (Password)` where `<AP-Address>` is the address of the
 Archipelago server. `(Port)` is only required if the Archipelago server is not using the default port of
@@ -88,5 +87,5 @@ the following links are the versions of the software we use.
 - [Minecraft NeoForge Download Page](https://projects.neoforged.net/neoforged/neoforge)
 - [Minecraft Archipelago Randomizer Mod Releases Page](https://github.com/qixils/NeoForgeAP/releases)
    - **DO NOT INSTALL THIS ON YOUR CLIENT**
-- [Java 21 Download Page](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html)
+- [Java 25 Download Page](https://adoptium.net/temurin/releases?version=25&os=any&arch=any)
 

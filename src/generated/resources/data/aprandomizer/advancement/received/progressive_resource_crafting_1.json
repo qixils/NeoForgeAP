@@ -12,7 +12,6 @@
     "announce_to_chat": false,
     "description": "Iron Nuggets <-> Bars\n  Gold Nuggets <-> Bars\n  Copper Nuggets <-> Bars\n  Furnace\n  Blast Furnace",
     "icon": {
-      "count": 1,
       "id": "minecraft:blast_furnace"
     },
     "title": "Progressive Resource Crafting 1"

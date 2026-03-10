@@ -24,7 +24,6 @@
     "description": "Deal nine hearts of melee damage in a single hit.",
     "frame": "challenge",
     "icon": {
-      "count": 1,
       "id": "minecraft:netherite_sword"
     },
     "title": "Overkill"

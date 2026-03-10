@@ -16,7 +16,6 @@
     "announce_to_chat": false,
     "description": "Harvest some leather",
     "icon": {
-      "count": 1,
       "id": "minecraft:leather"
     },
     "title": "Cow Tipper"

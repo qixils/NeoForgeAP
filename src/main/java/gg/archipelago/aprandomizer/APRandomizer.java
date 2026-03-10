@@ -81,7 +81,7 @@ public class APRandomizer {
     @NotNull
     static private final APMCData apmcData;
     static private final IntSet VALID_VERSIONS = IntSet.of(
-            9 // 1.21.8
+            10 // 26.1
     );
     @NotNull
     static private BlockPos jailCenter = BlockPos.ZERO;
@@ -136,7 +136,7 @@ public class APRandomizer {
                 apmcFile = maybeFile.get();
             }
 
-            boolean isZip = false;
+            boolean isZip;
             try (InputStream inputStream = Files.newInputStream(apmcFile)) {
                 byte[] header = new byte[ZIP_HEADER.length];
                 int read = inputStream.read(header, 0, ZIP_HEADER.length);
@@ -205,7 +205,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 1.21.8 v2.0.1 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 26.1 v2.1.0 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -314,6 +314,10 @@ public class APRandomizer {
         }
         if (server == null) server = event.getServer();
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        if (overworld == null){
+            LOGGER.error("THE SERVER COULD NOT GET Level.OVERWORLD.");
+            return;
+        }
 
         // do something when the server starts
 
@@ -352,7 +356,7 @@ public class APRandomizer {
             APClient = new APClient(server, advancementManager, itemManager, goalManager);
         }
 
-        if (worldData.getJailPlayers() && overworld != null) {
+        if (worldData.getJailPlayers()) {
             BlockPos spawn = overworld.getRespawnData().pos();
             // alter the spawn box position, so it doesn't interfere with spawning
             var jailOptional = overworld.getStructureManager().get(Identifier.fromNamespaceAndPath(MODID, "spawnjail"));
@@ -375,7 +379,7 @@ public class APRandomizer {
             overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, true, server);
             overworld.getGameRules().set(GameRules.MOB_DROPS, false, server);
             overworld.getGameRules().set(GameRules.ENTITY_DROPS, false, server);
-            overworld.setDayTime(0);
+            //overworld.setDayTime(0);
 
         }
 
