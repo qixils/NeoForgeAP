@@ -88,5 +88,5 @@ the following links are the versions of the software we use.
 - [Minecraft NeoForge Download Page](https://projects.neoforged.net/neoforged/neoforge)
 - [Minecraft Archipelago Randomizer Mod Releases Page](https://github.com/qixils/NeoForgeAP/releases)
    - **DO NOT INSTALL THIS ON YOUR CLIENT**
-- [Java 21 Download Page](https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html)
+- [Java 21 Download Page](https://adoptium.net/temurin/releases?version=21&os=any&arch=any)
 
