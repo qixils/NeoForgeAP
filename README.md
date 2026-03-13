@@ -5,7 +5,6 @@ NeoForge Rewrite by qixils (Lexi), coehlrich, MrRedstone54 (Red)
 Original (Forge) Implementation by KonoTyran.
 
 Todo:
-- Python Side Changes to implement this branch properly
 - 26.1 Advancements and Items
 - Gifting API Support
 
