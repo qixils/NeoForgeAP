@@ -27,9 +27,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.neoforged.bus.api.IEventBus;
@@ -135,7 +135,7 @@ public class APRandomizer {
                 apmcFile = maybeFile.get();
             }
 
-            boolean isZip;
+            boolean isZip = false;
             try (InputStream inputStream = Files.newInputStream(apmcFile)) {
                 byte[] header = new byte[ZIP_HEADER.length];
                 int read = inputStream.read(header, 0, ZIP_HEADER.length);
