@@ -1,11 +1,11 @@
 package gg.archipelago.aprandomizer.common.Utils;
 
+import gg.archipelago.aprandomizer.APRandomizer;
+import gg.archipelago.aprandomizer.ap.APClient;
 import io.github.archipelagomw.Print.APPrint;
 import io.github.archipelagomw.Print.APPrintColor;
 import io.github.archipelagomw.Print.APPrintPart;
 import io.github.archipelagomw.Print.APPrintType;
-import gg.archipelago.aprandomizer.APRandomizer;
-import gg.archipelago.aprandomizer.ap.APClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
@@ -60,6 +60,35 @@ public class Utils {
 
     }
 
+    public static boolean bitmaskMatchAll(int value, int mask) {
+        return (value & mask) == mask;
+    }
+
+    public static int colorOfFlags(int flags) {
+        if (bitmaskMatchAll(flags, ADVANCEMENT + USEFUL + TRAP)) {
+            return 0x80FF80;
+        }
+        if (bitmaskMatchAll(flags, ADVANCEMENT + USEFUL)) {
+            return 0xFFDF00;
+        }
+        if (bitmaskMatchAll(flags, ADVANCEMENT + TRAP)) {
+            return 0xFFAC1D;
+        }
+        if (bitmaskMatchAll(flags, USEFUL + TRAP)) {
+            return 0x9B59B7;
+        }
+        if (bitmaskMatchAll(flags, ADVANCEMENT)) {
+            return 0xAF99EF;
+        }
+        if (bitmaskMatchAll(flags, USEFUL)) {
+            return 0x6D8BE8;
+        }
+        if (bitmaskMatchAll(flags, TRAP)) {
+            return 0xFA8072;
+        }
+        return 0x00EEEE;
+    }
+
     public static Component apPrintToTextComponent(APPrint apPrint) {
         APClient apClient = APRandomizer.getAP();
         boolean isMe = apClient != null && apPrint.receiving == apClient.getSlot();
@@ -69,59 +98,30 @@ public class Utils {
             APPrintPart part = apPrint.parts[i];
             LOGGER.trace("part[{}]: {}, {}, {}", i, part.text, part.color, part.type);
             //no default color was sent so use our own coloring.
-            Color color = isMe ? Color.PINK : Color.WHITE;
-            boolean bold = false;
-            boolean underline = false;
+            int color = isMe ? Color.PINK.getRGB() : Color.WHITE.getRGB();
+            boolean bold = part.color == APPrintColor.bold;
+            boolean underline = part.color == APPrintColor.underline;
 
             if (part.color == APPrintColor.none) {
                 if (APRandomizer.getAP().getMyName().equals(part.text)) {
-                    color = Color.decode("#EE00EE");
+                    color = 0xEE00EE;
                     underline = true;
                 } else if (part.type == APPrintType.playerID) {
-                    color = Color.decode("#FAFAD2");
+                    color = 0xFAFAD2;
                 } else if (part.type == APPrintType.locationID) {
-                    color = Color.decode("#00FF7F");
+                    color = 0x00FF7F;
                 } else if (part.type == APPrintType.itemID) {
-                    LOGGER.debug(part.flags);
-                    if ((part.flags & (ADVANCEMENT + USEFUL + TRAP)) == (ADVANCEMENT + USEFUL + TRAP)) {
-                        color = Color.decode("#80FF80");// advancement+useful+trap (Cursed)
-                    }
-                    else if ((part.flags & (ADVANCEMENT + USEFUL)) == (ADVANCEMENT + USEFUL)) {
-                        color = Color.decode("#FFDF00");// advancement+useful
-                    }
-                    else if ((part.flags & (ADVANCEMENT + TRAP)) == (ADVANCEMENT + TRAP)) {
-                        color = Color.decode("#FFAC1D");// advancement+trap
-                    }
-                    else if ((part.flags & (USEFUL + TRAP)) == (USEFUL + TRAP)) {
-                        color = Color.decode("#9B59B7");// useful+trap
-                    }
-                    else if ((part.flags & ADVANCEMENT) == ADVANCEMENT) {
-                        color = Color.decode("#AF99EF"); // advancement
-                    }
-                    else if ((part.flags & USEFUL) == USEFUL) {
-                        color = Color.decode("#6D8BE8"); // useful
-                    }
-                    else if ((part.flags & TRAP) == TRAP) {
-                        color = Color.decode("#FA8072");// trap
-                    }
-                    else {
-                        color = Color.decode("#00EEEE");
-                    }
+                    color = colorOfFlags(part.flags);
                 }
-
             }
             else
-                color = part.color.color;
+                color = part.color.color.getRGB();
 
             if (part.color == APPrintColor.underline)
                 underline = true;
 
-            if (part.color == APPrintColor.bold)
-                bold = true;
-
-
             //blank out the first two bits because minecraft doesn't deal with alpha values
-           int iColor = color.getRGB() & ~(0xFF << 24);
+            int iColor = color & ~(0xFF << 24);
             Style style = Style.EMPTY.withColor(iColor).withBold(bold).withUnderlined(underline);
 
             message.append(Component.literal(part.text).withStyle(style));
