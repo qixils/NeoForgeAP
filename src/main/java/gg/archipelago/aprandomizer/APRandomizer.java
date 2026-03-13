@@ -121,8 +121,7 @@ public class APRandomizer {
                 // todo: shouldn't this be reversed? we want the newest first right?
                 Optional<Path> maybeFile = listFiles
                         .filter(item -> item.getFileName().toString().endsWith(".apmc"))
-                        .min(Comparator.comparingLong(path -> {
-                            // todo: i just set this up the same as the previous File-based logic but... shouldn't this be `max` not `min`? cus we want the newest first right?
+                        .max(Comparator.comparingLong(path -> {
                             try {
                                 return Files.getLastModifiedTime(path).toMillis();
                             } catch (IOException e) {
@@ -141,12 +140,15 @@ public class APRandomizer {
                 byte[] header = new byte[ZIP_HEADER.length];
                 int read = inputStream.read(header, 0, ZIP_HEADER.length);
                 isZip = read >= ZIP_HEADER.length && Arrays.equals(header, ZIP_HEADER);
+            } catch (Exception e) {
+                LOGGER.warn("Failed to check apmc header", e);
             }
 
             APMCData apmc = null;
             APMCMetaData metadata = null;
 
             if (isZip) {
+                LOGGER.info("Parsing apmc as zip");
                 try (ZipFile zipFile = new ZipFile(apmcFile.toFile())) {
                     Enumeration<? extends ZipEntry> entries = zipFile.entries();
                     while (entries.hasMoreElements()) {
@@ -163,7 +165,7 @@ public class APRandomizer {
                             }
                         }
 
-                        if (metadata == null && entry.getName().equals("archipelago.json")) {
+                        if (metadata == null && entry.getName().toLowerCase(Locale.ENGLISH).contains("archipelago.json")) {
                             try (InputStream inputStream = zipFile.getInputStream(entry)) {
                                 byte[] bytes = inputStream.readAllBytes();
                                 String jsonString = new String(bytes, StandardCharsets.UTF_8).trim();
@@ -178,6 +180,7 @@ public class APRandomizer {
                     }
                 }
             } else {
+                LOGGER.info("Parsing apmc as json");
                 try (InputStream inputStream = Files.newInputStream(apmcFile)) {
                     apmc = readApmcInputStream(inputStream);
                 }
