@@ -30,7 +30,7 @@ public class ReceiveItem {
             int color = Utils.colorOfFlags(item.flags);
             Component textItem = Component.literal(item.itemName).withStyle(Style.EMPTY.withColor(color));
             Component title = Component.literal("Received").withStyle(Style.EMPTY.withColor(APPrintColor.white.color.getRGB()));
-            Utils.sendTitleToAll(title, textItem, 5, 30, 5);
+            Utils.sendTitleToAll(title, textItem, 5, 60, 5);
         });
     }
 }
