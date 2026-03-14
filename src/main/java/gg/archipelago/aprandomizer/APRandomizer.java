@@ -155,7 +155,8 @@ public class APRandomizer {
                         ZipEntry entry = entries.nextElement();
                         if (entry.isDirectory()) continue;
 
-                        if (apmc == null && entry.getName().endsWith(".apmc")) {
+                        // .apmcmeta is new suffix for the nested file
+                        if (apmc == null && (entry.getName().endsWith(".apmc") || entry.getName().endsWith(".apmcmeta"))) {
                             try (InputStream inputStream = zipFile.getInputStream(entry)) {
                                 apmc = readApmcInputStream(inputStream);
                             } catch (IOException e) {
