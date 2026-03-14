@@ -135,7 +135,7 @@ public class APRandomizer {
                 apmcFile = maybeFile.get();
             }
 
-            boolean isZip;
+            boolean isZip = false;
             try (InputStream inputStream = Files.newInputStream(apmcFile)) {
                 byte[] header = new byte[ZIP_HEADER.length];
                 int read = inputStream.read(header, 0, ZIP_HEADER.length);
