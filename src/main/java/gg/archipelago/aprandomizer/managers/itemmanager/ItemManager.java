@@ -16,7 +16,6 @@ import it.unimi.dsi.fastutil.longs.LongList;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
-import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.Holder;
@@ -28,6 +27,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.LodestoneTracker;
@@ -90,7 +90,7 @@ public class ItemManager {
         map.put(40L, APItems.COMPASS_BASTION_REMNANT);
         map.put(41L, APItems.COMPASS_END_CITY);
         map.put(42L, APItems.ITEMSTACK_SHULKER_BOX);
-        //Dragon Egg Shard (If Applicable)
+        map.put(DRAGON_EGG_SHARD, APItems.DRAGON_EGG_SHARD);
         map.put(44L, APItems.GROUP_RECIPES_SPYGLASS);
         map.put(45L, APItems.GROUP_RECIPES_LEAD);
         map.put(46L, APItems.TRAP_BEES);
