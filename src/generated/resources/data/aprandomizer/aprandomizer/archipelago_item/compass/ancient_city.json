@@ -2,8 +2,8 @@
   "rewards": {
     "type": "aprandomizer:compass",
     "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:ancient_city"
+      "type": "aprandomizer:constant",
+      "level": "minecraft:overworld"
     },
     "name": "Ancient City",
     "structures": "#aprandomizer:ancient_city"

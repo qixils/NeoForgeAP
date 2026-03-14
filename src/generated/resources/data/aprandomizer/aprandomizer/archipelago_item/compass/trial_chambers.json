@@ -2,8 +2,8 @@
   "rewards": {
     "type": "aprandomizer:compass",
     "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:trial_chambers"
+      "type": "aprandomizer:constant",
+      "level": "minecraft:overworld"
     },
     "name": "Trial Chambers",
     "structures": "#aprandomizer:trial_chambers"

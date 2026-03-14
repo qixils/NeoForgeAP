@@ -2,8 +2,8 @@
   "rewards": {
     "type": "aprandomizer:compass",
     "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:woodland_mansion"
+      "type": "aprandomizer:constant",
+      "level": "minecraft:overworld"
     },
     "name": "Woodland Mansion",
     "structures": "#aprandomizer:woodland_mansion"
