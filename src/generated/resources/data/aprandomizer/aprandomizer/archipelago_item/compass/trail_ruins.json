@@ -2,8 +2,8 @@
   "rewards": {
     "type": "aprandomizer:compass",
     "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:trail_ruins"
+      "type": "aprandomizer:constant",
+      "level": "minecraft:overworld"
     },
     "name": "Trail Ruins",
     "structures": "#aprandomizer:trail_ruins"

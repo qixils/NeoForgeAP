@@ -4,6 +4,7 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.items.traps.MobTrap;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
+import gg.archipelago.aprandomizer.structures.level.ConstantLevel;
 import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.core.Holder;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.Optional;
@@ -381,23 +383,23 @@ public class APItems {
 
         context.register(COMPASS_WOODLAND_MANSION,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.WOODLAND_MANSION, new RandomizedStructureLevel(APStructureModifiers.WOODLAND_MANSION_NAME), Component.literal("Woodland Mansion"))));
+                        new CompassReward(APStructureTags.WOODLAND_MANSION, new ConstantLevel(Level.OVERWORLD), Component.literal("Woodland Mansion"))));
 
         context.register(COMPASS_OCEAN_MONUMENT,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.OCEAN_MONUMENT, new RandomizedStructureLevel(APStructureModifiers.OCEAN_MONUMENT_NAME), Component.literal("Ocean Monument"))));
+                        new CompassReward(APStructureTags.OCEAN_MONUMENT, new ConstantLevel(Level.OVERWORLD), Component.literal("Ocean Monument"))));
 
         context.register(COMPASS_ANCIENT_CITY,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.ANCIENT_CITY, new RandomizedStructureLevel(APStructureModifiers.ANCIENT_CITY_NAME), Component.literal("Ancient City"))));
+                        new CompassReward(APStructureTags.ANCIENT_CITY, new ConstantLevel(Level.OVERWORLD), Component.literal("Ancient City"))));
 
         context.register(COMPASS_TRAIL_RUINS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.TRAIL_RUINS, new RandomizedStructureLevel(APStructureModifiers.TRAIL_RUINS_NAME), Component.literal("Trail Ruins"))));
+                        new CompassReward(APStructureTags.TRAIL_RUINS, new ConstantLevel(Level.OVERWORLD), Component.literal("Trail Ruins"))));
 
         context.register(COMPASS_TRIAL_CHAMBERS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new RandomizedStructureLevel(APStructureModifiers.TRIAL_CHAMBERS_NAME), Component.literal("Trial Chambers"))));
+                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new ConstantLevel(Level.OVERWORLD), Component.literal("Trial Chambers"))));
 
 
         context.register(TRAP_BEES,
