@@ -1,11 +1,11 @@
 [
   {
-    "version": "2.1.0+1.21.11",
+    "version": "2.1.1+1.21.11",
     "channel": "release",
     "data": 10,
     "java": 21,
     "minecraft": "1.21.11",
-    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v2.1.0/aprandomizer-2.1.0+1.21.11.jar"
+    "url": "https://github.com/qixils/NeoForgeAP/releases/download/v2.1.1/aprandomizer-2.1.1+1.21.11.jar"
   },
   {
     "version": "2.0.1+1.21.8",
