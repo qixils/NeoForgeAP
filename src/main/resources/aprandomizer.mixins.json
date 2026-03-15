@@ -9,7 +9,8 @@
     "MixinPropertyManager",
     "MixinRaid",
     "MixinServerRecipeBook",
-    "MixinSpawnGateways"
+    "MixinSpawnGateways",
+    "MixinCrafterBlock"
   ],
   "injectors": {
     "defaultRequire": 1
