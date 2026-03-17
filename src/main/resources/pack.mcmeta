@@ -2,7 +2,7 @@
   "pack": {
     "description": "APRandomizer Resources",
     "min_format": 101.0,
-    "max_format": 101.0
+    "max_format": 101.1
   },
   "filter": {
     "block": [
