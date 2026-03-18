@@ -1,11 +1,11 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import io.github.archipelagomw.events.ArchipelagoEventListener;
-import io.github.archipelagomw.events.ConnectionAttemptEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.ConnectionAttemptEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,7 @@ public class AttemptedConnection {
             SlotData temp = event.getSlotData(SlotData.class);
             APMCData data = APRandomizer.getApmcData();
             if (!event.getSeedName().equals(data.seed_name)) {
-                Utils.sendMessageToAll("Failed to Connect to Archipelago Server: Wrong .apmc file found. please stop the server, use the correct .apmc file, delete the world folder, then relaunch the server.");
+                Utils.sendMessageToAll("Failed to Connect to Archipelago Server: Server seed does not match seed in .apmc file. Check to ensure you have the correct port and apmc file.");
                 event.setCanceled(true);
             }
             if (!APRandomizer.getValidVersions().contains(temp.getClient_version())) {
