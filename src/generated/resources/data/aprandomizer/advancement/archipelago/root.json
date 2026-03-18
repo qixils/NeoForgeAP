@@ -9,6 +9,12 @@
     "background": "minecraft:gui/advancements/backgrounds/end",
     "description": "Welcome to the AP Randomizer",
     "icon": {
+      "components": {
+        "minecraft:lore": [
+          "It vibrates with power...\nYou must fight this foe when all else is complete."
+        ]
+      },
+      "count": 1,
       "id": "minecraft:ender_pearl"
     },
     "show_toast": false,
