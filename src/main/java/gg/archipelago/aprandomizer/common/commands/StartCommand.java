@@ -76,7 +76,7 @@ public class StartCommand {
         overworld.getGameRules().set(GameRules.SPAWN_WANDERING_TRADERS, true, server);
         overworld.getGameRules().set(GameRules.MOB_GRIEFING, true, server);
         overworld.getGameRules().set(GameRules.SPAWN_MOBS, true, server);
-        overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, true, server);
+        overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, APRandomizer.isFastRespawn() , server);
         overworld.getGameRules().set(GameRules.MOB_DROPS, true, server);
         overworld.getGameRules().set(GameRules.ENTITY_DROPS, true, server);
         server.execute(() -> {

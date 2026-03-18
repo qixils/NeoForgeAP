@@ -286,6 +286,9 @@ public class APRandomizer {
     public static boolean isRace() {
         return getApmcData().race;
     }
+    public static boolean isFastRespawn(){
+        return getApmcData().respawn;
+    }
 
     public static void sendBounce(BouncePacket packet) {
         if (APClient != null)
