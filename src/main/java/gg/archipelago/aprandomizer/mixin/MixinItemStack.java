@@ -1,12 +1,15 @@
 package gg.archipelago.aprandomizer.mixin;
 
+import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.PatchedDataComponentMap;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,11 +30,16 @@ public abstract class MixinItemStack {
         Utils.setItemLore((ItemStack) (Object) this, Collections.singletonList(lore));
     }
 
-    @Inject(method = "<init>(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/core/component/PatchedDataComponentMap;)V", at = @At("RETURN"))
-    private void onInit(ItemLike itemLike, int count, PatchedDataComponentMap tag, CallbackInfo ci) {
-        if (itemLike == Items.WITHER_SKELETON_SKULL)
+    @Inject(method = "<init>(Lnet/minecraft/core/Holder;ILnet/minecraft/core/component/PatchedDataComponentMap;)V", at = @At("RETURN"))
+    private void onInit(Holder<Item> item, int count, PatchedDataComponentMap components, CallbackInfo ci) {
+        if (APRandomizer.getApmcData().state != APMCData.State.VALID)
+            return;
+        if (item == null)
+            return;
+
+        if (item.is(BuiltInRegistries.ITEM.getKey(Items.WITHER_SKELETON_SKULL)))
             aprandomizer$setBossLore(APMCData.Bosses.WITHER);
-        else if (itemLike == Items.ENDER_PEARL)
+        else if (item.is(BuiltInRegistries.ITEM.getKey(Items.ENDER_PEARL)))
             aprandomizer$setBossLore(APMCData.Bosses.ENDER_DRAGON);
     }
 }

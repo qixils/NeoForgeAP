@@ -108,6 +108,7 @@ public class APRandomizer {
         return data;
     }
 
+    @NotNull
     private static APMCData createApmcData() {
         try {
             Path apDataDir = Paths.get("./APData/");
