@@ -167,7 +167,8 @@ public class APItems {
 
         context.register(GROUP_RECIPES_SPYGLASS,
                 APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SPYGLASS))))));
+                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.SPYGLASS))),
+                        new ItemReward(new ItemStackTemplate(Items.AMETHYST_SHARD, 1)))));
 
         context.register(GROUP_RECIPES_LEAD,
                 APItem.ofRewards(List.of(
