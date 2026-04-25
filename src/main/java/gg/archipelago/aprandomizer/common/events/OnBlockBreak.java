@@ -5,12 +5,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 @EventBusSubscriber
 public class OnBlockBreak {
     @SubscribeEvent
-    static void onPlayerBlockInteract(BlockEvent.BreakEvent event) {
+    static void onPlayerBlockInteract(BreakBlockEvent event) {
         if (!APRandomizer.isJailPlayers())
             return;
         event.setCanceled(true);

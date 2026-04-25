@@ -1,6 +1,14 @@
 {
-  "rewards": {
-    "type": "aprandomizer:recipe",
-    "recipe": "minecraft:spyglass"
-  }
+  "rewards": [
+    {
+      "type": "aprandomizer:recipe",
+      "recipe": "minecraft:spyglass"
+    },
+    {
+      "type": "aprandomizer:item",
+      "item": {
+        "id": "minecraft:amethyst_shard"
+      }
+    }
+  ]
 }
