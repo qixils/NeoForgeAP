@@ -29,12 +29,12 @@ public class APGlobalLootModifierProvider extends GlobalLootModifierProvider {
         this.add("entities/drowned/add_trident", new AddTableLootModifier(
                 new LootItemCondition[] {
                     LootTableIdCondition.builder(EntityType.DROWNED.getDefaultLootTable().get().identifier()).build()
-                }, APLootTables.ENTITIES_DROWNED_ADD_TRIDENT));
+                } ,1000, APLootTables.ENTITIES_DROWNED_ADD_TRIDENT));
 
         this.add("entities/wither_skeleton/override_wither_skeleton_skull", new OverrideItemLootModifier(
                 new LootItemCondition[] {
                     LootTableIdCondition.builder(EntityType.WITHER_SKELETON.getDefaultLootTable().get().identifier()).build()
-                },
+                }, 1000,
                 ItemPredicate.Builder.item()
                         .of(items, Items.WITHER_SKELETON_SKULL)
                         .build(),

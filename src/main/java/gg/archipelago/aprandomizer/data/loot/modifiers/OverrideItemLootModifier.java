@@ -26,8 +26,8 @@ public class OverrideItemLootModifier extends LootModifier {
     private final ItemPredicate predicate;
     private final ResourceKey<LootTable> table;
 
-    public OverrideItemLootModifier(LootItemCondition[] conditionsIn, ItemPredicate predicate, ResourceKey<LootTable> table) {
-        super(conditionsIn);
+    public OverrideItemLootModifier(LootItemCondition[] conditionsIn, int priority, ItemPredicate predicate, ResourceKey<LootTable> table) {
+        super(conditionsIn, priority);
         this.predicate = predicate;
         this.table = table;
     }
