@@ -79,6 +79,7 @@ public class StartCommand {
         overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, APRandomizer.isFastRespawn() , server);
         overworld.getGameRules().set(GameRules.MOB_DROPS, true, server);
         overworld.getGameRules().set(GameRules.ENTITY_DROPS, true, server);
+        overworld.getGameRules().set(GameRules.BLOCK_DROPS, true, server);
         server.execute(() -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 player.getFoodData().eat(20, 20);

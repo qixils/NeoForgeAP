@@ -2,7 +2,9 @@ package gg.archipelago.aprandomizer.structures;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APStructures;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
@@ -11,8 +13,10 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 
 import java.util.List;
+import java.util.Optional;
 
 public class APStructureSets {
     public static final ResourceKey<StructureSet> BEE_GROVE = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
@@ -32,18 +36,24 @@ public class APStructureSets {
                 new StructureSet(
                         List.of(
                                 StructureSet.entry(structures.getOrThrow(APStructures.END_CITY_NETHER_STRUCTURE))),
-                        new RandomSpreadStructurePlacement(20, 10, RandomSpreadType.LINEAR, 92464638)));
+                        new RandomSpreadStructurePlacement(20, 11, RandomSpreadType.TRIANGULAR, 92464638)));
+
+        Holder.Reference<StructureSet> village_nether = context.register(VILLAGE_NETHER,
+                new StructureSet(
+                        List.of(
+                                StructureSet.entry(structures.getOrThrow(APStructures.VILLAGE_NETHER_STRUCTURE))),
+                        new RandomSpreadStructurePlacement(20, 6, RandomSpreadType.LINEAR, 784665)));
 
         context.register(PILLAGER_OUTPOST_NETHER,
                 new StructureSet(
                         List.of(
                                 StructureSet.entry(structures.getOrThrow(APStructures.PILLAGER_OUTPOST_NETHER_STRUCTURE))),
-                        new RandomSpreadStructurePlacement(16, 6, RandomSpreadType.LINEAR, 44897651)));
-
-        context.register(VILLAGE_NETHER,
-                new StructureSet(
-                        List.of(
-                                StructureSet.entry(structures.getOrThrow(APStructures.VILLAGE_NETHER_STRUCTURE))),
-                        new RandomSpreadStructurePlacement(16, 6, RandomSpreadType.LINEAR, 784665)));
+                        new RandomSpreadStructurePlacement(
+                                Vec3i.ZERO,
+                                StructurePlacement.FrequencyReductionMethod.LEGACY_TYPE_1,
+                                0.2F,
+                                44897651,
+                                Optional.of(new StructurePlacement.ExclusionZone(village_nether, 10)),
+                                15, 6, RandomSpreadType.LINEAR)));
     }
 }

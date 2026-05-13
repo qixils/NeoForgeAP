@@ -210,7 +210,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 26.1 v2.1.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 26.1.2 v2.1.3 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -387,6 +387,7 @@ public class APRandomizer {
             overworld.getGameRules().set(GameRules.IMMEDIATE_RESPAWN, true, server);
             overworld.getGameRules().set(GameRules.MOB_DROPS, false, server);
             overworld.getGameRules().set(GameRules.ENTITY_DROPS, false, server);
+            overworld.getGameRules().set(GameRules.BLOCK_DROPS, false, server);
             //overworld.setDayTime(0);
 
         }
