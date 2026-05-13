@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/lighten_up",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

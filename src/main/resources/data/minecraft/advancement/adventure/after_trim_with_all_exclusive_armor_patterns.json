@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/trim_with_all_exclusive_armor_patterns",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

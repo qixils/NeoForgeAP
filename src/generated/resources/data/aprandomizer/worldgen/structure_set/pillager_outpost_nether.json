@@ -2,14 +2,14 @@
   "placement": {
     "type": "minecraft:random_spread",
     "exclusion_zone": {
-      "chunk_count": 10,
+      "chunk_count": 2,
       "other_set": "aprandomizer:village_nether"
     },
     "frequency": 0.2,
     "frequency_reduction_method": "legacy_type_1",
     "salt": 44897651,
     "separation": 6,
-    "spacing": 16
+    "spacing": 15
   },
   "structures": [
     {

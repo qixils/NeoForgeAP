@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/who_needs_rockets",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

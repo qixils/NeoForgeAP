@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/overoverkill",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

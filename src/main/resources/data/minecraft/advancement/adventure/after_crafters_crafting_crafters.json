@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:adventure/crafters_crafting_crafters",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}

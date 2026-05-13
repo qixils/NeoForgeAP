@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:husbandry/repair_wolf_armor",
-  "criteria": {
-    "auto": {
-      "trigger": "minecraft:tick"
-    }
-  }
-}
