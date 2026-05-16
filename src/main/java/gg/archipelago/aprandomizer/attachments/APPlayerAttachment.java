@@ -8,10 +8,10 @@ import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.CompassReward;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class APPlayerAttachment {
@@ -20,7 +20,7 @@ public class APPlayerAttachment {
             .group(
                     Codec.INT
                             .fieldOf("index").forGetter(APPlayerAttachment::getIndex),
-                    CompassReward.CODEC.listOf()
+                    Codec.unboundedMap(Identifier.CODEC, CompassReward.CODEC)
                             .fieldOf("compass_rewards").forGetter(APPlayerAttachment::getUnlockedCompassRewards),
                     Codec.unboundedMap(ResourceKey.codec(APRegistries.ARCHIPELAGO_ITEM), Codec.INT)//.<Object2IntMap<ResourceKey<APItem>>>xmap(Object2IntOpenHashMap::new, Function.identity())
                             .fieldOf("tiers").forGetter(APPlayerAttachment::getTiers)
@@ -28,15 +28,15 @@ public class APPlayerAttachment {
             .apply(instance, APPlayerAttachment::new));
 
     private int index = 0;
-    private List<CompassReward> compassRewards = new ArrayList<>();
+    private Map<Identifier, CompassReward> compassRewards = new HashMap<>();
     private Object2IntMap<ResourceKey<APItem>> tiers = new Object2IntOpenHashMap<>();
 
     public APPlayerAttachment() {
     }
 
-    public APPlayerAttachment(int index, List<CompassReward> compassRewards, Map<ResourceKey<APItem>, Integer> tiers) {
+    public APPlayerAttachment(int index, Map<Identifier, CompassReward> compassRewards, Map<ResourceKey<APItem>, Integer> tiers) {
         this.index = index;
-        this.compassRewards = new ArrayList<>(compassRewards);
+        this.compassRewards = new HashMap<>(compassRewards);
         this.tiers = new Object2IntOpenHashMap<>(tiers);
     }
 
@@ -48,7 +48,7 @@ public class APPlayerAttachment {
         this.index = index;
     }
 
-    public List<CompassReward> getUnlockedCompassRewards() {
+    public Map<Identifier, CompassReward> getUnlockedCompassRewards() {
         return compassRewards;
     }
 

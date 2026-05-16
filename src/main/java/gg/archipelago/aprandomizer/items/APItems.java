@@ -2,6 +2,8 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.items.compass.BiomeTarget;
+import gg.archipelago.aprandomizer.items.compass.StructureTarget;
 import gg.archipelago.aprandomizer.items.traps.MobTrap;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.level.ConstantLevel;
@@ -9,6 +11,7 @@ import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,8 +19,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
@@ -25,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 
 import java.util.List;
 import java.util.Optional;
@@ -364,43 +368,83 @@ public class APItems {
         
         context.register(COMPASS_VILLAGE, 
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.VILLAGE, new RandomizedStructureLevel(APStructureModifiers.VILLAGE_NAME), Component.literal("Village"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village"),
+                                new StructureTarget(APStructureTags.VILLAGE, new RandomizedStructureLevel(APStructureModifiers.VILLAGE_NAME)),
+                                Component.literal("Village"),
+                                "Structures")));
 
         context.register(COMPASS_PILLAGER_OUTPOST,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME), Component.literal("Pillager Outpost"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost"),
+                                new StructureTarget(APStructureTags.PILLAGER_OUTPOST, new RandomizedStructureLevel(APStructureModifiers.PILLAGER_OUTPOST_NAME)),
+                                Component.literal("Pillager Outpost"),
+                                "Structures")));
 
         context.register(COMPASS_FORTRESS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.FORTRESS, new RandomizedStructureLevel(APStructureModifiers.FORTRESS_NAME), Component.literal("Nether Fortress"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fortress"),
+                                new StructureTarget(APStructureTags.FORTRESS, new RandomizedStructureLevel(APStructureModifiers.FORTRESS_NAME)),
+                                Component.literal("Nether Fortress"),
+                                "Structures")));
 
         context.register(COMPASS_BASTION_REMNANT,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME), Component.literal("Bastion Remnant"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bastion_remnant"),
+                                new StructureTarget(APStructureTags.BASTION_REMNANT, new RandomizedStructureLevel(APStructureModifiers.BASTION_REMNANT_NAME)),
+                                Component.literal("Bastion Remnant"),
+                                "Structures")));
 
         context.register(COMPASS_END_CITY,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME), Component.literal("End City"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city"),
+                                new StructureTarget(APStructureTags.END_CITY, new RandomizedStructureLevel(APStructureModifiers.END_CITY_NAME)),
+                                Component.literal("End City"),
+                                "Structures")));
 
         context.register(COMPASS_WOODLAND_MANSION,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.WOODLAND_MANSION, new ConstantLevel(Level.OVERWORLD), Component.literal("Woodland Mansion"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "woodland_mansion"),
+                                new StructureTarget(APStructureTags.WOODLAND_MANSION, new ConstantLevel(Level.OVERWORLD)),
+                                Component.literal("Woodland Mansion"),
+                                "Structures")));
 
         context.register(COMPASS_OCEAN_MONUMENT,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.OCEAN_MONUMENT, new ConstantLevel(Level.OVERWORLD), Component.literal("Ocean Monument"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "ocean_monument"),
+                                new StructureTarget(APStructureTags.OCEAN_MONUMENT, new ConstantLevel(Level.OVERWORLD)),
+                                Component.literal("Ocean Monument"),
+                                "Structures")));
 
         context.register(COMPASS_ANCIENT_CITY,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.ANCIENT_CITY, new ConstantLevel(Level.OVERWORLD), Component.literal("Ancient City"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "ancient_city"),
+                                new StructureTarget(APStructureTags.ANCIENT_CITY, new ConstantLevel(Level.OVERWORLD)),
+                                Component.literal("Ancient City"),
+                                "Structures")));
 
         context.register(COMPASS_TRAIL_RUINS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.TRAIL_RUINS, new ConstantLevel(Level.OVERWORLD), Component.literal("Trail Ruins"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "trail_ruins"),
+                                new StructureTarget(APStructureTags.TRAIL_RUINS, new ConstantLevel(Level.OVERWORLD)),
+                                Component.literal("Trail Ruins"),
+                                "Structures")));
 
         context.register(COMPASS_TRIAL_CHAMBERS,
                 APItem.ofReward(
-                        new CompassReward(APStructureTags.TRIAL_CHAMBERS, new ConstantLevel(Level.OVERWORLD), Component.literal("Trial Chambers"))));
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "trial_chambers"),
+                                new StructureTarget(APStructureTags.TRIAL_CHAMBERS, new ConstantLevel(Level.OVERWORLD)),
+                                Component.literal("Trial Chambers"),
+                                "Structures")));
 
 
         context.register(TRAP_BEES,

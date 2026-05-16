@@ -1,11 +1,16 @@
 {
   "rewards": {
     "type": "aprandomizer:compass",
-    "level": {
-      "type": "aprandomizer:constant",
-      "level": "minecraft:overworld"
-    },
+    "category": "Structures",
+    "id": "aprandomizer:ancient_city",
     "name": "Ancient City",
-    "structures": "#aprandomizer:ancient_city"
+    "target": {
+      "type": "aprandomizer:structure",
+      "level": {
+        "type": "aprandomizer:constant",
+        "level": "minecraft:overworld"
+      },
+      "structures": "#aprandomizer:ancient_city"
+    }
   }
 }

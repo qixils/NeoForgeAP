@@ -5,35 +5,35 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import gg.archipelago.aprandomizer.items.compass.CompassTarget;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
-import gg.archipelago.aprandomizer.structures.level.StructureLevelReference;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.LodestoneTracker;
-import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-public record CompassReward(TagKey<Structure> structures, StructureLevelReference level, Component name) implements APReward {
+public record CompassReward(Identifier id, CompassTarget target, Component name, String category) implements APReward {
 
     public static final MapCodec<CompassReward> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(
-                    TagKey.hashedCodec(Registries.STRUCTURE).fieldOf("structures").forGetter(CompassReward::structures),
-                    StructureLevelReference.CODEC.fieldOf("level").forGetter(CompassReward::level),
-                    ComponentSerialization.CODEC.fieldOf("name").forGetter(CompassReward::name))
+                    Identifier.CODEC.fieldOf("id").forGetter(CompassReward::id),
+                    CompassTarget.CODEC.fieldOf("target").forGetter(CompassReward::target),
+                    ComponentSerialization.CODEC.fieldOf("name").forGetter(CompassReward::name),
+                    Codec.STRING.fieldOf("category").forGetter(CompassReward::category))
             .apply(instance, CompassReward::new));
 
     public static final Codec<CompassReward> CODEC = MAP_CODEC.codec();
@@ -55,8 +55,8 @@ public record CompassReward(TagKey<Structure> structures, StructureLevelReferenc
 
     @Override
     public void give(ServerPlayer player) {
-        List<CompassReward> compassRewards = player.getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
-        compassRewards.add(this);
+        Map<Identifier, CompassReward> compassRewards = player.getData(APAttachmentTypes.AP_PLAYER).getUnlockedCompassRewards();
+        compassRewards.put(id, this);
 
         ItemStack compass = DEFAULT_COMPASS.create().copy();
         ItemManager.updateCompassLocation(this, player, compass);

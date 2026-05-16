@@ -197,10 +197,6 @@ public class Utils {
         return new Vec3(x, y, z);
     }
 
-    public static void addLodestoneTags(ResourceKey<Level> worldRegistryKey, BlockPos blockPos, ItemStack item) {
-        item.set(DataComponents.LODESTONE_TRACKER, new LodestoneTracker(Optional.of(new GlobalPos(worldRegistryKey, blockPos)),false));
-    }
-
     public static void giveItemToPlayer(ServerPlayer player, ItemStack itemstack) {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {

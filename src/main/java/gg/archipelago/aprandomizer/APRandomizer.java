@@ -12,6 +12,7 @@ import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import gg.archipelago.aprandomizer.items.APItem;
 import gg.archipelago.aprandomizer.items.APRewardTypes;
+import gg.archipelago.aprandomizer.items.compass.CompassTargetTypes;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.locations.APLocationTypes;
 import gg.archipelago.aprandomizer.managers.GoalManager;
@@ -225,6 +226,7 @@ public class APRandomizer {
         StructureLevelReferenceTypes.REGISTER.register(modEventBus);
         APAttachmentTypes.REGISTER.register(modEventBus);
         APLootModifierTypes.REGISTER.register(modEventBus);
+        CompassTargetTypes.REGISTER.register(modEventBus);
         modEventBus.addListener(APRandomizer::registerDataPackRegistries);
         modEventBus.addListener(APRandomizer::registerDataMapTypes);
     }

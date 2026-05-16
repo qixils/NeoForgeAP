@@ -1,11 +1,16 @@
 {
   "rewards": {
     "type": "aprandomizer:compass",
-    "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:village"
-    },
+    "category": "Structures",
+    "id": "aprandomizer:village",
     "name": "Village",
-    "structures": "#aprandomizer:village"
+    "target": {
+      "type": "aprandomizer:structure",
+      "level": {
+        "type": "aprandomizer:randomized_structure_level",
+        "name": "aprandomizer:village"
+      },
+      "structures": "#aprandomizer:village"
+    }
   }
 }

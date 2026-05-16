@@ -1,11 +1,16 @@
 {
   "rewards": {
     "type": "aprandomizer:compass",
-    "level": {
-      "type": "aprandomizer:randomized_structure_level",
-      "name": "aprandomizer:pillager_outpost"
-    },
+    "category": "Structures",
+    "id": "aprandomizer:pillager_outpost",
     "name": "Pillager Outpost",
-    "structures": "#aprandomizer:pillager_outpost"
+    "target": {
+      "type": "aprandomizer:structure",
+      "level": {
+        "type": "aprandomizer:randomized_structure_level",
+        "name": "aprandomizer:pillager_outpost"
+      },
+      "structures": "#aprandomizer:pillager_outpost"
+    }
   }
 }
