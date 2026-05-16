@@ -94,6 +94,7 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_ANCIENT_CITY = id("compass/ancient_city");
     public static final ResourceKey<APItem> COMPASS_TRAIL_RUINS = id("compass/trail_ruins");
     public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
+    public static final ResourceKey<APItem> COMPASS_UNVISITED_BIOMES = id("compass/unvisited_biomes");
 
     // Traps
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
