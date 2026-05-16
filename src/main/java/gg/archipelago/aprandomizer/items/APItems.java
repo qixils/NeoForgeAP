@@ -4,6 +4,7 @@ import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.items.compass.BiomeTarget;
 import gg.archipelago.aprandomizer.items.compass.StructureTarget;
+import gg.archipelago.aprandomizer.items.compass.UnvisitedBiomeTarget;
 import gg.archipelago.aprandomizer.items.traps.MobTrap;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.level.ConstantLevel;
@@ -445,6 +446,14 @@ public class APItems {
                                 new StructureTarget(APStructureTags.TRIAL_CHAMBERS, new ConstantLevel(Level.OVERWORLD)),
                                 Component.literal("Trial Chambers"),
                                 "Structures")));
+
+        context.register(COMPASS_UNVISITED_BIOMES,
+                APItem.ofReward(
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "unvisited_biomes"),
+                                new UnvisitedBiomeTarget(),
+                                Component.literal("Unvisited Biomes"),
+                                "Biomes")));
 
 
         context.register(TRAP_BEES,

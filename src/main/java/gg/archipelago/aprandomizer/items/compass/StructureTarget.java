@@ -6,6 +6,7 @@ import gg.archipelago.aprandomizer.structures.level.StructureLevelReference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
@@ -20,7 +21,7 @@ public record StructureTarget(TagKey<Structure> structures, StructureLevelRefere
             .apply(instance, StructureTarget::new));
 
     @Override
-    public Optional<BlockPos> findTarget(ServerLevel currentLevel, BlockPos start) {
+    public Optional<BlockPos> findTarget(ServerLevel currentLevel, BlockPos start, ServerPlayer player) {
         if (currentLevel.dimension() == level.level()) {
             return Optional.ofNullable(currentLevel.findNearestMapStructure(structures, start, 75, false));
         }

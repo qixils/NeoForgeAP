@@ -270,7 +270,7 @@ public class ItemManager {
 
     public static void updateCompassLocation(CompassReward compassReward, ServerPlayer player, ItemStack compass) {
         //get our local custom structure if needed.
-        Optional<BlockPos> pos = compassReward.target().findTarget(player.level(), player.blockPosition());
+        Optional<BlockPos> pos = compassReward.target().findTarget(player.level(), player.blockPosition(), player);
         List<String> lore = new ArrayList<>(List.of(
                 "Right click with compass in hand to",
                 "select a target from unlocked compasses."));

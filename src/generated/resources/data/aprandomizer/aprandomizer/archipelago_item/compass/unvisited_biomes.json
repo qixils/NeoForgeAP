@@ -1,0 +1,11 @@
+{
+  "rewards": {
+    "type": "aprandomizer:compass",
+    "category": "Biomes",
+    "id": "aprandomizer:unvisited_biomes",
+    "name": "Unvisited Biomes",
+    "target": {
+      "type": "aprandomizer:unvisited_biome"
+    }
+  }
+}

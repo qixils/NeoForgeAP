@@ -9,6 +9,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
 
 import java.util.Optional;
@@ -20,7 +21,7 @@ public record BiomeTarget(HolderSet<Biome> biomes) implements CompassTarget {
             .apply(instance, BiomeTarget::new));
 
     @Override
-    public Optional<BlockPos> findTarget(ServerLevel level, BlockPos start) {
+    public Optional<BlockPos> findTarget(ServerLevel level, BlockPos start, ServerPlayer player) {
         Pair<BlockPos, Holder<Biome>> target = level.findClosestBiome3d(biome -> biomes.contains(biome), start, 6400, 32, 64);
         if (target == null) {
             return Optional.empty();
