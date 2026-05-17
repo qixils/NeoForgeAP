@@ -90,47 +90,8 @@ public class APTemplatePools {
                         pools.getOrThrow(Pools.EMPTY),
                         List.of(
                                 Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/base_plate"),
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/base_plate"),
                                         1)),
-                        StructureTemplatePool.Projection.RIGID));
-
-        context.register(PILLAGER_OUTPOST_FEATURE_PLATES,
-                new StructureTemplatePool(
-                        pools.getOrThrow(Pools.EMPTY),
-                        List.of(
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_plate"),
-                                        1)),
-                        StructureTemplatePool.Projection.RIGID));
-
-        context.register(PILLAGER_OUTPOST_FEATURES,
-                new StructureTemplatePool(
-                        pools.getOrThrow(Pools.EMPTY),
-                        List.of(
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_cage1"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_cage2"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_cage_with_allays"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_logs"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_tent1"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_tent2"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/feature_targets"),
-                                        1),
-                                Pair.of(
-                                        StructurePoolElement.empty(),
-                                        6)),
                         StructureTemplatePool.Projection.RIGID));
 
         context.register(PILLAGER_OUTPOST_TOWERS,
@@ -140,10 +101,50 @@ public class APTemplatePools {
                                 Pair.of(
                                         StructurePoolElement.list(
                                                 List.of(
-                                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/watchtower"),
-                                                        StructurePoolElement.single(APRandomizer.MODID + ":pillager_outpost/watchtower_overgrown", processors.getOrThrow(ProcessorLists.OUTPOST_ROT)))),
+                                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/watchtower"),
+                                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/watchtower_overgrown", processors.getOrThrow(ProcessorLists.OUTPOST_ROT)))),
                                         1)),
                         StructureTemplatePool.Projection.RIGID));
+
+        context.register(PILLAGER_OUTPOST_FEATURE_PLATES,
+                new StructureTemplatePool(
+                        pools.getOrThrow(Pools.EMPTY),
+                        List.of(
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_plate"),
+                                        1)),
+                        StructureTemplatePool.Projection.RIGID));
+
+        context.register(PILLAGER_OUTPOST_FEATURES,
+                new StructureTemplatePool(
+                        pools.getOrThrow(Pools.EMPTY),
+                        List.of(
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_cage1"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_cage2"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_cage_with_allays"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_logs"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_tent1"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_tent2"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.legacy(APRandomizer.MODID + ":pillager_outpost/feature_targets"),
+                                        1),
+                                Pair.of(
+                                        StructurePoolElement.empty(),
+                                        6)),
+                        StructureTemplatePool.Projection.RIGID));
+
 
         Holder<StructureTemplatePool> netherVillageTerminators = context.register(VILLAGE_NETHER_TERMINATORS,
                 new StructureTemplatePool(

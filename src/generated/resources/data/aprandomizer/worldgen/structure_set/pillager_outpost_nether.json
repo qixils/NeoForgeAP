@@ -2,7 +2,7 @@
   "placement": {
     "type": "minecraft:random_spread",
     "exclusion_zone": {
-      "chunk_count": 10,
+      "chunk_count": 5,
       "other_set": "aprandomizer:village_nether"
     },
     "frequency": 0.2,

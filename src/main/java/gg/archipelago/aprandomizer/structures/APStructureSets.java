@@ -53,7 +53,7 @@ public class APStructureSets {
                                 StructurePlacement.FrequencyReductionMethod.LEGACY_TYPE_1,
                                 0.2F,
                                 44897651,
-                                Optional.of(new StructurePlacement.ExclusionZone(village_nether, 10)),
+                                Optional.of(new StructurePlacement.ExclusionZone(village_nether, 5)),
                                 15, 6, RandomSpreadType.LINEAR)));
     }
 }

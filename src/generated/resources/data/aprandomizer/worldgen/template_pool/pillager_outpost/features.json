@@ -2,7 +2,7 @@
   "elements": [
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_cage1",
         "processors": {
           "processors": []
@@ -13,7 +13,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_cage2",
         "processors": {
           "processors": []
@@ -24,7 +24,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_cage_with_allays",
         "processors": {
           "processors": []
@@ -35,7 +35,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_logs",
         "processors": {
           "processors": []
@@ -46,7 +46,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_tent1",
         "processors": {
           "processors": []
@@ -57,7 +57,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_tent2",
         "processors": {
           "processors": []
@@ -68,7 +68,7 @@
     },
     {
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "element_type": "minecraft:legacy_single_pool_element",
         "location": "aprandomizer:pillager_outpost/feature_targets",
         "processors": {
           "processors": []

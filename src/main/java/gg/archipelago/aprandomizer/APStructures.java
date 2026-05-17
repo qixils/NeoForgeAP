@@ -81,10 +81,11 @@ public class APStructures {
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),
                         Optional.empty(),
-                        6,
+                        7,
                         UniformHeight.of(
                                 VerticalAnchor.aboveBottom(16),
                                 VerticalAnchor.belowTop(10)),
+                        true,
                         Optional.empty(),
                         new JigsawStructure.MaxDistance(80)));
 

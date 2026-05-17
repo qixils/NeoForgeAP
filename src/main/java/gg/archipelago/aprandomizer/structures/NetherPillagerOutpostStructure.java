@@ -36,6 +36,7 @@ public class NetherPillagerOutpostStructure extends Structure {
                     Identifier.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
                     Codec.intRange(0, 30).fieldOf("size").forGetter(structure -> structure.size),
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
+                    Codec.BOOL.fieldOf("use_expansion_hack").forGetter(structure -> structure.useExpansionHack),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     JigsawStructure.MaxDistance.CODEC.fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter) //1-128
             ).apply(instance, NetherPillagerOutpostStructure::new));
@@ -44,6 +45,7 @@ public class NetherPillagerOutpostStructure extends Structure {
     private final Optional<Identifier> startJigsawName;
     private final int size;
     private final HeightProvider startHeight;
+    private final boolean useExpansionHack;
     private final Optional<Heightmap.Types> projectStartToHeightmap;
     private final JigsawStructure.MaxDistance maxDistanceFromCenter;
 
@@ -52,6 +54,7 @@ public class NetherPillagerOutpostStructure extends Structure {
                              Optional<Identifier> startJigsawName,
                              int size,
                              HeightProvider startHeight,
+                             boolean useExpansionHack,
                              Optional<Heightmap.Types> projectStartToHeightmap,
                              JigsawStructure.MaxDistance maxDistanceFromCenter)
     {
@@ -60,6 +63,7 @@ public class NetherPillagerOutpostStructure extends Structure {
         this.startJigsawName = startJigsawName;
         this.size = size;
         this.startHeight = startHeight;
+        this.useExpansionHack = useExpansionHack;
         this.projectStartToHeightmap = projectStartToHeightmap;
         this.maxDistanceFromCenter = maxDistanceFromCenter;
     }
@@ -141,7 +145,7 @@ public class NetherPillagerOutpostStructure extends Structure {
                         this.startJigsawName, // Can be used to only spawn from one Jigsaw block. But we don't need to worry about this.
                         this.size, // How deep a branch of pieces can go away from center piece. (5 means branches cannot be longer than 5 pieces from center piece)
                         blockPos, // Where to spawn the structure.
-                        false, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always.
+                        this.useExpansionHack, // "useExpansionHack" This is for legacy villages to generate properly. You should keep this false always. (Save for Pillager Outposts, which set this to true for some reason)
                         this.projectStartToHeightmap, // Adds the terrain height's y value to the passed in blockpos's y value. (This uses WORLD_SURFACE_WG heightmap which stops at top water too)
                         // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
                         // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
