@@ -84,7 +84,7 @@ public class OnLivingHurt {
             }
 
             Entity e = event.getSource().getEntity();
-            if (e instanceof ServerPlayer player && event.getNewDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
+            if (e instanceof ServerPlayer player && event.getHealthDamage() >= 18 && !event.getSource().is(DamageTypes.EXPLOSION) && !event.getSource().is(DamageTypes.FIREBALL)) {
                 //Utils.sendMessageToAll("damage type: "+ event.getSource().getMsgId());
                 AdvancementHolder a = server.getAdvancements().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/overkill"));
                 if (a == null) {
