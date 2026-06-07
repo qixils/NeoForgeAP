@@ -19,4 +19,5 @@ public class APRewardTypes {
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<CompassReward>> COMPASS = REGISTER.register("compass", () -> CompassReward.MAP_CODEC);
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<MobTrap>> MOB_TRAP = REGISTER.register("mob_trap", () -> MobTrap.MAP_CODEC);
     public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<DragonEggShardReward>> DRAGON_EGG_SHARD = REGISTER.register("dragon_egg_shard", () -> DragonEggShardReward.MAP_CODEC);
+    public static final DeferredHolder<MapCodec<? extends APReward>, MapCodec<HeartReward>> HEART = REGISTER.register("heart", () -> HeartReward.MAP_CODEC);
 }

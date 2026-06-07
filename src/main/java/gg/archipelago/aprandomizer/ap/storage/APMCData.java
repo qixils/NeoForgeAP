@@ -28,6 +28,9 @@ public class APMCData {
     @SerializedName("advancement_goal")
     public int advancements_required = -1;
 
+    @SerializedName("unlockable_hearts")
+    public boolean unlockable_hearts = false;
+
     @SerializedName("required_bosses")
     public Bosses required_bosses = Bosses.ENDER_DRAGON;
 

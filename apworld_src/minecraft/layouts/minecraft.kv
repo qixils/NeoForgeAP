@@ -1,0 +1,312 @@
+<RecentItem>:
+    size_hint: 1, None
+    height: 50
+    spacing: 10
+
+    Button:
+        text: '[b]' +root.name + '[/b]\n[color=bbb]' + root.path + '[/color]'
+        halign: 'left'
+        padding: 10, 0
+        markup: True
+        size: self.texture_size
+        id: load
+        text_size: self.width - 10, None
+        on_press: root.load()
+
+    Button:
+        id: rename
+        size_hint: None, 1
+        width: 50
+        padding: 20, 0
+        on_press: root.rename()
+        Image:
+            id: rename_icon
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size: self.width, self.height
+            color: 1, 1, 1, 1
+            fit_mode: "scale-down"
+
+    Button:
+        id: delete
+        size_hint: None, 1
+        width: 50
+        padding: 20, 0
+        on_press: root.delete()
+        Image:
+            id: delete_icon
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y
+            size: self.width, self.height
+            color: 1, .2, .2, 1
+            fit_mode: "scale-down"
+
+<TextOption>
+    rows: 1
+    size_hint: 1, None
+    height: 30
+    spacing: 10
+    Label:
+        size_hint: None, 1
+        width: dp(150)
+        text: root.label + ":"
+        text_size: self.size
+        valign: "middle"
+        halign: "right"
+    TextInput:
+        text: root.value
+        multiline: False
+        on_text_validate: root.button_press()
+
+<DropdownOption>
+    rows: 1
+    size_hint: 1, None
+    height: 30
+    spacing: 10
+    Label:
+        size_hint: None, 1
+        width: dp(150)
+        text: root.label + ":"
+        text_size: self.size
+        valign: "middle"
+        halign: "right"
+    Spinner:
+        text: root.value
+        values: root.options
+        size_hint: None, None
+        height: 30
+        width: dp(200)
+        on_text:
+            root.value = self.text
+
+<Separator@Widget>
+    size_hint_y: None
+    thickness: 2
+    margin: 2
+    height: self.thickness + 2 * self.margin
+    color: 1, 1, 1
+    canvas:
+        Color:
+            rgb: self.color
+        Rectangle:
+            pos: self.x + self.margin, self.y + self.margin + 1
+            size: self.width - 2 * self.margin , self.thickness
+
+<ProgressBarDialog>:
+    auto_dismiss: False
+    size_hint: .5, .5
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        Label:
+            text: root.text
+        ProgressBar:
+            max: root.max
+            value: root.progress
+        Label:
+            text: root.progress_text
+
+<ConfirmDialog>:
+    auto_dismiss: True
+    confirm_text: "Confirm"
+    cancel_text: "Cancel"
+    size_hint: .5, .5
+    GridLayout:
+        cols: 1
+        padding: 10
+        BoxLayout:
+            padding: 10
+            orientation: 'vertical'
+            id: content
+            Label:
+                text: root.text
+
+        GridLayout:
+            rows: 1
+            spacing: 10
+            padding: 10, 0
+            size_hint: 1, None
+            height: 40
+            Button:
+                id: confirm
+                text: root.confirm_text
+                background_color: 0, 1, 0, 1
+                on_press: root.dismiss()
+            Button
+                id: cancel
+                text: root.cancel_text
+                background_color: 1, 0, 0, 1
+                on_press: root.dismiss()
+
+<InfoDialog>:
+    auto_dismiss: True
+    button_text: "OK"
+    size_hint: .5, .5
+    GridLayout:
+        cols: 1
+        padding: 10
+        BoxLayout:
+            padding: 10
+            orientation: 'vertical'
+            id: content
+            Label:
+                text: root.text
+                text_size: self.width, None
+                size_hint: 1, None
+
+        GridLayout:
+            rows: 1
+            spacing: 10
+            padding: 10, 0
+            size_hint: 1, None
+            height: 40
+            Button:
+                text: root.button_text
+                background_color: 0, 1, 0, 1
+                on_press: root.dismiss()
+
+<LogEntry>:
+    markup: True
+    size_hint: 1, None
+    text_size: self.width, None
+    size: self.width, self.texture_size[1]
+
+<LogLabel@Label>:
+    markup: True
+    padding: 5,0
+    size_hint_y: None
+    text_size: self.width, None
+    height: self.texture_size[1]
+    canvas.before:
+        Color:
+            rgba: (0.2, 0.2, 0.2, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<ServerLog>:
+    messages: 1000 # amount of messages stored in client logs.
+    cols: 1
+    viewclass: 'LogLabel'
+    scroll_y: 0
+    scroll_type: ["content", "bars"]
+    bar_width: dp(12)
+    effect_cls: "ScrollEffect"
+    RecycleBoxLayout:
+        default_size: None, dp(20)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+        spacing: dp(3)
+
+<ServerWindow>:
+    name: "Server"
+    background_color: .5, .1, .1 , 1
+    GridLayout:
+        cols: 1
+        padding: dp(2)
+        spacing: dp(2)
+        Label:
+            id: status
+            size_hint: 1, None
+            height: 50
+            text: "...Server Starting..."
+            font_size: dp(25)
+
+            canvas.before:
+                Color:
+                    rgba: root.background_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        ServerLog:
+            id: log
+        TextInput:
+            id: cmd
+            multiline: False
+            size_hint: 1, None
+            height: self.minimum_height
+            on_text_validate: root.send_command(self.text)
+
+<WelcomeWindow>:
+    id: 'welcome'
+    name: "Welcome"
+    padding: 10, 5, 10, 10
+    TabbedPanel:
+        do_default_tab: False
+        TabbedPanelItem:
+            text: 'Games'
+            padding: 10
+            GridLayout:
+                cols: 1
+                padding: 10
+                GridLayout:
+                    rows: 1
+                    orientation: 'rl-tb'
+                    size_hint: 1, None
+                    height: 30
+                    Button:
+                        text: 'Open APMC File'
+                        padding: 10, 5
+                        size_hint: None, 1
+                        width: self.texture_size[0]
+                        on_press: root.client.open_apmc()
+
+                Separator:
+                    color: .5, .5, 1
+                    thickness: 3
+                    margin: 5
+
+                ScrollView:
+                    do_scroll_x: False
+                    effect_cls: 'ScrollEffect'
+                    GridLayout:
+                        cols: 1
+                        spacing: 10
+                        padding: 0, 5
+                        size_hint_y: None
+                        height: self.minimum_height
+                        id: saves
+        TabbedPanelItem:
+            text: "Options"
+            GridLayout:
+                cols: 1
+                id: option_layout
+                size_hint: 1, None
+                height: self.minimum_height
+                padding: 10
+                spacing: 10
+
+                GridLayout:
+                    rows: 1
+                    orientation: "rl-tb"
+                    size_hint: 1, None
+                    height: 30
+                    Button:
+                        size_hint: None, 1
+                        width: self.texture_size[0] + 20
+                        text: "Save"
+                        on_press: root.save_options()
+
+                FolderOption:
+                    id: path
+                    label: "Server Path"
+                    button_label: "Open Folder"
+                    Button:
+                        size_hint: None, 1
+                        width: self.texture_size[0] + dp(20)
+                        text: self.parent.button_label
+                        on_press: self.parent.button_press()
+
+                TextOption:
+                    id: max_memory
+                    label: "Max Memory"
+
+                TextOption:
+                    id: min_memory
+                    label: "Min Memory"
+
+                DropdownOption:
+                    id: release_option
+                    label: "Release Channel"

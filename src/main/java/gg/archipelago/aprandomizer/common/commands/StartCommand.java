@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.github.archipelagomw.ClientStatus;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
+import gg.archipelago.aprandomizer.common.Utils.UnlockableHearts;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.commands.CommandSourceStack;
@@ -82,7 +83,11 @@ public class StartCommand {
         server.execute(() -> {
             for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 player.getFoodData().eat(20, 20);
-                player.setHealth(20);
+                if (UnlockableHearts.enabled()) {
+                    UnlockableHearts.initialize(player);
+                } else {
+                    player.setHealth(20);
+                }
                 player.getInventory().clearContent();
                 player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
                 player.teleportTo(spawn.getX(), spawn.getY(), spawn.getZ());
