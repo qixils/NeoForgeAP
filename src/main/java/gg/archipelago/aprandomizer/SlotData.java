@@ -32,6 +32,9 @@ public class SlotData {
     @SerializedName("death_link")
     public boolean deathlink = false;
 
+    @SerializedName("unlockable_hearts")
+    public boolean unlockableHearts = false;
+
     @SerializedName("starting_items")
     public String startingItems;
 

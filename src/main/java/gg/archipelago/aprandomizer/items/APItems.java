@@ -93,6 +93,7 @@ public class APItems {
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
 
     public static final ResourceKey<APItem> DRAGON_EGG_SHARD = id("dragon_egg_shard");
+    public static final ResourceKey<APItem> HEART = id("heart");
 
     private static ResourceKey<APItem> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_ITEM, Identifier.fromNamespaceAndPath(APRandomizer.MODID, name));
@@ -409,6 +410,10 @@ public class APItems {
         context.register(DRAGON_EGG_SHARD,
                 APItem.ofReward(
                         new DragonEggShardReward()));
+
+        context.register(HEART,
+                APItem.ofReward(
+                        new HeartReward()));
     }
 
     private static ItemStack enchantment(Holder<Enchantment> enchantment, int level) {

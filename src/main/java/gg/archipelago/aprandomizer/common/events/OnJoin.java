@@ -2,6 +2,8 @@ package gg.archipelago.aprandomizer.common.events;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
+import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
+import gg.archipelago.aprandomizer.common.Utils.UnlockableHearts;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
@@ -52,6 +54,9 @@ public class OnJoin {
         }
         advancementManager.syncAllAdvancements();
         goalManager.updateInfoBar();
+        if (UnlockableHearts.enabled() && player.getData(APAttachmentTypes.AP_PLAYER).getIndex() == 0) {
+            UnlockableHearts.initialize(player);
+        }
         itemManager.catchUpPlayer(player);
 
         if (APRandomizer.isJailPlayers()) {

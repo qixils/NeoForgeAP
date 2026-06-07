@@ -12,6 +12,12 @@ Original (Forge) Implementation by KonoTyran.
 
 ## Configuring your YAML file
 
+### Unlockable Hearts
+
+This fork adds an `unlockable_hearts` option to the Minecraft APWorld. When enabled, players start with one heart, and nine progression `Heart` items are added to the item pool. Each received `Heart` restores one additional max heart up to the vanilla ten hearts.
+
+Use the packaged `minecraft.apworld` from this repository together with the matching NeoForgeAP mod jar built from this branch.
+
 ### What is a YAML file and why do I need one?
 
 See the guide on setting up a basic YAML at the Archipelago setup
