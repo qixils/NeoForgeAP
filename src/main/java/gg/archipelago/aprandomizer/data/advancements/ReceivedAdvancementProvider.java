@@ -346,6 +346,23 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("auto", PlayerTrigger.TriggerInstance.tick())
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/progressive_weapons_after"));
 
+        AdvancementHolder heartParent = root;
+        for (int heart = 1; heart <= 9; heart++) {
+            heartParent = Advancement.Builder.recipeAdvancement()
+                    .display(
+                            Items.RED_DYE,
+                            Component.literal("Heart Unlock " + heart),
+                            Component.literal("Increase your maximum health by one heart."),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            false,
+                            false)
+                    .parent(heartParent)
+                    .addCriterion("received", ReceivedItemCriteria.TriggerInstance.receivedItem(APItems.HEART, heart))
+                    .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "received/heart_" + heart));
+        }
+
         AdvancementHolder saddle = Advancement.Builder.recipeAdvancement()
                 .display(
                         Items.SADDLE,

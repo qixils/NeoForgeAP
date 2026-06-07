@@ -1,0 +1,26 @@
+{
+  "parent": "aprandomizer:received/heart_3",
+  "criteria": {
+    "received": {
+      "conditions": {
+        "item": "aprandomizer:heart",
+        "tier": 4
+      },
+      "trigger": "aprandomizer:received_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": "Increase your maximum health by one heart.",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:red_dye"
+    },
+    "title": "Heart Unlock 4"
+  },
+  "requirements": [
+    [
+      "received"
+    ]
+  ]
+}
