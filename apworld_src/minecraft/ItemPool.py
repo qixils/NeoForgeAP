@@ -44,7 +44,7 @@ def build_item_pool(world: "MinecraftWorld") -> List[Item]:
 
 	# Unlockable hearts
 	if world.options.unlockable_hearts:
-		itempool += [world.create_item("Heart") for _ in range(9)]
+		itempool += [world.create_item(f"Heart {heart}") for heart in range(1, 10)]
 
 	# Bee traps
 	bee_trap_percentage = world.options.bee_traps * 0.01

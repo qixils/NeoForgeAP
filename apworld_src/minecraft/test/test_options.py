@@ -33,8 +33,9 @@ class UnlockableHeartsTestBase(MCTestBase):
     }
 
     def test_hearts_in_pool(self):
-        hearts = [item for item in self.multiworld.itempool if item.name == "Heart"]
-        assert len(hearts) == 9
+        heart_names = {f"Heart {heart}" for heart in range(1, 10)}
+        hearts = [item for item in self.multiworld.itempool if item.name in heart_names]
+        assert {item.name for item in hearts} == heart_names
         assert all(item.classification == ItemClassification.progression for item in hearts)
 
     def test_unlockable_hearts_in_slot_data(self):
