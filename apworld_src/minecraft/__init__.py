@@ -162,7 +162,6 @@ class MinecraftWorld(World):
             'include_hard_advancements': self.options.include_hard_advancements.value,
             'include_unreasonable_advancements': self.options.include_unreasonable_advancements.value,
             'include_postgame_advancements': self.options.include_postgame_advancements.value,
-            'unlockable_hearts': self.options.unlockable_hearts.value,
         }
 
     def generate_early(self: "MinecraftWorld") -> None:
