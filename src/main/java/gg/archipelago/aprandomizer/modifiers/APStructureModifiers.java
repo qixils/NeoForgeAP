@@ -47,7 +47,7 @@ public class APStructureModifiers {
                                         BuiltinStructures.VILLAGE_TAIGA, biomes.getOrThrow(BiomeTags.HAS_VILLAGE_TAIGA)))),
                 APStructures.VILLAGE_NETHER_STRUCTURE,
                 VILLAGE_NAME));
-        
+
         context.register(PILLAGER_OUTPOST, new APStructureModifier(
                 Map.of(
                         Level.OVERWORLD, new APStructureModifier.LevelReplacements(
@@ -55,7 +55,7 @@ public class APStructureModifiers {
                                         BuiltinStructures.PILLAGER_OUTPOST, biomes.getOrThrow(BiomeTags.HAS_PILLAGER_OUTPOST)))),
                 APStructures.PILLAGER_OUTPOST_NETHER_STRUCTURE,
                 PILLAGER_OUTPOST_NAME));
-        
+
         context.register(FORTRESS, new APStructureModifier(
                 Map.of(),
                 BuiltinStructures.FORTRESS,
@@ -65,7 +65,7 @@ public class APStructureModifiers {
                 Map.of(),
                 BuiltinStructures.BASTION_REMNANT,
                 BASTION_REMNANT_NAME));
-        
+
         context.register(END_CITY, new APStructureModifier(
                 Map.of(
                         Level.END, new APStructureModifier.LevelReplacements(

@@ -1,13 +1,13 @@
 {
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 87633157,
-    "separation": 15,
-    "spacing": 40
+    "salt": 10387312,
+    "separation": 8,
+    "spacing": 34
   },
   "structures": [
     {
-      "structure": "aprandomizer:bee_grove",
+      "structure": "aprandomizer:end_city_overworld",
       "weight": 1
     }
   ]

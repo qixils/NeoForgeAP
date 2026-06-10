@@ -30,6 +30,8 @@ public class VanillaOverrideAdvancementProvider implements AdvancementSubProvide
                         LocationPredicate.Builder.inStructure(structures.getOrThrow(BuiltinStructures.END_CITY))))
                 .addCriterion("in_city_nether", PlayerTrigger.TriggerInstance.located(
                         LocationPredicate.Builder.inStructure(structures.getOrThrow(APStructures.END_CITY_NETHER_STRUCTURE))))
+                .addCriterion("in_city_overworld", PlayerTrigger.TriggerInstance.located(
+                        LocationPredicate.Builder.inStructure(structures.getOrThrow(APStructures.END_CITY_OVERWORLD_STRUCTURE))))
                 .display(
                         Items.PURPUR_BLOCK,
                         Component.translatable("advancements.end.find_end_city.title"),

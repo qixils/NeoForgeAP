@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:end_city",
+  "biomes": "#aprandomizer:overworld_structure",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

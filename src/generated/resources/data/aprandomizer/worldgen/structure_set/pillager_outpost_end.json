@@ -3,17 +3,17 @@
     "type": "minecraft:random_spread",
     "exclusion_zone": {
       "chunk_count": 10,
-      "other_set": "minecraft:villages"
+      "other_set": "aprandomizer:village_end"
     },
-    "frequency": 0.2,
     "frequency_reduction_method": "legacy_type_1",
     "salt": 165745296,
-    "separation": 6,
-    "spacing": 15
+    "separation": 11,
+    "spacing": 20,
+    "spread_type": "triangular"
   },
   "structures": [
     {
-      "structure": "minecraft:pillager_outpost",
+      "structure": "aprandomizer:pillager_outpost_end",
       "weight": 1
     }
   ]

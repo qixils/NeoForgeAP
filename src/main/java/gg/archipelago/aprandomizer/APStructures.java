@@ -6,8 +6,11 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.PillagerOutpostPools;
+import net.minecraft.data.worldgen.TaigaVillagePools;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
@@ -19,12 +22,10 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
-import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings;
-import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.structures.EndCityStructure;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -41,8 +42,11 @@ public class APStructures {
     public static final DeferredHolder<StructureType<?>, StructureType<NetherPillagerOutpostStructure>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> () -> NetherPillagerOutpostStructure.CODEC);
 
     public static final ResourceKey<Structure> VILLAGE_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
+    public static final ResourceKey<Structure> VILLAGE_END_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_end"));
     public static final ResourceKey<Structure> END_CITY_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
+    public static final ResourceKey<Structure> END_CITY_OVERWORLD_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_overworld"));
     public static final ResourceKey<Structure> PILLAGER_OUTPOST_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
+    public static final ResourceKey<Structure> PILLAGER_OUTPOST_END_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_end"));
     public static final ResourceKey<Structure> BEEGROVE_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
 
     public static void bootstrap(BootstrapContext<Structure> context) {
@@ -66,6 +70,43 @@ public class APStructures {
                                 .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                                 .build()));
 
+        context.register(END_CITY_OVERWORLD_STRUCTURE,
+                new EndCityStructure(
+                        new StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.OVERWORLD_STRUCTURE))
+                                .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
+                                .build()));
+
+        context.register(BuiltinStructures.END_CITY, new EndCityStructure(new Structure.StructureSettings(biomes.getOrThrow(BiomeTags.HAS_END_CITY))));
+
+
+        context.register(PILLAGER_OUTPOST_END_STRUCTURE,
+                new JigsawStructure(
+                        new Structure.StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.END_STRUCTURE))
+                                .spawnOverrides(
+                                        Map.of(
+                                                MobCategory.MONSTER,
+                                                new StructureSpawnOverride(
+                                                        StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedList.of(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1))
+                                                )
+                                        )
+                                )
+                                .terrainAdapation(TerrainAdjustment.BEARD_THIN)
+                                .build(),
+                        pools.getOrThrow(PillagerOutpostPools.START),
+                        7,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        true,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+
+        context.register(VILLAGE_END_STRUCTURE,
+                new JigsawStructure(
+                        new Structure.StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.END_STRUCTURE)).terrainAdapation(TerrainAdjustment.BEARD_THIN).build(),
+                        pools.getOrThrow(TaigaVillagePools.START),
+                        6,
+                        ConstantHeight.of(VerticalAnchor.absolute(0)),
+                        true,
+                        Heightmap.Types.WORLD_SURFACE_WG));
+
         context.register(PILLAGER_OUTPOST_NETHER_STRUCTURE,
                 new NetherPillagerOutpostStructure(
                         new StructureSettings.Builder(HolderSet.empty())
@@ -76,7 +117,7 @@ public class APStructures {
                                                 MobCategory.MONSTER, new StructureSpawnOverride(
                                                         StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                                         WeightedList.<MobSpawnSettings.SpawnerData>builder()
-                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 5))
+                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 1))
                                                                 .build())))
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),
