@@ -32,8 +32,6 @@ public class APMCData {
 
     @SerializedName("required_bosses")
     public Bosses required_bosses = Bosses.ENDER_DRAGON;
-    @SerializedName("structure_spawn_rate")
-    public int structure_spawn_rate = -1;
 
     @SerializedName("server")
     @Nullable
