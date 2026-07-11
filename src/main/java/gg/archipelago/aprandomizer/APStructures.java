@@ -42,11 +42,8 @@ public class APStructures {
     public static final DeferredHolder<StructureType<?>, StructureType<NetherPillagerOutpostStructure>> PILLAGER_OUTPOST_NETHER = DEFERRED_REGISTRY_STRUCTURE.register("pillager_outpost_nether", () -> () -> NetherPillagerOutpostStructure.CODEC);
 
     public static final ResourceKey<Structure> VILLAGE_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_nether"));
-    public static final ResourceKey<Structure> VILLAGE_END_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "village_end"));
     public static final ResourceKey<Structure> END_CITY_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_nether"));
-    public static final ResourceKey<Structure> END_CITY_OVERWORLD_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "end_city_overworld"));
     public static final ResourceKey<Structure> PILLAGER_OUTPOST_NETHER_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_nether"));
-    public static final ResourceKey<Structure> PILLAGER_OUTPOST_END_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "pillager_outpost_end"));
     public static final ResourceKey<Structure> BEEGROVE_STRUCTURE = ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "bee_grove"));
 
     public static void bootstrap(BootstrapContext<Structure> context) {
@@ -69,43 +66,6 @@ public class APStructures {
                         new StructureSettings.Builder(HolderSet.empty())
                                 .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
                                 .build()));
-
-        context.register(END_CITY_OVERWORLD_STRUCTURE,
-                new EndCityStructure(
-                        new StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.OVERWORLD_STRUCTURE))
-                                .generationStep(GenerationStep.Decoration.SURFACE_STRUCTURES)
-                                .build()));
-
-        context.register(BuiltinStructures.END_CITY, new EndCityStructure(new Structure.StructureSettings(biomes.getOrThrow(BiomeTags.HAS_END_CITY))));
-
-
-        context.register(PILLAGER_OUTPOST_END_STRUCTURE,
-                new JigsawStructure(
-                        new Structure.StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.END_STRUCTURE))
-                                .spawnOverrides(
-                                        Map.of(
-                                                MobCategory.MONSTER,
-                                                new StructureSpawnOverride(
-                                                        StructureSpawnOverride.BoundingBoxType.STRUCTURE, WeightedList.of(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1))
-                                                )
-                                        )
-                                )
-                                .terrainAdapation(TerrainAdjustment.BEARD_THIN)
-                                .build(),
-                        pools.getOrThrow(PillagerOutpostPools.START),
-                        7,
-                        ConstantHeight.of(VerticalAnchor.absolute(0)),
-                        true,
-                        Heightmap.Types.WORLD_SURFACE_WG));
-
-        context.register(VILLAGE_END_STRUCTURE,
-                new JigsawStructure(
-                        new Structure.StructureSettings.Builder(biomes.getOrThrow(APBiomeTags.END_STRUCTURE)).terrainAdapation(TerrainAdjustment.BEARD_THIN).build(),
-                        pools.getOrThrow(TaigaVillagePools.START),
-                        6,
-                        ConstantHeight.of(VerticalAnchor.absolute(0)),
-                        true,
-                        Heightmap.Types.WORLD_SURFACE_WG));
 
         context.register(PILLAGER_OUTPOST_NETHER_STRUCTURE,
                 new NetherPillagerOutpostStructure(
