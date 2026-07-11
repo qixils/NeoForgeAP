@@ -132,27 +132,6 @@ public class APStructureSets {
                 )
         );
         context.register(
-                BuiltinStructureSets.BURIED_TREASURES,
-                new StructureSet(
-                        structures.getOrThrow(BuiltinStructures.BURIED_TREASURE),
-                        new RandomSpreadStructurePlacement(
-                                new Vec3i(9, 0, 9), StructurePlacement.FrequencyReductionMethod.LEGACY_TYPE_2, 0.01F, 0, Optional.empty(), 1, 0, RandomSpreadType.LINEAR
-                        )
-                )
-        );
-        context.register(
-                BuiltinStructureSets.MINESHAFTS,
-                new StructureSet(
-                        List.of(
-                                StructureSet.entry(structures.getOrThrow(BuiltinStructures.MINESHAFT)),
-                                StructureSet.entry(structures.getOrThrow(BuiltinStructures.MINESHAFT_MESA))
-                        ),
-                        new RandomSpreadStructurePlacement(
-                                Vec3i.ZERO, StructurePlacement.FrequencyReductionMethod.LEGACY_TYPE_3, 0.004F, 0, Optional.empty(), 1, 0, RandomSpreadType.LINEAR
-                        )
-                )
-        );
-        context.register(
                 BuiltinStructureSets.RUINED_PORTALS,
                 new StructureSet(
                         List.of(
@@ -195,12 +174,6 @@ public class APStructureSets {
                                 StructureSet.entry(structures.getOrThrow(BuiltinStructures.BASTION_REMNANT), 3)
                         ),
                         new RandomSpreadStructurePlacement(27, 4, RandomSpreadType.LINEAR, 30084232)
-                )
-        );
-        context.register(
-                BuiltinStructureSets.NETHER_FOSSILS,
-                new StructureSet(
-                        structures.getOrThrow(BuiltinStructures.NETHER_FOSSIL), new RandomSpreadStructurePlacement(2, 1, RandomSpreadType.LINEAR, 14357921)
                 )
         );
         context.register(
