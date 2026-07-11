@@ -5,7 +5,6 @@
     "minecraft:village_savanna",
     "minecraft:village_snowy",
     "minecraft:village_taiga",
-    "aprandomizer:village_nether",
-    "aprandomizer:village_end"
+    "aprandomizer:village_nether"
   ]
 }

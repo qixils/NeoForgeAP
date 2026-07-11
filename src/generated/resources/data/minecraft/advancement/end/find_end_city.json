@@ -32,22 +32,6 @@
         ]
       },
       "trigger": "minecraft:location"
-    },
-    "in_city_overworld": {
-      "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "location": {
-                "structures": "aprandomizer:end_city_overworld"
-              }
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:location"
     }
   },
   "display": {
@@ -64,8 +48,7 @@
   "requirements": [
     [
       "in_city",
-      "in_city_nether",
-      "in_city_overworld"
+      "in_city_nether"
     ]
   ],
   "sends_telemetry_event": true

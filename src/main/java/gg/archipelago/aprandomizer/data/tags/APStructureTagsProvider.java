@@ -23,16 +23,14 @@ public class APStructureTagsProvider extends StructureTagsProvider {
 
         tag(APStructureTags.END_CITY)
                 .add(BuiltinStructures.END_CITY)
-                .add(APStructures.END_CITY_NETHER_STRUCTURE)
-                .add(APStructures.END_CITY_OVERWORLD_STRUCTURE);
+                .add(APStructures.END_CITY_NETHER_STRUCTURE);
 
         tag(APStructureTags.FORTRESS)
                 .add(BuiltinStructures.FORTRESS);
 
         tag(APStructureTags.PILLAGER_OUTPOST)
                 .add(BuiltinStructures.PILLAGER_OUTPOST)
-                .add(APStructures.PILLAGER_OUTPOST_NETHER_STRUCTURE)
-                .add(APStructures.PILLAGER_OUTPOST_END_STRUCTURE);
+                .add(APStructures.PILLAGER_OUTPOST_NETHER_STRUCTURE);
 
         tag(APStructureTags.VILLAGE)
                 .add(BuiltinStructures.VILLAGE_DESERT)
@@ -40,8 +38,7 @@ public class APStructureTagsProvider extends StructureTagsProvider {
                 .add(BuiltinStructures.VILLAGE_SAVANNA)
                 .add(BuiltinStructures.VILLAGE_SNOWY)
                 .add(BuiltinStructures.VILLAGE_TAIGA)
-                .add(APStructures.VILLAGE_NETHER_STRUCTURE)
-                .add(APStructures.VILLAGE_END_STRUCTURE);
+                .add(APStructures.VILLAGE_NETHER_STRUCTURE);
 
         tag(APStructureTags.ANCIENT_CITY)
                 .add(BuiltinStructures.ANCIENT_CITY);
