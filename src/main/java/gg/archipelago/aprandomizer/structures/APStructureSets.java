@@ -9,13 +9,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructureSets;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
-import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
@@ -31,7 +26,7 @@ public class APStructureSets {
 
     public static void bootstrap(BootstrapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
-        HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
+        //HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         context.register(BEE_GROVE,
                 new StructureSet(
                         List.of(
@@ -63,7 +58,7 @@ public class APStructureSets {
                                 Optional.of(new StructurePlacement.ExclusionZone(village_nether, 10)),
                                 27, 4, RandomSpreadType.LINEAR)));
 
-        //Vanilla Structure Overrides
+        /*Vanilla Structure Overrides, for if we determine the base randomizer needs adjusted structure spawn rates.
         Holder.Reference<StructureSet> villages = context.register(
                 BuiltinStructureSets.VILLAGES,
                 new StructureSet(
@@ -199,5 +194,6 @@ public class APStructureSets {
                         structures.getOrThrow(BuiltinStructures.TRIAL_CHAMBERS), new RandomSpreadStructurePlacement(34, 12, RandomSpreadType.LINEAR, 94251327)
                 )
         );
+         */
     }
 }
