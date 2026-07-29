@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.zombie.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -41,7 +41,7 @@ public class GoonTrap implements Trap {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfGoons; i++) {
-                Zombie goon = EntityType.ZOMBIE.create(world, EntitySpawnReason.MOB_SUMMONED);
+                Zombie goon = EntityTypes.ZOMBIE.create(world, EntitySpawnReason.MOB_SUMMONED);
                 if (goon == null) continue;
                 goon.setItemInHand(InteractionHand.MAIN_HAND, fish.copy());
                 goon.setTarget(player);

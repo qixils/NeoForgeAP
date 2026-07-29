@@ -6,7 +6,7 @@ import gg.archipelago.aprandomizer.items.APItems;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.triggers.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
@@ -48,7 +48,7 @@ public class ReceivedAdvancementProvider implements AdvancementSubProvider {
 
         AdvancementHolder beds = Advancement.Builder.recipeAdvancement()
                 .display(
-                        Items.PINK_BED,
+                        Items.BED.pink(),
                         Component.literal("Beds"),
                         Component.empty(),
                         null,

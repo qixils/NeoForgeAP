@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -33,7 +33,7 @@ public class PhantomTrap implements Trap {
             ServerLevel world = (ServerLevel) player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < 3; i++) {
-                Phantom phantom = EntityType.PHANTOM.create(world, EntitySpawnReason.MOB_SUMMONED);
+                Phantom phantom = EntityTypes.PHANTOM.create(world, EntitySpawnReason.MOB_SUMMONED);
                 if (phantom == null) continue;
                 phantom.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, MobEffectInstance.INFINITE_DURATION, 0, false, false));
                 Vec3 offset = Utils.getRandomPosition(pos, 5);

@@ -1,11 +1,11 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import io.github.archipelagomw.Print.APPrintJsonType;
-import io.github.archipelagomw.events.ArchipelagoEventListener;
-import io.github.archipelagomw.events.PrintJSONEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import io.github.archipelagomw.Print.APPrintJsonType;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.PrintJSONEvent;
 
 public class PrintJsonListener {
 

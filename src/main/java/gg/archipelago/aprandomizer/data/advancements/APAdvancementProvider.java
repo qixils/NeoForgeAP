@@ -2,8 +2,15 @@ package gg.archipelago.aprandomizer.data.advancements;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.tags.APDamageTypeTags;
-import net.minecraft.advancements.*;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.predicates.*;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate;
+import net.minecraft.advancements.predicates.entity.PlayerPredicate;
+import net.minecraft.advancements.triggers.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -11,11 +18,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
@@ -196,7 +204,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         true,
                         false)
                 .addCriterion("ride_1km", CriteriaTriggers.TICK.createCriterion(new PlayerTrigger.TriggerInstance(Optional.of(EntityPredicate.wrap(EntityPredicate.Builder.entity()
-                        .subPredicate(PlayerPredicate.Builder.player()
+                        .player(PlayerPredicate.Builder.player()
                                 .addStat(Stats.CUSTOM, customStats.getOrThrow(ResourceKey.create(Registries.CUSTOM_STAT, Stats.MINECART_ONE_CM)), MinMaxBounds.Ints.atLeast(100000))
                                 .build()))))))
                 .requirements(AdvancementRequirements.Strategy.AND)
@@ -216,7 +224,7 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                 .addCriterion("fall_riding_pig", CriteriaTriggers.ENTITY_HURT_PLAYER.createCriterion(new EntityHurtPlayerTrigger.TriggerInstance(Optional.of(
                         EntityPredicate.wrap(EntityPredicate.Builder.entity()
                                 .vehicle(EntityPredicate.Builder.entity()
-                                        .entityType(EntityTypePredicate.of(entityTypes, EntityType.PIG))))),
+                                        .entityType(EntityTypePredicate.of(entityTypes, EntityTypes.PIG))))),
                         Optional.of(DamagePredicate.Builder.damageInstance()
                                 .type(DamageSourcePredicate.Builder.damageType()
                                         .tag(TagPredicate.is(APDamageTypeTags.FALL)))

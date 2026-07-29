@@ -7,8 +7,8 @@ import gg.archipelago.aprandomizer.items.compass.CompassTarget;
 import gg.archipelago.aprandomizer.locations.APLocation;
 import gg.archipelago.aprandomizer.structures.level.StructureLevelReference;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 
 public class APRegistries {
     public static final ResourceKey<Registry<APItem>> ARCHIPELAGO_ITEM = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago_item"));

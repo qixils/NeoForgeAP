@@ -1,13 +1,13 @@
 package gg.archipelago.aprandomizer.ap;
 
-import io.github.archipelagomw.Client;
-import io.github.archipelagomw.flags.ItemsHandling;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.events.*;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
+import io.github.archipelagomw.Client;
+import io.github.archipelagomw.flags.ItemsHandling;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.server.MinecraftServer;

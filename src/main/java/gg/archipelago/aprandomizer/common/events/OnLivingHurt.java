@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.common.events;
 
-import io.github.archipelagomw.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
+import io.github.archipelagomw.network.client.BouncePacket;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.Identifier;
@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.pig.Pig;
 import net.minecraft.world.level.storage.TagValueOutput;
@@ -34,7 +34,7 @@ public class OnLivingHurt {
     @SubscribeEvent
     static void onLivingDeathEvent(LivingDeathEvent event) {
         Entity damageSource = event.getSource().getEntity();
-        if (damageSource == null || damageSource.getType() != EntityType.PLAYER) return;
+        if (damageSource == null || damageSource.getType() != EntityTypes.PLAYER) return;
 
         APClient apClient = APRandomizer.getAP();
         if (apClient == null || !apClient.isConnected()) return;

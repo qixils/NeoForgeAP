@@ -2,7 +2,6 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
-import gg.archipelago.aprandomizer.items.compass.BiomeTarget;
 import gg.archipelago.aprandomizer.items.compass.StructureTarget;
 import gg.archipelago.aprandomizer.items.compass.UnvisitedBiomeTarget;
 import gg.archipelago.aprandomizer.items.traps.MobTrap;
@@ -12,7 +11,6 @@ import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,14 +20,13 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biomes;
 
 import java.util.List;
 import java.util.Optional;
@@ -134,23 +131,11 @@ public class APItems {
                         new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.FLINT_AND_STEEL))))));
 
         context.register(GROUP_RECIPES_BEDS,
-                APItem.ofRewards(List.of(
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLACK_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BLUE_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.BROWN_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.CYAN_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GRAY_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GREEN_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIGHT_BLUE_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIGHT_GRAY_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.LIME_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.MAGENTA_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.ORANGE_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.PINK_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.PURPLE_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.RED_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.WHITE_BED))),
-                        new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.YELLOW_BED))))));
+                APItem.ofRewards(Items.BED
+                        .map(ItemStackTemplate::new)
+                        .map(RecipeBuilder::getDefaultRecipeId)
+                        .<APReward>map(RecipeReward::new)
+                        .asList()));
 
         context.register(GROUP_RECIPES_BOTTLES,
                 APItem.ofRewards(List.of(
@@ -263,7 +248,7 @@ public class APItems {
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.REDSTONE_BLOCK))),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.GLOWSTONE))),
                                 new RecipeReward(Identifier.withDefaultNamespace("copper_ingot_from_copper_block")),
-                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_BLOCK))),
+                                new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.COPPER_BLOCK.weathering().unaffected()))),
                                 new RecipeReward(Identifier.withDefaultNamespace("iron_ingot_from_iron_block")),
                                 new RecipeReward(RecipeBuilder.getDefaultRecipeId(new ItemStackTemplate(Items.IRON_BLOCK))),
                                 new RecipeReward(Identifier.withDefaultNamespace("gold_ingot_from_gold_block")),
@@ -459,7 +444,7 @@ public class APItems {
 
         context.register(TRAP_BEES,
                 APItem.ofReward(
-                        new MobTrap(EntityType.BEE, 3, 5, true, Optional.of(1200))));
+                        new MobTrap(EntityTypes.BEE, 3, 5, true, Optional.of(1200))));
 
         context.register(DRAGON_EGG_SHARD,
                 APItem.ofReward(

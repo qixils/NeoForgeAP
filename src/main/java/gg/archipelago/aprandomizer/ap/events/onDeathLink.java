@@ -1,12 +1,12 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import io.github.archipelagomw.events.ArchipelagoEventListener;
-import io.github.archipelagomw.events.DeathLinkEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.common.events.OnDeath;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.DeathLinkEvent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
