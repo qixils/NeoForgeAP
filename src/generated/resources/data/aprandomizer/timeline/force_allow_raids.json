@@ -1,0 +1,13 @@
+{
+  "clock": "minecraft:overworld",
+  "tracks": {
+    "minecraft:gameplay/can_start_raid": {
+      "keyframes": [
+        {
+          "ticks": 0,
+          "value": true
+        }
+      ]
+    }
+  }
+}

@@ -14,12 +14,13 @@ import gg.archipelago.aprandomizer.data.recipes.APRecipeProvider;
 import gg.archipelago.aprandomizer.data.tags.APBiomeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APDamageTypeTagsProvider;
 import gg.archipelago.aprandomizer.data.tags.APStructureTagsProvider;
-import gg.archipelago.aprandomizer.dimensions.APDimensionTypes;
+import gg.archipelago.aprandomizer.data.tags.APTimelineTagsProvider;
 import gg.archipelago.aprandomizer.items.APItems;
 import gg.archipelago.aprandomizer.locations.APLocations;
 import gg.archipelago.aprandomizer.modifiers.APStructureModifiers;
 import gg.archipelago.aprandomizer.structures.APStructureSets;
 import gg.archipelago.aprandomizer.structures.APTemplatePools;
+import gg.archipelago.aprandomizer.timelines.APTimelines;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -51,7 +52,7 @@ public class APDataGenerator {
                         .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
                         .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap)
                         .add(APRegistries.ARCHIPELAGO_ITEM, APItems::bootstrap)
-                        .add(Registries.DIMENSION_TYPE, APDimensionTypes::bootstrap),
+                        .add(Registries.TIMELINE, APTimelines::bootstrap),
                 Set.of(APRandomizer.MODID, "minecraft"))).getRegistryProvider();
         event.addProvider(new AdvancementProvider(event.getGenerator().getPackOutput(), registries, List.of(
                 new APAdvancementProvider(),
@@ -74,5 +75,6 @@ public class APDataGenerator {
                 List.of(
                         new LootTableProvider.SubProviderEntry(APAddedLootTableProvider::new, LootContextParamSets.ALL_PARAMS)),
                 registries));
+        event.addProvider(new APTimelineTagsProvider(event.getGenerator().getPackOutput(), registries));
     }
 }
