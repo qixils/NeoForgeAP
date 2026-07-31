@@ -2,6 +2,7 @@ package gg.archipelago.aprandomizer.items;
 
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
+import gg.archipelago.aprandomizer.items.compass.ConstantBiomeTarget;
 import gg.archipelago.aprandomizer.items.compass.StructureTarget;
 import gg.archipelago.aprandomizer.items.compass.UnvisitedBiomeTarget;
 import gg.archipelago.aprandomizer.items.traps.MobTrap;
@@ -11,6 +12,7 @@ import gg.archipelago.aprandomizer.structures.level.RandomizedStructureLevel;
 import gg.archipelago.aprandomizer.tags.APStructureTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,6 +29,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 
 import java.util.List;
 import java.util.Optional;
@@ -92,6 +96,7 @@ public class APItems {
     public static final ResourceKey<APItem> COMPASS_TRAIL_RUINS = id("compass/trail_ruins");
     public static final ResourceKey<APItem> COMPASS_TRIAL_CHAMBERS = id("compass/trial_chambers");
     public static final ResourceKey<APItem> COMPASS_UNVISITED_BIOMES = id("compass/unvisited_biomes");
+    public static final ResourceKey<APItem> COMPASS_SULFUR_CAVES = id("compass/sulfur_cave");
 
     // Traps
     public static final ResourceKey<APItem> TRAP_BEES = id("trap/bees");
@@ -104,6 +109,7 @@ public class APItems {
 
     public static void bootstrap(BootstrapContext<APItem> context) {
         HolderGetter<Enchantment> enchantments = context.lookup(Registries.ENCHANTMENT);
+        HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
 
         context.register(GROUP_RECIPES_ARCHERY,
                 APItem.ofRewards(List.of(
@@ -439,6 +445,14 @@ public class APItems {
                                 Identifier.fromNamespaceAndPath(APRandomizer.MODID, "unvisited_biomes"),
                                 new UnvisitedBiomeTarget(),
                                 Component.literal("Unvisited Biomes"),
+                                "Biomes")));
+
+        context.register(COMPASS_SULFUR_CAVES,
+                APItem.ofReward(
+                        new CompassReward(
+                                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "sulfur_caves"),
+                                new ConstantBiomeTarget(HolderSet.direct(biomes.getOrThrow(Biomes.SULFUR_CAVES))),
+                                Component.literal("Sulfur Caves"),
                                 "Biomes")));
 
 

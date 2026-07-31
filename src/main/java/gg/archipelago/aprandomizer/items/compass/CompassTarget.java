@@ -14,5 +14,9 @@ public interface CompassTarget {
 
     public Optional<BlockPos> findTarget(ServerLevel level, BlockPos start, ServerPlayer player);
 
+    public default boolean includeY() {
+        return true;
+    }
+
     public MapCodec<? extends CompassTarget> codec();
 }

@@ -280,7 +280,7 @@ public class ItemManager {
                 .append(")");
 
         if (pos.isPresent()) {
-            lore.addFirst("Location X: " + pos.get().getX() + ", Z: " + pos.get().getZ());
+            lore.addFirst("Location X: " + pos.get().getX() + (compassReward.target().includeY() ? ", Y: " + pos.get().getY() : "") + ", Z: " + pos.get().getZ());
         } else {
             displayName = Component.empty()
                     .append("Structure Compass (")

@@ -29,6 +29,11 @@ public record StructureTarget(TagKey<Structure> structures, StructureLevelRefere
     }
 
     @Override
+    public boolean includeY() {
+        return false;
+    }
+
+    @Override
     public MapCodec<? extends CompassTarget> codec() {
         return CODEC;
     }
