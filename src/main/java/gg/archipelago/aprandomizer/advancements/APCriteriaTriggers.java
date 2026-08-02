@@ -1,7 +1,7 @@
 package gg.archipelago.aprandomizer.advancements;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

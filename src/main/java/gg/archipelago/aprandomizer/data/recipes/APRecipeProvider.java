@@ -1,16 +1,16 @@
 package gg.archipelago.aprandomizer.data.recipes;
 
 import gg.archipelago.aprandomizer.APRandomizer;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.criterion.ImpossibleTrigger;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
+import net.minecraft.advancements.triggers.ImpossibleTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;

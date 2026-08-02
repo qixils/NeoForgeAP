@@ -3,8 +3,8 @@ package gg.archipelago.aprandomizer.locations;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.APRegistries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 
 public class APLocations {
     
@@ -150,6 +150,8 @@ public class APLocations {
     public static final ResourceKey<APLocation> VANILLA_ADVENTURE_HEART_TRANSPLANTER = id("vanilla/adventure/heart_transplanter");
     //1.21.11 "Mounts of Mayhem" advancements
     public static final ResourceKey<APLocation> VANILLA_ADVENTURE_SPEAR_MANY_MOBS = id("vanilla/adventure/spear_many_mobs");
+    //26.2 "Chaos Cubed" advancements
+    public static final ResourceKey<APLocation> VANILLA_HUSBANDRY_UH_OH = id("vanilla/husbandry/uh_oh");
     private static ResourceKey<APLocation> id(String name) {
         return ResourceKey.create(APRegistries.ARCHIPELAGO_LOCATION, Identifier.fromNamespaceAndPath(APRandomizer.MODID, name));
     }
@@ -297,5 +299,7 @@ public class APLocations {
         context.register(VANILLA_ADVENTURE_HEART_TRANSPLANTER, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/heart_transplanter")));
         //1.21.11 advancements
         context.register(VANILLA_ADVENTURE_SPEAR_MANY_MOBS, new AdvancementLocation(Identifier.withDefaultNamespace("adventure/spear_many_mobs")));
+        //26.2 advancements
+        context.register(VANILLA_HUSBANDRY_UH_OH, new AdvancementLocation(Identifier.withDefaultNamespace("husbandry/uh_oh")));
     }
 }

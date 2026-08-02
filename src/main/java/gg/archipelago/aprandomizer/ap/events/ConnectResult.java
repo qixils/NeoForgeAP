@@ -1,13 +1,13 @@
 package gg.archipelago.aprandomizer.ap.events;
 
-import io.github.archipelagomw.events.ArchipelagoEventListener;
-import io.github.archipelagomw.events.ConnectionResultEvent;
-import io.github.archipelagomw.network.ConnectionResult;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.managers.GoalManager;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.ConnectionResultEvent;
+import io.github.archipelagomw.network.ConnectionResult;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import net.minecraft.core.HolderLookup;
 import org.apache.logging.log4j.LogManager;

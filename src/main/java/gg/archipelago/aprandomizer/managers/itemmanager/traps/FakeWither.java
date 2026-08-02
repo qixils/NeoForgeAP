@@ -10,7 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -23,7 +23,7 @@ public class FakeWither implements Trap {
     public FakeWither(MinecraftServer server) {
         NeoForge.EVENT_BUS.register(this);
 
-        witherBar = server.getCustomBossEvents().create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityType.WITHER.getDescriptionId()));
+        witherBar = server.getCustomBossEvents().create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "fake-wither"), Component.translatable(EntityTypes.WITHER.getDescriptionId()));
         witherBar.setColor(BossEvent.BossBarColor.PURPLE);
         witherBar.setDarkenScreen(true);
         witherBar.setMax(300);

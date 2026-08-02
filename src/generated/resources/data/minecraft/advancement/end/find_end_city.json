@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "structures": "minecraft:end_city"
               }
             }
@@ -24,7 +24,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "location": {
+              "minecraft:location": {
                 "structures": "aprandomizer:end_city_nether"
               }
             }

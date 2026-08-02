@@ -1,19 +1,19 @@
 package gg.archipelago.aprandomizer;
 
-import gg.archipelago.aprandomizer.structures.*;
+import gg.archipelago.aprandomizer.structures.APTemplatePools;
+import gg.archipelago.aprandomizer.structures.NetherEndCityStructure;
+import gg.archipelago.aprandomizer.structures.NetherPillagerOutpostStructure;
+import gg.archipelago.aprandomizer.structures.NetherVillageStructure;
 import gg.archipelago.aprandomizer.tags.APBiomeTags;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.data.worldgen.PillagerOutpostPools;
-import net.minecraft.data.worldgen.TaigaVillagePools;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.BiomeTags;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -77,7 +77,7 @@ public class APStructures {
                                                 MobCategory.MONSTER, new StructureSpawnOverride(
                                                         StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                                         WeightedList.<MobSpawnSettings.SpawnerData>builder()
-                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 1))
+                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypes.PILLAGER, 1, 1), 1))
                                                                 .build())))
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),

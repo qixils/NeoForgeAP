@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.phys.Vec3;
 
@@ -28,7 +28,7 @@ public class BeeTrap implements Trap {
             ServerLevel world = player.level();
             Vec3 pos = player.position();
             for (int i = 0; i < numberOfBees; i++) {
-                Bee bee = EntityType.BEE.create(world, EntitySpawnReason.MOB_SUMMONED);
+                Bee bee = EntityTypes.BEE.create(world, EntitySpawnReason.MOB_SUMMONED);
                 if (bee == null) continue;
                 Vec3 offset = Utils.getRandomPosition(pos, 5);
                 bee.snapTo(offset);

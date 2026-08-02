@@ -1,20 +1,17 @@
 package gg.archipelago.aprandomizer.ap.events;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import io.github.archipelagomw.events.ArchipelagoEventListener;
-import io.github.archipelagomw.events.BouncedEvent;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.SlotData;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
+import io.github.archipelagomw.events.ArchipelagoEventListener;
+import io.github.archipelagomw.events.BouncedEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
@@ -44,7 +41,7 @@ public class onMC35 {
             } catch (CommandSyntaxException ignored) {
             }
             eNBT.putString("id", event.getString("enemy"));
-            Entity entity = EntityType.loadEntityRecursive(eNBT, player.level(), EntitySpawnReason.MOB_SUMMONED, (spawnEntity) -> {
+            Entity entity = EntityType.loadEntityRecursive(eNBT, player.level(), new EntitySpawnRequest(EntitySpawnReason.MOB_SUMMONED, false), (spawnEntity) -> {
                 Vec3 pos = player.position();
                 Vec3 offset = Utils.getRandomPosition(pos, 10);
                 spawnEntity.snapTo(offset.x, offset.y, offset.z, spawnEntity.yRotO, spawnEntity.xRotO);

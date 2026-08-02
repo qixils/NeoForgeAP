@@ -1,12 +1,12 @@
 package gg.archipelago.aprandomizer.managers;
 
-import io.github.archipelagomw.ClientStatus;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManager;
+import io.github.archipelagomw.ClientStatus;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -26,7 +26,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
+import java.awt.Color;
 
 @EventBusSubscriber
 public class GoalManager {

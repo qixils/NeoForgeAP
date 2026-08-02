@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:husbandry/uh_oh",
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "requirements": [
+    [
+      "auto"
+    ]
+  ]
+}

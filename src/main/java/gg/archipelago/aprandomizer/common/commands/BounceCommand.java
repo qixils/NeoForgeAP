@@ -1,9 +1,9 @@
 package gg.archipelago.aprandomizer.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import io.github.archipelagomw.network.client.BouncePacket;
 import gg.archipelago.aprandomizer.APRandomizer;
 import gg.archipelago.aprandomizer.ap.APClient;
+import io.github.archipelagomw.network.client.BouncePacket;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -36,7 +36,7 @@ public class BounceCommand {
                         .suggests(SuggestionProviders.cast(SuggestionProviders.SUMMONABLE_ENTITIES))
                         .executes(context ->
                                 bounceEntity(context.getSource(),
-                                        ResourceArgument.getSummonableEntityType(context, "entity"),
+                                ResourceArgument.getSummonableEntityType(context, "entity"),
                                         new CompoundTag()
                                 )
                         )
@@ -44,7 +44,7 @@ public class BounceCommand {
                                 .executes(context ->
                                         bounceEntity(
                                                 context.getSource(),
-                                                ResourceArgument.getSummonableEntityType(context, "entity"),
+                                        ResourceArgument.getSummonableEntityType(context, "entity"),
                                                 CompoundTagArgument.getCompoundTag(context, "nbt")
                                         )
                                 )

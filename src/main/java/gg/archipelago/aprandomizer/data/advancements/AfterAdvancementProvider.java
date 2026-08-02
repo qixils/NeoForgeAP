@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.criterion.PlayerTrigger;
+import net.minecraft.advancements.triggers.PlayerTrigger;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.resources.Identifier;
