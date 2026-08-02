@@ -6,8 +6,11 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.PillagerOutpostPools;
+import net.minecraft.data.worldgen.TaigaVillagePools;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
@@ -19,12 +22,10 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
-import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings;
-import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.structures.EndCityStructure;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -76,7 +77,7 @@ public class APStructures {
                                                 MobCategory.MONSTER, new StructureSpawnOverride(
                                                         StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                                         WeightedList.<MobSpawnSettings.SpawnerData>builder()
-                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 5))
+                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityType.PILLAGER, 1, 1), 1))
                                                                 .build())))
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),
