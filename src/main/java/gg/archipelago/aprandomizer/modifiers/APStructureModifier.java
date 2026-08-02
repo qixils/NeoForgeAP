@@ -110,7 +110,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
         return CODEC;
     }
 
-    public static record LevelReplacements(Map<ResourceKey<Structure>, HolderSet<Biome>> replacements) {
+    public record LevelReplacements(Map<ResourceKey<Structure>, HolderSet<Biome>> replacements) {
         public static final Codec<LevelReplacements> CODEC = RecordCodecBuilder.create(instance -> instance
                 .group(
                         Codec.unboundedMap(ResourceKey.codec(Registries.STRUCTURE), RegistryCodecs.homogeneousList(Registries.BIOME)).fieldOf("replacements").forGetter(LevelReplacements::replacements))

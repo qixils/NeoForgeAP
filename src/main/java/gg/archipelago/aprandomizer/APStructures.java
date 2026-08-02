@@ -22,12 +22,10 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
-import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.Structure.StructureSettings;
-import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
-import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.structures.EndCityStructure;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -79,7 +77,7 @@ public class APStructures {
                                                 MobCategory.MONSTER, new StructureSpawnOverride(
                                                         StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                                         WeightedList.<MobSpawnSettings.SpawnerData>builder()
-                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypes.PILLAGER, 1, 1), 5))
+                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypes.PILLAGER, 1, 1), 1))
                                                                 .build())))
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),
