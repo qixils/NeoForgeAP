@@ -99,6 +99,8 @@ public class ItemManager {
         map.put(50L, APItems.COMPASS_ANCIENT_CITY);
         map.put(51L, APItems.COMPASS_TRAIL_RUINS);
         map.put(52L, APItems.COMPASS_TRIAL_CHAMBERS);
+        map.put(53L, APItems.COMPASS_SULFUR_CAVES);
+        map.put(54L, APItems.COMPASS_UNVISITED_BIOMES);
     });
 
 //    long index = 51L;
