@@ -13,5 +13,4 @@ dependencies {
 tasks.shadowJar {
     relocate("org.java_websocket", "io.github.archipelagomw.shaded.org.java_websocket")
     relocate("org.apache.hc", "io.github.archipelagomw.shaded.org.apache.hc")
-    minimize()
 }
