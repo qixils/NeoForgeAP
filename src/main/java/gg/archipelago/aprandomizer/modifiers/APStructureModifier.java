@@ -8,7 +8,7 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -113,7 +113,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
     public record LevelReplacements(Map<ResourceKey<Structure>, HolderSet<Biome>> replacements) {
         public static final Codec<LevelReplacements> CODEC = RecordCodecBuilder.create(instance -> instance
                 .group(
-                        Codec.unboundedMap(ResourceKey.codec(Registries.STRUCTURE), RegistryCodecs.homogeneousList(Registries.BIOME)).fieldOf("replacements").forGetter(LevelReplacements::replacements))
+                        Codec.unboundedMap(ResourceKey.codec(Registries.STRUCTURE), RegistryCodecs.holderSet(Registries.BIOME)).fieldOf("replacements").forGetter(LevelReplacements::replacements))
                 .apply(instance, LevelReplacements::new));
     }
 }

@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
@@ -201,14 +202,14 @@ public class Utils {
         boolean flag = player.getInventory().add(itemstack);
         if (flag && itemstack.isEmpty()) {
             itemstack.setCount(1);
-            ItemEntity itementity1 = player.drop(itemstack, false);
+            ItemEntity itementity1 = player.drop(itemstack, false, Prediction.PREDICTED);
             if (itementity1 != null) {
                 itementity1.makeFakeItem();
             }
             player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             player.inventoryMenu.broadcastChanges();
         } else {
-            ItemEntity itementity = player.drop(itemstack, false);
+            ItemEntity itementity = player.drop(itemstack, false, Prediction.PREDICTED);
             if (itementity != null) {
                 itementity.setNoPickUpDelay();
                 itementity.setTarget(player.getUUID());

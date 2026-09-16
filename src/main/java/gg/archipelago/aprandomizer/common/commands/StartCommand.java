@@ -63,7 +63,7 @@ public class StartCommand {
         ItemManager itemManager = APRandomizer.getItemManager();
         if (itemManager == null) return 0;
         BlockPos spawn = overworld.getRespawnData().pos();
-        StructureTemplate jailStruct = overworld.getStructureManager().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "spawnjail")).orElseThrow();
+        StructureTemplate jailStruct = overworld.getStructureTemplateManager().get(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "spawnjail")).orElseThrow();
         BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
         for (BlockPos blockPos : BlockPos.betweenClosed(jailPos, jailPos.offset(jailStruct.getSize()))) {
             overworld.setBlock(blockPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);

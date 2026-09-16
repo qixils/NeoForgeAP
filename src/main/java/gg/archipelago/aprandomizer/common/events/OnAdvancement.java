@@ -62,7 +62,7 @@ public class OnAdvancement {
             am.addAdvancement(entry.getKey());
             am.syncAdvancement(entry.getKey(), entry.getValue());
             advancement.display().ifPresent(it -> server.getPlayerList().broadcastSystemMessage(
-                    advancement.display().get().getType().createAnnouncement(event.getAdvancement(), player),
+                    advancement.display().get().type().createAnnouncement(event.getAdvancement(), player),
                     false
             ));
         }

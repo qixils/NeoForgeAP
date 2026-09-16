@@ -13,6 +13,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -77,7 +79,7 @@ public class APStructures {
                                                 MobCategory.MONSTER, new StructureSpawnOverride(
                                                         StructureSpawnOverride.BoundingBoxType.STRUCTURE,
                                                         WeightedList.<MobSpawnSettings.SpawnerData>builder()
-                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypes.PILLAGER, 1, 1), 1))
+                                                                .add(new Weighted<>(new MobSpawnSettings.SpawnerData(EntityTypes.PILLAGER, new ConstantInt(1)), 1))
                                                                 .build())))
                                 .build(),
                         pools.getOrThrow(APTemplatePools.PILLAGER_OUTPOST_BASE_PLATES),

@@ -369,7 +369,7 @@ public class APRandomizer {
         if (worldData.getJailPlayers()) {
             BlockPos spawn = overworld.getRespawnData().pos();
             // alter the spawn box position, so it doesn't interfere with spawning
-            var jailOptional = overworld.getStructureManager().get(Identifier.fromNamespaceAndPath(MODID, "spawnjail"));
+            var jailOptional = overworld.getStructureTemplateManager().get(Identifier.fromNamespaceAndPath(MODID, "spawnjail"));
             if (jailOptional.isPresent()) {
                 StructureTemplate jail = jailOptional.get();
                 BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);

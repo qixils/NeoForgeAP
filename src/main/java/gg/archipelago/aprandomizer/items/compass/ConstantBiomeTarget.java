@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.biome.Biome;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.biome.Biome;
 public record ConstantBiomeTarget(HolderSet<Biome> biomes) implements BiomeTarget {
     public static final MapCodec<ConstantBiomeTarget> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(
-                    RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(ConstantBiomeTarget::biomes))
+                    RegistryCodecs.holderSet(Registries.BIOME).fieldOf("biomes").forGetter(ConstantBiomeTarget::biomes))
             .apply(instance, ConstantBiomeTarget::new));
 
     @Override

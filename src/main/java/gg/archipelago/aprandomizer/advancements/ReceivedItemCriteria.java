@@ -4,13 +4,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import gg.archipelago.aprandomizer.APRegistries;
 import gg.archipelago.aprandomizer.items.APItem;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class ReceivedItemCriteria extends SimpleCriterionTrigger<ReceivedItemCri
         this.trigger(player, instance -> instance.item().equals(item) && tier >= instance.tier());
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, ResourceKey<APItem> item, int tier) implements SimpleCriterionTrigger.SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, ResourceKey<APItem> item, int tier) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance
                 .group(
                         EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),

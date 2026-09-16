@@ -17,6 +17,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -45,7 +46,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.ENDER_PEARL,
                         Component.literal("Archipelago"),
                         Component.literal("Welcome to the AP Randomizer"),
-                        Identifier.withDefaultNamespace("gui/advancements/backgrounds/end"),
                         AdvancementType.TASK,
                         false,
                         false,
@@ -60,7 +60,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.BREAD,
                         Component.literal("Bake Bread"),
                         Component.literal("Turn wheat into bread"),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -75,7 +74,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.LEATHER,
                         Component.literal("Cow Tipper"),
                         Component.literal("Harvest some leather"),
-                        null,
                         AdvancementType.TASK,
                         true,
                         false,
@@ -90,7 +88,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.OAK_LOG,
                         Component.literal("Getting Wood"),
                         Component.literal("Attack a tree until a block of wood pops out."),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -105,7 +102,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.WOODEN_SWORD,
                         Component.literal("Time to Strike!"),
                         Component.literal("Use planks and sticks to make a sword"),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -120,7 +116,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.WOODEN_PICKAXE,
                         Component.literal("Time to Mine!"),
                         Component.literal("Use planks and sticks to make a pickaxe"),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -135,7 +130,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.FURNACE,
                         Component.literal("Hot Topic"),
                         Component.literal("Construct a furnace out of eight cobblestone blocks."),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -150,7 +144,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.BOOKSHELF,
                         Component.literal("Librarian"),
                         Component.literal("Build a bookshelf to improve your enchantment table."),
-                        null,
                         AdvancementType.TASK,
                         true,
                         false,
@@ -165,7 +158,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.NETHERITE_SWORD,
                         Component.literal("Overkill"),
                         Component.literal("Deal nine hearts of melee damage in a single hit."),
-                        null,
                         AdvancementType.CHALLENGE,
                         true,
                         true,
@@ -183,7 +175,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.ENCHANTED_GOLDEN_APPLE,
                         Component.literal("Overpowered"),
                         Component.literal("Eat an enchanted golden apple."),
-                        null,
                         AdvancementType.TASK,
                         true,
                         true,
@@ -198,7 +189,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.MINECART,
                         Component.literal("On A Rail"),
                         Component.literal("Reach 1km by minecart in your statistics."),
-                        null,
                         AdvancementType.GOAL,
                         true,
                         true,
@@ -216,7 +206,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.SADDLE,
                         Component.literal("When Pigs Fly"),
                         Component.literal("Fly a pig off a cliff of at least 5 blocks"),
-                        null,
                         AdvancementType.CHALLENGE,
                         true,
                         true,
@@ -238,7 +227,6 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                         Items.CAKE,
                         Component.literal("The Lie"),
                         Component.literal("Bake cake using wheat, sugar, milk, and eggs!"),
-                        null,
                         AdvancementType.CHALLENGE,
                         true,
                         true,
@@ -248,5 +236,4 @@ public class APAdvancementProvider implements AdvancementSubProvider {
                 .save(writer, Identifier.fromNamespaceAndPath(APRandomizer.MODID, "archipelago/the_lie"));
 
     }
-
 }
