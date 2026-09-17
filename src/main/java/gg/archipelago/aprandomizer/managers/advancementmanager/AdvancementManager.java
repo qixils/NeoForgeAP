@@ -162,6 +162,8 @@ public class AdvancementManager {
         map.put(APLocations.VANILLA_ADVENTURE_HEART_TRANSPLANTER, 136L);
         // 1.21.11 advancements
         map.put(APLocations.VANILLA_ADVENTURE_SPEAR_MANY_MOBS, 137L);
+        // 26.2 advancements
+        map.put(APLocations.VANILLA_HUSBANDRY_UH_OH, 138L);
     });
 
     private final LongSet earnedAdvancements = new LongOpenHashSet();
