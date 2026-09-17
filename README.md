@@ -26,7 +26,7 @@ select where you want the YAML file to go.
 ## Installing the Minecraft APWorld
 
 When you first download the APWorld, it will not be installed in the Archipelago Launcher. You must open the Archipelago
-Launcher, and click "Install APWorld". From there, select the downloaded Minecraft APWorld, and it should install itself.
+Launcher and click "Install APWorld". From there, select the downloaded Minecraft APWorld, and it should install itself.
 Restart the Archipelago Launcher, and it will appear under the Client Tab. It looks like a Minecraft book with gold text on the cover.
 
 ### Updating the Minecraft APWorld
@@ -71,7 +71,7 @@ When you are finished with the Minecraft World, you may delete it from the list.
 
 ### Connect to the MultiServer
 
-Using Minecraft 26.1, connect to the server. The IP address is:
+Using Minecraft 26.2, connect to the server. The IP address is:
 - `localhost` if you're hosting
 - provided to you by the server hosting service, if using one
 - your friend's public IP address, if they're port forwarding
