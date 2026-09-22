@@ -20,6 +20,8 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -47,7 +49,8 @@ public class GoalManager {
     private final AdvancementManager advancementManager;
     private final WorldData worldData;
 
-    public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager, WorldData worldData) {
+    public GoalManager(MinecraftServer server, APMCData apmc, AdvancementManager advancementManager,
+            WorldData worldData) {
         this.server = server;
         this.apmc = apmc;
         this.advancementManager = advancementManager;
@@ -60,17 +63,21 @@ public class GoalManager {
 
     public void initializeInfoBar() {
         CustomBossEvents bossInfoManager = server.getCustomBossEvents();
-        advancementInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
+        advancementInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(),
+                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "advancementinfobar"), Component.literal(""));
         advancementInfoBar.setMax(advancementsRequired);
         advancementInfoBar.setColor(BossEvent.BossBarColor.BLUE);
         advancementInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
 
-        eggInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));
+        eggInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(),
+                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "egginfobar"), Component.literal(""));
         eggInfoBar.setMax(dragonEggShardsRequired);
         eggInfoBar.setColor(BossEvent.BossBarColor.WHITE);
         eggInfoBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
 
-        connectionInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(), Identifier.fromNamespaceAndPath(APRandomizer.MODID, "connectioninfobar"), Component.literal("Not connected to Archipelago").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
+        connectionInfoBar = bossInfoManager.create(server.getLevel(Level.OVERWORLD).getRandom(),
+                Identifier.fromNamespaceAndPath(APRandomizer.MODID, "connectioninfobar"),
+                Component.literal("Not connected to Archipelago").withStyle(Style.EMPTY.withColor(ChatFormatting.RED)));
         connectionInfoBar.setMax(1);
         connectionInfoBar.setValue(1);
         connectionInfoBar.setColor(BossEvent.BossBarColor.RED);
@@ -89,10 +96,10 @@ public class GoalManager {
         checkBossMessages();
     }
 
-
     public String getAdvancementRemainingString() {
         if (advancementsRequired > 0) {
-            return String.format(" Advancements (%d / %d)", advancementManager.getFinishedAmount(), advancementsRequired);
+            return String.format(" Advancements (%d / %d)", advancementManager.getFinishedAmount(),
+                    advancementsRequired);
         }
         return "";
     }
@@ -137,12 +144,18 @@ public class GoalManager {
         if (!APRandomizer.isConnected())
             return;
         APClient apClient = APRandomizer.getAP();
-        if (apClient == null) return; // checked by isConnected but a failsafe doesn't hurt
+        if (apClient == null)
+            return; // checked by isConnected but a failsafe doesn't hurt
         boolean hasGoal = goalsDone();
         if (apmc.required_bosses.hasDragon())
             hasGoal = hasGoal && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isDragonKilled());
         if (apmc.required_bosses.hasWither())
             hasGoal = hasGoal && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isWitherKilled());
+        if (apmc.required_bosses.hasElderGuardian())
+            hasGoal = hasGoal
+                    && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isElderGuardianKilled());
+        if (apmc.required_bosses.hasWarden())
+            hasGoal = hasGoal && (APRandomizer.getWorldData() != null && APRandomizer.getWorldData().isWardenKilled());
 
         if (hasGoal)
             apClient.setGameState(ClientStatus.CLIENT_GOAL);
@@ -150,38 +163,72 @@ public class GoalManager {
 
     public void checkBossMessages() {
         WorldData worldData = APRandomizer.getWorldData();
-        if (worldData == null) return;
+        if (worldData == null)
+            return;
 
-        //check if the dragon message has been sent, and send it if needed.
-        if (goalsDone() && worldData.getDragonState() == WorldData.ASLEEP && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
+        // check if the dragon message has been sent, and send it if needed.
+        if (goalsDone() && worldData.getDragonState() == WorldData.ASLEEP
+                && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
             worldData.setDragonState(WorldData.WAITING);
             Utils.PlaySoundToAll(SoundEvents.ENDER_DRAGON_AMBIENT);
             Utils.sendMessageToAll("The Dragon is waiting...");
-            Utils.sendTitleToAll(Component.literal("The Dragon").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.ORANGE.getRGB()))), Component.literal("is waiting..."), 40, 120, 40);
+            Utils.sendTitleToAll(
+                    Component.literal("The Dragon")
+                            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.ORANGE.getRGB()))),
+                    Component.literal("is waiting..."), 40, 120, 40);
         }
 
-        //check if the wither message has been sent, and send it if needed.
+        // check if the wither message has been sent, and send it if needed.
         if (goalsDone() && worldData.getWitherState() == WorldData.ASLEEP && isBossRequired(APMCData.Bosses.WITHER)) {
             worldData.setWitherState(WorldData.WAITING);
             Utils.PlaySoundToAll(SoundEvents.WITHER_AMBIENT);
             Utils.sendMessageToAll("The Darkness is calling...");
-            Utils.sendTitleToAll(Component.literal("The Darkness").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.BLACK.getRGB()))), Component.literal("is calling..."), 40, 120, 40);
+            Utils.sendTitleToAll(
+                    Component.literal("The Darkness")
+                            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.BLACK.getRGB()))),
+                    Component.literal("is calling..."), 40, 120, 40);
+        }
+
+        // check if the elder guardian message has been sent, and send it if needed.
+        if (goalsDone() && worldData.getElderGuardianState() == WorldData.ASLEEP
+                && isBossRequired(APMCData.Bosses.ELDER_GUARDIAN)) {
+            worldData.setElderGuardianState(advancementsRequired);(WorldData.WAITING);
+            Utils.PlaySoundToAll(SoundEvents.ELDER_GUARDIAN_AMBIENT);
+            Utils.sendMessageToAll("The Ocean is calling...");
+            Utils.sendTitleToAll(
+                    Component.literal("The Ocean")
+                            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.BLUE.getRGB()))),
+                    Component.literal("is calling..."), 40, 120, 40);
+        }
+
+        // check if the warden message has been sent, and send it if needed.
+        if (goalsDone() && worldData.getWardenState() == WorldData.ASLEEP
+                && isBossRequired(APMCData.Bosses.WARDEN)) {
+            worldData.setWardenState(WorldData.WAITING);
+            Utils.PlaySoundToAll(SoundEvents.WARDEN_AMBIENT);
+            Utils.sendMessageToAll("The Ancient One is calling...");
+            Utils.sendTitleToAll(
+                    Component.literal("The Ancient One")
+                            .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(Color.BLACK.getRGB()))),
+                    Component.literal("is calling..."), 40, 120, 40);
         }
     }
 
     public boolean goalsDone() {
-        return advancementManager.getFinishedAmount() >= advancementsRequired && this.currentEggShards() >= dragonEggShardsRequired;
+        return advancementManager.getFinishedAmount() >= advancementsRequired
+                && this.currentEggShards() >= dragonEggShardsRequired;
     }
 
-
-    //subscribe to living death event to check for wither/dragon kills;
+    // subscribe to living death event to check for wither/dragon kills;
     @SubscribeEvent
     public static void onBossDeath(LivingDeathEvent event) {
         LivingEntity mob = event.getEntity();
         GoalManager goalManager = APRandomizer.getGoalManager();
-        if (goalManager == null) return;
+        if (goalManager == null)
+            return;
         WorldData worldData = APRandomizer.getWorldData();
-        if (worldData == null) return;
+        if (worldData == null)
+            return;
         if (mob instanceof EnderDragon && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ENDER_DRAGON)) {
             worldData.setDragonKilled();
             Utils.sendMessageToAll("She is no more...");
@@ -192,17 +239,22 @@ public class GoalManager {
             Utils.sendMessageToAll("The Darkness has lifted...");
             goalManager.updateGoal(true);
         }
+        if (mob instanceof ElderGuardian && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.ELDER_GUARDIAN)) {
+            worldData.setElderGuardianKilled();
+            Utils.sendMessageToAll("The Ocean is freed...");
+            goalManager.updateGoal(true);
+        }
+        if (mob instanceof Warden && goalManager.goalsDone() && isBossRequired(APMCData.Bosses.WARDEN)) {
+            worldData.setWardenKilled();
+            Utils.sendMessageToAll("The Ancient One has been put to rest...");
+            goalManager.updateGoal(true);
+        }
     }
 
     // check APMC.required_bosses to see if the boss is required
     public static boolean isBossRequired(APMCData.Bosses boss) {
         var required = APRandomizer.getApmcData().required_bosses;
 
-        // if it matches our goal its true
-        if (required == boss) return true;
-        // a boss is required and you asked about none.
-        if (boss == APMCData.Bosses.NONE) return false;
-        // if both bosses are required, and you didn't ask about none, return ture;
-        return required == APMCData.Bosses.BOTH;
+        return required.hasBoss(boss);
     }
 }
