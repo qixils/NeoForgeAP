@@ -8,6 +8,7 @@ import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.datamaps.APDataMaps;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.codec.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -67,7 +68,7 @@ public record APStructureModifier(Map<ResourceKey<Level>, LevelReplacements> lev
     }
 
     @Override
-    public void modify(Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
+    public void modify(RegistryAccess registries, Holder<Structure> structure, Phase phase, ModifiableStructureInfo.StructureInfo.Builder builder) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer(); // odd load order
         if (server == null) return;
         if (!phase.equals(Phase.MODIFY) || structure.unwrapKey().isEmpty()) return;

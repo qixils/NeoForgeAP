@@ -41,7 +41,7 @@ import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewDatapackRegistryEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -231,9 +231,9 @@ public class APRandomizer {
         modEventBus.addListener(APRandomizer::registerDataMapTypes);
     }
 
-    public static void registerDataPackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(APRegistries.ARCHIPELAGO_ITEM, APItem.CODEC);
-        event.dataPackRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
+    public static void registerDataPackRegistries(NewDatapackRegistryEvent event) {
+        event.worldRegistry(APRegistries.ARCHIPELAGO_ITEM, APItem.CODEC);
+        event.worldRegistry(APRegistries.ARCHIPELAGO_LOCATION, APLocation.CODEC);
     }
 
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
