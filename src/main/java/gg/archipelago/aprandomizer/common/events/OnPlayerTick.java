@@ -17,7 +17,7 @@ public class OnPlayerTick {
             return;
 
         Holder<Biome> biome = player.level().getBiome(player.blockPosition());
-        player.getData(APAttachmentTypes.AP_PLAYER).getVisitedBiomes().add(biome.getKey());
+        player.getData(APAttachmentTypes.AP_PLAYER).getVisitedBiomes().add(biome.key());
     }
 
 }

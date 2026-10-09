@@ -22,7 +22,6 @@ import gg.archipelago.aprandomizer.structures.APStructureSets;
 import gg.archipelago.aprandomizer.structures.APTemplatePools;
 import gg.archipelago.aprandomizer.timelines.APTimelines;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.packs.*;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataRegistryEntriesEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.List;
@@ -43,43 +43,38 @@ import java.util.concurrent.CompletableFuture;
 public class APDataGenerator {
 
     @SubscribeEvent
-    public static void onDataGen(GatherDataEvent.Client event) {
-        event.createWorldRegistryObjects(
-                new RegistrySetBuilder()
-                        .add(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, APStructureModifiers::bootstrap)
-                        .add(Registries.STRUCTURE, APStructures::bootstrap)
-                        .add(Registries.TEMPLATE_POOL, APTemplatePools::bootstrap)
-                        .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
-                        .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap)
-                        .add(APRegistries.ARCHIPELAGO_ITEM, APItems::bootstrap)
-                        .add(Registries.TIMELINE, APTimelines::bootstrap),
-                Set.of(APRandomizer.MODID, "minecraft"));
-
-        event.createReloadableRegistryObjects(
-                new RegistrySetBuilder()
-                        .add(Registries.ADVANCEMENT, new AdvancementProvider(List.of(
-                                APAdvancementProvider::new,
-                                ReceivedAdvancementProvider::new,
-                                output -> new AfterAdvancementProvider(output, List.of(
-                                        VanillaStoryAdvancements::new,
-                                        VanillaNetherAdvancements::new,
-                                        VanillaTheEndAdvancements::new,
-                                        VanillaHusbandryAdvancements::new,
-                                        VanillaAdventureAdvancements::new),
-                                        id -> Identifier.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
-                                VanillaOverrideAdvancementProvider::new)))
-                        .add(RecipeProvider.asBootstrap(APRecipeProvider::new))
-                        .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(
-                                new LootTableProvider.SubProviderEntry(APAddedLootTableProvider::new, LootContextParamSets.ALL_PARAMS)))),
-                Set.of(APRandomizer.MODID, "minecraft"));
-
-        CompletableFuture<HolderLookup.Provider> worldLookup = event.getWorldLookupProvider();
-
-        event.addProvider(new APDamageTypeTagsProvider(event.getGenerator().getPackOutput(), worldLookup));
-        event.addProvider(new APDataMapProvider(event.getGenerator().getPackOutput(), worldLookup));
-        event.addProvider(new APBiomeTagsProvider(event.getGenerator().getPackOutput(), worldLookup));
-        event.addProvider(new APStructureTagsProvider(event.getGenerator().getPackOutput(), worldLookup));
-        event.addProvider(new APGlobalLootModifierProvider(event.getGenerator().getPackOutput(), worldLookup));
-        event.addProvider(new APTimelineTagsProvider(event.getGenerator().getPackOutput(), worldLookup));
+    public static void onDataGen(GatherDataRegistryEntriesEvent event) {
+        event.add(NeoForgeRegistries.Keys.STRUCTURE_MODIFIERS, APStructureModifiers::bootstrap)
+                .add(Registries.STRUCTURE, APStructures::bootstrap)
+                .add(Registries.TEMPLATE_POOL, APTemplatePools::bootstrap)
+                .add(Registries.STRUCTURE_SET, APStructureSets::bootstrap)
+                .add(APRegistries.ARCHIPELAGO_LOCATION, APLocations::bootstrap)
+                .add(APRegistries.ARCHIPELAGO_ITEM, APItems::bootstrap)
+                .add(Registries.TIMELINE, APTimelines::bootstrap)
+                .add(Registries.ADVANCEMENT, new AdvancementProvider(List.of(
+                        APAdvancementProvider::new,
+                        ReceivedAdvancementProvider::new,
+                        output -> new AfterAdvancementProvider(output, List.of(
+                                VanillaStoryAdvancements::new,
+                                VanillaNetherAdvancements::new,
+                                VanillaTheEndAdvancements::new,
+                                VanillaHusbandryAdvancements::new,
+                                VanillaAdventureAdvancements::new),
+                                id -> Identifier.fromNamespaceAndPath(APRandomizer.MODID, "vanilla/" + id.getPath() + "_after")),
+                        VanillaOverrideAdvancementProvider::new)))
+                .add(RecipeProvider.asBootstrap(APRecipeProvider::new))
+                .add(Registries.LOOT_TABLE, new LootTableProvider(Set.of(), List.of(
+                        new LootTableProvider.SubProviderEntry(APAddedLootTableProvider::new, LootContextParamSets.ALL_PARAMS))));
     }
+    @SubscribeEvent
+    public static void onLookup(GatherDataEvent.Client gatherDataEvent){
+        CompletableFuture<HolderLookup.Provider> reloadLookup = gatherDataEvent.getReloadableLookupProvider();
+
+        gatherDataEvent.addProvider(new APDamageTypeTagsProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        gatherDataEvent.addProvider(new APDataMapProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        gatherDataEvent.addProvider(new APBiomeTagsProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        gatherDataEvent.addProvider(new APStructureTagsProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        gatherDataEvent.addProvider(new APGlobalLootModifierProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        gatherDataEvent.addProvider(new APTimelineTagsProvider(gatherDataEvent.getGenerator().getPackOutput(), reloadLookup));
+        }
 }

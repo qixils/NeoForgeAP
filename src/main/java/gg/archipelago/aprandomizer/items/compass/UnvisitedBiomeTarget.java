@@ -16,7 +16,7 @@ public class UnvisitedBiomeTarget implements BiomeTarget {
     @Override
     public boolean isTargetingBiome(Holder<Biome> biome, ServerPlayer player) {
         Set<ResourceKey<Biome>> visited = player.getData(APAttachmentTypes.AP_PLAYER).getVisitedBiomes();
-        return !visited.contains(biome.getKey());
+        return !visited.contains(biome.key());
     }
 
     @Override
