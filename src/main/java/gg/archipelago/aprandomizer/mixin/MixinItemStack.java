@@ -7,6 +7,7 @@ import gg.archipelago.aprandomizer.managers.GoalManager;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -17,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Collections;
-
 
 @Mixin(ItemStack.class)
 public abstract class MixinItemStack {
@@ -41,5 +41,9 @@ public abstract class MixinItemStack {
             aprandomizer$setBossLore(APMCData.Bosses.WITHER);
         else if (item.is(BuiltInRegistries.ITEM.getKey(Items.ENDER_PEARL)))
             aprandomizer$setBossLore(APMCData.Bosses.ENDER_DRAGON);
+        else if (item.is(BuiltInRegistries.ITEM.getKey(Items.MILK_BUCKET)))
+            aprandomizer$setBossLore(APMCData.Bosses.ELDER_GUARDIAN);
+        else if (item.is(ItemTags.WOOL))
+            aprandomizer$setBossLore(APMCData.Bosses.WARDEN);
     }
 }

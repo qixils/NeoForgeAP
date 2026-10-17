@@ -1,11 +1,14 @@
 package gg.archipelago.aprandomizer;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import gg.archipelago.aprandomizer.advancements.APCriteriaTriggers;
 import gg.archipelago.aprandomizer.ap.APClient;
 import gg.archipelago.aprandomizer.ap.storage.APMCData;
 import gg.archipelago.aprandomizer.ap.storage.APMCMetaData;
 import gg.archipelago.aprandomizer.attachments.APAttachmentTypes;
+import gg.archipelago.aprandomizer.common.Utils.RequiredBossesDeserializer;
 import gg.archipelago.aprandomizer.common.Utils.Utils;
 import gg.archipelago.aprandomizer.data.WorldData;
 import gg.archipelago.aprandomizer.data.loot.APLootModifierTypes;
@@ -66,9 +69,9 @@ public class APRandomizer {
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "aprandomizer";
-    private static final byte[] ZIP_HEADER = new byte[]{ 0x50, 0x4B, 0x03, 0x04 };
+    private static final byte[] ZIP_HEADER = new byte[] { 0x50, 0x4B, 0x03, 0x04 };
 
-    //store our APClient
+    // store our APClient
     @Nullable
     static private APClient APClient;
     @Nullable
@@ -89,7 +92,13 @@ public class APRandomizer {
     @Nullable
     static private WorldData worldData;
 
-    static private final Gson gson = new Gson();
+    static private Gson gson;
+
+    static {
+        GsonBuilder gson = new GsonBuilder();
+        gson.registerTypeAdapter(APMCData.RequiredBosses.class, new RequiredBossesDeserializer());
+        APRandomizer.gson = gson.create();
+    }
 
     private static APMCData readApmcInputStream(InputStream inputStream) throws IOException {
         byte[] bytes = inputStream.readAllBytes();
@@ -155,10 +164,12 @@ public class APRandomizer {
                     Enumeration<? extends ZipEntry> entries = zipFile.entries();
                     while (entries.hasMoreElements()) {
                         ZipEntry entry = entries.nextElement();
-                        if (entry.isDirectory()) continue;
+                        if (entry.isDirectory())
+                            continue;
 
                         // .apmcmeta is new suffix for the nested file
-                        if (apmc == null && (entry.getName().endsWith(".apmc") || entry.getName().endsWith(".apmcmeta"))) {
+                        if (apmc == null
+                                && (entry.getName().endsWith(".apmc") || entry.getName().endsWith(".apmcmeta"))) {
                             try (InputStream inputStream = zipFile.getInputStream(entry)) {
                                 apmc = readApmcInputStream(inputStream);
                             } catch (IOException e) {
@@ -168,7 +179,8 @@ public class APRandomizer {
                             }
                         }
 
-                        if (metadata == null && entry.getName().toLowerCase(Locale.ENGLISH).contains("archipelago.json")) {
+                        if (metadata == null
+                                && entry.getName().toLowerCase(Locale.ENGLISH).contains("archipelago.json")) {
                             try (InputStream inputStream = zipFile.getInputStream(entry)) {
                                 byte[] bytes = inputStream.readAllBytes();
                                 String jsonString = new String(bytes, StandardCharsets.UTF_8).trim();
@@ -179,7 +191,8 @@ public class APRandomizer {
                             }
                         }
 
-                        if (apmc != null && metadata != null) break;
+                        if (apmc != null && metadata != null)
+                            break;
                     }
                 }
             } else {
@@ -239,6 +252,7 @@ public class APRandomizer {
     public static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
         event.register(APDataMaps.DEFAULT_STRUCTURE_BIOMES);
     }
+
     @Nullable
     public static APClient getAP() {
         return APClient;
@@ -259,7 +273,7 @@ public class APRandomizer {
     }
 
     @Nullable
-    public static MinecraftServer getServer(){
+    public static MinecraftServer getServer() {
         return server;
     }
 
@@ -278,7 +292,8 @@ public class APRandomizer {
     }
 
     public static void setJailPlayers(boolean jailPlayers) {
-        if (worldData != null) worldData.setJailPlayers(jailPlayers);
+        if (worldData != null)
+            worldData.setJailPlayers(jailPlayers);
     }
 
     @NotNull
@@ -289,7 +304,8 @@ public class APRandomizer {
     public static boolean isRace() {
         return getApmcData().race;
     }
-    public static boolean isFastRespawn(){
+
+    public static boolean isFastRespawn() {
         return getApmcData().respawn;
     }
 
@@ -322,9 +338,10 @@ public class APRandomizer {
             LOGGER.error("NO APMC FILE FOUND. PLEASE PLACE A VALID APMC FILE IN THE APDATA FOLDER.");
             return;
         }
-        if (server == null) server = event.getServer();
+        if (server == null)
+            server = event.getServer();
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-        if (overworld == null){
+        if (overworld == null) {
             LOGGER.error("THE SERVER COULD NOT GET Level.OVERWORLD.");
             return;
         }
@@ -336,28 +353,32 @@ public class APRandomizer {
         overworld.getGameRules().set(GameRules.SHOW_ADVANCEMENT_MESSAGES, false, server);
         server.setDifficulty(Difficulty.NORMAL, true);
 
-        //fetch our custom world save data we attach to the worlds.
+        // fetch our custom world save data we attach to the worlds.
         worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());
 
-        //set up managers
-        if (advancementManager == null) advancementManager = new AdvancementManager(worldData);
-        if (goalManager == null) goalManager = new GoalManager(server, apmcData, advancementManager, worldData);
-        if (itemManager == null) itemManager = new ItemManager(server, goalManager, worldData);
+        // set up managers
+        if (advancementManager == null)
+            advancementManager = new AdvancementManager(worldData);
+        if (goalManager == null)
+            goalManager = new GoalManager(server, apmcData, advancementManager, worldData);
+        if (itemManager == null)
+            itemManager = new ItemManager(server, goalManager, worldData);
 
         advancementManager.setCheckedAdvancements(worldData.getLocations());
 
-        //check if APMC data is present and if the seed matches what we expect
+        // check if APMC data is present and if the seed matches what we expect
         if (apmcData.state == APMCData.State.VALID && !worldData.getSeedName().equals(apmcData.seed_name)) {
-            //check to see if our worldData is empty. If it is, then save the apRoom data.
+            // check to see if our worldData is empty. If it is, then save the apRoom data.
             if (worldData.getSeedName().isEmpty()) {
                 worldData.setSeedName(apmcData.seed_name);
-                //this is also our first boot so set this flag so we can do first boot stuff.
+                // this is also our first boot so set this flag so we can do first boot stuff.
             } else {
                 apmcData.state = APMCData.State.INVALID_SEED;
             }
         }
 
-        //if no apmc file was found set our world data seed to invalid so it will force a regen of this blank world.
+        // if no apmc file was found set our world data seed to invalid so it will force
+        // a regen of this blank world.
         if (apmcData.state == APMCData.State.MISSING) {
             worldData.setSeedName("Invalid");
         }
@@ -373,8 +394,10 @@ public class APRandomizer {
             if (jailOptional.isPresent()) {
                 StructureTemplate jail = jailOptional.get();
                 BlockPos jailPos = new BlockPos(spawn.getX() + 5, 300, spawn.getZ() + 5);
-                jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX() / 2), jailPos.getY() + 1, jailPos.getZ() + (jail.getSize().getZ() / 2));
-                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(), Block.UPDATE_CLIENTS);
+                jailCenter = new BlockPos(jailPos.getX() + (jail.getSize().getX() / 2), jailPos.getY() + 1,
+                        jailPos.getZ() + (jail.getSize().getZ() / 2));
+                jail.placeInWorld(overworld, jailPos, jailPos, new StructurePlaceSettings(), RandomSource.create(),
+                        Block.UPDATE_CLIENTS);
             } else {
                 jailCenter = spawn;
             }
@@ -390,7 +413,7 @@ public class APRandomizer {
             overworld.getGameRules().set(GameRules.MOB_DROPS, false, server);
             overworld.getGameRules().set(GameRules.ENTITY_DROPS, false, server);
             overworld.getGameRules().set(GameRules.BLOCK_DROPS, false, server);
-            //overworld.setDayTime(0);
+            // overworld.setDayTime(0);
 
         }
 
@@ -401,7 +424,8 @@ public class APRandomizer {
                 APClient.setName(apmcData.player_name);
 
                 String address = apmcData.server;
-                if (apmcData.port > 0 && !address.contains(":")) address += ":" + apmcData.port;
+                if (apmcData.port > 0 && !address.contains(":"))
+                    address += ":" + apmcData.port;
 
                 Utils.sendMessageToAll("Connecting to Archipelago server at " + address);
 

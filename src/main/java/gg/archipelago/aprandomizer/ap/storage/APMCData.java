@@ -1,8 +1,17 @@
 package gg.archipelago.aprandomizer.ap.storage;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+
+import gg.archipelago.aprandomizer.ap.storage.APMCData.RequiredBosses;
+
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 public class APMCData {
@@ -31,7 +40,7 @@ public class APMCData {
     public boolean respawn = true;
 
     @SerializedName("required_bosses")
-    public Bosses required_bosses = Bosses.ENDER_DRAGON;
+    public RequiredBosses required_bosses = RequiredBosses.ENDER_DRAGON;
 
     @SerializedName("server")
     @Nullable
@@ -43,10 +52,11 @@ public class APMCData {
     public State state = State.VALID;
 
     public boolean dragonStartSpawned() {
-        //if our goal is not to kill the dragon, start with the dragon spawned.
-        if (required_bosses == Bosses.NONE || required_bosses == Bosses.WITHER)
+        // if our goal is not to kill the dragon, start with the dragon spawned.
+        if (!required_bosses.hasDragon())
             return true;
-        //if our goal is "fast" and requires no advancements or egg shards then the dragon should start spawned too;
+        // if our goal is "fast" and requires no advancements or egg shards then the
+        // dragon should start spawned too;
         return advancements_required == 0 && egg_shards_required == 0;
     }
 
@@ -55,22 +65,17 @@ public class APMCData {
     }
 
     public enum Bosses {
-        @SerializedName("none")
-        NONE(false, false),
-        @SerializedName("ender_dragon")
-        ENDER_DRAGON(true, false),
-        @SerializedName("wither")
-        WITHER(false, true),
-        @SerializedName("both")
-        BOTH(true, true);
+        ENDER_DRAGON,
+        WITHER,
+        ELDER_GUARDIAN,
+        WARDEN
+    }
 
-        private final boolean dragon;
-        private final boolean wither;
-
-        Bosses(boolean dragon, boolean wither) {
-            this.dragon = dragon;
-            this.wither = wither;
-        }
+    public record RequiredBosses(boolean dragon, boolean wither, boolean elderGuardian, boolean warden) {
+        public static RequiredBosses ENDER_DRAGON = new RequiredBosses(true, false, false, false);
+        public static RequiredBosses WITHER = new RequiredBosses(false, true, false, false);
+        public static RequiredBosses BOTH = new RequiredBosses(true, true, false, false);
+        public static RequiredBosses ALL = new RequiredBosses(true, true, true, true);
 
         public boolean hasDragon() {
             return dragon;
@@ -78,6 +83,23 @@ public class APMCData {
 
         public boolean hasWither() {
             return wither;
+        }
+
+        public boolean hasElderGuardian() {
+            return elderGuardian;
+        }
+
+        public boolean hasWarden() {
+            return warden;
+        }
+
+        public boolean hasBoss(Bosses boss) {
+            return switch (boss) {
+                case Bosses.ENDER_DRAGON -> hasDragon();
+                case Bosses.WITHER -> hasWither();
+                case Bosses.ELDER_GUARDIAN -> hasElderGuardian();
+                case Bosses.WARDEN -> hasWarden();
+            };
         }
     }
 

@@ -21,6 +21,8 @@ public class WorldData extends SavedData {
     private String seedName = "";
     private int dragonState = ASLEEP;
     private int witherState = ASLEEP;
+    private int elderGuardianState = ASLEEP;
+    private int wardenState = ASLEEP;
     private boolean jailPlayers = true;
     private LongSet locations = new LongOpenHashSet();
     private int index = 0;
@@ -35,13 +37,19 @@ public class WorldData extends SavedData {
     public static final Codec<WorldData> CODEC = RecordCodecBuilder.create(instance -> instance
             .group(
                     Codec.STRING.fieldOf("seedName").forGetter(WorldData::getSeedName),
-                    Codec.INT.fieldOf("dragonState").forGetter(WorldData::getDragonState),
+                    Codec.INT.optionalFieldOf("dragonState", ASLEEP).forGetter(WorldData::getDragonState),
                     Codec.INT.optionalFieldOf("witherState", ASLEEP).forGetter(WorldData::getWitherState),
+                    Codec.INT.optionalFieldOf("elderGuardianState", ASLEEP).forGetter(WorldData::getElderGuardianState),
+                    Codec.INT.optionalFieldOf("wardenState", ASLEEP).forGetter(WorldData::getWardenState),
                     Codec.BOOL.fieldOf("jailPlayers").forGetter(WorldData::getJailPlayers),
-                    Codec.LONG_STREAM.<LongSet>xmap(stream -> new LongOpenHashSet(stream.toArray()), LongSet::longStream).fieldOf("locations").forGetter(WorldData::getLocations),
+                    Codec.LONG_STREAM
+                            .<LongSet>xmap(stream -> new LongOpenHashSet(stream.toArray()), LongSet::longStream)
+                            .fieldOf("locations").forGetter(WorldData::getLocations),
                     Codec.INT.fieldOf("index").forGetter(WorldData::getItemIndex),
                     Codec.INT.optionalFieldOf("dragonEggShards", 0).forGetter(WorldData::getDragonEggShards),
-                    ResourceKey.codec(Registries.RECIPE).listOf().xmap(list -> (List<ResourceKey<Recipe<?>>>) new ArrayList<>(list), Function.identity()).fieldOf("unlockedRecipes").forGetter(WorldData::getUnlockedRecipes))
+                    ResourceKey.codec(Registries.RECIPE).listOf()
+                            .xmap(list -> (List<ResourceKey<Recipe<?>>>) new ArrayList<>(list), Function.identity())
+                            .fieldOf("unlockedRecipes").forGetter(WorldData::getUnlockedRecipes))
             .apply(instance, WorldData::new));
 
     public void setSeedName(String seedName) {
@@ -103,16 +111,21 @@ public class WorldData extends SavedData {
     }
 
     public static SavedDataType<WorldData> getFactory() {
-        return new SavedDataType<>(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "aprandomizer/worlddata"), WorldData::new, WorldData.CODEC);
+        return new SavedDataType<>(Identifier.fromNamespaceAndPath(APRandomizer.MODID, "aprandomizer/worlddata"),
+                WorldData::new, WorldData.CODEC);
     }
 
     public WorldData() {
     }
 
-    private WorldData(String seedName, int dragonState, int witherState, boolean jailPlayers, LongSet locations, int itemIndex, int dragonEggShards, List<ResourceKey<Recipe<?>>> unlockedRecipes) {
+    private WorldData(String seedName, int dragonState, int witherState, int elderGuardianState, int wardenState,
+            boolean jailPlayers, LongSet locations,
+            int itemIndex, int dragonEggShards, List<ResourceKey<Recipe<?>>> unlockedRecipes) {
         this.seedName = seedName;
         this.dragonState = dragonState;
         this.witherState = witherState;
+        this.elderGuardianState = elderGuardianState;
+        this.wardenState = wardenState;
         this.jailPlayers = jailPlayers;
         this.locations = locations;
         this.index = itemIndex;
@@ -154,4 +167,39 @@ public class WorldData extends SavedData {
         unlockedRecipes.add(recipe);
         this.setDirty();
     }
+
+    public void setElderGuardianState(int elderGuardianState) {
+        this.elderGuardianState = elderGuardianState;
+        this.setDirty();
+    }
+
+    public void setElderGuardianKilled() {
+        setElderGuardianState(KILLED);
+    }
+
+    public int getElderGuardianState() {
+        return elderGuardianState;
+    }
+
+    public boolean isElderGuardianKilled() {
+        return elderGuardianState == KILLED;
+    }
+
+    public void setWardenState(int wardenState) {
+        this.wardenState = wardenState;
+        this.setDirty();
+    }
+
+    public void setWardenKilled() {
+        setWardenState(KILLED);
+    }
+
+    public int getWardenState() {
+        return wardenState;
+    }
+
+    public boolean isWardenKilled() {
+        return wardenState == KILLED;
+    }
+
 }
