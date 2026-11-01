@@ -38,6 +38,8 @@ public class APMCData {
     public int advancements_required = -1;
     @SerializedName("immediate_respawn")
     public boolean respawn = true;
+    @SerializedName("old_collect")
+    public boolean old_collect = false;
 
     @SerializedName("required_bosses")
     public RequiredBosses required_bosses = RequiredBosses.ENDER_DRAGON;

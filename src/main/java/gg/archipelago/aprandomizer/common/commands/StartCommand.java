@@ -16,6 +16,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -85,6 +87,7 @@ public class StartCommand {
                 player.getFoodData().eat(20, 20);
                 player.setHealth(20);
                 player.getInventory().clearContent();
+                player.removeAllEffects();
                 player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
                 player.teleportTo(spawn.getX(), spawn.getY(), spawn.getZ());
 

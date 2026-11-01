@@ -30,7 +30,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.gamerules.GameRules;
@@ -224,7 +223,7 @@ public class APRandomizer {
     }
 
     public APRandomizer(IEventBus modEventBus) {
-        LOGGER.info("Minecraft Archipelago 26.2 v2.2.0 Randomizer initializing.");
+        LOGGER.info("Minecraft Archipelago 26.3 v2.3.0 Randomizer initializing.");
 
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeBus = NeoForge.EVENT_BUS;
@@ -309,6 +308,10 @@ public class APRandomizer {
         return getApmcData().respawn;
     }
 
+    public static boolean isOldCollect() {
+        return getApmcData().old_collect;
+    }
+
     public static void sendBounce(BouncePacket packet) {
         if (APClient != null)
             APClient.sendBounce(packet);
@@ -351,7 +354,7 @@ public class APRandomizer {
         overworld.getGameRules().set(GameRules.LIMITED_CRAFTING, true, server);
         overworld.getGameRules().set(GameRules.KEEP_INVENTORY, true, server);
         overworld.getGameRules().set(GameRules.SHOW_ADVANCEMENT_MESSAGES, false, server);
-        server.setDifficulty(Difficulty.NORMAL, true);
+        //server.setDifficulty(Difficulty.NORMAL, true);
 
         // fetch our custom world save data we attach to the worlds.
         worldData = server.overworld().getDataStorage().computeIfAbsent(WorldData.getFactory());

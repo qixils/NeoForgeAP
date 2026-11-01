@@ -8,6 +8,8 @@ import gg.archipelago.aprandomizer.managers.advancementmanager.AdvancementManage
 import gg.archipelago.aprandomizer.managers.itemmanager.ItemManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.GameType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -58,6 +60,7 @@ public class OnJoin {
             BlockPos jail = APRandomizer.getJailPosition();
             player.teleportTo(jail.getX(), jail.getY(), jail.getZ());
             player.setGameMode(GameType.SURVIVAL);
+            player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 999999999));
         }
     }
 }

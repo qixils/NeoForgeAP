@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api("io.github.archipelagomw:Java-Client:0.2.1") {
+    api("io.github.archipelagomw:Java-Client:0.2.2") {
         exclude group: "com.google.code.gson"
         exclude group: "org.slf4j"
     }
