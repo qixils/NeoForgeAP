@@ -60,7 +60,7 @@ public class OnJoin {
             BlockPos jail = APRandomizer.getJailPosition();
             player.teleportTo(jail.getX(), jail.getY(), jail.getZ());
             player.setGameMode(GameType.SURVIVAL);
-            player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 999999999));
+            player.addEffect(new MobEffectInstance(MobEffects.SATURATION, -1, 0, true, false, false));
         }
     }
 }
